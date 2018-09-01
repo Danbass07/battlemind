@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlayersTable extends Migration
+class CreateLeaguesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreatePlayersTable extends Migration
      */
     public function up()
     {
-        Schema::create('players', function (Blueprint $table) {
+        Schema::create('leagues', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index();
             $table->string('name');
-            $table->string('url');
-            $table->string('type');
-            $table->integer('wins');
-            $table->integer('lost');
-            $table->integer('draws');
+            $table->integer('win_point_value');
+            $table->integer('lost_point_value');
+            $table->integer('draw_point_value');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreatePlayersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('players');
+        Schema::dropIfExists('leagues');
     }
 }

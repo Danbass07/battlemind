@@ -15676,7 +15676,7 @@ var generatePath = function generatePath() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(37);
-module.exports = __webpack_require__(104);
+module.exports = __webpack_require__(105);
 
 
 /***/ }),
@@ -37942,8 +37942,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Welcome__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Players__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Leagues__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Player__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Players__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Leagues__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Newplayer__ = __webpack_require__(104);
+
+
 
 
 
@@ -38001,11 +38005,12 @@ if (document.getElementById('root')) {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Switch */],
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Welcome__["a" /* default */], null),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/', component: __WEBPACK_IMPORTED_MODULE_3__components_Welcome__["a" /* default */] }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/new', component: __WEBPACK_IMPORTED_MODULE_3__components_Welcome__["a" /* default */] }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/players', component: __WEBPACK_IMPORTED_MODULE_4__components_Players__["a" /* default */] }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues', component: __WEBPACK_IMPORTED_MODULE_5__components_Leagues__["a" /* default */] })
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/new', component: __WEBPACK_IMPORTED_MODULE_7__components_Newplayer__["a" /* default */] }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/:id/edit', component: __WEBPACK_IMPORTED_MODULE_4__components_Player__["a" /* default */] }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/players', component: __WEBPACK_IMPORTED_MODULE_5__components_Players__["a" /* default */] }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues', component: __WEBPACK_IMPORTED_MODULE_6__components_Leagues__["a" /* default */] }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Welcome__["a" /* default */], null)
             )
         )
     ), document.getElementById('root'));
@@ -59931,7 +59936,10 @@ var Welcome = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(75);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -59942,18 +59950,88 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var Players = function (_Component) {
     _inherits(Players, _Component);
 
-    function Players() {
+    function Players(props) {
         _classCallCheck(this, Players);
 
-        return _possibleConstructorReturn(this, (Players.__proto__ || Object.getPrototypeOf(Players)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Players.__proto__ || Object.getPrototypeOf(Players)).call(this, props));
+
+        _this.state = {
+            players: []
+        };
+        return _this;
     }
 
     _createClass(Players, [{
+        key: 'deleteHandler',
+        value: function deleteHandler(id) {
+
+            var isNotId = function isNotId(player) {
+                return player.id !== id;
+            };
+            var updatedPlayer = this.state.players.filter(isNotId);
+            this.setState({ players: updatedPlayer });
+            axios.delete('/players/' + id);
+        }
+    }, {
+        key: 'renderPlayers',
+        value: function renderPlayers() {
+            var _this2 = this;
+
+            return this.state.players.map(function (player) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { key: player.id, className: 'media' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'media-body' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            player.name,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                                { to: '/' + player.id + '/edit', className: 'btn btn-sm btn-success float-right' },
+                                'Update'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        return _this2.deleteHandler(player.id);
+                                    },
+                                    className: 'btn btn-sm btn-warning float-right' },
+                                'Delete'
+                            )
+                        )
+                    )
+                );
+            });
+        }
+    }, {
+        key: 'getPlayers',
+        value: function getPlayers() {
+            var _this3 = this;
+
+            axios.get('/players').then(function (response) {
+                return _this3.setState({
+                    players: [].concat(_toConsumableArray(response.data.players))
+                });
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.getPlayers();
+        }
+    }, {
         key: 'render',
         value: function render() {
+            {
+                console.log(this.state);
+            }
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'container' },
@@ -59966,7 +60044,8 @@ var Players = function (_Component) {
                     'h2',
                     null,
                     'List of all your players (decks,armies,teams)'
-                )
+                ),
+                this.renderPlayers()
             );
         }
     }]);
@@ -60032,9 +60111,444 @@ var Leagues = function (_Component) {
 
 /***/ }),
 /* 104 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Newplayer = function (_Component) {
+    _inherits(Newplayer, _Component);
+
+    function Newplayer(props) {
+        _classCallCheck(this, Newplayer);
+
+        var _this = _possibleConstructorReturn(this, (Newplayer.__proto__ || Object.getPrototypeOf(Newplayer)).call(this, props));
+
+        _this.state = {
+            name: '',
+            type: '',
+            url: '',
+            wins: 0,
+            lost: 0,
+            draws: 0
+        };
+        _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
+        _this.typeChangeHandler = _this.typeChangeHandler.bind(_this);
+        _this.urlChangeHandler = _this.urlChangeHandler.bind(_this);
+        _this.submitHandler = _this.submitHandler.bind(_this);
+        // this.renderTasks = this.renderTasks.bind(this);
+        // this.deleteHandler = this.deleteHandler.bind(this);
+        return _this;
+    }
+
+    _createClass(Newplayer, [{
+        key: 'nameChangeHandler',
+        value: function nameChangeHandler(e) {
+            this.setState({
+                name: e.target.value
+            });
+        }
+    }, {
+        key: 'typeChangeHandler',
+        value: function typeChangeHandler(e) {
+            this.setState({
+                type: e.target.value
+            });
+        }
+    }, {
+        key: 'urlChangeHandler',
+        value: function urlChangeHandler(e) {
+            this.setState({
+                url: e.target.value
+            });
+        }
+    }, {
+        key: 'submitHandler',
+        value: function submitHandler(e) {
+            var _this2 = this;
+
+            e.preventDefault();
+            console.log(this.state);
+            axios.post('players', {
+                name: this.state.name,
+                type: this.state.type,
+                url: this.state.url,
+                wins: this.state.wins,
+                lost: this.state.lost,
+                draws: this.state.draws
+            }).then(function (response) {
+                console.log(response);
+                _this2.setState({
+                    name: '',
+                    type: '',
+                    url: '',
+                    wins: 0,
+                    lost: 0,
+                    draws: 0
+                });
+                _this2.props.history.push('/home');
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'container' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    { onSubmit: this.submitHandler },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        {
+                            className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                            className: 'form-control',
+                            placeholder: 'Name',
+                            onChange: this.nameChangeHandler,
+                            required: true
+
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                            className: 'form-control',
+                            placeholder: 'Type',
+                            required: true,
+                            onChange: this.typeChangeHandler
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                            className: 'form-control',
+                            placeholder: 'Url',
+                            required: true,
+                            onChange: this.urlChangeHandler
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        {
+                            type: 'submit',
+                            className: 'btn btn-primary'
+
+                        },
+                        'Add new player'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Newplayer;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Newplayer);
+
+/***/ }),
+/* 105 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(75);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var Player = function (_Component) {
+    _inherits(Player, _Component);
+
+    function Player(props) {
+        _classCallCheck(this, Player);
+
+        var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, props));
+
+        _this.state = {
+            name: '',
+            type: '',
+            url: '',
+            wins: 0,
+            lost: 0,
+            draws: 0
+        };
+        _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
+        _this.typeChangeHandler = _this.typeChangeHandler.bind(_this);
+        _this.urlChangeHandler = _this.urlChangeHandler.bind(_this);
+        _this.submitHandler = _this.submitHandler.bind(_this);
+        _this.addWin = _this.addWin.bind(_this);
+        _this.addLost = _this.addLost.bind(_this);
+        _this.addDraw = _this.addDraw.bind(_this);
+        _this.removeWin = _this.removeWin.bind(_this);
+        _this.removeLost = _this.removeLost.bind(_this);
+        _this.removeDraw = _this.removeDraw.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(Player, [{
+        key: 'nameChangeHandler',
+        value: function nameChangeHandler(e) {
+            this.setState({
+                name: e.target.value
+            });
+        }
+    }, {
+        key: 'typeChangeHandler',
+        value: function typeChangeHandler(e) {
+            this.setState({
+                type: e.target.value
+            });
+        }
+    }, {
+        key: 'urlChangeHandler',
+        value: function urlChangeHandler(e) {
+            this.setState({
+                url: e.target.value
+            });
+        }
+    }, {
+        key: 'submitHandler',
+        value: function submitHandler(e) {
+            var _this2 = this;
+
+            e.preventDefault();
+            axios.put('/players/' + this.props.match.params.id, {
+                name: this.state.name,
+                type: this.state.type,
+                url: this.state.url,
+                wins: this.state.wins,
+                lost: this.state.lost,
+                draws: this.state.draws
+            }).then(function (response) {
+                _this2.props.history.push('/home');
+            });
+        }
+    }, {
+        key: 'getPlayers',
+        value: function getPlayers() {
+            var _this3 = this;
+
+            axios.get('/players/' + this.props.match.params.id + '/edit').then(function (response) {
+                return _this3.setState({
+                    name: response.data.player.name,
+                    type: response.data.player.type,
+                    url: response.data.player.url,
+                    wins: response.data.player.wins,
+                    lost: response.data.player.lost,
+                    draws: response.data.player.draws
+                });
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.getPlayers();
+        }
+    }, {
+        key: 'addWin',
+        value: function addWin() {
+
+            var win = +this.state.wins + +1;
+            this.setState({
+                wins: win
+            });
+        }
+    }, {
+        key: 'addLost',
+        value: function addLost() {
+            var lost = +this.state.lost + +1;
+            this.setState({
+                lost: lost
+            });
+        }
+    }, {
+        key: 'addDraw',
+        value: function addDraw() {
+            var draw = +this.state.draws + +1;
+            this.setState({
+                draws: draw
+            });
+        }
+    }, {
+        key: 'removeWin',
+        value: function removeWin() {
+
+            var win = +this.state.wins - +1;
+            if (win >= 0) {
+                this.setState({
+                    wins: win
+                });
+            }
+        }
+    }, {
+        key: 'removeLost',
+        value: function removeLost() {
+            var lost = +this.state.lost - +1;
+            if (lost >= 0) {
+                this.setState({
+                    lost: lost
+                });
+            }
+        }
+    }, {
+        key: 'removeDraw',
+        value: function removeDraw() {
+            var draw = +this.state.draws - +1;
+            if (draw >= 0) {
+                this.setState({
+                    draws: draw
+                });
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            console.log(this.props.match.params.id);
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'container' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row justify-content-center' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col-md-8' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'card' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'card-header' },
+                                'Edit Player'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'form',
+                                { onSubmit: this.submitHandler },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    {
+                                        className: 'form-group' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        className: 'form-control',
+                                        placeholder: 'Name',
+                                        value: this.state.name,
+                                        onChange: this.nameChangeHandler,
+                                        required: true
+
+                                    }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        className: 'form-control',
+                                        placeholder: 'Type',
+                                        required: true,
+                                        value: this.state.type,
+                                        onChange: this.typeChangeHandler
+                                    }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        className: 'form-control',
+                                        placeholder: 'Url',
+                                        required: true,
+                                        value: this.state.url,
+                                        onChange: this.urlChangeHandler
+                                    })
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    null,
+                                    'Wins :',
+                                    this.state.wins
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { onClick: this.addWin },
+                                    '++++'
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { onClick: this.removeWin },
+                                    '----'
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    null,
+                                    'Lost: ',
+                                    this.state.lost,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { onClick: this.addLost },
+                                        '++++'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { onClick: this.removeLost },
+                                        '----'
+                                    )
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    null,
+                                    'Draws: ',
+                                    this.state.draws,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { onClick: this.addDraw },
+                                        '++++'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { onClick: this.removeDraw },
+                                        '----'
+                                    )
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'button',
+                                    {
+                                        type: 'submit',
+                                        className: 'btn btn-primary'
+
+                                    },
+                                    'Edit player'
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Player;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Player);
 
 /***/ })
 /******/ ]);

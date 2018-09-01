@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
 import Welcome from './components/Welcome';
+import Player from './components/Player';
 import Players from './components/Players';
 import Leagues from './components/Leagues';
-
+import Newplayer from './components/Newplayer';
 
 
 
@@ -28,11 +29,13 @@ if (document.getElementById('root')) {
                 </li>
             </ul>
             <Switch>
-                <Welcome />
+                
                 <Route exact path="/" component={Welcome}></Route>
-                <Route exact path="/new" component={Welcome}></Route>
+                <Route exact path="/new" component={Newplayer}></Route>
+                <Route exact path="/:id/edit" component={Player}></Route>
                 <Route exact path="/players" component={Players}></Route>
                 <Route exact path="/leagues" component={Leagues}></Route>
+                <Welcome />
             </Switch>
         </div>
     </BrowserRouter>
