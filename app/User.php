@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Player;
+use App\League;
 
 class User extends Authenticatable
 {
@@ -29,5 +30,8 @@ class User extends Authenticatable
     ];
     public function players() {
         return $this->hasMany(Player::class);
+    }
+    public function leagues() {
+        return $this->hasMany(League::class);
     }
 }

@@ -16,6 +16,7 @@ class CreateLeaguesTable extends Migration
         Schema::create('leagues', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('user_id')->unsigned()->index();
             $table->integer('win_point_value');
             $table->integer('lost_point_value');
             $table->integer('draw_point_value');

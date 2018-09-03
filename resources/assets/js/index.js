@@ -5,6 +5,7 @@ import Welcome from './components/Welcome';
 import Player from './components/Player';
 import Players from './components/Players';
 import Leagues from './components/Leagues';
+import League from './components/League';
 import Newplayer from './components/Newplayer';
 
 
@@ -32,7 +33,8 @@ if (document.getElementById('root')) {
                 
                 <Route exact path="/" component={Welcome}></Route>
                 <Route exact path="/new" component={Newplayer}></Route>
-                <Route exact path="/:id/edit" component={Player}></Route>
+                <Route exact path="/players/:id/edit" component={Player}></Route>
+                <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/players" component={Players}></Route>
                 <Route exact path="/leagues" component={Leagues}></Route>
                 <Welcome />
