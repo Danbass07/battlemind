@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
-import Newleague from './Newleague';
+
 
 class Leagues extends Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class Leagues extends Component {
         
         const isNotId = league => league.id !== id;
         const updatedLeague = this.state.leagues.filter(isNotId);
-        this.setState({leauges: updatedLeague});
+        this.setState({leagues: updatedLeague});
         axios.delete(`/leagues/${id}`);
 
     }
@@ -33,22 +33,26 @@ class Leagues extends Component {
         ))
     }
     getLeagues() {
+       
         axios.get('/leagues').then(response =>
          this.setState({
             leagues: [...response.data.leagues]
              })
         );
+        
     }
     componentWillMount() {
-      this.getLeagues(); 
-    }
+      
+        this.getLeagues(); 
+      }
+ 
     render() {
     
         return (
             <div className="container">
                 <h1>Leagues Component</h1>
                 <h2>List of all your leagues</h2>
-                <Newleague />
+                
                 {this.renderLeagues()}
             </div>
         );

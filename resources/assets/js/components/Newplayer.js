@@ -39,7 +39,7 @@ class Newplayer extends Component {
     submitHandler(e) {
 
         e.preventDefault();
-        console.log(this.state);
+        console.log(this.props.history);
         axios.post('players', {
             name: this.state.name,
             type: this.state.type,

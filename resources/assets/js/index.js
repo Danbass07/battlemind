@@ -6,6 +6,7 @@ import Player from './components/Player';
 import Players from './components/Players';
 import Leagues from './components/Leagues';
 import League from './components/League';
+import Newleague from './components/Newleague';
 import Newplayer from './components/Newplayer';
 
 
@@ -20,7 +21,10 @@ if (document.getElementById('root')) {
                     <Link to="/">Welcome</Link>
                 </li>
                 <li>
-                    <Link to="/new">New Player</Link>
+                    <Link to="/newplayer">New Player</Link>
+                </li>
+                <li>
+                    <Link to="/newleague">New League</Link>
                 </li>
                 <li>
                     <Link to="/players">Players Results</Link>
@@ -32,7 +36,8 @@ if (document.getElementById('root')) {
             <Switch>
                 
                 <Route exact path="/" component={Welcome}></Route>
-                <Route exact path="/new" component={Newplayer}></Route>
+                <Route exact path="/newplayer" component={Newplayer}></Route>
+                <Route exact path="/newleague" component={Newleague}></Route>
                 <Route exact path="/players/:id/edit" component={Player}></Route>
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/players" component={Players}></Route>

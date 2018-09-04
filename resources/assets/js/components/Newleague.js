@@ -9,12 +9,18 @@ class Newleague extends Component {
             win_point_value: 0,
             lost_point_value: 0,
             draw_point_value: 0,
+            number_of_games: '',
+            number_of_players: '',
+            number_of_points: ''
             
         };
         this.nameChangeHandler = this.nameChangeHandler.bind(this);
         this.win_point_valueChangeHandler = this.win_point_valueChangeHandler.bind(this);
         this.lost_point_valueChangeHandler = this.lost_point_valueChangeHandler.bind(this);
         this.draw_point_valueChangeHandler = this.draw_point_valueChangeHandler.bind(this);
+        this.number_of_gamesChangeHandler = this.number_of_gamesChangeHandler.bind(this);
+        this.number_of_playersChangeHandler = this.number_of_playersChangeHandler.bind(this);
+        this.number_of_pointsChangeHandler = this.number_of_pointsChangeHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         // this.renderTasks = this.renderTasks.bind(this);
         // this.deleteHandler = this.deleteHandler.bind(this);
@@ -40,24 +46,45 @@ class Newleague extends Component {
             draw_point_value: +e.target.value
         });
     }
+    number_of_gamesChangeHandler(e) {
+        this.setState({
+            number_of_games: +e.target.value
+        });
+    }
+    number_of_playersChangeHandler(e) {
+        this.setState({
+            number_of_players: +e.target.value
+        });
+    }
+    number_of_pointsChangeHandler(e) {
+        this.setState({
+            number_of_points: +e.target.value
+        });
+    }
 
     submitHandler(e) {
 
         e.preventDefault();
-        console.log(this.state);
+        
         axios.post('leagues', {
             name: this.state.name,
             win_point_value: this.state.win_point_value,
             lost_point_value: this.state.lost_point_value,
-            draw_point_value: this.state.draw_point_value
+            draw_point_value: this.state.draw_point_value,
+            number_of_games: this.state.number_of_games,
+            number_of_players: this.state.number_of_players,
+            number_of_points: this.state.number_of_points,
             
         }).then(response => {
-            console.log(response);
+            
            this.setState({
             name: '',
             win_point_value: '',
             lost_point_value: '',
-            draw_point_value: ''
+            draw_point_value: '',
+            number_of_games: '',
+            number_of_players: '',
+            number_of_points: '',
            });
            this.props.history.push('/home');
         });
@@ -95,6 +122,24 @@ class Newleague extends Component {
                                 placeholder="draw point value"
                                 required
                                 onChange={this.draw_point_valueChangeHandler}
+                                />
+                                 <input 
+                                className="form-control" 
+                                placeholder="number_of_games"
+                                required
+                                onChange={this.number_of_gamesChangeHandler}
+                                />
+                                 <input 
+                                className="form-control" 
+                                placeholder="number_of_players"
+                                required
+                                onChange={this.number_of_playersChangeHandler}
+                                />
+                                 <input 
+                                className="form-control" 
+                                placeholder=" number_of_points"
+                                required
+                                onChange={this.number_of_pointsChangeHandler}
                                 />
                                 
                                 </div>
