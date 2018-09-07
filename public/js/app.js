@@ -60630,9 +60630,10 @@ var Leagues = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(6);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -60658,7 +60659,9 @@ var League = function (_Component) {
             draw_point_value: 0,
             number_of_games: '',
             number_of_players: '',
-            number_of_points: ''
+            number_of_points: '',
+            allPlayers: [],
+            leaguePlayers: []
 
         };
         _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
@@ -60747,6 +60750,8 @@ var League = function (_Component) {
 
             axios.get('/leagues/' + this.props.match.params.id + '/edit').then(function (response) {
                 return _this3.setState({
+
+                    id: response.data.league.id,
                     name: response.data.league.name,
                     win_point_value: response.data.league.win_point_value,
                     lost_point_value: response.data.league.lost_point_value,
@@ -60759,9 +60764,57 @@ var League = function (_Component) {
             });
         }
     }, {
+        key: 'addPlayer',
+        value: function addPlayer(player) {
+            axios.get('/leagues/' + this.props.match.params.id + '/addPlayer/' + player.id).then(function (response) {
+                return console.log('response');
+            });
+        }
+    }, {
+        key: 'renderPlayers',
+        value: function renderPlayers() {
+            var _this4 = this;
+
+            return this.state.allPlayers.map(function (player) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { key: player.id, className: 'media' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'media-body' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            player.name,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        return _this4.addPlayer(player);
+                                    },
+                                    className: 'btn btn-sm btn-warning float-right' },
+                                'Add Player'
+                            )
+                        )
+                    )
+                );
+            });
+        }
+    }, {
+        key: 'getPlayers',
+        value: function getPlayers() {
+            var _this5 = this;
+
+            axios.get('/players').then(function (response) {
+                return _this5.setState({
+                    allPlayers: [].concat(_toConsumableArray(response.data.players))
+                });
+            });
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.getLeague();
+            this.getPlayers();
         }
     }, {
         key: 'render',
@@ -60852,7 +60905,8 @@ var League = function (_Component) {
                                     'Edit League'
                                 )
                             ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
+                            this.renderPlayers()
                         )
                     )
                 )

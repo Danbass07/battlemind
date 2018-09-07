@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\League;
+use App\Player;
 
 class LeagueController extends Controller
 {
@@ -73,5 +74,14 @@ class LeagueController extends Controller
     public function destroy($id)
     {
         League::findOrFail($id)->delete(); 
+    }
+
+    public function addPlayer($league_id, $player_id )
+    {
+        $leagues = \App\League::find($league_id);
+        $players = \App\Player::find($player_id);
+        
+        $leagues->players()->save($players);
+       // return response()->json($player);
     }
 }

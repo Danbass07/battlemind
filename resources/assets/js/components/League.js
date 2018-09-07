@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import {Link} from 'react-router-dom';
 
 class League extends Component {
     constructor(props) {
@@ -12,6 +12,8 @@ class League extends Component {
             number_of_games: '',
             number_of_players: '',
             number_of_points: '',
+            allPlayers: [],
+            leaguePlayers: [],
 
         };
         this.nameChangeHandler = this.nameChangeHandler.bind(this);
@@ -31,35 +33,36 @@ class League extends Component {
     
     
     win_point_valueChangeHandler(e) {
-        this.setState({
-            win_point_value: e.target.value
-        });
-    }
+            this.setState({
+                win_point_value: e.target.value
+            });
+        }
     lost_point_valueChangeHandler(e) {
-        this.setState({
-            lost_point_value: e.target.value
-    });
-}
+            this.setState({
+                lost_point_value: e.target.value
+            });
+        }
     draw_point_valueChangeHandler(e) {
-        this.setState({
-            draw_point_value: e.target.value
-    });
-    }
+            this.setState({
+                draw_point_value: e.target.value
+            });
+        }
     number_of_gamesChangeHandler(e) {
-        this.setState({
-            number_of_games: e.target.value
-    }); 
-    }
+            this.setState({
+                number_of_games: e.target.value
+        }); 
+        }
     number_of_playersChangeHandler(e) {
-        this.setState({
-            number_of_players: e.target.value
-        });
-    }
+            this.setState({
+                number_of_players: e.target.value
+            });
+        }
     number_of_pointsChangeHandler(e) {
-        this.setState({
-            number_of_points: e.target.value
-        });
-    }
+            this.setState({
+                number_of_points: e.target.value
+            });
+        }
+
     submitHandler(e) {
 
         e.preventDefault();
@@ -82,20 +85,49 @@ class League extends Component {
         axios.get(`/leagues/${this.props.match.params.id}/edit`).then(response =>
             
          this.setState({
-            name: response.data.league.name,
-            win_point_value: response.data.league.win_point_value,
-            lost_point_value: response.data.league.lost_point_value,
-            draw_point_value: response.data.league.draw_point_value,
-            number_of_games: response.data.league.number_of_games,
-            number_of_players: response.data.league.number_of_players,
-            number_of_points: response.data.league.number_of_points
+
+            id:                  response.data.league.id,   
+            name:                response.data.league.name,
+            win_point_value:     response.data.league.win_point_value,
+            lost_point_value:    response.data.league.lost_point_value,
+            draw_point_value:    response.data.league.draw_point_value,
+            number_of_games:     response.data.league.number_of_games,
+            number_of_players:   response.data.league.number_of_players,
+            number_of_points:    response.data.league.number_of_points,
            
              })
 
         );
     }
+    addPlayer(player) {
+        axios.get(`/leagues/${this.props.match.params.id}/addPlayer/${player.id}`).then(response =>
+            console.log('response')
+        );
+    }
+    renderPlayers(){
+        return this.state.allPlayers.map(player => (
+            <div key={player.id} className="media">
+                 <div className="media-body">
+                    <div>
+                        {player.name}
+                      
+                        <button onClick={() => this.addPlayer(player)}
+                        className="btn btn-sm btn-warning float-right">Add Player</button>
+                    </div>
+              </div>
+             </div>
+        ))
+    }
+    getPlayers() {
+        axios.get('/players').then(response =>
+         this.setState({
+            allPlayers: [...response.data.players]
+             })
+        );
+    }
     componentWillMount() {
-      this.getLeague(); 
+      this.getLeague();
+      this.getPlayers() 
     }
     render() {
        
@@ -175,7 +207,7 @@ class League extends Component {
                                 </button>
                 </form>
                             <hr />
-                            
+                            {this.renderPlayers()}
                         </div>
                     </div>
                 </div>
