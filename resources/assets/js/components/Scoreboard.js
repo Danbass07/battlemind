@@ -9,9 +9,24 @@ class Scoreboard extends Component {
            players: [],
         };
         this.renderResults = this.renderResults.bind(this);
+        this.cauntPoints = this.cauntPoints.bind(this);
+        
+    }
+    cauntPoints(){
+        const players = this.state.players;
+        this.state.leagues.forEach(function(league){
+            console.log(league);
+            players.forEach(function(player){
+                console.log(player);
+                
+            });
+        });
     }
 
     renderResults(league) {
+
+        
+
         return this.state.players.map(player => (
             <div key={player.id} className="media">
                  <div className="media-body">
@@ -31,7 +46,7 @@ class Scoreboard extends Component {
              </div>
         ))
     }
-    renderScoreboard(){
+    renderScoreboard(){                         
       
    
         return this.state.leagues.map(league => (
@@ -67,6 +82,7 @@ class Scoreboard extends Component {
                
                 <hr />
                 {this.renderScoreboard()}
+                {this.cauntPoints()}
             </div>
         );
     }
