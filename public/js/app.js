@@ -60073,8 +60073,7 @@ var Scoreboard = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
                 this.renderScoreboard(),
-                this.cauntPoints(),
-                console.log(this.state)
+                this.cauntPoints()
             );
         }
     }]);
@@ -60677,6 +60676,8 @@ var League = function (_Component) {
         _this.number_of_gamesChangeHandler = _this.number_of_gamesChangeHandler.bind(_this);
         _this.number_of_playersChangeHandler = _this.number_of_playersChangeHandler.bind(_this);
         _this.number_of_pointsChangeHandler = _this.number_of_pointsChangeHandler.bind(_this);
+        _this.contains = _this.contains.bind(_this);
+        _this.addPlayer = _this.addPlayer.bind(_this);
         return _this;
     }
 
@@ -60763,22 +60764,50 @@ var League = function (_Component) {
                     draw_point_value: response.data.league.draw_point_value,
                     number_of_games: response.data.league.number_of_games,
                     number_of_players: response.data.league.number_of_players,
-                    number_of_points: response.data.league.number_of_points
-
+                    number_of_points: response.data.league.number_of_points,
+                    leaguePlayers: response.data.players
                 });
             });
         }
     }, {
         key: 'addPlayer',
         value: function addPlayer(player) {
+            var _this4 = this;
+
             axios.get('/leagues/' + this.props.match.params.id + '/addPlayer/' + player.id).then(function (response) {
-                return console.log('response');
+                return _this4.setState({
+                    leaguePlayers: [].concat(_toConsumableArray(_this4.state.leaguePlayers), [player])
+                });
             });
+        }
+    }, {
+        key: 'removePlayer',
+        value: function removePlayer(player) {
+            var _this5 = this;
+
+            axios.get('/leagues/' + this.props.match.params.id + '/removePlayer/' + player.id).then(function (response) {
+                return _this5.setState({
+                    leaguePlayers: [].concat(_toConsumableArray(response.data))
+                });
+            });
+        }
+    }, {
+        key: 'contains',
+        value: function contains(a, obj) {
+            for (var i = 0; i < a.length; i++) {
+
+                if (a[i].id === obj.id) {
+
+                    return true;
+                }
+            }
+
+            return false;
         }
     }, {
         key: 'renderPlayers',
         value: function renderPlayers() {
-            var _this4 = this;
+            var _this6 = this;
 
             return this.state.allPlayers.map(function (player) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60791,13 +60820,20 @@ var League = function (_Component) {
                             'div',
                             null,
                             player.name,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            !_this6.contains(_this6.state.leaguePlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this4.addPlayer(player);
+                                        return _this6.addPlayer(player);
                                     },
                                     className: 'btn btn-sm btn-warning float-right' },
                                 'Add Player'
+                            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        return _this6.removePlayer(player);
+                                    },
+                                    className: 'btn btn-sm btn-warning float-right' },
+                                '  X  '
                             )
                         )
                     )
@@ -60807,10 +60843,10 @@ var League = function (_Component) {
     }, {
         key: 'getPlayers',
         value: function getPlayers() {
-            var _this5 = this;
+            var _this7 = this;
 
             axios.get('/players').then(function (response) {
-                return _this5.setState({
+                return _this7.setState({
                     allPlayers: [].concat(_toConsumableArray(response.data.players))
                 });
             });
@@ -60825,6 +60861,7 @@ var League = function (_Component) {
         key: 'render',
         value: function render() {
 
+            console.log(this.state);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'container' },

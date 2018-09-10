@@ -56,8 +56,10 @@ class LeagueController extends Controller
     public function edit($id)
     {
         $league = League::findOrFail($id);
+        $players = League::findOrFail($id)->players()->get();
         return response()->json([
             'league' => $league,
+            'players' => $players,
         ]);
     }
 
@@ -79,9 +81,21 @@ class LeagueController extends Controller
     public function addPlayer($league_id, $player_id )
     {
         $leagues = \App\League::find($league_id);
-        $players = \App\Player::find($player_id);
+        $player = \App\Player::find($player_id);
         
-        $leagues->players()->save($players);
-       // return response()->json($player);
+        $leagues->players()->save($player);
+       return response()->json($player);
+    }
+
+    public function removePlayer($league_id, $player_id )
+    {
+        $leagues = \App\League::find($league_id);
+        $player = \App\Player::find($player_id);
+        
+        $leagues->players()->detach($player);
+        $leaguePlayers = League::findOrFail($league_id)->players()->get();
+
+       
+       return response()->json($leaguePlayers);
     }
 }

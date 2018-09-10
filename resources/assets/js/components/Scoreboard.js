@@ -87,7 +87,7 @@ class Scoreboard extends Component {
                 <hr />
                 {this.renderScoreboard()}
                 {this.cauntPoints()}
-                {console.log(this.state)}
+              
             </div>
         );
     }

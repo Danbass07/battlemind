@@ -24,6 +24,8 @@ class League extends Component {
         this.number_of_gamesChangeHandler = this.number_of_gamesChangeHandler.bind(this);
         this.number_of_playersChangeHandler = this.number_of_playersChangeHandler.bind(this);
         this.number_of_pointsChangeHandler = this.number_of_pointsChangeHandler.bind(this);
+        this.contains = this.contains.bind(this);
+        this.addPlayer = this.addPlayer.bind(this);
     }
     nameChangeHandler(e) {
             this.setState({
@@ -94,26 +96,55 @@ class League extends Component {
             number_of_games:     response.data.league.number_of_games,
             number_of_players:   response.data.league.number_of_players,
             number_of_points:    response.data.league.number_of_points,
-           
+            leaguePlayers:      response.data.players,
              })
 
         );
     }
     addPlayer(player) {
         axios.get(`/leagues/${this.props.match.params.id}/addPlayer/${player.id}`).then(response =>
-            console.log('response')
+            this.setState ({
+                leaguePlayers:[...this.state.leaguePlayers, player ],
+            })
         );
     }
+    removePlayer(player) {
+        axios.get(`/leagues/${this.props.match.params.id}/removePlayer/${player.id}`).then(response =>
+            this.setState ({
+                leaguePlayers:[...response.data ],
+            })
+            
+        );
+    }
+    contains(a, obj) {
+        for (var i = 0; i < a.length; i++) {
+          
+            if (a[i].id === obj.id) {
+              
+                return true;
+            }
+        }
+      
+        return false;
+    }
+
     renderPlayers(){
+        
         return this.state.allPlayers.map(player => (
             <div key={player.id} className="media">
                  <div className="media-body">
                     <div>
                         {player.name}
                       
-                        <button onClick={() => this.addPlayer(player)}
-                        className="btn btn-sm btn-warning float-right">Add Player</button>
-                    </div>
+                        { !this.contains(this.state.leaguePlayers, player) ? <button onClick={() => this.addPlayer(player)}
+                            className="btn btn-sm btn-warning float-right">Add Player</button> : 
+                            <button onClick={() => this.removePlayer(player)}
+                            className="btn btn-sm btn-warning float-right">  X  </button> }
+                      
+                        
+                        </div>
+
+
               </div>
              </div>
         ))
@@ -131,7 +162,7 @@ class League extends Component {
     }
     render() {
        
-        
+        console.log(this.state);
         return (
             <div className="container">
                 <div className="row justify-content-center">
