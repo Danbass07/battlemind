@@ -11,9 +11,16 @@ class ScoreboardController extends Controller
     public function index(Request $request) {
         $players = Player::all();
         $leagues = League::all();
+        $league = League::all()->players()->get();
+
+       
+       
+          
         return response()->json([
             'players' => $players,
             'leagues' => $leagues,
+            'leaguePlayers' => $league,
+            
         ]);
    }
 }

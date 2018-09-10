@@ -7,6 +7,7 @@ class Scoreboard extends Component {
         this.state = {
             leagues: [],
            players: [],
+           leaguePlayers: [],
         };
         this.renderResults = this.renderResults.bind(this);
         this.cauntPoints = this.cauntPoints.bind(this);
@@ -15,9 +16,10 @@ class Scoreboard extends Component {
     cauntPoints(){
         const players = this.state.players;
         this.state.leagues.forEach(function(league){
-            console.log(league);
+            
+          //  console.log(league);
             players.forEach(function(player){
-                console.log(player);
+             //   console.log(player);
                 
             });
         });
@@ -66,12 +68,14 @@ class Scoreboard extends Component {
          this.setState({
             players: [...response.data.players],
             leagues: [...response.data.leagues],
-             })
-      
+            leaguePlayers: [...response.data.leaguePlayers],
+             })      
         );
+        
     }
     componentWillMount() {
       this.getAll(); 
+      
       
     }
     render() {
@@ -83,6 +87,7 @@ class Scoreboard extends Component {
                 <hr />
                 {this.renderScoreboard()}
                 {this.cauntPoints()}
+                {console.log(this.state)}
             </div>
         );
     }

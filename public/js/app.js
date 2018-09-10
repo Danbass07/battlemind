@@ -59963,7 +59963,8 @@ var Scoreboard = function (_Component) {
 
         _this.state = {
             leagues: [],
-            players: []
+            players: [],
+            leaguePlayers: []
         };
         _this.renderResults = _this.renderResults.bind(_this);
         _this.cauntPoints = _this.cauntPoints.bind(_this);
@@ -59976,9 +59977,11 @@ var Scoreboard = function (_Component) {
         value: function cauntPoints() {
             var players = this.state.players;
             this.state.leagues.forEach(function (league) {
-                console.log(league);
+
+                //  console.log(league);
                 players.forEach(function (player) {
-                    console.log(player);
+                    //   console.log(player);
+
                 });
             });
         }
@@ -60042,7 +60045,8 @@ var Scoreboard = function (_Component) {
             axios.get('/scoreboard').then(function (response) {
                 return _this3.setState({
                     players: [].concat(_toConsumableArray(response.data.players)),
-                    leagues: [].concat(_toConsumableArray(response.data.leagues))
+                    leagues: [].concat(_toConsumableArray(response.data.leagues)),
+                    leaguePlayers: [].concat(_toConsumableArray(response.data.leaguePlayers))
                 });
             });
         }
@@ -60069,7 +60073,8 @@ var Scoreboard = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
                 this.renderScoreboard(),
-                this.cauntPoints()
+                this.cauntPoints(),
+                console.log(this.state)
             );
         }
     }]);
