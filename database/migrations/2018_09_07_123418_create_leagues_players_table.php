@@ -23,9 +23,9 @@ class CreateLeaguesPlayersTable extends Migration
             $table->integer('player_id')->unsigned()->nullable();
             $table->foreign('player_id')->references('id')
                   ->on('players')->onDelete('cascade');
-            $table->integer('win')->nullable();   
-            $table->integer('lost')->nullable();
-            $table->integer('draw')->nullable();   
+            $table->integer('win')->default('0');   
+            $table->integer('lost')->default('0');
+            $table->integer('draw')->default('0');   
             $table->timestamps();
         });
     }

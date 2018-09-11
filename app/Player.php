@@ -15,6 +15,6 @@ class Player extends Model
             return $this->belongsTo(User::class);
     }
     public function leagues() {
-        return $this->belongsToMany(League::class)->withTimestamps();
+        return $this->belongsToMany(League::class)->withPivot('win', 'lost', 'draw')->withTimestamps();
     }
 }

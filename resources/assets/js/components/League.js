@@ -14,6 +14,9 @@ class League extends Component {
             number_of_points: '',
             allPlayers: [],
             leaguePlayers: [],
+            win: [],
+            lost: [],
+            draw: [],
 
         };
         this.nameChangeHandler = this.nameChangeHandler.bind(this);
@@ -26,6 +29,8 @@ class League extends Component {
         this.number_of_pointsChangeHandler = this.number_of_pointsChangeHandler.bind(this);
         this.contains = this.contains.bind(this);
         this.addPlayer = this.addPlayer.bind(this);
+        this.getResults = this.getResults.bind(this);
+        this.renderResults = this.renderResults.bind(this);
     }
     nameChangeHandler(e) {
             this.setState({
@@ -98,6 +103,7 @@ class League extends Component {
             number_of_points:    response.data.league.number_of_points,
             leaguePlayers:      response.data.players,
              })
+        
 
         );
     }
@@ -116,6 +122,16 @@ class League extends Component {
             
         );
     }
+    getResults() {
+        axios.get(`/leagues/${this.props.match.params.id}/getResults/`).then(response =>
+           this.setState({
+            win: response.data.win,
+            lost: response.data.lost,
+            draw: response.data.draw,
+           })
+            
+        );
+    }
     contains(a, obj) {
         for (var i = 0; i < a.length; i++) {
           
@@ -127,7 +143,17 @@ class League extends Component {
       
         return false;
     }
-
+    renderResults(player){
+        return this.state.win.map(win => (
+            <div key={player.id} className="media">
+                 <div className="media-body">
+                    <div>
+                    {win[1] === player.id ?
+                       <p>{ win[0]}</p>: null}
+                    </div>
+                </div>
+                    </div> ))
+    }
     renderPlayers(){
         
         return this.state.allPlayers.map(player => (
@@ -138,9 +164,11 @@ class League extends Component {
                       
                         { !this.contains(this.state.leaguePlayers, player) ? <button onClick={() => this.addPlayer(player)}
                             className="btn btn-sm btn-warning float-right">Add Player</button> : 
+                            
+                           
                             <button onClick={() => this.removePlayer(player)}
                             className="btn btn-sm btn-warning float-right">  X  </button> }
-                      
+                       {this.renderResults(player)}
                         
                         </div>
 
@@ -158,11 +186,12 @@ class League extends Component {
     }
     componentWillMount() {
       this.getLeague();
-      this.getPlayers() 
+      this.getPlayers();
+     this.getResults(); 
     }
     render() {
        
-        console.log(this.state);
+       console.log(this.state);
         return (
             <div className="container">
                 <div className="row justify-content-center">

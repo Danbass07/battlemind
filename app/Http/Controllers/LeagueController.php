@@ -98,4 +98,23 @@ class LeagueController extends Controller
        
        return response()->json($leaguePlayers);
     }
+    public function getResults($league_id)
+    {
+        $league = \App\League::find($league_id);
+        $win = [];
+        $lost = [];
+        $draw = [];
+        foreach ($league->players as $player) {
+            array_push($win, [$player->pivot->win, $player->id]);
+            array_push($lost, [$player->pivot->lost, $player->id]);
+            array_push($draw,[$player->pivot->draw, $player->id]);
+        }
+
+        // $results = $league->players->pivot->win;
+        return response()->json([
+            'win' => $win, 
+            'lost' => $lost,
+            'draw' => $draw,
+            ]);
+    }
 }

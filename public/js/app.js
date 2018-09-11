@@ -59963,8 +59963,8 @@ var Scoreboard = function (_Component) {
 
         _this.state = {
             leagues: [],
-            players: [],
-            leaguePlayers: []
+            players: []
+
         };
         _this.renderResults = _this.renderResults.bind(_this);
         _this.cauntPoints = _this.cauntPoints.bind(_this);
@@ -60045,8 +60045,8 @@ var Scoreboard = function (_Component) {
             axios.get('/scoreboard').then(function (response) {
                 return _this3.setState({
                     players: [].concat(_toConsumableArray(response.data.players)),
-                    leagues: [].concat(_toConsumableArray(response.data.leagues)),
-                    leaguePlayers: [].concat(_toConsumableArray(response.data.leaguePlayers))
+                    leagues: [].concat(_toConsumableArray(response.data.leagues))
+
                 });
             });
         }
@@ -60665,7 +60665,10 @@ var League = function (_Component) {
             number_of_players: '',
             number_of_points: '',
             allPlayers: [],
-            leaguePlayers: []
+            leaguePlayers: [],
+            win: [],
+            lost: [],
+            draw: []
 
         };
         _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
@@ -60678,6 +60681,8 @@ var League = function (_Component) {
         _this.number_of_pointsChangeHandler = _this.number_of_pointsChangeHandler.bind(_this);
         _this.contains = _this.contains.bind(_this);
         _this.addPlayer = _this.addPlayer.bind(_this);
+        _this.getResults = _this.getResults.bind(_this);
+        _this.renderResults = _this.renderResults.bind(_this);
         return _this;
     }
 
@@ -60792,6 +60797,19 @@ var League = function (_Component) {
             });
         }
     }, {
+        key: 'getResults',
+        value: function getResults() {
+            var _this6 = this;
+
+            axios.get('/leagues/' + this.props.match.params.id + '/getResults/').then(function (response) {
+                return _this6.setState({
+                    win: response.data.win,
+                    lost: response.data.lost,
+                    draw: response.data.draw
+                });
+            });
+        }
+    }, {
         key: 'contains',
         value: function contains(a, obj) {
             for (var i = 0; i < a.length; i++) {
@@ -60805,9 +60823,32 @@ var League = function (_Component) {
             return false;
         }
     }, {
+        key: 'renderResults',
+        value: function renderResults(player) {
+            return this.state.win.map(function (win) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { key: player.id, className: 'media' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'media-body' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            win[1] === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'p',
+                                null,
+                                win[0]
+                            ) : null
+                        )
+                    )
+                );
+            });
+        }
+    }, {
         key: 'renderPlayers',
         value: function renderPlayers() {
-            var _this6 = this;
+            var _this7 = this;
 
             return this.state.allPlayers.map(function (player) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60820,21 +60861,22 @@ var League = function (_Component) {
                             'div',
                             null,
                             player.name,
-                            !_this6.contains(_this6.state.leaguePlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            !_this7.contains(_this7.state.leaguePlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this6.addPlayer(player);
+                                        return _this7.addPlayer(player);
                                     },
                                     className: 'btn btn-sm btn-warning float-right' },
                                 'Add Player'
                             ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this6.removePlayer(player);
+                                        return _this7.removePlayer(player);
                                     },
                                     className: 'btn btn-sm btn-warning float-right' },
                                 '  X  '
-                            )
+                            ),
+                            _this7.renderResults(player)
                         )
                     )
                 );
@@ -60843,10 +60885,10 @@ var League = function (_Component) {
     }, {
         key: 'getPlayers',
         value: function getPlayers() {
-            var _this7 = this;
+            var _this8 = this;
 
             axios.get('/players').then(function (response) {
-                return _this7.setState({
+                return _this8.setState({
                     allPlayers: [].concat(_toConsumableArray(response.data.players))
                 });
             });
@@ -60856,6 +60898,7 @@ var League = function (_Component) {
         value: function componentWillMount() {
             this.getLeague();
             this.getPlayers();
+            this.getResults();
         }
     }, {
         key: 'render',

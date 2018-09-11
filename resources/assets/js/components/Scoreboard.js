@@ -7,7 +7,7 @@ class Scoreboard extends Component {
         this.state = {
             leagues: [],
            players: [],
-           leaguePlayers: [],
+           
         };
         this.renderResults = this.renderResults.bind(this);
         this.cauntPoints = this.cauntPoints.bind(this);
@@ -68,7 +68,7 @@ class Scoreboard extends Component {
          this.setState({
             players: [...response.data.players],
             leagues: [...response.data.leagues],
-            leaguePlayers: [...response.data.leaguePlayers],
+          
              })      
         );
         

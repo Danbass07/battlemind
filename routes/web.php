@@ -23,3 +23,5 @@ Route::resource('/leagues', 'LeagueController');
 Route::resource('/scoreboard', 'ScoreboardController');
 Route::get('/leagues/{id}/addPlayer/{pid}', 'LeagueController@addPlayer');
 Route::get('/leagues/{id}/removePlayer/{pid}', 'LeagueController@removePlayer');
+
+Route::get('/leagues/{id}/getResults', 'LeagueController@getResults');
