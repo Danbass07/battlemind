@@ -15,7 +15,7 @@ class CreateLeaguesPlayersTable extends Migration
     {
         Schema::create('league_player', function (Blueprint $table) {
            
-           
+            $table->increments('id');
             $table->integer('league_id')->unsigned()->nullable();
             $table->foreign('league_id')->references('id')
                   ->on('leagues')->onDelete('cascade');
@@ -37,6 +37,6 @@ class CreateLeaguesPlayersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leagues_players');
+        Schema::dropIfExists('league_player');
     }
 }

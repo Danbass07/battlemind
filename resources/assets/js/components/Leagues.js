@@ -24,7 +24,7 @@ class Leagues extends Component {
                  <div className="media-body">
                     <div>
                         {league.name}
-                        <Link to={`leagues/${league.id}/edit`} className="btn btn-sm btn-success float-right">Update</Link>
+                        <Link to={`leagues/${league.id}/edit`} className="btn btn-sm btn-success float-right">{league.id}Update</Link>
                         <button onClick={() => this.deleteHandler(league.id)}
                         className="btn btn-sm btn-warning float-right">Delete</button>
                     </div>

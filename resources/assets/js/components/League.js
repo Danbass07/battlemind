@@ -5,6 +5,7 @@ class League extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: 0,
             name: 'name',
             win_point_value: 0,
             lost_point_value: 0,
@@ -31,6 +32,7 @@ class League extends Component {
         this.addPlayer = this.addPlayer.bind(this);
         this.getResults = this.getResults.bind(this);
         this.renderResults = this.renderResults.bind(this);
+        this.addWin = this.addWin.bind(this);
     }
     nameChangeHandler(e) {
             this.setState({
@@ -142,17 +144,36 @@ class League extends Component {
         }
       
         return false;
+    } 
+    addWin(player_id) {
+       
+        console.log(this.props.match.params.id);
+        axios.get(`/players/${this.props.match.params.id}/addWin/${player_id}`).then(response =>
+            this.getResults()
+        )
+    }
+    addLost(player_id) {
+       
+        console.log(this.props.match.params.id);
+        axios.get(`/players/${this.props.match.params.id}/addWin/${player_id}`).then(response =>
+            this.getResults()
+        )
     }
     renderResults(player){
         return this.state.win.map(win => (
-            <div key={player.id} className="media">
-                 <div className="media-body">
+            <div key={win}>
+                {win[1] === player.id ?
                     <div>
-                    {win[1] === player.id ?
-                       <p>{ win[0]}</p>: null}
-                    </div>
-                </div>
-                    </div> ))
+                       <button onClick={() => this.addWin(player.id)} className="btn btn-sm btn-info float-right">
+                            { win[0]}
+                        </button>
+                        <button onClick={() => this.addLost(player.id)} className="btn btn-sm btn-alert float-right">
+                        { lost[0]}
+                        </button>
+                    </div> : null}
+            </div>
+                
+        ))
     }
     renderPlayers(){
         
@@ -191,7 +212,7 @@ class League extends Component {
     }
     render() {
        
-       console.log(this.state);
+       
         return (
             <div className="container">
                 <div className="row justify-content-center">

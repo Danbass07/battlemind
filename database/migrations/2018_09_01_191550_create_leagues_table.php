@@ -20,9 +20,9 @@ class CreateLeaguesTable extends Migration
             $table->integer('win_point_value');
             $table->integer('lost_point_value');
             $table->integer('draw_point_value');
-            $table->integer('number_of_games')->nullable();
-            $table->integer('number_of_players')->nullable();
-            $table->integer('number_of_points')->nullable();
+            $table->integer('number_of_games')->default('999');
+            $table->integer('number_of_players')->default('999');
+            $table->integer('number_of_points')->default('999');
             $table->timestamps();
         });
     }

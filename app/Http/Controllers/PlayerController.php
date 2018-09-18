@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Player;
+use App\League;
 
 class PlayerController extends Controller
 {
@@ -72,5 +73,40 @@ class PlayerController extends Controller
     public function destroy($id)
     {
         Player::findOrFail($id)->delete(); 
+    }
+
+    public function addWin($id, $pid)
+    {
+         $league = League::findOrFail($id);
+         $player = Player::findOrFail($pid);
+      
+        
+        foreach ($league->players as $player) {
+                 if ((string)$player->pivot->player_id === (string)$pid) {
+                $player->pivot->win += 1;
+                $player->pivot->save();
+                $wins = $player->pivot->win;
+                
+            } else {
+                $wins = 'player id  '.$player->pivot->player_id .'  pid  '.$pid.'league id '.$league->id.' player_id '.$player->id;
+            }
+        }
+        return response()->json($wins);
+    }
+    public function addLost($id, $pid)
+    {
+         $league = League::findOrFail($id);
+         
+      
+        
+        foreach ($league->players as $player) {
+                 if ((string)$player->pivot->player_id === (string)$pid) {
+                $player->pivot->win -= 1;
+                $player->pivot->save();
+                $wins = $player->pivot->win;
+                
+            } 
+        }
+        
     }
 }
