@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+
 
 class League extends Component {
     constructor(props) {
@@ -15,9 +15,7 @@ class League extends Component {
             number_of_points: '',
             allPlayers: [],
             leaguePlayers: [],
-            win: [],
-            lost: [],
-            draw: [],
+            action: 'minus',
 
         };
         this.nameChangeHandler = this.nameChangeHandler.bind(this);
@@ -30,9 +28,21 @@ class League extends Component {
         this.number_of_pointsChangeHandler = this.number_of_pointsChangeHandler.bind(this);
         this.contains = this.contains.bind(this);
         this.addPlayer = this.addPlayer.bind(this);
-        this.getResults = this.getResults.bind(this);
-        this.renderResults = this.renderResults.bind(this);
-        this.addWin = this.addWin.bind(this);
+        this.renderResultsDynamic = this.renderResultsDynamic.bind(this);
+        
+       
+        
+    }
+    actionController() {
+        if (this.state.action === 'minus') {
+            this.setState({
+                action: 'add',
+            })
+        } else { 
+            this.setState({
+                action: 'minus',
+            }) 
+        }
     }
     nameChangeHandler(e) {
             this.setState({
@@ -124,16 +134,7 @@ class League extends Component {
             
         );
     }
-    getResults() {
-        axios.get(`/leagues/${this.props.match.params.id}/getResults/`).then(response =>
-           this.setState({
-            win: response.data.win,
-            lost: response.data.lost,
-            draw: response.data.draw,
-           })
-            
-        );
-    }
+   
     contains(a, obj) {
         for (var i = 0; i < a.length; i++) {
           
@@ -145,42 +146,66 @@ class League extends Component {
       
         return false;
     } 
-    addWin(player_id) {
-       
-        console.log(this.props.match.params.id);
-        axios.get(`/players/${this.props.match.params.id}/addWin/${player_id}`).then(response =>
-            this.getResults()
-        )
+
+ resultChangeController(player_id, category, key) {
+    const leaguePlayersUpdate = [...this.state.leaguePlayers];
+    let number = 1;  
+    if(this.state.action === 'minus'){
+           number = -1
+       };
+        if (category === 'Win') {
+         leaguePlayersUpdate[key].pivot.win += number;
+        }
+        if (category === 'Lost') {
+           leaguePlayersUpdate[key].pivot.lost += number;
+            }
+        if (category === 'Draw') {
+              leaguePlayersUpdate[key].pivot.draw += number;
+                
     }
-    addLost(player_id) {
-       
-        console.log(this.props.match.params.id);
-        axios.get(`/players/${this.props.match.params.id}/addWin/${player_id}`).then(response =>
-            this.getResults()
-        )
-    }
-    renderResults(player){
-        return this.state.win.map(win => (
-            <div key={win}>
-                {win[1] === player.id ?
+        
+
+       this.setState({
+            leaguePlayers: leaguePlayersUpdate,
+            
+            
+           })
+    axios.get(`/players/${this.props.match.params.id}/addResult/${player_id}/${category}/${this.state.action}`).then( response =>
+        console.log(response.data)
+    )
+ }
+   
+   
+    
+    renderResultsDynamic(player){
+        return this.state.leaguePlayers.map((leaguePlayer, index) => (
+            <div key={leaguePlayer.id}>
+                {this.state.leaguePlayers[index].pivot.player_id === player.id ?
                     <div>
-                       <button onClick={() => this.addWin(player.id)} className="btn btn-sm btn-info float-right">
-                            { win[0]}
+                        
+                       <button onClick={() => this.resultChangeController(player.id ,'Win', index)} className="btn btn-sm btn-info float-right">
+                            { this.state.leaguePlayers[index].pivot.win}
                         </button>
-                        <button onClick={() => this.addLost(player.id)} className="btn btn-sm btn-alert float-right">
-                        { lost[0]}
+                        <button onClick={() => this.resultChangeController(player.id ,'Lost', index)} className="btn btn-sm btn-danger float-right">
+                            { this.state.leaguePlayers[index].pivot.lost}
                         </button>
+                        <button onClick={() => this.resultChangeController(player.id ,'Draw', index)} className="btn btn-sm btn-warning float-right">
+                            { this.state.leaguePlayers[index].pivot.draw}
+                        </button>
+                     
                     </div> : null}
             </div>
                 
         ))
     }
+
     renderPlayers(){
         
         return this.state.allPlayers.map(player => (
             <div key={player.id} className="media">
                  <div className="media-body">
                     <div>
+                        {player.id}
                         {player.name}
                       
                         { !this.contains(this.state.leaguePlayers, player) ? <button onClick={() => this.addPlayer(player)}
@@ -189,8 +214,8 @@ class League extends Component {
                            
                             <button onClick={() => this.removePlayer(player)}
                             className="btn btn-sm btn-warning float-right">  X  </button> }
-                       {this.renderResults(player)}
-                        
+                   
+                        {this.renderResultsDynamic(player)}
                         </div>
 
 
@@ -208,7 +233,7 @@ class League extends Component {
     componentWillMount() {
       this.getLeague();
       this.getPlayers();
-     this.getResults(); 
+     
     }
     render() {
        
@@ -288,6 +313,9 @@ class League extends Component {
                                 </button>
                 </form>
                             <hr />
+                            <button onClick={() => this.actionController()} className="btn btn-sm btn-dark float-right">
+                            { this.state.action}
+                            </button>
                             {this.renderPlayers()}
                         </div>
                     </div>

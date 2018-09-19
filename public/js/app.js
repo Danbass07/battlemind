@@ -60635,7 +60635,6 @@ var Leagues = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -60645,7 +60644,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 
 
 
@@ -60668,9 +60666,7 @@ var League = function (_Component) {
             number_of_points: '',
             allPlayers: [],
             leaguePlayers: [],
-            win: [],
-            lost: [],
-            draw: []
+            action: 'minus'
 
         };
         _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
@@ -60683,13 +60679,25 @@ var League = function (_Component) {
         _this.number_of_pointsChangeHandler = _this.number_of_pointsChangeHandler.bind(_this);
         _this.contains = _this.contains.bind(_this);
         _this.addPlayer = _this.addPlayer.bind(_this);
-        _this.getResults = _this.getResults.bind(_this);
-        _this.renderResults = _this.renderResults.bind(_this);
-        _this.addWin = _this.addWin.bind(_this);
+        _this.renderResultsDynamic = _this.renderResultsDynamic.bind(_this);
+
         return _this;
     }
 
     _createClass(League, [{
+        key: 'actionController',
+        value: function actionController() {
+            if (this.state.action === 'minus') {
+                this.setState({
+                    action: 'add'
+                });
+            } else {
+                this.setState({
+                    action: 'minus'
+                });
+            }
+        }
+    }, {
         key: 'nameChangeHandler',
         value: function nameChangeHandler(e) {
             this.setState({
@@ -60800,19 +60808,6 @@ var League = function (_Component) {
             });
         }
     }, {
-        key: 'getResults',
-        value: function getResults() {
-            var _this6 = this;
-
-            axios.get('/leagues/' + this.props.match.params.id + '/getResults/').then(function (response) {
-                return _this6.setState({
-                    win: response.data.win,
-                    lost: response.data.lost,
-                    draw: response.data.draw
-                });
-            });
-        }
-    }, {
         key: 'contains',
         value: function contains(a, obj) {
             for (var i = 0; i < a.length; i++) {
@@ -60826,50 +60821,63 @@ var League = function (_Component) {
             return false;
         }
     }, {
-        key: 'addWin',
-        value: function addWin(player_id) {
-            var _this7 = this;
+        key: 'resultChangeController',
+        value: function resultChangeController(player_id, category, key) {
+            var leaguePlayersUpdate = [].concat(_toConsumableArray(this.state.leaguePlayers));
+            var number = 1;
+            if (this.state.action === 'minus') {
+                number = -1;
+            };
+            if (category === 'Win') {
+                leaguePlayersUpdate[key].pivot.win += number;
+            }
+            if (category === 'Lost') {
+                leaguePlayersUpdate[key].pivot.lost += number;
+            }
+            if (category === 'Draw') {
+                leaguePlayersUpdate[key].pivot.draw += number;
+            }
 
-            console.log(this.props.match.params.id);
-            axios.get('/players/' + this.props.match.params.id + '/addWin/' + player_id).then(function (response) {
-                return _this7.getResults();
+            this.setState({
+                leaguePlayers: leaguePlayersUpdate
+
+            });
+            axios.get('/players/' + this.props.match.params.id + '/addResult/' + player_id + '/' + category + '/' + this.state.action).then(function (response) {
+                return console.log(response.data);
             });
         }
     }, {
-        key: 'addLost',
-        value: function addLost(player_id) {
-            var _this8 = this;
+        key: 'renderResultsDynamic',
+        value: function renderResultsDynamic(player) {
+            var _this6 = this;
 
-            console.log(this.props.match.params.id);
-            axios.get('/players/' + this.props.match.params.id + '/addWin/' + player_id).then(function (response) {
-                return _this8.getResults();
-            });
-        }
-    }, {
-        key: 'renderResults',
-        value: function renderResults(player) {
-            var _this9 = this;
-
-            return this.state.win.map(function (win) {
+            return this.state.leaguePlayers.map(function (leaguePlayer, index) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { key: win },
-                    win[1] === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    { key: leaguePlayer.id },
+                    _this6.state.leaguePlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { onClick: function onClick() {
-                                    return _this9.addWin(player.id);
+                                    return _this6.resultChangeController(player.id, 'Win', index);
                                 }, className: 'btn btn-sm btn-info float-right' },
-                            win[0]
+                            _this6.state.leaguePlayers[index].pivot.win
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { onClick: function onClick() {
-                                    return _this9.addLost(player.id);
-                                }, className: 'btn btn-sm btn-alert float-right' },
-                            lost[0]
+                                    return _this6.resultChangeController(player.id, 'Lost', index);
+                                }, className: 'btn btn-sm btn-danger float-right' },
+                            _this6.state.leaguePlayers[index].pivot.lost
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: function onClick() {
+                                    return _this6.resultChangeController(player.id, 'Draw', index);
+                                }, className: 'btn btn-sm btn-warning float-right' },
+                            _this6.state.leaguePlayers[index].pivot.draw
                         )
                     ) : null
                 );
@@ -60878,7 +60886,7 @@ var League = function (_Component) {
     }, {
         key: 'renderPlayers',
         value: function renderPlayers() {
-            var _this10 = this;
+            var _this7 = this;
 
             return this.state.allPlayers.map(function (player) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60890,23 +60898,24 @@ var League = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             null,
+                            player.id,
                             player.name,
-                            !_this10.contains(_this10.state.leaguePlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            !_this7.contains(_this7.state.leaguePlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this10.addPlayer(player);
+                                        return _this7.addPlayer(player);
                                     },
                                     className: 'btn btn-sm btn-warning float-right' },
                                 'Add Player'
                             ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this10.removePlayer(player);
+                                        return _this7.removePlayer(player);
                                     },
                                     className: 'btn btn-sm btn-warning float-right' },
                                 '  X  '
                             ),
-                            _this10.renderResults(player)
+                            _this7.renderResultsDynamic(player)
                         )
                     )
                 );
@@ -60915,10 +60924,10 @@ var League = function (_Component) {
     }, {
         key: 'getPlayers',
         value: function getPlayers() {
-            var _this11 = this;
+            var _this8 = this;
 
             axios.get('/players').then(function (response) {
-                return _this11.setState({
+                return _this8.setState({
                     allPlayers: [].concat(_toConsumableArray(response.data.players))
                 });
             });
@@ -60928,11 +60937,11 @@ var League = function (_Component) {
         value: function componentWillMount() {
             this.getLeague();
             this.getPlayers();
-            this.getResults();
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this9 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -61020,6 +61029,13 @@ var League = function (_Component) {
                                 )
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        return _this9.actionController();
+                                    }, className: 'btn btn-sm btn-dark float-right' },
+                                this.state.action
+                            ),
                             this.renderPlayers()
                         )
                     )

@@ -75,23 +75,40 @@ class PlayerController extends Controller
         Player::findOrFail($id)->delete(); 
     }
 
+
+    public function addResult($id, $pid, $category, $action) {
+
+        $league = League::findOrFail($id);
+        $number = 1;
+        if ((string)$action === 'minus') {
+            $number = -1;
+        }  
+            foreach ($league->players as $player) {
+                if ((string)$player->pivot->player_id === (string)$pid) {
+                    if((string)$category === 'addWin' ) { $player->pivot->win += $number; }
+                    if((string)$category === 'addLost' ) { $player->pivot->lost += $number; }
+                    if((string)$category === 'addDraw' ) { $player->pivot->draw += $number; }
+                        $player->pivot->save();
+                       
+                    
+        }            
+     
+    }
+}
+
     public function addWin($id, $pid)
     {
          $league = League::findOrFail($id);
-         $player = Player::findOrFail($pid);
-      
-        
+                      
         foreach ($league->players as $player) {
                  if ((string)$player->pivot->player_id === (string)$pid) {
                 $player->pivot->win += 1;
                 $player->pivot->save();
                 $wins = $player->pivot->win;
                 
-            } else {
-                $wins = 'player id  '.$player->pivot->player_id .'  pid  '.$pid.'league id '.$league->id.' player_id '.$player->id;
             }
-        }
-        return response()->json($wins);
+    }
+        
     }
     public function addLost($id, $pid)
     {
@@ -101,12 +118,29 @@ class PlayerController extends Controller
         
         foreach ($league->players as $player) {
                  if ((string)$player->pivot->player_id === (string)$pid) {
-                $player->pivot->win -= 1;
+                $player->pivot->lost += 1;
                 $player->pivot->save();
-                $wins = $player->pivot->win;
+                $lost = $player->pivot->lost;
                 
             } 
         }
+        return response()->json($lost);  
+    }
+    
+    public function addDraw($id, $pid)
+    {
+         $league = League::findOrFail($id);
+         
+      
         
+        foreach ($league->players as $player) {
+                 if ((string)$player->pivot->player_id === (string)$pid) {
+                $player->pivot->draw += 1;
+                $player->pivot->save();
+                $draw = $player->pivot->draw;
+                
+            } 
+        }
+        return response()->json($draw);  
     }
 }
