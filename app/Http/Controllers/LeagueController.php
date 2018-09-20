@@ -84,7 +84,7 @@ class LeagueController extends Controller
         $player = \App\Player::find($player_id);
         
         $leagues->players()->save($player);
-       return response()->json($player);
+       return response()->json($leagues->players);
     }
 
     public function removePlayer($league_id, $player_id )
@@ -102,23 +102,9 @@ class LeagueController extends Controller
     {
         $league = \App\League::find($league_id);
         $leaguePlayers = $league->players;
-        // $win = [];
-        // $lost = [];
-        // $draw = [];
-        // foreach ($leaguePlayers as $key => $player) {
-
-        //     $leaguePlayers[$key]->wins  = $player->pivot->win;
-        //     // array_push($win, [$player->pivot->win, $player->id]);
-        //     // array_push($lost, [$player->pivot->lost, $player->id]);
-        //     // array_push($draw,[$player->pivot->draw, $player->id]);
-           
-        // }
-
-        // $results = $league->players->pivot->win;
+       
         return response()->json([
-            // 'win' => $win, 
-            // 'lost' => $lost,
-            // 'draw' => $draw,
+         
             $leaguePlayers
             ]);
     }

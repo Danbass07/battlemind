@@ -85,9 +85,9 @@ class PlayerController extends Controller
         }  
             foreach ($league->players as $player) {
                 if ((string)$player->pivot->player_id === (string)$pid) {
-                    if((string)$category === 'addWin' ) { $player->pivot->win += $number; }
-                    if((string)$category === 'addLost' ) { $player->pivot->lost += $number; }
-                    if((string)$category === 'addDraw' ) { $player->pivot->draw += $number; }
+                    if((string)$category === 'Win' ) { $player->pivot->win += $number; }
+                    if((string)$category === 'Lost' ) { $player->pivot->lost += $number; }
+                    if((string)$category === 'Draw' ) { $player->pivot->draw += $number; }
                         $player->pivot->save();
                        
                     

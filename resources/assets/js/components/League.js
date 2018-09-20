@@ -120,17 +120,18 @@ class League extends Component {
         );
     }
     addPlayer(player) {
+        
         axios.get(`/leagues/${this.props.match.params.id}/addPlayer/${player.id}`).then(response =>
             this.setState ({
-                leaguePlayers:[...this.state.leaguePlayers, player ],
-            })
+                leaguePlayers:[...response.data ],
+            }).then(this.getPlayers())
         );
     }
     removePlayer(player) {
         axios.get(`/leagues/${this.props.match.params.id}/removePlayer/${player.id}`).then(response =>
             this.setState ({
                 leaguePlayers:[...response.data ],
-            })
+            }).then(this.getPlayers())
             
         );
     }
@@ -178,9 +179,9 @@ class League extends Component {
    
     
     renderResultsDynamic(player){
-        return this.state.leaguePlayers.map((leaguePlayer, index) => (
+     return this.state.leaguePlayers.map((leaguePlayer, index) => (
             <div key={leaguePlayer.id}>
-                {this.state.leaguePlayers[index].pivot.player_id === player.id ?
+                {this.state.leaguePlayers[index].pivot && this.state.leaguePlayers[index].pivot.player_id === player.id ?
                     <div>
                         
                        <button onClick={() => this.resultChangeController(player.id ,'Win', index)} className="btn btn-sm btn-info float-right">
