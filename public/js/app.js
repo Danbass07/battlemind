@@ -60000,31 +60000,74 @@ var Scoreboard = function (_Component) {
         key: 'cauntPoints',
         value: function cauntPoints(league) {
 
-            var playersGlobalResults = this.state.players.map(function (player) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { key: player.id },
-                    'Name : ',
-                    player.name,
-                    ' | Wins : ',
-                    player.wins,
-                    ' | Lost : ',
-                    player.lost,
-                    ' | Draws :',
-                    player.draws
-                );
-            });
-            console.log(this.state.players);
+            var playersGlobalResults = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'thead',
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'tr',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            'Name '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            ' Wins '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            ' Lost '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            ' Draws  '
+                        )
+                    )
+                ),
+                this.state.players.map(function (player) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'tbody',
+                        { key: player.id },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'tr',
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.name
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.wins
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.lost
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.draws
+                            )
+                        )
+                    );
+                })
+            );
             return playersGlobalResults;
         }
     }, {
         key: 'renderScoreboard',
         value: function renderScoreboard() {
             var _this2 = this;
-
-            // console.log(this.state.leagues);
-            // console.log(this.state.players);
-            // console.log(this.state.users);
 
             var tableHead = this.state.leagues.map(function (league) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60036,39 +60079,48 @@ var Scoreboard = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             null,
-                            _this2.state.users.map(function (user) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    { key: user.id },
-                                    'League Name : ',
-                                    league.name,
-                                    ' User : ',
-                                    league.user_id === user.id ? user.name : null
-                                );
-                            }),
-                            _this2.cauntPoints(league),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'table',
+                                { className: 'table' },
+                                _this2.state.users.map(function (user) {
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'thead',
+                                        { key: user.id },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'tr',
+                                            null,
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'th',
+                                                { scope: 'col' },
+                                                ' League Name : ',
+                                                league.name
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'th',
+                                                { scope: 'col' },
+                                                ' User : ',
+                                                league.user_id === user.id ? user.name : null
+                                            )
+                                        )
+                                    );
+                                }),
+                                _this2.cauntPoints(league)
+                            ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
                         )
                     )
                 );
             });
             return tableHead;
-            // return this.state.leagues.map(league => (
-            //     <div key={league.id} className="media">
-            //          <div className="media-body">
-            //             <div>
-            //                 {league.name} {league.user_id}
-            //                 {this.renderResults(league)}
-            //                 <hr />
-            //             </div>
-            //       </div>
-            //      </div>))
         }
     }, {
         key: 'getAll',
         value: function getAll() {
             var _this3 = this;
 
+            this.axios = axios.create({
+                baseURL: 'http://localhost/batt'
+            });
             axios.get('/scoreboard').then(function (response) {
                 return _this3.setState({
                     players: [].concat(_toConsumableArray(response.data.players)),
@@ -60081,6 +60133,7 @@ var Scoreboard = function (_Component) {
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
+
             this.getAll();
         }
     }, {
@@ -60186,6 +60239,7 @@ var Player = function (_Component) {
             var _this2 = this;
 
             e.preventDefault();
+
             axios.put('/players/' + this.props.match.params.id, {
                 name: this.state.name,
                 type: this.state.type,
@@ -60277,7 +60331,7 @@ var Player = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.props.match.params.id);
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'container' },
@@ -60329,18 +60383,17 @@ var Player = function (_Component) {
                                     'div',
                                     null,
                                     'Wins :',
-                                    this.state.wins
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    { onClick: this.addWin },
-                                    '++++'
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    { onClick: this.removeWin },
-                                    '----'
+                                    this.state.wins,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: '', onClick: this.addWin },
+                                        '++++'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'button',
+                                        { className: '', onClick: this.removeWin },
+                                        '----'
+                                    )
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'div',
@@ -60348,14 +60401,13 @@ var Player = function (_Component) {
                                     'Lost: ',
                                     this.state.lost,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { onClick: this.addLost },
+                                        'button',
+                                        { className: '', onClick: this.addLost },
                                         '++++'
                                     ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { onClick: this.removeLost },
+                                        'button',
+                                        { className: '', onClick: this.removeLost },
                                         '----'
                                     )
                                 ),
@@ -60365,14 +60417,13 @@ var Player = function (_Component) {
                                     'Draws: ',
                                     this.state.draws,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { onClick: this.addDraw },
+                                        'button',
+                                        { className: '', onClick: this.addDraw },
                                         '++++'
                                     ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { onClick: this.removeDraw },
+                                        'button',
+                                        { className: '', onClick: this.removeDraw },
                                         '----'
                                     )
                                 ),

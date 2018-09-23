@@ -41,45 +41,62 @@ class Scoreboard extends Component {
     }
     cauntPoints(league) {
 
-        const playersGlobalResults = this.state.players.map(player => (
-            <div key={player.id}>
-            Name : {player.name} | Wins : {player.wins} | Lost : {player.lost} | Draws :{player.draws}
-            </div>
-        ));
-        console.log(this.state.players);
+        const playersGlobalResults = 
+        <div>
+        <thead>
+            <tr>
+                <th scope="col">Name </th>   
+                <th scope="col"> Wins </th> 
+                <th scope="col"> Lost </th> 
+                <th scope="col"> Draws  </th>
+            </tr>
+        </thead> 
+        {this.state.players.map(player => (
+            
+            <tbody key={player.id}>
+                <tr>
+                    <td>{player.name}</td>   
+                    <td>{player.wins}</td> 
+                    <td>{player.lost}</td> 
+                    <td>{player.draws}</td>
+                </tr>    
+            </tbody>
+        
+            
+        ))}
+        </div>
         return playersGlobalResults
     }
     renderScoreboard(){                         
       
-        // console.log(this.state.leagues);
-        // console.log(this.state.players);
-        // console.log(this.state.users);
+      
         
         const tableHead = this.state.leagues.map(league => (
                 <div key={league.id} className="media">
                      <div className="media-body">
                         <div>
-                            
-                            {this.state.users.map(user => (<div key={user.id}>League Name : {league.name} User : {league.user_id === user.id ? user.name: null}</div>))}
-                           {this.cauntPoints(league)}
+                            <table className="table">
+                                {this.state.users.map(user => (
+                                    <thead key={user.id}>
+                                        <tr>
+                                            <th scope="col"> League Name : {league.name}</th> 
+                                            <th scope="col"> User : {league.user_id === user.id ? user.name: null}</th>
+                                        </tr>
+                                    </thead>))}
+                            {this.cauntPoints(league)}
+                            </table>
                             <hr />
                         </div>
                     </div>
                 </div>));
             return tableHead
-        // return this.state.leagues.map(league => (
-        //     <div key={league.id} className="media">
-        //          <div className="media-body">
-        //             <div>
-        //                 {league.name} {league.user_id}
-        //                 {this.renderResults(league)}
-        //                 <hr />
-        //             </div>
-        //       </div>
-        //      </div>))
+     
     }
 
     getAll() {
+        this.axios = axios.create({
+            baseURL: 'http://localhost/batt',
+        });
         axios.get('/scoreboard').then(response =>
          this.setState({
             players: [...response.data.players],
@@ -91,7 +108,9 @@ class Scoreboard extends Component {
         
     }
     componentWillMount() {
+        
       this.getAll(); 
+     
       
       
     }

@@ -49,6 +49,7 @@ class Player extends Component {
     submitHandler(e) {
 
         e.preventDefault();
+      
         axios.put(`/players/${this.props.match.params.id}`, {
             name: this.state.name,
             type: this.state.type,
@@ -123,7 +124,7 @@ class Player extends Component {
         }
     }
     render() {
-        console.log(this.props.match.params.id);
+        
         return (
             <div className="container">
                 <div className="row justify-content-center">
@@ -162,9 +163,18 @@ class Player extends Component {
                                 
                                 </div>
                                 
-                                <div>Wins :{this.state.wins}</div><div onClick={this.addWin}>++++</div><hr /><div onClick={this.removeWin}>----</div>
-                                <div>Lost: {this.state.lost}<div onClick={this.addLost}>++++</div><hr /><div onClick={this.removeLost}>----</div></div>
-                                <div>Draws: {this.state.draws}<div onClick={this.addDraw}>++++</div><hr /><div onClick={this.removeDraw}>----</div></div>
+                                <div>Wins :{this.state.wins}
+                                <div className="" onClick={this.addWin}>++++</div>
+                                <button className="" onClick={this.removeWin}>----</button>
+                                </div>
+                                <div>Lost: {this.state.lost}
+                                <button className="" onClick={this.addLost}>++++</button>
+                                <button className=""  onClick={this.removeLost}>----</button>
+                                </div>
+                                <div>Draws: {this.state.draws}
+                                <button className="" onClick={this.addDraw}>++++</button>
+                                <button className="" onClick={this.removeDraw}>----</button>
+                                </div>
                                 
                                 <button 
                                 type="submit" 
