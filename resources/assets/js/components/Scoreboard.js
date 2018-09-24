@@ -45,7 +45,8 @@ class Scoreboard extends Component {
         <div>
         <thead>
             <tr>
-                <th scope="col">Name </th>   
+                <th scope="col">Name </th> 
+                <th scope="col">Points </th>    
                 <th scope="col"> Wins </th> 
                 <th scope="col"> Lost </th> 
                 <th scope="col"> Draws  </th>
@@ -56,7 +57,8 @@ class Scoreboard extends Component {
             <tbody key={player.id}>
                 <tr>
                     <td>{player.name}</td>   
-                    <td>{player.wins}</td> 
+                    <td>{player.wins * league.win_point_value + player.lost * league.lost_point_value + player.draws * league.draw_point_value}</td> 
+                    <td>{player.wins}</td>
                     <td>{player.lost}</td> 
                     <td>{player.draws}</td>
                 </tr>    
