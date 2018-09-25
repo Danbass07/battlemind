@@ -82,7 +82,7 @@ class Scoreboard extends Component {
                                     <thead key={user.id}>
                                         {league.user_id === user.id ?
                                             <tr>
-                                                <th scope="col"> League Name : {league.name}</th> 
+                                                <th scope="col"> Name : {league.name}</th> 
                                                 <th scope="col"> User : {user.name} </th> 
                                             </tr>
                                         : null}
