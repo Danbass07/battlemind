@@ -58,6 +58,7 @@ class Scoreboard extends Component {
             <thead>
                 <tr>
                     <th scope="col">Name </th> 
+                    <th scope="col">Owner </th>
                     <th scope="col">Points </th>    
                     <th scope="col"> Wins </th> 
                     <th scope="col"> Lost </th> 
@@ -66,9 +67,14 @@ class Scoreboard extends Component {
             </thead> 
         {this.state.players.sort(this.compareValues('total',  'desc')).map(player => (
             
+            
             <tbody key={player.id}>
                 <tr>
                     <td>{player.name}</td>   
+
+                {this.state.users.map(user => (
+                    user.id === player.user_id ? <td>{user.name}</td> : null ))}
+
                     <td>{player.total}</td>
                     {/* <td>{player.wins * league.win_point_value + player.lost * league.lost_point_value + player.draws * league.draw_point_value}</td>  */}
                     <td>{player.wins}</td>

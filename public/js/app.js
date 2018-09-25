@@ -60012,6 +60012,8 @@ var Scoreboard = function (_Component) {
     }, {
         key: 'displayTable',
         value: function displayTable(league) {
+            var _this2 = this;
+
             this.calculatePoints(league);
             var playersGlobalResults = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'table',
@@ -60026,6 +60028,11 @@ var Scoreboard = function (_Component) {
                             'th',
                             { scope: 'col' },
                             'Name '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            'Owner '
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'th',
@@ -60061,6 +60068,13 @@ var Scoreboard = function (_Component) {
                                 null,
                                 player.name
                             ),
+                            _this2.state.users.map(function (user) {
+                                return user.id === player.user_id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'td',
+                                    null,
+                                    user.name
+                                ) : null;
+                            }),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'td',
                                 null,
@@ -60090,7 +60104,7 @@ var Scoreboard = function (_Component) {
     }, {
         key: 'renderScoreboard',
         value: function renderScoreboard() {
-            var _this2 = this;
+            var _this3 = this;
 
             var tableHead = this.state.leagues.map(function (league) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60105,7 +60119,7 @@ var Scoreboard = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'table',
                                 null,
-                                _this2.state.users.map(function (user) {
+                                _this3.state.users.map(function (user) {
                                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'thead',
                                         { key: user.id },
@@ -60129,7 +60143,7 @@ var Scoreboard = function (_Component) {
                                     );
                                 })
                             ),
-                            _this2.displayTable(league),
+                            _this3.displayTable(league),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
                         )
                     )
@@ -60140,10 +60154,10 @@ var Scoreboard = function (_Component) {
     }, {
         key: 'getAll',
         value: function getAll() {
-            var _this3 = this;
+            var _this4 = this;
 
             axios.get('/scoreboard').then(function (response) {
-                return _this3.setState({
+                return _this4.setState({
                     players: [].concat(_toConsumableArray(response.data.players)),
                     leagues: [].concat(_toConsumableArray(response.data.leagues)),
                     users: [].concat(_toConsumableArray(response.data.users))
