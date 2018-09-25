@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 
 class Players extends Component {
@@ -42,7 +41,7 @@ class Players extends Component {
       this.getPlayers(); 
     }
     render() {
-        {console.log(this.state)}
+      
         return (
             <div className="container">
                 <h1>Players Component</h1>

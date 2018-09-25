@@ -163,18 +163,18 @@ class Player extends Component {
                                 
                                 </div>
                                 
-                                <div>Wins :{this.state.wins}
-                                <div className="" onClick={this.addWin}>++++</div>
-                                <button className="" onClick={this.removeWin}>----</button>
-                                </div>
-                                <div>Lost: {this.state.lost}
-                                <button className="" onClick={this.addLost}>++++</button>
-                                <button className=""  onClick={this.removeLost}>----</button>
-                                </div>
-                                <div>Draws: {this.state.draws}
-                                <button className="" onClick={this.addDraw}>++++</button>
-                                <button className="" onClick={this.removeDraw}>----</button>
-                                </div>
+                                <h2>Wins :{this.state.wins}
+                                <div className="btn btn-sm btn-info float-right" onClick={this.addWin}>++++</div>
+                                <div className="btn btn-sm btn-warning float-right" onClick={this.removeWin}>----</div>
+                                </h2>
+                                <h2>Lost: {this.state.lost}
+                                <div className="btn btn-sm btn-info float-right" onClick={this.addLost}>++++</div>
+                                <div className="btn btn-sm btn-warning float-right"  onClick={this.removeLost}>----</div>
+                                </h2>
+                                <h2>Draws: {this.state.draws}
+                                <div className="btn btn-sm btn-info float-right" onClick={this.addDraw}>++++</div>
+                                <div className="btn btn-sm btn-warning float-right" onClick={this.removeDraw}>----</div>
+                                </h2>
                                 
                                 <button 
                                 type="submit" 

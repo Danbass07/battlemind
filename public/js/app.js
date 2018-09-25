@@ -60017,6 +60017,11 @@ var Scoreboard = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'th',
                             { scope: 'col' },
+                            'Points '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
                             ' Wins '
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60042,6 +60047,11 @@ var Scoreboard = function (_Component) {
                                 'td',
                                 null,
                                 player.name
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.wins * league.win_point_value + player.lost * league.lost_point_value + player.draws * league.draw_point_value
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'td',
@@ -60380,50 +60390,50 @@ var Player = function (_Component) {
                                     })
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
+                                    'h2',
                                     null,
                                     'Wins :',
                                     this.state.wins,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'div',
-                                        { className: '', onClick: this.addWin },
+                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addWin },
                                         '++++'
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'button',
-                                        { className: '', onClick: this.removeWin },
+                                        'div',
+                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeWin },
                                         '----'
                                     )
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
+                                    'h2',
                                     null,
                                     'Lost: ',
                                     this.state.lost,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'button',
-                                        { className: '', onClick: this.addLost },
+                                        'div',
+                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addLost },
                                         '++++'
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'button',
-                                        { className: '', onClick: this.removeLost },
+                                        'div',
+                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeLost },
                                         '----'
                                     )
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
+                                    'h2',
                                     null,
                                     'Draws: ',
                                     this.state.draws,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'button',
-                                        { className: '', onClick: this.addDraw },
+                                        'div',
+                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addDraw },
                                         '++++'
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'button',
-                                        { className: '', onClick: this.removeDraw },
+                                        'div',
+                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeDraw },
                                         '----'
                                     )
                                 ),
@@ -60457,9 +60467,7 @@ var Player = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(6);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -60469,7 +60477,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 
 
 
@@ -60516,7 +60523,7 @@ var Players = function (_Component) {
                             null,
                             player.name,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
                                 { to: 'players/' + player.id + '/edit', className: 'btn btn-sm btn-success float-right' },
                                 'Update'
                             ),
@@ -60552,9 +60559,7 @@ var Players = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            {
-                console.log(this.state);
-            }
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'container' },
