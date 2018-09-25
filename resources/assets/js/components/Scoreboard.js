@@ -78,10 +78,12 @@ class Scoreboard extends Component {
                             <table className="table">
                                 {this.state.users.map(user => (
                                     <thead key={user.id}>
-                                        <tr>
-                                            <th scope="col"> League Name : {league.name}</th> 
-                                            <th scope="col"> User : {league.user_id === user.id ? user.name: null}</th>
-                                        </tr>
+                                        {league.user_id === user.id ?
+                                            <tr>
+                                                <th scope="col"> League Name : {league.name}</th> 
+                                                <th scope="col"> User : {user.name} </th> 
+                                            </tr>
+                                        : null}
                                     </thead>))}
                             {this.cauntPoints(league)}
                             </table>
