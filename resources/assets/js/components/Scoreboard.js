@@ -8,11 +8,16 @@ class Scoreboard extends Component {
             leagues: [],
            players: [],
            users: [],
+           file: [],
            
         };
       
          this.displayTable = this.displayTable.bind(this);
          this.calculatePoints = this.calculatePoints.bind(this);
+         this.onChange = this.onChange.bind(this)
+         this.submitHandlerTwo = this.submitHandlerTwo.bind(this);
+         this.fileUpload = this.fileUpload.bind(this)
+         //this.fileInput = React.createRef();
         
     }
     compareValues(key, order='asc') {
@@ -47,9 +52,10 @@ class Scoreboard extends Component {
             // this.setState({
             //     players: playersSoted,
             // })
-         console.log(playersSoted);
+         
     }
 
+  
 
     displayTable(league) {
         this.calculatePoints(league);
@@ -73,7 +79,7 @@ class Scoreboard extends Component {
                     <td>{player.name}</td>   
 
                 {this.state.users.map(user => (
-                    user.id === player.user_id ? <td>{user.name}</td> : null ))}
+                    user.id === player.user_id ? <td key={user.id}>{user.name}</td> : null ))}
 
                     <td>{player.total}</td>
                     {/* <td>{player.wins * league.win_point_value + player.lost * league.lost_point_value + player.draws * league.draw_point_value}</td>  */}
@@ -135,12 +141,65 @@ class Scoreboard extends Component {
       
       
     }
+
+    onChange(e) {
+        let files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+              return;
+        this.createImage(files[0]);
+      }
+
+    submitHandlerTwo(e) {
+
+
+        e.preventDefault() 
+      this.fileUpload(this.state.image);
+        // e.preventDefault();
+        // this.setState({file:this.fileInput.current.files[0]});
+        
+        // const load = this.fileInput.current.files[0];
+        // console.log(load);
+        // axios.post('scoreboard', 
+        //     load
+        // ).then(response =>console.log(response));
+    }
+    createImage(file) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.setState({
+            image: e.target.result
+          })
+        };
+        reader.readAsDataURL(file);
+      }
+      fileUpload(image){
+        const url = 'fileupload';
+        const formData = {file: this.state.image}
+        return  axios.post(url, formData)
+                .then(response => console.log(response))
+      }
     render() {
         return (
             <div className="container">
                 <h1>Welcome Component</h1>
                 <h2>Information you want to see every time you visit your profile</h2>
-               
+                <form onSubmit={this.submitHandlerTwo} encType="multipart/form-data">
+
+                        <input 
+                        type="file"
+                        // ref={this.fileInput}
+                        onChange={this.onChange}
+
+                        required
+                        />
+                        <button 
+                        type="submit"
+                        className="btn btn-primary"
+                        >
+                        Add Photo
+                        </button>
+
+                </form>
                 <hr />
                 {this.renderScoreboard()}
              

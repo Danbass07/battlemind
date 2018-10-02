@@ -13,9 +13,12 @@ class PlayerController extends Controller
     }
 
     public function index(Request $request, Player $player) {
-         $allPlayers = $player->whereIn('user_id', $request->user())->with('user');
-         $players = $allPlayers->orderBy('wins','desc')->get();
-         return response()->json(['players' => $players,]);
+         $allplayers = Player::all();
+         $allPlayersWithUser = $player->whereIn('user_id', $request->user())->with('user');
+         $players = $allPlayersWithUser->orderBy('wins','desc')->get();
+         return response()->json(['players' => $players,
+                                    'allplayers' => $allplayers,
+                                    ]);
     }
     
 
@@ -31,18 +34,22 @@ class PlayerController extends Controller
         $this->validate($request, [
             'name' => 'required|max:50',
             'type' => 'required|max:50',
-            'url' => 'required|max:50',
+            
         ]);
+        $url ='avatar';
+      
+        
         $player = $request->user()->players()->create([
             'name' => $request->name,
             'type' => $request->type,
-            'url' => $request->url,
+            'url' => $url,
             'wins' => $request->wins,
             'lost' => $request->lost,
             'draws' => $request->draws,
         ]);
-
+           
         return response()->json($player->with('user')->find($player->id));
+       
     }
 
   

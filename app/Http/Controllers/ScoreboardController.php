@@ -24,4 +24,5 @@ class ScoreboardController extends Controller
             
         ]);
    }
+ 
 }

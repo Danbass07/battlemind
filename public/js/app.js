@@ -59964,12 +59964,17 @@ var Scoreboard = function (_Component) {
         _this.state = {
             leagues: [],
             players: [],
-            users: []
+            users: [],
+            file: []
 
         };
 
         _this.displayTable = _this.displayTable.bind(_this);
         _this.calculatePoints = _this.calculatePoints.bind(_this);
+        _this.onChange = _this.onChange.bind(_this);
+        _this.submitHandlerTwo = _this.submitHandlerTwo.bind(_this);
+        _this.fileUpload = _this.fileUpload.bind(_this);
+        //this.fileInput = React.createRef();
 
         return _this;
     }
@@ -60007,7 +60012,6 @@ var Scoreboard = function (_Component) {
             // this.setState({
             //     players: playersSoted,
             // })
-            console.log(playersSoted);
         }
     }, {
         key: 'displayTable',
@@ -60071,7 +60075,7 @@ var Scoreboard = function (_Component) {
                             _this2.state.users.map(function (user) {
                                 return user.id === player.user_id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'td',
-                                    null,
+                                    { key: user.id },
                                     user.name
                                 ) : null;
                             }),
@@ -60172,6 +60176,50 @@ var Scoreboard = function (_Component) {
             this.getAll();
         }
     }, {
+        key: 'onChange',
+        value: function onChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            this.createImage(files[0]);
+        }
+    }, {
+        key: 'submitHandlerTwo',
+        value: function submitHandlerTwo(e) {
+
+            e.preventDefault();
+            this.fileUpload(this.state.image);
+            // e.preventDefault();
+            // this.setState({file:this.fileInput.current.files[0]});
+
+            // const load = this.fileInput.current.files[0];
+            // console.log(load);
+            // axios.post('scoreboard', 
+            //     load
+            // ).then(response =>console.log(response));
+        }
+    }, {
+        key: 'createImage',
+        value: function createImage(file) {
+            var _this5 = this;
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                _this5.setState({
+                    image: e.target.result
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    }, {
+        key: 'fileUpload',
+        value: function fileUpload(image) {
+            var url = 'fileupload';
+            var formData = { file: this.state.image };
+            return axios.post(url, formData).then(function (response) {
+                return console.log(response);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60186,6 +60234,25 @@ var Scoreboard = function (_Component) {
                     'h2',
                     null,
                     'Information you want to see every time you visit your profile'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    { onSubmit: this.submitHandlerTwo, encType: 'multipart/form-data' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        type: 'file'
+                        // ref={this.fileInput}
+                        , onChange: this.onChange,
+
+                        required: true
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        {
+                            type: 'submit',
+                            className: 'btn btn-primary'
+                        },
+                        'Add Photo'
+                    )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
                 this.renderScoreboard()
@@ -60788,6 +60855,7 @@ var League = function (_Component) {
         _this.contains = _this.contains.bind(_this);
         _this.addPlayer = _this.addPlayer.bind(_this);
         _this.renderResultsDynamic = _this.renderResultsDynamic.bind(_this);
+        _this.renderResults = _this.renderResults.bind(_this);
 
         return _this;
     }
@@ -60874,6 +60942,29 @@ var League = function (_Component) {
             });
         }
     }, {
+        key: 'compareValues',
+        value: function compareValues(key) {
+            var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
+
+            return function (a, b) {
+                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    return 0;
+                }
+
+                var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
+                var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
+
+                var comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return order == 'desc' ? comparison * -1 : comparison;
+            };
+        }
+    }, {
         key: 'getLeague',
         value: function getLeague() {
             var _this3 = this;
@@ -60931,7 +61022,12 @@ var League = function (_Component) {
     }, {
         key: 'resultChangeController',
         value: function resultChangeController(player_id, category, key) {
+            var _this6 = this;
+
             var leaguePlayersUpdate = [].concat(_toConsumableArray(this.state.leaguePlayers));
+            leaguePlayersUpdate.map(function (leaguePlayer) {
+                return leaguePlayer.pivot.result = leaguePlayer.pivot.win * _this6.state.win_point_value + leaguePlayer.pivot.lost * _this6.state.lost_point_value + leaguePlayer.pivot.draw * _this6.state.draw_point_value;
+            });
             var number = 1;
             if (this.state.action === 'minus') {
                 number = -1;
@@ -60950,42 +61046,61 @@ var League = function (_Component) {
                 leaguePlayers: leaguePlayersUpdate
 
             });
-            axios.get('/players/' + this.props.match.params.id + '/addResult/' + player_id + '/' + category + '/' + this.state.action).then(function (response) {
-                return console.log(response.data);
+            axios.get('/players/' + this.props.match.params.id + '/addResult/' + player_id + '/' + category + '/' + this.state.action);
+        }
+    }, {
+        key: 'renderResults',
+        value: function renderResults() {
+            var _this7 = this;
+
+            var leaguePlayersResults = [].concat(_toConsumableArray(this.state.leaguePlayers));
+            leaguePlayersResults.map(function (leaguePlayer) {
+                return leaguePlayer.pivot.result = leaguePlayer.pivot.win * _this7.state.win_point_value + leaguePlayer.pivot.lost * _this7.state.lost_point_value + leaguePlayer.pivot.draw * _this7.state.draw_point_value;
+            });
+
+            this.setState({
+                leaguePlayers: leaguePlayersResults
             });
         }
     }, {
         key: 'renderResultsDynamic',
         value: function renderResultsDynamic(player) {
-            var _this6 = this;
+            var _this8 = this;
 
-            return this.state.leaguePlayers.map(function (leaguePlayer, index) {
+            return this.state.leaguePlayers.sort(this.compareValues('result', 'desc')).map(function (leaguePlayer, index) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { key: leaguePlayer.id },
-                    _this6.state.leaguePlayers[index].pivot && _this6.state.leaguePlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    _this8.state.leaguePlayers[index].pivot && _this8.state.leaguePlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
+                        console.log('1st' + _this8.state.leaguePlayers),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'btn btn-sm btn-success float-right' },
+                            _this8.state.leaguePlayers[index].pivot.result,
+                            ' '
+                        ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { onClick: function onClick() {
-                                    return _this6.resultChangeController(player.id, 'Win', index);
+                                    return _this8.resultChangeController(player.id, 'Win', index);
                                 }, className: 'btn btn-sm btn-info float-right' },
-                            _this6.state.leaguePlayers[index].pivot.win
+                            _this8.state.leaguePlayers[index].pivot.win
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { onClick: function onClick() {
-                                    return _this6.resultChangeController(player.id, 'Lost', index);
+                                    return _this8.resultChangeController(player.id, 'Lost', index);
                                 }, className: 'btn btn-sm btn-danger float-right' },
-                            _this6.state.leaguePlayers[index].pivot.lost
+                            _this8.state.leaguePlayers[index].pivot.lost
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { onClick: function onClick() {
-                                    return _this6.resultChangeController(player.id, 'Draw', index);
+                                    return _this8.resultChangeController(player.id, 'Draw', index);
                                 }, className: 'btn btn-sm btn-warning float-right' },
-                            _this6.state.leaguePlayers[index].pivot.draw
+                            _this8.state.leaguePlayers[index].pivot.draw
                         )
                     ) : null
                 );
@@ -60994,7 +61109,7 @@ var League = function (_Component) {
     }, {
         key: 'renderPlayers',
         value: function renderPlayers() {
-            var _this7 = this;
+            var _this9 = this;
 
             return this.state.allPlayers.map(function (player) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -61008,22 +61123,22 @@ var League = function (_Component) {
                             null,
                             player.id,
                             player.name,
-                            !_this7.contains(_this7.state.leaguePlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            !_this9.contains(_this9.state.leaguePlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this7.addPlayer(player);
+                                        return _this9.addPlayer(player);
                                     },
                                     className: 'btn btn-sm btn-warning float-right' },
                                 'Add Player'
                             ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this7.removePlayer(player);
+                                        return _this9.removePlayer(player);
                                     },
                                     className: 'btn btn-sm btn-warning float-right' },
                                 '  X  '
                             ),
-                            _this7.renderResultsDynamic(player)
+                            _this9.renderResultsDynamic(player)
                         )
                     )
                 );
@@ -61032,11 +61147,11 @@ var League = function (_Component) {
     }, {
         key: 'getPlayers',
         value: function getPlayers() {
-            var _this8 = this;
+            var _this10 = this;
 
             axios.get('/players').then(function (response) {
-                return _this8.setState({
-                    allPlayers: [].concat(_toConsumableArray(response.data.players))
+                return _this10.setState({
+                    allPlayers: [].concat(_toConsumableArray(response.data.allplayers))
                 });
             });
         }
@@ -61049,7 +61164,7 @@ var League = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this9 = this;
+            var _this11 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -61140,7 +61255,7 @@ var League = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this9.actionController();
+                                        return _this11.actionController();
                                     }, className: 'btn btn-sm btn-dark float-right' },
                                 this.state.action
                             ),
@@ -61397,6 +61512,7 @@ var Newplayer = function (_Component) {
         _this.typeChangeHandler = _this.typeChangeHandler.bind(_this);
         _this.urlChangeHandler = _this.urlChangeHandler.bind(_this);
         _this.submitHandler = _this.submitHandler.bind(_this);
+
         // this.renderTasks = this.renderTasks.bind(this);
         // this.deleteHandler = this.deleteHandler.bind(this);
         return _this;
@@ -61429,7 +61545,7 @@ var Newplayer = function (_Component) {
             var _this2 = this;
 
             e.preventDefault();
-            console.log(this.props.history);
+
             axios.post('players', {
                 name: this.state.name,
                 type: this.state.type,
@@ -61438,7 +61554,7 @@ var Newplayer = function (_Component) {
                 lost: this.state.lost,
                 draws: this.state.draws
             }).then(function (response) {
-                console.log(response);
+
                 _this2.setState({
                     name: '',
                     type: '',
@@ -61476,21 +61592,15 @@ var Newplayer = function (_Component) {
                             required: true,
                             onChange: this.typeChangeHandler
                         }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                            className: 'form-control',
-                            placeholder: 'Url',
-                            required: true,
-                            onChange: this.urlChangeHandler
-                        })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        {
-                            type: 'submit',
-                            className: 'btn btn-primary'
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            {
+                                type: 'submit',
+                                className: 'btn btn-primary'
 
-                        },
-                        'Add new player'
+                            },
+                            'Add new player'
+                        )
                     )
                 )
             );

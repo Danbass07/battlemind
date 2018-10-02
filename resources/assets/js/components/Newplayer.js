@@ -16,6 +16,7 @@ class Newplayer extends Component {
         this.typeChangeHandler = this.typeChangeHandler.bind(this);
         this.urlChangeHandler = this.urlChangeHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
+        
         // this.renderTasks = this.renderTasks.bind(this);
         // this.deleteHandler = this.deleteHandler.bind(this);
     }
@@ -35,11 +36,13 @@ class Newplayer extends Component {
             url: e.target.value
         });
     }
+  
+    
 
     submitHandler(e) {
-
+      
         e.preventDefault();
-        console.log(this.props.history);
+      
         axios.post('players', {
             name: this.state.name,
             type: this.state.type,
@@ -48,7 +51,7 @@ class Newplayer extends Component {
             lost: this.state.lost,
             draws: this.state.draws
         }).then(response => {
-            console.log(response);
+            
            this.setState({
             name: '',
             type: '',
@@ -64,7 +67,7 @@ class Newplayer extends Component {
     render() {
         return (
             <div className="container">
-                <form onSubmit={this.submitHandler}>
+                <form onSubmit={this.submitHandler} >
                 <div 
                                className="form-group">
                                 <input 
@@ -82,16 +85,7 @@ class Newplayer extends Component {
                                 />
                                 
                                 
-                                <input 
-                                className="form-control" 
-                                placeholder="Url"
-                                required
-                                onChange={this.urlChangeHandler}
-                                />
-                                
-                                
-                                </div>
-                                
+                                                            
                                 
                                 
                                 <button 
@@ -101,7 +95,13 @@ class Newplayer extends Component {
                                 >
                                 Add new player
                                 </button>
+                 </div>               
                 </form>
+            
+            
+
+
+                
             </div>
         );
     }

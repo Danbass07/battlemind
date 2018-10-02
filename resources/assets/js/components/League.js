@@ -29,6 +29,7 @@ class League extends Component {
         this.contains = this.contains.bind(this);
         this.addPlayer = this.addPlayer.bind(this);
         this.renderResultsDynamic = this.renderResultsDynamic.bind(this);
+        this.renderResults = this.renderResults.bind(this);
         
        
         
@@ -100,6 +101,29 @@ class League extends Component {
         });
 
     }
+    compareValues(key, order='asc') {
+        return function(a, b) {
+          if(!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            // property doesn't exist on either object
+              return 0; 
+          }
+      
+          const varA = (typeof a[key] === 'string') ? 
+            a[key].toUpperCase() : a[key];
+          const varB = (typeof b[key] === 'string') ? 
+            b[key].toUpperCase() : b[key];
+      
+          let comparison = 0;
+          if (varA > varB) {
+            comparison = 1;
+          } else if (varA < varB) {
+            comparison = -1;
+          }
+          return (
+            (order == 'desc') ? (comparison * -1) : comparison
+          );
+        };
+      }
     getLeague() {
         axios.get(`/leagues/${this.props.match.params.id}/edit`).then(response =>
             
@@ -150,6 +174,9 @@ class League extends Component {
 
  resultChangeController(player_id, category, key) {
     const leaguePlayersUpdate = [...this.state.leaguePlayers];
+    leaguePlayersUpdate.map((leaguePlayer) => (
+        leaguePlayer.pivot.result = leaguePlayer.pivot.win * this.state.win_point_value + leaguePlayer.pivot.lost * this.state.lost_point_value + leaguePlayer.pivot.draw * this.state.draw_point_value
+       ));
     let number = 1;  
     if(this.state.action === 'minus'){
            number = -1
@@ -171,20 +198,30 @@ class League extends Component {
             
             
            })
-    axios.get(`/players/${this.props.match.params.id}/addResult/${player_id}/${category}/${this.state.action}`).then( response =>
-        console.log(response.data)
-    )
+    axios.get(`/players/${this.props.match.params.id}/addResult/${player_id}/${category}/${this.state.action}`);
  }
    
-   
+   renderResults() {
+       const leaguePlayersResults = [...this.state.leaguePlayers];
+        leaguePlayersResults.map((leaguePlayer) => (
+        leaguePlayer.pivot.result = leaguePlayer.pivot.win * this.state.win_point_value + leaguePlayer.pivot.lost * this.state.lost_point_value + leaguePlayer.pivot.draw * this.state.draw_point_value
+       ));
+       
+       this.setState({
+        leaguePlayers: leaguePlayersResults,
+       });
+                       
+   }
     
     renderResultsDynamic(player){
-     return this.state.leaguePlayers.map((leaguePlayer, index) => (
+        
+     return this.state.leaguePlayers.sort(this.compareValues('result',  'desc')).map((leaguePlayer, index) => (
             <div key={leaguePlayer.id}>
                 {this.state.leaguePlayers[index].pivot && this.state.leaguePlayers[index].pivot.player_id === player.id ?
                     <div>
-                        
-                       <button onClick={() => this.resultChangeController(player.id ,'Win', index)} className="btn btn-sm btn-info float-right">
+                        {console.log('1st'+this.state.leaguePlayers)}
+                       <div className="btn btn-sm btn-success float-right">{this.state.leaguePlayers[index].pivot.result} </div>
+                        <button onClick={() => this.resultChangeController(player.id ,'Win', index)} className="btn btn-sm btn-info float-right">
                             { this.state.leaguePlayers[index].pivot.win}
                         </button>
                         <button onClick={() => this.resultChangeController(player.id ,'Lost', index)} className="btn btn-sm btn-danger float-right">
@@ -201,7 +238,7 @@ class League extends Component {
     }
 
     renderPlayers(){
-        
+       
         return this.state.allPlayers.map(player => (
             <div key={player.id} className="media">
                  <div className="media-body">
@@ -215,7 +252,7 @@ class League extends Component {
                            
                             <button onClick={() => this.removePlayer(player)}
                             className="btn btn-sm btn-warning float-right">  X  </button> }
-                   
+                        
                         {this.renderResultsDynamic(player)}
                         </div>
 
@@ -227,13 +264,17 @@ class League extends Component {
     getPlayers() {
         axios.get('/players').then(response =>
          this.setState({
-            allPlayers: [...response.data.players]
+            allPlayers: [...response.data.allplayers]
              })
         );
+        
     }
     componentWillMount() {
       this.getLeague();
       this.getPlayers();
+     
+      
+      
      
     }
     render() {
