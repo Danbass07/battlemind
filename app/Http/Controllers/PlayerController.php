@@ -31,12 +31,14 @@ class PlayerController extends Controller
         $this->validate($request, [
             'name' => 'required|max:50',
             'type' => 'required|max:50',
-            'url' => 'required|max:50',
+            
         ]);
+            $url = 'url';
+
         $player = $request->user()->players()->create([
             'name' => $request->name,
             'type' => $request->type,
-            'url' => $request->url,
+            'url' => $url,
             'wins' => $request->wins,
             'lost' => $request->lost,
             'draws' => $request->draws,

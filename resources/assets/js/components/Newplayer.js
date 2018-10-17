@@ -31,9 +31,9 @@ class Newplayer extends Component {
         });
     }
     urlChangeHandler(e) {
-        this.setState({
-            url: e.target.value
-        });
+        // this.setState({
+        //     url: e.target.value
+        // });
     }
 
     submitHandler(e) {
@@ -43,12 +43,12 @@ class Newplayer extends Component {
         axios.post('players', {
             name: this.state.name,
             type: this.state.type,
-            url: this.state.url,
+            // url: this.state.url,
             wins: this.state.wins,
             lost: this.state.lost,
             draws: this.state.draws
         }).then(response => {
-            console.log(response);
+           
            this.setState({
             name: '',
             type: '',
@@ -64,7 +64,7 @@ class Newplayer extends Component {
     render() {
         return (
             <div className="container">
-                <form onSubmit={this.submitHandler}>
+                <form onSubmit={this.submitHandler} enctype="multipart/form-data">
                 <div 
                                className="form-group">
                                 <input 
@@ -83,6 +83,7 @@ class Newplayer extends Component {
                                 
                                 
                                 <input 
+                                type="file"
                                 className="form-control" 
                                 placeholder="Url"
                                 required

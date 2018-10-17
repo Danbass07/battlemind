@@ -61419,9 +61419,9 @@ var Newplayer = function (_Component) {
     }, {
         key: 'urlChangeHandler',
         value: function urlChangeHandler(e) {
-            this.setState({
-                url: e.target.value
-            });
+            // this.setState({
+            //     url: e.target.value
+            // });
         }
     }, {
         key: 'submitHandler',
@@ -61433,12 +61433,12 @@ var Newplayer = function (_Component) {
             axios.post('players', {
                 name: this.state.name,
                 type: this.state.type,
-                url: this.state.url,
+                // url: this.state.url,
                 wins: this.state.wins,
                 lost: this.state.lost,
                 draws: this.state.draws
             }).then(function (response) {
-                console.log(response);
+
                 _this2.setState({
                     name: '',
                     type: '',
@@ -61458,7 +61458,7 @@ var Newplayer = function (_Component) {
                 { className: 'container' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
-                    { onSubmit: this.submitHandler },
+                    { onSubmit: this.submitHandler, enctype: 'multipart/form-data' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         {
@@ -61477,6 +61477,7 @@ var Newplayer = function (_Component) {
                             onChange: this.typeChangeHandler
                         }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                            type: 'file',
                             className: 'form-control',
                             placeholder: 'Url',
                             required: true,
