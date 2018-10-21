@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
-import Welcome from './components/Welcome';
+import Welcome from './containers/Welcome';
 import Player from './components/Player';
 import Players from './components/Players';
 import Leagues from './components/Leagues';

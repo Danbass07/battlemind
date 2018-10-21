@@ -38003,7 +38003,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Welcome__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__containers_Welcome__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Player__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Players__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Leagues__ = __webpack_require__(105);
@@ -38080,14 +38080,14 @@ if (document.getElementById('root')) {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Switch */],
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/', component: __WEBPACK_IMPORTED_MODULE_3__components_Welcome__["a" /* default */] }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/', component: __WEBPACK_IMPORTED_MODULE_3__containers_Welcome__["a" /* default */] }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/newplayer', component: __WEBPACK_IMPORTED_MODULE_9__components_Newplayer__["a" /* default */] }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/newleague', component: __WEBPACK_IMPORTED_MODULE_8__components_Newleague__["a" /* default */] }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/players/:id/edit', component: __WEBPACK_IMPORTED_MODULE_4__components_Player__["a" /* default */] }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues/:id/edit', component: __WEBPACK_IMPORTED_MODULE_7__components_League__["a" /* default */] }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/players', component: __WEBPACK_IMPORTED_MODULE_5__components_Players__["a" /* default */] }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues', component: __WEBPACK_IMPORTED_MODULE_6__components_Leagues__["a" /* default */] }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Welcome__["a" /* default */], null)
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__containers_Welcome__["a" /* default */], null)
             )
         )
     ), document.getElementById('root'));
@@ -59889,383 +59889,8 @@ module.exports = hoistNonReactStatics;
 
 
 /***/ }),
-/* 101 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Scoreboard__ = __webpack_require__(102);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var Welcome = function (_Component) {
-    _inherits(Welcome, _Component);
-
-    function Welcome() {
-        _classCallCheck(this, Welcome);
-
-        return _possibleConstructorReturn(this, (Welcome.__proto__ || Object.getPrototypeOf(Welcome)).apply(this, arguments));
-    }
-
-    _createClass(Welcome, [{
-        key: 'render',
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'container' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Scoreboard__["a" /* default */], null)
-            );
-        }
-    }]);
-
-    return Welcome;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Welcome);
-
-/***/ }),
-/* 102 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(6);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var Scoreboard = function (_Component) {
-    _inherits(Scoreboard, _Component);
-
-    function Scoreboard(props) {
-        _classCallCheck(this, Scoreboard);
-
-        var _this = _possibleConstructorReturn(this, (Scoreboard.__proto__ || Object.getPrototypeOf(Scoreboard)).call(this, props));
-
-        _this.state = {
-            leagues: [],
-            players: [],
-            users: [],
-            file: []
-
-        };
-
-        _this.displayTable = _this.displayTable.bind(_this);
-        _this.calculatePoints = _this.calculatePoints.bind(_this);
-        _this.onChange = _this.onChange.bind(_this);
-        _this.submitHandlerTwo = _this.submitHandlerTwo.bind(_this);
-        _this.fileUpload = _this.fileUpload.bind(_this);
-        //this.fileInput = React.createRef();
-
-        return _this;
-    }
-
-    _createClass(Scoreboard, [{
-        key: 'compareValues',
-        value: function compareValues(key) {
-            var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
-
-            return function (a, b) {
-                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-                    // property doesn't exist on either object
-                    return 0;
-                }
-
-                var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
-                var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
-
-                var comparison = 0;
-                if (varA > varB) {
-                    comparison = 1;
-                } else if (varA < varB) {
-                    comparison = -1;
-                }
-                return order == 'desc' ? comparison * -1 : comparison;
-            };
-        }
-    }, {
-        key: 'calculatePoints',
-        value: function calculatePoints(league) {
-            this.state.players.map(function (player) {
-                return player.total = player.wins * league.win_point_value + player.lost * league.lost_point_value + player.draws * league.draw_point_value;
-            });
-            var playersSoted = [].concat(_toConsumableArray(this.state.players.sort(this.compareValues('total', 'desc'))));
-            // this.setState({
-            //     players: playersSoted,
-            // })
-        }
-    }, {
-        key: 'displayTable',
-        value: function displayTable(league) {
-            var _this2 = this;
-
-            this.calculatePoints(league);
-            var playersGlobalResults = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'table',
-                { className: 'table' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'thead',
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'tr',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'th',
-                            { scope: 'col' },
-                            'Name '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'th',
-                            { scope: 'col' },
-                            'Owner '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'th',
-                            { scope: 'col' },
-                            'Points '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'th',
-                            { scope: 'col' },
-                            ' Wins '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'th',
-                            { scope: 'col' },
-                            ' Lost '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'th',
-                            { scope: 'col' },
-                            ' Draws  '
-                        )
-                    )
-                ),
-                this.state.players.sort(this.compareValues('total', 'desc')).map(function (player) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'tbody',
-                        { key: player.id },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'tr',
-                            null,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'td',
-                                null,
-                                player.name
-                            ),
-                            _this2.state.users.map(function (user) {
-                                return user.id === player.user_id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'td',
-                                    { key: user.id },
-                                    user.name
-                                ) : null;
-                            }),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'td',
-                                null,
-                                player.total
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'td',
-                                null,
-                                player.wins
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'td',
-                                null,
-                                player.lost
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'td',
-                                null,
-                                player.draws
-                            )
-                        )
-                    );
-                })
-            );
-            return playersGlobalResults;
-        }
-    }, {
-        key: 'renderScoreboard',
-        value: function renderScoreboard() {
-            var _this3 = this;
-
-            var tableHead = this.state.leagues.map(function (league) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { key: league.id, className: 'media' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'media-body' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            null,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'table',
-                                null,
-                                _this3.state.users.map(function (user) {
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'thead',
-                                        { key: user.id },
-                                        league.user_id === user.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            'tr',
-                                            null,
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'th',
-                                                { scope: 'col' },
-                                                ' Name : ',
-                                                league.name
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'th',
-                                                { scope: 'col' },
-                                                ' User : ',
-                                                user.name,
-                                                ' '
-                                            )
-                                        ) : null
-                                    );
-                                })
-                            ),
-                            _this3.displayTable(league),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
-                        )
-                    )
-                );
-            });
-            return tableHead;
-        }
-    }, {
-        key: 'getAll',
-        value: function getAll() {
-            var _this4 = this;
-
-            axios.get('/scoreboard').then(function (response) {
-                return _this4.setState({
-                    players: [].concat(_toConsumableArray(response.data.players)),
-                    leagues: [].concat(_toConsumableArray(response.data.leagues)),
-                    users: [].concat(_toConsumableArray(response.data.users))
-
-                });
-            });
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-
-            this.getAll();
-        }
-    }, {
-        key: 'onChange',
-        value: function onChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length) return;
-            this.createImage(files[0]);
-        }
-    }, {
-        key: 'submitHandlerTwo',
-        value: function submitHandlerTwo(e) {
-
-            e.preventDefault();
-            this.fileUpload(this.state.image);
-            // e.preventDefault();
-            // this.setState({file:this.fileInput.current.files[0]});
-
-            // const load = this.fileInput.current.files[0];
-            // console.log(load);
-            // axios.post('scoreboard', 
-            //     load
-            // ).then(response =>console.log(response));
-        }
-    }, {
-        key: 'createImage',
-        value: function createImage(file) {
-            var _this5 = this;
-
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                _this5.setState({
-                    image: e.target.result
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    }, {
-        key: 'fileUpload',
-        value: function fileUpload(image) {
-            var url = 'fileupload';
-            var formData = { file: this.state.image };
-            return axios.post(url, formData).then(function (response) {
-                return console.log(response);
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'container' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    'Welcome Component'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
-                    null,
-                    'Information you want to see every time you visit your profile'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { onSubmit: this.submitHandlerTwo, encType: 'multipart/form-data' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        type: 'file'
-                        // ref={this.fileInput}
-                        , onChange: this.onChange,
-
-                        required: true
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        {
-                            type: 'submit',
-                            className: 'btn btn-primary'
-                        },
-                        'Add Photo'
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
-                this.renderScoreboard()
-            );
-        }
-    }]);
-
-    return Scoreboard;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Scoreboard);
-
-/***/ }),
+/* 101 */,
+/* 102 */,
 /* 103 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -61617,6 +61242,400 @@ var Newplayer = function (_Component) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return compareValues; });
+
+function compareValues(key) {
+  var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
+
+  return function (a, b) {
+    if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+      return 0;
+    }
+
+    var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
+    var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
+
+    var comparison = 0;
+    if (varA > varB) {
+      comparison = 1;
+    } else if (varA < varB) {
+      comparison = -1;
+    }
+    return order == 'desc' ? comparison * -1 : comparison;
+  };
+}
+
+
+
+/***/ }),
+/* 115 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Scoreboard__ = __webpack_require__(116);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var Welcome = function (_Component) {
+    _inherits(Welcome, _Component);
+
+    function Welcome() {
+        _classCallCheck(this, Welcome);
+
+        return _possibleConstructorReturn(this, (Welcome.__proto__ || Object.getPrototypeOf(Welcome)).apply(this, arguments));
+    }
+
+    _createClass(Welcome, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'container' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Scoreboard__["a" /* default */], null)
+            );
+        }
+    }]);
+
+    return Welcome;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Welcome);
+
+/***/ }),
+/* 116 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Table__ = __webpack_require__(118);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var Scoreboard = function (_Component) {
+    _inherits(Scoreboard, _Component);
+
+    function Scoreboard(props) {
+        _classCallCheck(this, Scoreboard);
+
+        var _this = _possibleConstructorReturn(this, (Scoreboard.__proto__ || Object.getPrototypeOf(Scoreboard)).call(this, props));
+
+        _this.state = {
+
+            leagues: [],
+            players: [],
+            users: [],
+            filter: 'all'
+
+        };
+
+        return _this;
+    }
+
+    _createClass(Scoreboard, [{
+        key: 'getAll',
+        value: function getAll() {
+            var _this2 = this;
+
+            axios.get('/scoreboard').then(function (response) {
+                return _this2.setState({
+                    players: [].concat(_toConsumableArray(response.data.players)),
+                    leagues: [].concat(_toConsumableArray(response.data.leagues)),
+                    users: [].concat(_toConsumableArray(response.data.users))
+
+                });
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+
+            this.getAll();
+        }
+    }, {
+        key: 'filterResult',
+        value: function filterResult(e) {
+            this.setState({
+                filter: e.target.id
+            });
+            console.log(e.target.id);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'container' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h1',
+                    null,
+                    'Welcome Component'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h2',
+                    null,
+                    'Information you want to see every time you visit your profile'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { id: 'all', onClick: this.filterResult },
+                        'All'
+                    ),
+                    this.state.users.map(function (user) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { id: user.id, key: user.id, onClick: _this3.filterResult },
+                            user.name
+                        );
+                    })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
+                this.state.filter === 'all' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Table__["a" /* default */], { players: this.state.players, leagues: this.state.leagues, users: this.state.users }) : null
+            );
+        }
+    }]);
+
+    return Scoreboard;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Scoreboard);
+
+/***/ }),
+/* 117 */,
+/* 118 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions__ = __webpack_require__(114);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var Scoreboard = function (_Component) {
+    _inherits(Scoreboard, _Component);
+
+    function Scoreboard(props) {
+        _classCallCheck(this, Scoreboard);
+
+        var _this = _possibleConstructorReturn(this, (Scoreboard.__proto__ || Object.getPrototypeOf(Scoreboard)).call(this, props));
+
+        _this.displayTable = _this.displayTable.bind(_this);
+        _this.calculatePoints = _this.calculatePoints.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(Scoreboard, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {}
+    }, {
+        key: 'calculatePoints',
+        value: function calculatePoints(league) {
+            this.props.players.map(function (player) {
+                return player.total = player.wins * league.win_point_value + player.lost * league.lost_point_value + player.draws * league.draw_point_value;
+            });
+        }
+    }, {
+        key: 'displayTable',
+        value: function displayTable(league) {
+            var _this2 = this;
+
+            this.calculatePoints(league);
+            var playersGlobalResults = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'table',
+                { className: 'table' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'thead',
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'tr',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            'Name '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            'Owner '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            'Points '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            ' Wins '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            ' Lost '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'th',
+                            { scope: 'col' },
+                            ' Draws  '
+                        )
+                    )
+                ),
+                this.props.players.sort(Object(__WEBPACK_IMPORTED_MODULE_1__functions__["a" /* compareValues */])('total', 'desc')).map(function (player) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'tbody',
+                        { key: player.id },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'tr',
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.name
+                            ),
+                            _this2.props.users.map(function (user) {
+                                return user.id === player.user_id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'td',
+                                    { key: user.id },
+                                    user.name
+                                ) : null;
+                            }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.total
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.wins
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.lost
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'td',
+                                null,
+                                player.draws
+                            )
+                        )
+                    );
+                })
+            );
+            return playersGlobalResults;
+        }
+    }, {
+        key: 'renderScoreboard',
+        value: function renderScoreboard() {
+            var _this3 = this;
+
+            var tableHead = this.props.leagues.map(function (league) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { key: league.id, className: 'media' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'media-body' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'table',
+                                null,
+                                _this3.props.users.map(function (user) {
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'thead',
+                                        { key: user.id },
+                                        league.user_id === user.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'tr',
+                                            null,
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'th',
+                                                { scope: 'col' },
+                                                ' Name : ',
+                                                league.name
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'th',
+                                                { scope: 'col' },
+                                                ' User : ',
+                                                user.name,
+                                                ' '
+                                            )
+                                        ) : null
+                                    );
+                                })
+                            ),
+                            _this3.displayTable(league),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
+                        )
+                    )
+                );
+            });
+            return tableHead;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                this.renderScoreboard()
+            );
+        }
+    }]);
+
+    return Scoreboard;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Scoreboard);
 
 /***/ })
 /******/ ]);
