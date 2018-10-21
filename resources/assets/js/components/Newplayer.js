@@ -32,9 +32,9 @@ class Newplayer extends Component {
         });
     }
     urlChangeHandler(e) {
-        this.setState({
-            url: e.target.value
-        });
+        // this.setState({
+        //     url: e.target.value
+        // });
     }
   
     
@@ -46,7 +46,7 @@ class Newplayer extends Component {
         axios.post('players', {
             name: this.state.name,
             type: this.state.type,
-            url: this.state.url,
+            // url: this.state.url,
             wins: this.state.wins,
             lost: this.state.lost,
             draws: this.state.draws
