@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Player;
 use App\League;
+use App\Scoreboard;
 
 class User extends Authenticatable
 {
@@ -33,5 +34,8 @@ class User extends Authenticatable
     }
     public function leagues() {
         return $this->hasMany(League::class);
+    }
+    public function scoreboards() {
+        return $this->hasMany(Scoreboard::class);
     }
 }

@@ -8,6 +8,7 @@ import Leagues from './components/Leagues';
 import League from './components/League';
 import Newleague from './components/Newleague';
 import Newplayer from './components/Newplayer';
+import Newscoreboard from './components/Newscoreboard';
 
 
 
@@ -27,6 +28,9 @@ if (document.getElementById('root')) {
                     <Link to="/newleague">New League</Link>
                 </li>
                 <li>
+                    <Link to="/newscoreboard">New Scoreboard</Link>
+                </li>
+                <li>
                     <Link to="/players">Players Results</Link>
                 </li>
                 <li>
@@ -38,6 +42,7 @@ if (document.getElementById('root')) {
                 <Route exact path="/" component={Welcome}></Route>
                 <Route exact path="/newplayer" component={Newplayer}></Route>
                 <Route exact path="/newleague" component={Newleague}></Route>
+                <Route exact path="/newscoreboard" component={Newscoreboard}></Route>
                 <Route exact path="/players/:id/edit" component={Player}></Route>
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/players" component={Players}></Route>

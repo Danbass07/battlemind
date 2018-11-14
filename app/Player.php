@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\League;
+use App\Scoreboard;
 
 class Player extends Model
 {   
@@ -16,5 +17,9 @@ class Player extends Model
     }
     public function leagues() {
         return $this->belongsToMany(League::class)->withPivot('win', 'lost', 'draw')->withTimestamps();
+    }
+
+    public function scoreboards() {
+        return $this->belongsToMany(Scoreboard::class)->withPivot('win', 'lost', 'draw')->withTimestamps();
     }
 }

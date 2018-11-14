@@ -12,17 +12,17 @@ class FileuploadController extends Controller
       
         if($request->get('file'))
            {
-               $image = $request->get('file');
-               $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+             //  $image = $request->get('file');
+             //  $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
                //Image::make($request->get('file'));
                //->save(public_path('storage/').$name);
-              $request->file('file')
+           //   $request->file('file')
               //->store('files');
             //  $image = $request->get('file');
              //->store('avatars');
-              $fileupload = new Fileupload();
-              $fileupload->filename=$name;
-              $fileupload->save();
+             // $fileupload = new Fileupload();
+             // $fileupload->filename=$name;
+             // $fileupload->save();
               //$path = $request->file('file');
               //->save('files');
 
