@@ -20,8 +20,18 @@ function compareValues(key, order='asc') {
         (order == 'desc') ? (comparison * -1) : comparison
       );
     };
-  }
+  };
 
+  function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+      
+        if (a[i].id === obj.id) {
+          
+            return true;
+        }
+    }
+  
+    return false;
+} 
 
-
-export {compareValues};
+export {compareValues, contains};

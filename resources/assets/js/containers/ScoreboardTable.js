@@ -21,15 +21,15 @@ class Scoreboard extends Component {
     }
     
     getAll() {
-        axios.get('/scoreboard').then(response =>
-         this.setState({
-            players: [...response.data.players],
-            leagues: [...response.data.leagues],
-            users: [...response.data.users],
+        // axios.get('/scoreboard').then(response =>
+        //  this.setState({
+        //     players: [...response.data.players],
+        //     leagues: [...response.data.leagues],
+        //     users: [...response.data.users],
             
           
-             })      
-        );
+        //      })      
+        // );
         
     }
     componentWillMount() {
@@ -53,7 +53,7 @@ class Scoreboard extends Component {
             <div className="container">
                 <h1>Welcome Component</h1>
                 <h2>Information you want to see every time you visit your profile</h2>
-                <div>
+                {/* <div>
                     <div id='all' onClick={this.filterResult}>All</div>
                 {this.state.users.map(user =>
                     <button id={user.id} key={user.id} onClick={this.filterResult}>{user.name}</button>
@@ -62,7 +62,7 @@ class Scoreboard extends Component {
           
                 <hr />
                 {this.state.filter === 'all' ?
-                <Table players={this.state.players} leagues={this.state.leagues} users={this.state.users} /> : null}
+                <Table players={this.state.players} leagues={this.state.leagues} users={this.state.users} /> : null} */}
                 
              
               

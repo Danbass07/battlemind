@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
 import Welcome from './containers/Welcome';
-import Player from './components/Player';
-import Players from './components/Players';
-import Leagues from './components/Leagues';
-import League from './components/League';
-import Newleague from './components/Newleague';
-import Newplayer from './components/Newplayer';
-import Newscoreboard from './components/Newscoreboard';
-
+import Player from './components/Players/Player';
+import Players from './components/Players/Players';
+import Leagues from './components/Leagues/Leagues';
+import League from './components/Leagues/League';
+import Scoreboards from './components/Scoreboards/Scoreboards';
+import Scoreboard from './components/Scoreboards/Scoreboard';
+import Newleague from './components/Leagues/Newleague';
+import Newplayer from './components/Players/Newplayer';
+import Newscoreboard from './components/Scoreboards/NewScoreboard';
+import Navigation from './components/Navigation/Navigation';
 
 
 if (document.getElementById('root')) {
@@ -17,26 +19,7 @@ if (document.getElementById('root')) {
 
     <BrowserRouter>
         <div>
-            <ul>
-                <li>
-                    <Link to="/">Welcome</Link>
-                </li>
-                <li>
-                    <Link to="/newplayer">New Player</Link>
-                </li>
-                <li>
-                    <Link to="/newleague">New League</Link>
-                </li>
-                <li>
-                    <Link to="/newscoreboard">New Scoreboard</Link>
-                </li>
-                <li>
-                    <Link to="/players">Players Results</Link>
-                </li>
-                <li>
-                    <Link to="/leagues">Leagues Results</Link>
-                </li>
-            </ul>
+            <Navigation />
             <Switch>
                 
                 <Route exact path="/" component={Welcome}></Route>
@@ -45,8 +28,11 @@ if (document.getElementById('root')) {
                 <Route exact path="/newscoreboard" component={Newscoreboard}></Route>
                 <Route exact path="/players/:id/edit" component={Player}></Route>
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
+                <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
                 <Route exact path="/players" component={Players}></Route>
                 <Route exact path="/leagues" component={Leagues}></Route>
+                <Route exact path="/scoreboards" component={Scoreboards}></Route>
+                
                 <Welcome />
             </Switch>
         </div>

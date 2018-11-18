@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Scoreboard from './Scoreboard';
+import ScoreboardTable from './ScoreboardTable';
 
 class Welcome extends Component {
 
@@ -7,7 +7,7 @@ class Welcome extends Component {
         return (
             <div className="container">
           
-                <Scoreboard />
+                <ScoreboardTable />
                
             </div>
         );

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class NewScoreboard extends Component {
+class Newplayer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,11 +11,17 @@ class NewScoreboard extends Component {
             wins: 0,
             lost: 0,
             draws: 0,
+            types: [
+                { id: 0,
+                  type: 'test' },
+
+            ],
         };
         this.nameChangeHandler = this.nameChangeHandler.bind(this);
         this.typeChangeHandler = this.typeChangeHandler.bind(this);
         this.urlChangeHandler = this.urlChangeHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
+        this.getTypes = this.getTypes.bind(this);
         
         // this.renderTasks = this.renderTasks.bind(this);
         // this.deleteHandler = this.deleteHandler.bind(this);
@@ -43,21 +49,38 @@ class NewScoreboard extends Component {
       
         e.preventDefault();
       
-        axios.post('scoreboard', {
+        axios.post('players', {
             name: this.state.name,
             type: this.state.type,
-    
+            // url: this.state.url,
+            wins: this.state.wins,
+            lost: this.state.lost,
+            draws: this.state.draws
         }).then(response => {
             
            this.setState({
             name: '',
             type: '',
-        });
-        console.log(response);
-          // this.props.history.push('/home');
+            url: '',
+            wins: 0,
+            lost: 0,
+            draws: 0,
+           });
+           this.props.history.push('/home');
         });
 
     }
+    getTypes() {
+        axios.get('/types').then(response =>
+         this.setState({
+            types: [...response.data.types]
+             })
+        );
+    }
+    componentWillMount(){
+        this.getTypes();
+    }
+
     render() {
         return (
             <div className="container">
@@ -71,12 +94,19 @@ class NewScoreboard extends Component {
                                 required
                                 
                                 />
-                                <input 
+                                <select 
                                 className="form-control"
-                                placeholder="Type"
+                                placeholder={console.log(this.state.types)}
                                 required
                                 onChange={this.typeChangeHandler}
-                                />
+                                >
+                            {this.state.types.map(type => (
+                                <option key={type.id}>{type.type}</option>
+                            ))}
+                                
+                                
+                                
+                                </select>
                                 
                                 
                                                             
@@ -87,7 +117,7 @@ class NewScoreboard extends Component {
                                 className="btn btn-primary"
 
                                 >
-                                Add new Scoreboard
+                                Add new player
                                 </button>
                  </div>               
                 </form>
@@ -100,4 +130,4 @@ class NewScoreboard extends Component {
         );
     }
 }
-export default NewScoreboard
+export default Newplayer

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {compareValues} from '../functions';
 import {Link} from 'react-router-dom';
 
-class Scoreboard extends Component {
+class Photo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -76,4 +76,4 @@ createImage(file) {
     );
 }
 }
-export default Scoreboard
+export default Photo

@@ -14,7 +14,7 @@ class CreateScoreboardPlayerTable extends Migration
     public function up()
     {
         Schema::create('scoreboard_player', function (Blueprint $table) {
-            $table->increments('id');
+            
             $table->integer('scoreboard_id')->unsigned()->nullable();
             $table->foreign('scoreboard_id')->references('id')
                   ->on('scoreboards')->onDelete('cascade');

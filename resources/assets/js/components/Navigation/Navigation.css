@@ -1,0 +1,27 @@
+.navigation{
+    display: flex;
+    list-style-type: none;
+    padding: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    justify-content: space-around;
+    background-color: blue;
+    color: white;
+    font-size: 1.2em;
+    left: 0;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.top {
+    position: fixed;
+    top: 0;
+    
+}
+.bottom {
+    position: fixed;
+    bottom: 0;
+    
+}

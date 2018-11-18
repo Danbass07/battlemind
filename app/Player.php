@@ -20,6 +20,6 @@ class Player extends Model
     }
 
     public function scoreboards() {
-        return $this->belongsToMany(Scoreboard::class)->withPivot('win', 'lost', 'draw')->withTimestamps();
+        return $this->belongsToMany(Scoreboard::class, 'scoreboard_player')->withPivot('win', 'lost', 'draw')->withTimestamps();
     }
 }

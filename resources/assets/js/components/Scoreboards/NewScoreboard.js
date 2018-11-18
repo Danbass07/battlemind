@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class Newplayer extends Component {
+class NewScoreboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,24 +43,18 @@ class Newplayer extends Component {
       
         e.preventDefault();
       
-        axios.post('players', {
+        axios.post('scoreboards', {
             name: this.state.name,
             type: this.state.type,
-            // url: this.state.url,
-            wins: this.state.wins,
-            lost: this.state.lost,
-            draws: this.state.draws
+    
         }).then(response => {
             
            this.setState({
             name: '',
             type: '',
-            url: '',
-            wins: 0,
-            lost: 0,
-            draws: 0,
-           });
-           this.props.history.push('/home');
+        });
+       
+          this.props.history.push('/home');
         });
 
     }
@@ -93,7 +87,7 @@ class Newplayer extends Component {
                                 className="btn btn-primary"
 
                                 >
-                                Add new player
+                                Add new Scoreboard
                                 </button>
                  </div>               
                 </form>
@@ -106,4 +100,4 @@ class Newplayer extends Component {
         );
     }
 }
-export default Newplayer
+export default NewScoreboard
