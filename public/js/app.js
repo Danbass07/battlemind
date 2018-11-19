@@ -60272,6 +60272,8 @@ var Player = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Players_css__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Players_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Players_css__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -60281,6 +60283,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -60318,28 +60321,20 @@ var Players = function (_Component) {
             return this.state.players.map(function (player) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { key: player.id, className: 'media' },
+                    { key: player.id, className: 'list-item' },
+                    player.name,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'media-body' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            null,
-                            player.name,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                { to: 'players/' + player.id + '/edit', className: 'btn btn-sm btn-success float-right' },
-                                'Update'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { onClick: function onClick() {
-                                        return _this2.deleteHandler(player.id);
-                                    },
-                                    className: 'btn btn-sm btn-warning float-right' },
-                                'Delete'
-                            )
-                        )
+                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                        { to: 'players/' + player.id + '/edit', className: 'button update' },
+                        'Update'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        { onClick: function onClick() {
+                                return _this2.deleteHandler(player.id);
+                            },
+                            className: 'button' },
+                        'Delete'
                     )
                 );
             });
@@ -60366,7 +60361,7 @@ var Players = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                null,
+                { className: 'content' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'h1',
                     null,
@@ -60377,7 +60372,11 @@ var Players = function (_Component) {
                     null,
                     'List of all your players (decks,armies,teams)'
                 ),
-                this.renderPlayers()
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'list-grid' },
+                    this.renderPlayers()
+                )
             );
         }
     }]);
@@ -62740,7 +62739,52 @@ exports = module.exports = __webpack_require__(117)(false);
 
 
 // module
-exports.push([module.i, ".content {\r\n    height:78vh;\r\n    width: 100%;\r\n    overflow: auto ;\r\n    position: absolute;\r\n    margin-bottom: 70px;\r\n    display: flex;\r\n    align-items: center;\r\n    background-color: black;\r\n\r\n    \r\n}\r\n.maincontent {\r\n    display: flex;\r\n    width: 100%;\r\n    height: 100%;\r\n    align-items: center;\r\n    justify-content: center;\r\n \r\n  \r\n    \r\n}\r\n.myform {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 40%;\r\n   \r\n}\r\n.myform-control {\r\n    height: 30px;\r\n    width: 100%;\r\n    margin: 5%;\r\n}\r\n.submit-button {\r\n    background-color: chocolate;\r\n    width: 100%;\r\n    margin: 5%;\r\n}\r\n@media only screen and (min-width: 700px) {\r\n.content {\r\n    height:85vh;\r\n    }\r\n}\r\n\r\n@media only screen and (min-width: 1000px) {\r\n    .content {\r\n        height:90vh;\r\n        }\r\n    }", ""]);
+exports.push([module.i, ".content {\r\n    height:78vh;\r\n    width: 100%;\r\n    overflow: auto ;\r\n    position: absolute;\r\n    margin-bottom: 70px;\r\n    \r\n    align-items: center;\r\n    background-color: black;\r\n\r\n    \r\n}\r\n.maincontent {\r\n    display: flex;\r\n    width: 100%;\r\n    height: 100%;\r\n    align-items: center;\r\n    justify-content: center;\r\n \r\n  \r\n    \r\n}\r\n.myform {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 40%;\r\n   \r\n}\r\n.myform-control {\r\n    height: 30px;\r\n    width: 100%;\r\n    margin: 5%;\r\n}\r\n.submit-button {\r\n    background-color: chocolate;\r\n    width: 100%;\r\n    margin: 5%;\r\n}\r\n.button {\r\n    background-color: rgb(252, 17, 0);\r\n    width: 25%;\r\n    padding: 8px;\r\n    border: 1px solid coral;\r\n    text-align: center;\r\n}\r\n.update {\r\n    background-color: rgb(20, 8, 122);\r\n    margin-left: auto;\r\n}\r\n\r\n.list-grid {\r\n   \r\n    color: cornsilk;\r\n}\r\n.list-item {\r\n    display: flex;\r\n    justify-items: flex-end;\r\n    border: 1px solid cornsilk;\r\n}\r\n@media only screen and (min-width: 700px) {\r\n.content {\r\n    height:85vh;\r\n    }\r\n}\r\n\r\n@media only screen and (min-width: 1000px) {\r\n    .content {\r\n        height:90vh;\r\n        }\r\n    }", ""]);
+
+// exports
+
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(127);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(118)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../../node_modules/css-loader/index.js!./Players.css", function() {
+			var newContent = require("!!../../../../../node_modules/css-loader/index.js!./Players.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(117)(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
 
 // exports
 

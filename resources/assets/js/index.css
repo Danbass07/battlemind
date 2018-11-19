@@ -4,7 +4,7 @@
     overflow: auto ;
     position: absolute;
     margin-bottom: 70px;
-    display: flex;
+    
     align-items: center;
     background-color: black;
 
@@ -35,6 +35,27 @@
     background-color: chocolate;
     width: 100%;
     margin: 5%;
+}
+.button {
+    background-color: rgb(252, 17, 0);
+    width: 25%;
+    padding: 8px;
+    border: 1px solid coral;
+    text-align: center;
+}
+.update {
+    background-color: rgb(20, 8, 122);
+    margin-left: auto;
+}
+
+.list-grid {
+   
+    color: cornsilk;
+}
+.list-item {
+    display: flex;
+    justify-items: flex-end;
+    border: 1px solid cornsilk;
 }
 @media only screen and (min-width: 700px) {
 .content {

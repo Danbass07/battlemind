@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import './Players.css';
 
 class Players extends Component {
     constructor(props) {
@@ -18,15 +19,15 @@ class Players extends Component {
     }
     renderPlayers(){
         return this.state.players.map(player => (
-            <div key={player.id} className="media">
-                 <div className="media-body">
-                    <div>
+            <div key={player.id} className="list-item">
+                 
+                    
                         {player.name}
-                        <Link to={`players/${player.id}/edit`} className="btn btn-sm btn-success float-right">Update</Link>
+                        <Link to={`players/${player.id}/edit`} className="button update">Update</Link>
                         <button onClick={() => this.deleteHandler(player.id)}
-                        className="btn btn-sm btn-warning float-right">Delete</button>
-                    </div>
-              </div>
+                        className="button">Delete</button>
+                    
+               
              </div>
         ))
     }
@@ -43,10 +44,10 @@ class Players extends Component {
     render() {
       
         return (
-            <div >
+            <div className="content" >
                 <h1>Players Component</h1>
                 <h2>List of all your players (decks,armies,teams)</h2>
-                {this.renderPlayers()}
+                <div className="list-grid">{this.renderPlayers()}</div>
             </div>
         );
     }
