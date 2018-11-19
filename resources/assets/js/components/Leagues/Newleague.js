@@ -92,19 +92,18 @@ class Newleague extends Component {
     }
     render() {
         return (
-            <div className="container">
-                <form onSubmit={this.submitHandler}>
-                <div 
-                               className="form-group">
+            <div className="maincontent">
+                <form className="myform" onSubmit={this.submitHandler}>
+
                                 <input 
-                                className="form-control"
+                                className="myform-control"
                                 placeholder="Name"
                                 onChange={this.nameChangeHandler}
                                 required
                                 
                                 />
                                 <input 
-                                className="form-control"
+                                className="myform-control"
                                 placeholder="win point value"
                                 required
                                 onChange={this.win_point_valueChangeHandler}
@@ -112,43 +111,43 @@ class Newleague extends Component {
                                 
                                 
                                 <input 
-                                className="form-control" 
+                                className="myform-control" 
                                 placeholder="lost point value"
                                 required
                                 onChange={this.lost_point_valueChangeHandler}
                                 />
                                 <input 
-                                className="form-control" 
+                                className="myform-control" 
                                 placeholder="draw point value"
                                 required
                                 onChange={this.draw_point_valueChangeHandler}
                                 />
                                  <input 
-                                className="form-control" 
+                                className="myform-control" 
                                 placeholder="number_of_games"
                                 required
                                 onChange={this.number_of_gamesChangeHandler}
                                 />
                                  <input 
-                                className="form-control" 
+                                className="myform-control" 
                                 placeholder="number_of_players"
                                 required
                                 onChange={this.number_of_playersChangeHandler}
                                 />
                                  <input 
-                                className="form-control" 
+                                className="myform-control" 
                                 placeholder=" number_of_points"
                                 required
                                 onChange={this.number_of_pointsChangeHandler}
                                 />
                                 
-                                </div>
+
                                 
                                 
                                 
                                 <button 
                                 type="submit" 
-                                className="btn btn-primary"
+                                className="submit-button"
 
                                 >
                                 Add new League

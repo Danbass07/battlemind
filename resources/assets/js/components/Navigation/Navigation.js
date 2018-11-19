@@ -7,30 +7,32 @@ class Navigation extends Component {
 
     render() {
         return (
-            <div className="container">
-          
+            <div>
+                <div className="additionalStrip onTop">N E W</div>
                 <ul className="navigation top">
+                
                     <li>
-                        <Link to="/newplayer">New Player</Link>
+                        <Link to="/newplayer">Player</Link>
                     </li>
                     <li>
-                        <Link to="/newleague">New League</Link>
+                        <Link to="/newleague">League</Link>
                     </li>
                     <li>
-                        <Link to="/newscoreboard">New Scoreboard</Link>
+                        <Link to="/newscoreboard">Scoreboard</Link>
                     </li>
                 </ul>
                 <ul className="navigation bottom">
                     <li>
-                        <Link to="/players">Players Results</Link>
+                        <Link to="/players">Players</Link>
                     </li>
                     <li>
-                        <Link to="/leagues">Leagues Results</Link>
+                        <Link to="/leagues">Leagues</Link>
                     </li>
                     <li>
-                        <Link to="/scoreboards">Scoreboards List</Link>
+                        <Link to="/scoreboards">Scoreboards</Link>
                     </li>
                 </ul> 
+                <div className="additionalStrip onBottom">L I S T S</div>
             </div>
         );
     }

@@ -60,19 +60,18 @@ class NewScoreboard extends Component {
     }
     render() {
         return (
-            <div className="container">
-                <form onSubmit={this.submitHandler} >
-                <div 
-                               className="form-group">
+            <div className="maincontent">
+                <form className="myform" onSubmit={this.submitHandler} >
+               
                                 <input 
-                                className="form-control"
+                                className="myform-control"
                                 placeholder="Name"
                                 onChange={this.nameChangeHandler}
                                 required
                                 
                                 />
                                 <input 
-                                className="form-control"
+                                className="myform-control"
                                 placeholder="Type"
                                 required
                                 onChange={this.typeChangeHandler}
@@ -84,12 +83,12 @@ class NewScoreboard extends Component {
                                 
                                 <button 
                                 type="submit" 
-                                className="btn btn-primary"
+                                className="submit-button"
 
                                 >
                                 Add new Scoreboard
                                 </button>
-                 </div>               
+                             
                 </form>
             
             

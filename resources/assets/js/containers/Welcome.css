@@ -1,0 +1,21 @@
+.welcome {
+  
+    text-align: center;
+    padding: 4% 4%;
+    color: cornsilk;
+    background-color: cornflowerblue;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.welcome  h1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 2.5em;
+   
+}
+.welcome  h2 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.5em; 
+}

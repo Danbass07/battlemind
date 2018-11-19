@@ -12,14 +12,16 @@ import Newleague from './components/Leagues/Newleague';
 import Newplayer from './components/Players/Newplayer';
 import Newscoreboard from './components/Scoreboards/NewScoreboard';
 import Navigation from './components/Navigation/Navigation';
+import "./index.css";
 
 
 if (document.getElementById('root')) {
     ReactDOM.render(
 
     <BrowserRouter>
-        <div>
+        <div >
             <Navigation />
+           <div className="content">
             <Switch>
                 
                 <Route exact path="/" component={Welcome}></Route>
@@ -35,6 +37,7 @@ if (document.getElementById('root')) {
                 
                 <Welcome />
             </Switch>
+            </div>
         </div>
     </BrowserRouter>
     

@@ -9,19 +9,52 @@
     color: white;
     font-size: 1.2em;
     left: 0;
+    height: 35px;
+    
 }
 a {
     color: white;
     text-decoration: none;
+  
+}
+
+.additionalStrip {
+    height: 35px;
+    width: 100%;
+    background-color: salmon;
+    text-align: center;
+    padding: 5px;
+    font-size: 1.2em;
+    animation: mymove 5s infinite;
+}
+.onTop {
+    position: relative;       
+    top: 0px;
+}
+.onBottom {
+    position: fixed;       
+    bottom: 0;
+    z-index: 2;
 }
 
 .top {
-    position: fixed;
-    top: 50px;
+    position: relative;
+    top: 0px;
+    margin: 0;
     
 }
 .bottom {
     position: fixed;
-    bottom: 0;
-    
+    bottom: 35px;
+    margin: 0;
+    z-index: 2;
+   
+}
+
+@keyframes mymove {
+    0% {text-align: left;}
+    25% {text-align: center;}
+    50% {text-align: right;}
+    75% {text-align: center;}
+    100% {text-align: left;}
 }

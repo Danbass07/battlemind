@@ -48,7 +48,7 @@ class Leagues extends Component {
     render() {
     
         return (
-            <div className="container">
+            <div>
                 <h1>Leagues Component</h1>
                 <h2>List of all your leagues</h2>
                 
