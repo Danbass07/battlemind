@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {compareValues} from '../functions';
 
-class Scoreboard extends Component {
+class Table extends Component {
     constructor(props) {
         super(props);
 
@@ -112,4 +112,4 @@ class Scoreboard extends Component {
         );
     }
 }
-export default Scoreboard
+export default Table

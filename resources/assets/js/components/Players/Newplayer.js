@@ -6,124 +6,92 @@ class Newplayer extends Component {
         super(props);
         this.state = {
             name: '',
-            type: '',
-            url: '',
+            type: 'planeswalker',
+            url: 'url',
             wins: 0,
             lost: 0,
             draws: 0,
-            types: [
-                { id: 0,
-                  type: 'test' },
 
-            ],
         };
-        this.nameChangeHandler = this.nameChangeHandler.bind(this);
-        this.typeChangeHandler = this.typeChangeHandler.bind(this);
-        this.urlChangeHandler = this.urlChangeHandler.bind(this);
-        this.submitHandler = this.submitHandler.bind(this);
-        this.getTypes = this.getTypes.bind(this);
         
-        // this.renderTasks = this.renderTasks.bind(this);
-        // this.deleteHandler = this.deleteHandler.bind(this);
     }
 
-    nameChangeHandler(e) {
+    changeHandler(e) {
         this.setState({
-            name: e.target.value
+            [e.target.placeholder]: e.target.value
         });
     }
-    typeChangeHandler(e) {
+    optionChangeHandler(e) {
+        
         this.setState({
-            type: e.target.value
+            type: e.target.value,
         });
     }
-    urlChangeHandler(e) {
-        // this.setState({
-        //     url: e.target.value
-        // });
-    }
-  
-    
 
-    submitHandler(e) {
-      
-        e.preventDefault();
-      
-        axios.post('players', {
+    submitHandler() {
+     
+       //  e.preventDefault();
+       
+        axios.post('/players', {
             name: this.state.name,
             type: this.state.type,
-            // url: this.state.url,
+            url: this.state.url,
             wins: this.state.wins,
             lost: this.state.lost,
-            draws: this.state.draws
+            draws: this.state.draws,
         }).then(response => {
             
            this.setState({
             name: '',
-            type: '',
-            url: '',
+            type: 'blank',
+            url: 'url',
             wins: 0,
             lost: 0,
             draws: 0,
            });
-           this.props.history.push('/home');
+           if (response.status == 200){
+               alert("SUCCESS")
+           }
+
         });
 
-    }
-    getTypes() {
-        axios.get('/types').then(response =>
-         this.setState({
-            types: [...response.data.types]
-             })
-        );
-    }
-    componentWillMount(){
-        this.getTypes();
     }
 
     render() {
         return (
+            
             <div className="maincontent">
-                <form className="myform" onSubmit={this.submitHandler} >
-               
-                                <input 
-                                className="myform-control"
-                                placeholder="Name"
-                                onChange={this.nameChangeHandler}
-                                required
-                                
-                                />
-                                <select 
-                                className="myform-control"
-                                required
-                                onChange={this.typeChangeHandler}
-                                >
-                            {this.state.types.map(type => (
-                                <option key={type.id}>{type.type}</option>
-                            ))}
-                                
-                                
-                                
-                                </select>
-                                
-                                
-                                                            
-                                
-                                
-                                <button 
-                                type="submit" 
-                                className="submit-button"
+                <form className="myform"  onSubmit={(e) => this.submitHandler(e)} >
 
-                                >
-                                Add new player
-                                </button>
+                    <input 
+                    className="myform-control"
+                    placeholder="name"
+                    onChange={(e) => this.changeHandler(e)}
+                    required                    
+                    />
+
+                    <select 
+                    className="myform-control"
+                    
+                    
+                    onChange={(e) => this.optionChangeHandler(e)}
+                    >
+                    {this.props.types.map(type => (
+
+                        <option  key={type.id}>{type.type}</option>
+
+                    ))}
+                    </select>
+                    
+                    <button 
+                    type="submit" 
+                    className="submit-button"
+                    >
+                    Add new player
+                    </button>
                           
                 </form>
             
-            
-
-
-                
             </div>
         );
     }

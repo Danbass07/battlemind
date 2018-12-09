@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class NewScoreboard extends Component {
+class Newscoreboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,38 +12,27 @@ class NewScoreboard extends Component {
             lost: 0,
             draws: 0,
         };
-        this.nameChangeHandler = this.nameChangeHandler.bind(this);
-        this.typeChangeHandler = this.typeChangeHandler.bind(this);
-        this.urlChangeHandler = this.urlChangeHandler.bind(this);
-        this.submitHandler = this.submitHandler.bind(this);
+
+    }
+
+    changeHandler(e) {
+        this.setState({
+            [e.target.placeholder]: e.target.value
+        });
+    }
+    optionChangeHandler(e) {
         
-        // this.renderTasks = this.renderTasks.bind(this);
-        // this.deleteHandler = this.deleteHandler.bind(this);
+        this.setState({
+            type: e.target.value,
+        });
     }
 
-    nameChangeHandler(e) {
-        this.setState({
-            name: e.target.value
-        });
-    }
-    typeChangeHandler(e) {
-        this.setState({
-            type: e.target.value
-        });
-    }
-    urlChangeHandler(e) {
-        // this.setState({
-        //     url: e.target.value
-        // });
-    }
   
-    
-
     submitHandler(e) {
       
-        e.preventDefault();
+       // e.preventDefault();
       
-        axios.post('scoreboards', {
+        axios.post('/scoreboards', {
             name: this.state.name,
             type: this.state.type,
     
@@ -53,29 +42,37 @@ class NewScoreboard extends Component {
             name: '',
             type: '',
         });
-       
-          this.props.history.push('/home');
+        if (response.status == 200){
+             alert("SUCCESS")
+            }
         });
 
     }
     render() {
         return (
             <div className="maincontent">
-                <form className="myform" onSubmit={this.submitHandler} >
+                <form className="myform" onSubmit={() => this.submitHandler()} >
                
                                 <input 
                                 className="myform-control"
-                                placeholder="Name"
-                                onChange={this.nameChangeHandler}
+                                placeholder="name"
+                                onChange={(e) => this.changeHandler(e)}
                                 required
                                 
                                 />
-                                <input 
+
+                                <select 
                                 className="myform-control"
-                                placeholder="Type"
-                                required
-                                onChange={this.typeChangeHandler}
-                                />
+                                
+                                
+                                onChange={(e) => this.optionChangeHandler(e)}
+                                >
+                                {this.props.types.map(type => (
+
+                                    <option  key={type.id}>{type.type}</option>
+
+                                ))}
+                                </select>
                                 
                                 
                                                             
@@ -99,4 +96,4 @@ class NewScoreboard extends Component {
         );
     }
 }
-export default NewScoreboard
+export default Newscoreboard

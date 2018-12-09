@@ -10,9 +10,10 @@ import Scoreboards from './components/Scoreboards/Scoreboards';
 import Scoreboard from './components/Scoreboards/Scoreboard';
 import Newleague from './components/Leagues/Newleague';
 import Newplayer from './components/Players/Newplayer';
-import Newscoreboard from './components/Scoreboards/NewScoreboard';
 import Navigation from './components/Navigation/Navigation';
 import "./index.css";
+
+import Battlemind from './containers/Battlemind';
 
 
 if (document.getElementById('root')) {
@@ -20,7 +21,8 @@ if (document.getElementById('root')) {
 
     <BrowserRouter>
         <div >
-            <Navigation />
+            <Battlemind />
+            {/* <Navigation />
            <div className="content">
             <Switch>
                 
@@ -36,8 +38,8 @@ if (document.getElementById('root')) {
                 <Route exact path="/scoreboards" component={Scoreboards}></Route>
                 
                 <Welcome />
-            </Switch>
-            </div>
+            </Switch> */}
+            {/* </div> */}
         </div>
     </BrowserRouter>
     

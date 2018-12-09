@@ -18,14 +18,9 @@ class League extends Component {
             action: 'minus',
 
         };
-        this.nameChangeHandler = this.nameChangeHandler.bind(this);
+  
+        this.changeHandler = this.changeHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
-        this.win_point_valueChangeHandler = this.win_point_valueChangeHandler.bind(this);
-        this.lost_point_valueChangeHandler = this.lost_point_valueChangeHandler.bind(this);
-        this.draw_point_valueChangeHandler = this.draw_point_valueChangeHandler.bind(this);
-        this.number_of_gamesChangeHandler = this.number_of_gamesChangeHandler.bind(this);
-        this.number_of_playersChangeHandler = this.number_of_playersChangeHandler.bind(this);
-        this.number_of_pointsChangeHandler = this.number_of_pointsChangeHandler.bind(this);
         this.contains = this.contains.bind(this);
         this.addPlayer = this.addPlayer.bind(this);
         this.renderResultsDynamic = this.renderResultsDynamic.bind(this);
@@ -44,44 +39,19 @@ class League extends Component {
                 action: 'minus',
             }) 
         }
+       
     }
-    nameChangeHandler(e) {
-            this.setState({
-            name: e.target.value
-            });
-        }
+
+
+    changeHandler(e) {
+
+        const property = e.target.placeholder
+        this.setState({
+            [property]: e.target.value
+        });
     
-    
-    win_point_valueChangeHandler(e) {
-            this.setState({
-                win_point_value: e.target.value
-            });
-        }
-    lost_point_valueChangeHandler(e) {
-            this.setState({
-                lost_point_value: e.target.value
-            });
-        }
-    draw_point_valueChangeHandler(e) {
-            this.setState({
-                draw_point_value: e.target.value
-            });
-        }
-    number_of_gamesChangeHandler(e) {
-            this.setState({
-                number_of_games: e.target.value
-        }); 
-        }
-    number_of_playersChangeHandler(e) {
-            this.setState({
-                number_of_players: e.target.value
-            });
-        }
-    number_of_pointsChangeHandler(e) {
-            this.setState({
-                number_of_points: e.target.value
-            });
-        }
+    }
+
 
     submitHandler(e) {
 
@@ -292,9 +262,9 @@ class League extends Component {
                                className="form-group">
                                 <input 
                                 className="form-control"
-                                placeholder="Name"
+                                placeholder="name"
                                 value={this.state.name}
-                                onChange={this.nameChangeHandler}
+                                onChange={this.changeHandler}
                                 required
                                 
                                 />
@@ -302,45 +272,51 @@ class League extends Component {
                                 className="form-control"
                                 placeholder="win_point_value"
                                 required
+                                type="number"
                                 value={this.state.win_point_value}
-                                onChange={this.win_point_valueChangeHandler}
+                                onChange={this.changeHandler}
                                 />
                                 
                                 
                                 <input 
                                 className="form-control" 
-                                placeholder="Lost_point_value"
+                                placeholder="lost_point_value"
                                 required
+                                type="number"
                                 value={this.state.lost_point_value}
-                                onChange={this.lost_point_valueChangeHandler}
+                                onChange={this.changeHandler}
                                 />
                                  <input 
                                 className="form-control" 
-                                placeholder="Draw_point_value"
+                                placeholder="draw_point_value"
                                 required
+                                type="number"
                                 value={this.state.draw_point_value}
-                                onChange={this.draw_point_valueChangeHandler}
+                                onChange={this.changeHandler}
                                 />
                                  <input 
                                 className="form-control" 
                                 placeholder="number_of_games"
                                 required
+                                type="number"
                                 value={this.state.number_of_games}
-                                onChange={this.number_of_gamesChangeHandler}
+                                onChange={this.changeHandler}
                                 />
                                  <input 
                                 className="form-control" 
-                                placeholder="number_of_plyers"
+                                placeholder="number_of_players"
                                 required
+                                type="number"
                                 value={this.state.number_of_players}
-                                onChange={this.number_of_playersChangeHandler}
+                                onChange={this.changeHandler}
                                 />
                                   <input 
                                 className="form-control" 
                                 placeholder="number_of_points"
                                 required
+                                type="number"
                                 value={this.state.number_of_points}
-                                onChange={this.number_of_pointsChangeHandler}
+                                onChange={this.changeHandler}
                                 />
                                 
                                 </div>
