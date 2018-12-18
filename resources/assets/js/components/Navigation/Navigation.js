@@ -4,7 +4,7 @@ import './Navigation.css';
 
 
 class Navigation extends Component {
-
+ 
     render() {
         return (
             <div>
@@ -26,7 +26,7 @@ class Navigation extends Component {
                         <button onClick={this.props.button} name="new" value="action">New</button>
                     </li>
                     <li>
-                        <button onClick={this.props.button} name="lists" value="action">Lists</button>
+                        <button onClick={this.props.button} name="list" value="action">Lists</button>
                     </li>
                     <li>
                         <button onClick={this.props.button} name="reset" value=" ">empty</button>

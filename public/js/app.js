@@ -568,13 +568,13 @@ module.exports = warning;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(95);
 /* unused harmony reexport Redirect */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(34);
-/* unused harmony reexport Route */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(17);
 /* unused harmony reexport Router */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(97);
 /* unused harmony reexport StaticRouter */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Switch__ = __webpack_require__(99);
-/* unused harmony reexport Switch */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_10__Switch__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__generatePath__ = __webpack_require__(101);
 /* unused harmony reexport generatePath */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__matchPath__ = __webpack_require__(102);
@@ -16444,7 +16444,7 @@ var Newplayer = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navigation_css__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navigation_css__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navigation_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Navigation_css__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -16530,7 +16530,7 @@ var Navigation = function (_Component) {
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
-                            { onClick: this.props.button, name: 'lists', value: 'action' },
+                            { onClick: this.props.button, name: 'list', value: 'action' },
                             'Lists'
                         )
                     ),
@@ -16563,7 +16563,7 @@ var Navigation = function (_Component) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(42);
-module.exports = __webpack_require__(126);
+module.exports = __webpack_require__(125);
 
 
 /***/ }),
@@ -38838,9 +38838,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Leagues_Newleague__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Players_Newplayer__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Navigation_Navigation__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__index_css__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__index_css__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__index_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__containers_Battlemind__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__containers_Battlemind__ = __webpack_require__(123);
 
 
 
@@ -60459,7 +60459,7 @@ StaticRouter.childContextTypes = {
 // Written in this round about way for babel-transform-imports
 
 
-/* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Switch__["a" /* default */]);
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Switch__["a" /* default */]);
 
 /***/ }),
 /* 100 */
@@ -61209,7 +61209,7 @@ var Player = function (_Component) {
     return Player;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Player);
+/* harmony default export */ __webpack_exports__["a"] = (Player);
 
 /***/ }),
 /* 111 */
@@ -61331,7 +61331,7 @@ var Players = function (_Component) {
     return Players;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Players);
+/* harmony default export */ __webpack_exports__["a"] = (Players);
 
 /***/ }),
 /* 112 */
@@ -61501,7 +61501,7 @@ var Leagues = function (_Component) {
     return Leagues;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Leagues);
+/* harmony default export */ __webpack_exports__["a"] = (Leagues);
 
 /***/ }),
 /* 115 */
@@ -61931,7 +61931,7 @@ var League = function (_Component) {
     return League;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (League);
+/* harmony default export */ __webpack_exports__["a"] = (League);
 
 /***/ }),
 /* 116 */
@@ -62057,7 +62057,7 @@ var Scoreboards = function (_Component) {
     return Scoreboards;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Scoreboards);
+/* harmony default export */ __webpack_exports__["a"] = (Scoreboards);
 
 /***/ }),
 /* 117 */
@@ -62413,7 +62413,7 @@ var Scoreboard = function (_Component) {
     return Scoreboard;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Scoreboard);
+/* harmony default export */ __webpack_exports__["a"] = (Scoreboard);
 
 /***/ }),
 /* 118 */
@@ -62459,14 +62459,13 @@ function contains(a, obj) {
 
 
 /***/ }),
-/* 119 */,
-/* 120 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(121);
+var content = __webpack_require__(120);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -62491,7 +62490,7 @@ if(false) {
 }
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -62505,13 +62504,13 @@ exports.push([module.i, ".navigation{\r\n    display: flex;\r\n    list-style-ty
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(123);
+var content = __webpack_require__(122);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -62536,7 +62535,7 @@ if(false) {
 }
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -62550,16 +62549,23 @@ exports.push([module.i, ".content {\r\n    height:78vh;\r\n    width: 100%;\r\n 
 
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Players_Players__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Leagues_Leagues__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboards__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Players_Player__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Leagues_League__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_Scoreboards_Scoreboard__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_router_dom__ = __webpack_require__(5);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -62578,6 +62584,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
+
+
+
+
+
 var Battlemind = function (_Component) {
     _inherits(Battlemind, _Component);
 
@@ -62587,7 +62600,7 @@ var Battlemind = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Battlemind.__proto__ || Object.getPrototypeOf(Battlemind)).call(this, props));
 
         _this.state = {
-            action: 'new',
+            action: 'list',
             object: 'league',
             types: [{ id: 0,
                 type: 'test' }]
@@ -62629,27 +62642,36 @@ var Battlemind = function (_Component) {
         value: function render() {
             var _this3 = this;
 
-            return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+            return __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(
                 'div',
                 null,
-                __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], { button: function button(e) {
+                __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], { button: function button(e) {
                         return _this3.buttonHandler(e);
                     } }),
-                console.log(this.state),
-                this.state.action === 'new' && this.state.object === 'player' ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], { types: this.state.types }) : null,
-                this.state.action === 'new' && this.state.object === 'league' ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], null) : null,
-                this.state.action === 'new' && this.state.object === 'scoreboard' ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], { types: this.state.types }) : null
+                __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_11_react_router_dom__["d" /* Switch */],
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11_react_router_dom__["c" /* Route */], { exact: true, path: '/players/:id/edit', component: __WEBPACK_IMPORTED_MODULE_7__components_Players_Player__["a" /* default */] }),
+                    __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues/:id/edit', component: __WEBPACK_IMPORTED_MODULE_8__components_Leagues_League__["a" /* default */] }),
+                    __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11_react_router_dom__["c" /* Route */], { exact: true, path: '/scoreboards/:id/edit', component: __WEBPACK_IMPORTED_MODULE_9__components_Scoreboards_Scoreboard__["a" /* default */] }),
+                    this.state.action === 'new' && this.state.object === 'player' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], { types: this.state.types }) : null,
+                    this.state.action === 'new' && this.state.object === 'league' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], null) : null,
+                    this.state.action === 'new' && this.state.object === 'scoreboard' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], { types: this.state.types }) : null,
+                    this.state.action === 'list' && this.state.object === 'player' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Players_Players__["a" /* default */], null) : null,
+                    this.state.action === 'list' && this.state.object === 'league' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Leagues_Leagues__["a" /* default */], null) : null,
+                    this.state.action === 'list' && this.state.object === 'scoreboard' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboards__["a" /* default */], null) : null
+                )
             );
         }
     }]);
 
     return Battlemind;
-}(__WEBPACK_IMPORTED_MODULE_4_react__["Component"]);
+}(__WEBPACK_IMPORTED_MODULE_10_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Battlemind);
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62781,7 +62803,7 @@ var Newscoreboard = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Newscoreboard);
 
 /***/ }),
-/* 126 */
+/* 125 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

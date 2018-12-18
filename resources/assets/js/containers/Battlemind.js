@@ -2,13 +2,20 @@ import Navigation from '../components/Navigation/Navigation';
 import Newplayer from '../components/Players/Newplayer';
 import Newleague from '../components/Leagues/Newleague';
 import Newscoreboard from '../components/Scoreboards/Newscoreboard';
+import Players from '../components/Players/Players';
+import Leagues from '../components/Leagues/Leagues';
+import Scoreboards from '../components/Scoreboards/Scoreboards';
+import Player from '../components/Players/Player';
+import League from '../components/Leagues/League';
+import Scoreboard from '../components/Scoreboards/Scoreboard';
 import React, { Component } from 'react';
+import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
 
 class Battlemind extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            action: 'new',
+            action: 'list',
             object: 'league',
             types: [
                 { id: 0,
@@ -45,11 +52,24 @@ componentWillMount(){
         return (
             <div>
                 <Navigation button={(e) => this.buttonHandler(e)} />
-                {console.log(this.state)}
+            <Switch>
+                
+               
+  
+                <Route exact path="/players/:id/edit" component={Player}></Route>
+                <Route exact path="/leagues/:id/edit" component={League}></Route>
+                <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
                 {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
                 {this.state.action === 'new' && this.state.object === 'league' ? <Newleague  /> : null}
                 {this.state.action === 'new' && this.state.object === 'scoreboard' ? <Newscoreboard types={this.state.types} /> : null}
+                {this.state.action === 'list' && this.state.object === 'player' ? <Players /> : null}
+                {this.state.action === 'list' && this.state.object === 'league' ? <Leagues /> : null}
+                {this.state.action === 'list' && this.state.object === 'scoreboard' ? <Scoreboards /> : null}
+                
 
+            </Switch> 
+            
+                
 
 
             </div>
