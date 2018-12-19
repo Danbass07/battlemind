@@ -48,11 +48,11 @@ class Leagues extends Component {
     render() {
     
         return (
-            <div>
-                <h1>Leagues Component</h1>
-                <h2>List of all your leagues</h2>
-                
+            <div className="maincontent">
+             
+                <div className="list-grid"> 
                 {this.renderLeagues()}
+                </div>
             </div>
         );
     }

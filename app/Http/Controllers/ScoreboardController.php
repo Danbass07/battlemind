@@ -32,7 +32,7 @@ class ScoreboardController extends Controller
        
             $allScoreboards = $scoreboard->whereIn('user_id', $request->user())->with('user');
             $scoreboards = $allScoreboards->get();
-            return response()->json(['scoreboards' => $scoreboards,]);
+            return response()->json(['content' => $scoreboards,]);
       
        
    }

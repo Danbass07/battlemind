@@ -8,7 +8,7 @@ class Navigation extends Component {
     render() {
         return (
             <div>
-                <div className="additionalStrip onTop">N E W</div>
+   
                 <ul className="navigation top">
                 
                     <li>
@@ -32,7 +32,7 @@ class Navigation extends Component {
                         <button onClick={this.props.button} name="reset" value=" ">empty</button>
                     </li>
                 </ul> 
-                <div className="additionalStrip onBottom">L I S T S</div>
+               
 
 
                 {/* <div className="additionalStrip onTop">N E W</div>

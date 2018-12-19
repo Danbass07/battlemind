@@ -1,5 +1,7 @@
 .navigation{
     display: flex;
+    position: fixed; 
+    overflow: hidden;
     list-style-type: none;
     padding: 4px;
     box-sizing: border-box;
@@ -12,40 +14,16 @@
     height: 35px;
     
 }
-a {
-    color: white;
-    text-decoration: none;
-  
-}
-
-.additionalStrip {
-    height: 35px;
-    width: 100%;
-    background-color: salmon;
-    text-align: center;
-    padding: 5px;
-    font-size: 1.2em;
-    animation: mymove 5s infinite;
-}
-.onTop {
-    position: relative;       
-    top: 0px;
-}
-.onBottom {
-    position: fixed;       
-    bottom: 0;
-    z-index: 2;
-}
 
 .top {
-    position: relative;
-    top: 0px;
+    position: fixed;
+    top: 50px;
     margin: 0;
     
 }
 .bottom {
     position: fixed;
-    bottom: 35px;
+    bottom: 0;
     margin: 0;
     z-index: 2;
    

@@ -10,6 +10,7 @@ import League from '../components/Leagues/League';
 import Scoreboard from '../components/Scoreboards/Scoreboard';
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
+import List from '../components/List';
 
 class Battlemind extends Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class Battlemind extends Component {
             ],
             
         };
+    
     }
 
 buttonHandler(e) {
@@ -48,9 +50,11 @@ getTypes() {
 componentWillMount(){
     this.getTypes();
 }
+
+
     render() {
         return (
-            <div>
+            <div className="Battlemind">  
                 <Navigation button={(e) => this.buttonHandler(e)} />
             <Switch>
                 
@@ -59,12 +63,16 @@ componentWillMount(){
                 <Route exact path="/players/:id/edit" component={Player}></Route>
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
-                {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
+
+
+                {this.state.action === 'list'  ? <List object={this.state.object} /> : null}
+
+                {/* {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
                 {this.state.action === 'new' && this.state.object === 'league' ? <Newleague  /> : null}
                 {this.state.action === 'new' && this.state.object === 'scoreboard' ? <Newscoreboard types={this.state.types} /> : null}
                 {this.state.action === 'list' && this.state.object === 'player' ? <Players /> : null}
                 {this.state.action === 'list' && this.state.object === 'league' ? <Leagues /> : null}
-                {this.state.action === 'list' && this.state.object === 'scoreboard' ? <Scoreboards /> : null}
+                {this.state.action === 'list' && this.state.object === 'scoreboard' ? <Scoreboards /> : null} */}
                 
 
             </Switch> 

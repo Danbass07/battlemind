@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import "./League.css";
+import {Link} from 'react-router-dom';
 
 class League extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class League extends Component {
         this.addPlayer = this.addPlayer.bind(this);
         this.renderResultsDynamic = this.renderResultsDynamic.bind(this);
         this.renderResults = this.renderResults.bind(this);
-        
+     
        
         
     }
@@ -247,13 +248,15 @@ class League extends Component {
       
      
     }
+
     render() {
        
        
         return (
             <div>
-                <div className="row justify-content-center">
-                    <div className="col-md-8">
+                <div className="Modal">
+                <Link to={`/`} className="Cancel-button">X</Link>
+                    <div className="Form">
                         <div className="card">
                             <div className="card-header">Edit Leauge</div>
 
@@ -331,10 +334,10 @@ class League extends Component {
                                 </button>
                 </form>
                             <hr />
-                            <button onClick={() => this.actionController()} className="btn btn-sm btn-dark float-right">
+                            {/* <button onClick={() => this.actionController()} className="btn btn-sm btn-dark float-right">
                             { this.state.action}
-                            </button>
-                            {this.renderPlayers()}
+                            </button> */}
+                            {/* {this.renderPlayers()} */}
                         </div>
                     </div>
                 </div>

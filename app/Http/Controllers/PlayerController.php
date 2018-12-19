@@ -16,7 +16,7 @@ class PlayerController extends Controller
          $allplayers = Player::all();
          $allPlayersWithUser = $player->whereIn('user_id', $request->user())->with('user');
          $players = $allPlayersWithUser->orderBy('wins','desc')->get();
-         return response()->json(['players' => $players,
+         return response()->json(['content' => $players,
                                     'allplayers' => $allplayers,
                                     ]);
     }

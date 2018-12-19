@@ -15,7 +15,7 @@ class LeagueController extends Controller
     public function index(Request $request, League $league) {
          $allLeagues = $league->whereIn('user_id', $request->user())->with('user');
          $leagues = $allLeagues->get();
-         return response()->json(['leagues' => $leagues,]);
+         return response()->json(['content' => $leagues,]);
     }
     
 

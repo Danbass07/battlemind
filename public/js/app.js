@@ -16297,7 +16297,7 @@ var Newleague = function (_Component) {
     return Newleague;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Newleague);
+/* unused harmony default export */ var _unused_webpack_default_export = (Newleague);
 
 /***/ }),
 /* 39 */
@@ -16435,7 +16435,7 @@ var Newplayer = function (_Component) {
     return Newplayer;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Newplayer);
+/* unused harmony default export */ var _unused_webpack_default_export = (Newplayer);
 
 /***/ }),
 /* 40 */
@@ -16475,11 +16475,6 @@ var Navigation = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'additionalStrip onTop' },
-                    'N E W'
-                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'ul',
                     { className: 'navigation top' },
@@ -16543,11 +16538,6 @@ var Navigation = function (_Component) {
                             'empty'
                         )
                     )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'additionalStrip onBottom' },
-                    'L I S T S'
                 )
             );
         }
@@ -61095,10 +61085,15 @@ var Player = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'test' },
+                { className: 'Modal' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                    { to: '/', className: 'Cancel-button' },
+                    'X'
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'row justify-content-center' },
+                    { className: 'Form' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'col-md-8' },
@@ -61308,17 +61303,7 @@ var Players = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'content' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    'Players Component'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
-                    null,
-                    'List of all your players (decks,armies,teams)'
-                ),
+                { className: 'maincontent' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'list-grid' },
@@ -61331,7 +61316,7 @@ var Players = function (_Component) {
     return Players;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Players);
+/* unused harmony default export */ var _unused_webpack_default_export = (Players);
 
 /***/ }),
 /* 112 */
@@ -61482,18 +61467,12 @@ var Leagues = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                null,
+                { className: 'maincontent' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    'Leagues Component'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
-                    null,
-                    'List of all your leagues'
-                ),
-                this.renderLeagues()
+                    'div',
+                    { className: 'list-grid' },
+                    this.renderLeagues()
+                )
             );
         }
     }]);
@@ -61501,7 +61480,7 @@ var Leagues = function (_Component) {
     return Leagues;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Leagues);
+/* unused harmony default export */ var _unused_webpack_default_export = (Leagues);
 
 /***/ }),
 /* 115 */
@@ -61510,6 +61489,9 @@ var Leagues = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__League_css__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__League_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__League_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(5);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -61521,6 +61503,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -61819,17 +61803,21 @@ var League = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this11 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'row justify-content-center' },
+                    { className: 'Modal' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                        { to: '/', className: 'Cancel-button' },
+                        'X'
+                    ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'col-md-8' },
+                        { className: 'Form' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'card' },
@@ -61912,15 +61900,7 @@ var League = function (_Component) {
                                     'Edit League'
                                 )
                             ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { onClick: function onClick() {
-                                        return _this11.actionController();
-                                    }, className: 'btn btn-sm btn-dark float-right' },
-                                this.state.action
-                            ),
-                            this.renderPlayers()
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
                         )
                     )
                 )
@@ -62057,7 +62037,7 @@ var Scoreboards = function (_Component) {
     return Scoreboards;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Scoreboards);
+/* unused harmony default export */ var _unused_webpack_default_export = (Scoreboards);
 
 /***/ }),
 /* 117 */
@@ -62346,10 +62326,15 @@ var Scoreboard = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'container' },
+                { className: 'Modal' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                    { to: '/', className: 'Cancel-button' },
+                    'X'
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'row justify-content-center' },
+                    { className: 'Form' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'col-md-8' },
@@ -62498,7 +62483,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, ".navigation{\r\n    display: flex;\r\n    list-style-type: none;\r\n    padding: 4px;\r\n    box-sizing: border-box;\r\n    width: 100%;\r\n    justify-content: space-around;\r\n    background-color: rgb(44, 37, 37);\r\n    color: white;\r\n    font-size: 1.2em;\r\n    left: 0;\r\n    height: 35px;\r\n    \r\n}\r\na {\r\n    color: white;\r\n    text-decoration: none;\r\n  \r\n}\r\n\r\n.additionalStrip {\r\n    height: 35px;\r\n    width: 100%;\r\n    background-color: salmon;\r\n    text-align: center;\r\n    padding: 5px;\r\n    font-size: 1.2em;\r\n    animation: mymove 5s infinite;\r\n}\r\n.onTop {\r\n    position: relative;       \r\n    top: 0px;\r\n}\r\n.onBottom {\r\n    position: fixed;       \r\n    bottom: 0;\r\n    z-index: 2;\r\n}\r\n\r\n.top {\r\n    position: relative;\r\n    top: 0px;\r\n    margin: 0;\r\n    \r\n}\r\n.bottom {\r\n    position: fixed;\r\n    bottom: 35px;\r\n    margin: 0;\r\n    z-index: 2;\r\n   \r\n}\r\n\r\n@keyframes mymove {\r\n    0% {text-align: left;}\r\n    25% {text-align: center;}\r\n    50% {text-align: right;}\r\n    75% {text-align: center;}\r\n    100% {text-align: left;}\r\n}", ""]);
+exports.push([module.i, ".navigation{\r\n    display: flex;\r\n    position: fixed; \r\n    overflow: hidden;\r\n    list-style-type: none;\r\n    padding: 4px;\r\n    box-sizing: border-box;\r\n    width: 100%;\r\n    justify-content: space-around;\r\n    background-color: rgb(44, 37, 37);\r\n    color: white;\r\n    font-size: 1.2em;\r\n    left: 0;\r\n    height: 35px;\r\n    \r\n}\r\n\r\n.top {\r\n    position: fixed;\r\n    top: 50px;\r\n    margin: 0;\r\n    \r\n}\r\n.bottom {\r\n    position: fixed;\r\n    bottom: 0;\r\n    margin: 0;\r\n    z-index: 2;\r\n   \r\n}\r\n\r\n@keyframes mymove {\r\n    0% {text-align: left;}\r\n    25% {text-align: center;}\r\n    50% {text-align: right;}\r\n    75% {text-align: center;}\r\n    100% {text-align: left;}\r\n}", ""]);
 
 // exports
 
@@ -62543,7 +62528,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, ".content {\r\n    height:78vh;\r\n    width: 100%;\r\n    overflow: auto ;\r\n    position: absolute;\r\n    margin-bottom: 70px;\r\n    \r\n    align-items: center;\r\n    background-color: black;\r\n\r\n    \r\n}\r\n.maincontent {\r\n    display: flex;\r\n    width: 100%;\r\n    height: 100%;\r\n    align-items: center;\r\n    justify-content: center;\r\n \r\n  \r\n    \r\n}\r\n.myform {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 40%;\r\n   \r\n}\r\n.myform-control {\r\n    height: 30px;\r\n    width: 100%;\r\n    margin: 5%;\r\n}\r\n.submit-button {\r\n    background-color: chocolate;\r\n    width: 100%;\r\n    margin: 5%;\r\n}\r\n.button {\r\n    background-color: rgb(252, 17, 0);\r\n    width: 25%;\r\n    padding: 8px;\r\n    border: 1px solid coral;\r\n    text-align: center;\r\n}\r\n.update {\r\n    background-color: rgb(20, 8, 122);\r\n    margin-left: auto;\r\n}\r\n\r\n.list-grid {\r\n   \r\n    color: cornsilk;\r\n}\r\n.list-item {\r\n    display: flex;\r\n    justify-items: flex-end;\r\n    border: 1px solid cornsilk;\r\n}\r\n@media only screen and (min-width: 700px) {\r\n.content {\r\n    height:85vh;\r\n    }\r\n}\r\n\r\n@media only screen and (min-width: 1000px) {\r\n    .content {\r\n        height:90vh;\r\n        }\r\n    }", ""]);
+exports.push([module.i, ".content {\r\n    height:78vh;\r\n    width: 100%;\r\n    overflow: auto ;\r\n    position: absolute;\r\n    margin-bottom: 70px;\r\n    \r\n    align-items: center;\r\n    background-color: black;\r\n\r\n    \r\n}\r\n\r\n.myform {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 40%;\r\n   \r\n}\r\n.myform-control {\r\n    height: 30px;\r\n    width: 100%;\r\n    margin: 5%;\r\n}\r\n.submit-button {\r\n    background-color: chocolate;\r\n    width: 100%;\r\n    margin: 5%;\r\n}\r\n.button {\r\n    background-color: rgb(252, 17, 0);\r\n    width: 25%;\r\n    padding: 8px;\r\n    border: 1px solid coral;\r\n    text-align: center;\r\n}\r\n.update {\r\n    background-color: rgb(20, 8, 122);\r\n    margin-left: auto;\r\n}\r\n\r\n.list-grid {\r\n   \r\n    color: cornsilk;\r\n}\r\n.list-item {\r\n    display: flex;\r\n    justify-items: flex-end;\r\n    border: 1px solid cornsilk;\r\n}\r\n/* global edit list */\r\n\r\n.Modal {\r\n    position: fixed;\r\n    height: 100vw;\r\n    width: 100vw;\r\n    top: 0;\r\n    background-color: black;\r\n    opacity: 0.7;\r\n    z-index: 1000;\r\n    padding: 5%;\r\n}\r\n.Form {\r\n    position: relative;\r\n    z-index: 1001;\r\n    width: 50%;\r\n    margin: 5% auto;\r\n}\r\n.Cancel-button {\r\n    position: relative;\r\n    width: 50px;\r\n    height: 50px;\r\n    margin: 70% 70%;\r\n    font-size: 3em;\r\n    text-decoration: none;\r\n    align-content: center;\r\n    border: solid 2px white;\r\n    border-radius: 50% 50% 50% 50%;\r\n    padding: 5px;\r\n\r\n}\r\na:hover {\r\n    color: white;\r\n}\r\n@media only screen and (min-width: 700px) {\r\n.content {\r\n    height:85vh;\r\n    }\r\n}\r\n\r\n@media only screen and (min-width: 1000px) {\r\n    .content {\r\n        height:90vh;\r\n        }\r\n    }", ""]);
 
 // exports
 
@@ -62566,6 +62551,7 @@ exports.push([module.i, ".content {\r\n    height:78vh;\r\n    width: 100%;\r\n 
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_router_dom__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_List__ = __webpack_require__(129);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -62577,6 +62563,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -62606,6 +62593,7 @@ var Battlemind = function (_Component) {
                 type: 'test' }]
 
         };
+
         return _this;
     }
 
@@ -62644,7 +62632,7 @@ var Battlemind = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(
                 'div',
-                null,
+                { className: 'Battlemind' },
                 __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], { button: function button(e) {
                         return _this3.buttonHandler(e);
                     } }),
@@ -62654,12 +62642,7 @@ var Battlemind = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11_react_router_dom__["c" /* Route */], { exact: true, path: '/players/:id/edit', component: __WEBPACK_IMPORTED_MODULE_7__components_Players_Player__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues/:id/edit', component: __WEBPACK_IMPORTED_MODULE_8__components_Leagues_League__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11_react_router_dom__["c" /* Route */], { exact: true, path: '/scoreboards/:id/edit', component: __WEBPACK_IMPORTED_MODULE_9__components_Scoreboards_Scoreboard__["a" /* default */] }),
-                    this.state.action === 'new' && this.state.object === 'player' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], { types: this.state.types }) : null,
-                    this.state.action === 'new' && this.state.object === 'league' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], null) : null,
-                    this.state.action === 'new' && this.state.object === 'scoreboard' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], { types: this.state.types }) : null,
-                    this.state.action === 'list' && this.state.object === 'player' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Players_Players__["a" /* default */], null) : null,
-                    this.state.action === 'list' && this.state.object === 'league' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Leagues_Leagues__["a" /* default */], null) : null,
-                    this.state.action === 'list' && this.state.object === 'scoreboard' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboards__["a" /* default */], null) : null
+                    this.state.action === 'list' ? __WEBPACK_IMPORTED_MODULE_10_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__components_List__["a" /* default */], { object: this.state.object }) : null
                 )
             );
         }
@@ -62800,13 +62783,180 @@ var Newscoreboard = function (_Component) {
     return Newscoreboard;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Newscoreboard);
+/* unused harmony default export */ var _unused_webpack_default_export = (Newscoreboard);
 
 /***/ }),
 /* 125 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 126 */,
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(128);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(11)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../../node_modules/css-loader/index.js!./League.css", function() {
+			var newContent = require("!!../../../../../node_modules/css-loader/index.js!./League.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(10)(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 129 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var List = function (_Component) {
+    _inherits(List, _Component);
+
+    function List(props) {
+        _classCallCheck(this, List);
+
+        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
+
+        _this.state = {
+            content: []
+        };
+        return _this;
+    }
+
+    _createClass(List, [{
+        key: 'deleteHandler',
+        value: function deleteHandler(id) {
+
+            var isNotId = function isNotId(player) {
+                return player.id !== id;
+            };
+            var updatedPlayer = this.state.players.filter(isNotId);
+            this.setState({ players: updatedPlayer });
+            axios.delete('/players/' + id);
+        }
+    }, {
+        key: 'renderContent',
+        value: function renderContent() {
+            var _this2 = this;
+
+            return this.state.content.map(function (content) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { key: content.id, className: 'list-item' },
+                    content.name,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                        { to: _this2.props.object + 's/' + content.id + '/edit', className: 'button update' },
+                        'Update'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        { onClick: function onClick() {
+                                return _this2.deleteHandler(content.id);
+                            },
+                            className: 'button' },
+                        'Delete'
+                    )
+                );
+            });
+        }
+    }, {
+        key: 'getContent',
+        value: function getContent() {
+            var _this3 = this;
+
+            axios.get('/' + this.props.object + 's').then(function (response) {
+                return _this3.setState({
+                    content: [].concat(_toConsumableArray(response.data.content))
+                });
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.getContent();
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (prevProps.object !== this.props.object) {
+                this.getContent();
+                console.log(prevProps.object);
+                console.log(this.props.object);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            {
+                console.log(this.props.object);
+            }
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'maincontent' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'list-grid' },
+                    this.renderContent()
+                )
+            );
+        }
+    }]);
+
+    return List;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (List);
 
 /***/ })
 /******/ ]);

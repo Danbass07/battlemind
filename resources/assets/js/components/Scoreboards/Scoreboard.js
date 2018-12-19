@@ -223,8 +223,9 @@ class Scoreboard extends Component {
     render() {
         
         return (
-            <div className="container">
-                <div className="row justify-content-center">
+            <div className="Modal">
+            <Link to={`/`} className="Cancel-button">X</Link>
+             <div className="Form">
                     <div className="col-md-8">
                         <div className="card">
                             <div className="card-header">Edit Scoreboard</div>
