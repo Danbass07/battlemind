@@ -2,9 +2,6 @@ import Navigation from '../components/Navigation/Navigation';
 import Newplayer from '../components/Players/Newplayer';
 import Newleague from '../components/Leagues/Newleague';
 import Newscoreboard from '../components/Scoreboards/Newscoreboard';
-import Players from '../components/Players/Players';
-import Leagues from '../components/Leagues/Leagues';
-import Scoreboards from '../components/Scoreboards/Scoreboards';
 import Player from '../components/Players/Player';
 import League from '../components/Leagues/League';
 import Scoreboard from '../components/Scoreboards/Scoreboard';
@@ -17,7 +14,7 @@ class Battlemind extends Component {
         super(props);
         this.state = {
             action: 'list',
-            object: 'league',
+            object: 'scoreboard',
             types: [
                 { id: 0,
                   type: 'test' },
@@ -66,6 +63,9 @@ componentWillMount(){
 
 
                 {this.state.action === 'list'  ? <List object={this.state.object} /> : null}
+                {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
+                {this.state.action === 'new' && this.state.object === 'league' ? <Newleague  /> : null}
+                {this.state.action === 'new' && this.state.object === 'scoreboard' ? <Newscoreboard types={this.state.types} /> : null}
 
                 {/* {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
                 {this.state.action === 'new' && this.state.object === 'league' ? <Newleague  /> : null}

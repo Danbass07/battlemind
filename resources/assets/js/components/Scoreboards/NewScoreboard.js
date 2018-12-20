@@ -6,7 +6,7 @@ class Newscoreboard extends Component {
         super(props);
         this.state = {
             name: '',
-            type: '',
+            type: 'planeswalker',
             url: '',
             wins: 0,
             lost: 0,
