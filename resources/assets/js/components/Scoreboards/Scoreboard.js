@@ -223,7 +223,8 @@ class Scoreboard extends Component {
     render() {
         
         return (
-            <div className="Modal">
+        <div>
+            <div className="Modal"></div>
             <Link to={`/`} className="Cancel-button">X</Link>
              <div className="Form">
                     <div className="col-md-8">
@@ -271,8 +272,9 @@ class Scoreboard extends Component {
                             {this.renderPlayers()}
                         </div>
                     </div>
-                </div>
+               
             </div>
+        </div>
         );
     }
 }

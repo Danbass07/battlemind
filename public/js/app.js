@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 42);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,7 +73,7 @@
 if (false) {
   module.exports = require('./cjs/react.production.min.js');
 } else {
-  module.exports = __webpack_require__(69);
+  module.exports = __webpack_require__(63);
 }
 
 
@@ -85,7 +85,7 @@ if (false) {
 
 
 var bind = __webpack_require__(21);
-var isBuffer = __webpack_require__(50);
+var isBuffer = __webpack_require__(44);
 
 /*global toString:true*/
 
@@ -413,7 +413,7 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(83)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(77)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -553,33 +553,33 @@ module.exports = warning;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__ = __webpack_require__(76);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(83);
 /* unused harmony reexport HashRouter */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(31);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__Link__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(84);
 /* unused harmony reexport MemoryRouter */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NavLink__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NavLink__ = __webpack_require__(86);
 /* unused harmony reexport NavLink */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Prompt__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Prompt__ = __webpack_require__(88);
 /* unused harmony reexport Prompt */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(90);
 /* unused harmony reexport Redirect */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(32);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(15);
 /* unused harmony reexport Router */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(92);
 /* unused harmony reexport StaticRouter */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Switch__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Switch__ = __webpack_require__(94);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_10__Switch__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__generatePath__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__generatePath__ = __webpack_require__(96);
 /* unused harmony reexport generatePath */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__matchPath__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__matchPath__ = __webpack_require__(97);
 /* unused harmony reexport matchPath */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__withRouter__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__withRouter__ = __webpack_require__(98);
 /* unused harmony reexport withRouter */
 
 
@@ -615,11 +615,11 @@ module.exports = warning;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createBrowserHistory__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createBrowserHistory__ = __webpack_require__(78);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__createBrowserHistory__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__createHashHistory__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__createHashHistory__ = __webpack_require__(81);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__createHashHistory__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__createMemoryHistory__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__createMemoryHistory__ = __webpack_require__(82);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_2__createMemoryHistory__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LocationUtils__ = __webpack_require__(9);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__LocationUtils__["a"]; });
@@ -782,8 +782,8 @@ module.exports = warning;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createLocation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return locationsAreEqual; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(7);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -859,7 +859,7 @@ var locationsAreEqual = function locationsAreEqual(a, b) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(53);
+var normalizeHeaderName = __webpack_require__(47);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -953,7 +953,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(52)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(46)))
 
 /***/ }),
 /* 11 */
@@ -14452,12 +14452,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(1);
-var settle = __webpack_require__(54);
-var buildURL = __webpack_require__(56);
-var parseHeaders = __webpack_require__(57);
-var isURLSameOrigin = __webpack_require__(58);
+var settle = __webpack_require__(48);
+var buildURL = __webpack_require__(50);
+var parseHeaders = __webpack_require__(51);
+var isURLSameOrigin = __webpack_require__(52);
 var createError = __webpack_require__(23);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(59);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(53);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -14554,7 +14554,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(60);
+      var cookies = __webpack_require__(54);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -14638,7 +14638,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(55);
+var enhanceError = __webpack_require__(49);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -15215,7 +15215,7 @@ Route.childContextTypes = {
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isarray = __webpack_require__(93)
+var isarray = __webpack_require__(87)
 
 /**
  * Expose `pathToRegexp`.
@@ -15690,1514 +15690,14 @@ var generatePath = function generatePath() {
 
 /***/ }),
 /* 36 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var Player = function (_Component) {
-    _inherits(Player, _Component);
-
-    function Player(props) {
-        _classCallCheck(this, Player);
-
-        var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, props));
-
-        _this.state = {
-            name: '',
-            type: '',
-            url: '',
-            wins: 0,
-            lost: 0,
-            draws: 0
-        };
-        _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
-        _this.typeChangeHandler = _this.typeChangeHandler.bind(_this);
-        _this.urlChangeHandler = _this.urlChangeHandler.bind(_this);
-        _this.submitHandler = _this.submitHandler.bind(_this);
-        _this.addWin = _this.addWin.bind(_this);
-        _this.addLost = _this.addLost.bind(_this);
-        _this.addDraw = _this.addDraw.bind(_this);
-        _this.removeWin = _this.removeWin.bind(_this);
-        _this.removeLost = _this.removeLost.bind(_this);
-        _this.removeDraw = _this.removeDraw.bind(_this);
-
-        return _this;
-    }
-
-    _createClass(Player, [{
-        key: 'nameChangeHandler',
-        value: function nameChangeHandler(e) {
-            this.setState({
-                name: e.target.value
-            });
-        }
-    }, {
-        key: 'typeChangeHandler',
-        value: function typeChangeHandler(e) {
-            this.setState({
-                type: e.target.value
-            });
-        }
-    }, {
-        key: 'urlChangeHandler',
-        value: function urlChangeHandler(e) {
-            this.setState({
-                url: e.target.value
-            });
-        }
-    }, {
-        key: 'submitHandler',
-        value: function submitHandler(e) {
-            var _this2 = this;
-
-            e.preventDefault();
-
-            axios.put('/players/' + this.props.match.params.id, {
-                name: this.state.name,
-                type: this.state.type,
-                url: this.state.url,
-                wins: this.state.wins,
-                lost: this.state.lost,
-                draws: this.state.draws
-            }).then(function (response) {
-                _this2.props.history.push('/home');
-            });
-        }
-    }, {
-        key: 'getPlayers',
-        value: function getPlayers() {
-            var _this3 = this;
-
-            axios.get('/players/' + this.props.match.params.id + '/edit').then(function (response) {
-                return _this3.setState({
-                    name: response.data.player.name,
-                    type: response.data.player.type,
-                    url: response.data.player.url,
-                    wins: response.data.player.wins,
-                    lost: response.data.player.lost,
-                    draws: response.data.player.draws
-                });
-            });
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.getPlayers();
-        }
-    }, {
-        key: 'addWin',
-        value: function addWin() {
-
-            var win = +this.state.wins + +1;
-            this.setState({
-                wins: win
-            });
-        }
-    }, {
-        key: 'addLost',
-        value: function addLost() {
-            var lost = +this.state.lost + +1;
-            this.setState({
-                lost: lost
-            });
-        }
-    }, {
-        key: 'addDraw',
-        value: function addDraw() {
-            var draw = +this.state.draws + +1;
-            this.setState({
-                draws: draw
-            });
-        }
-    }, {
-        key: 'removeWin',
-        value: function removeWin() {
-
-            var win = +this.state.wins - +1;
-            if (win >= 0) {
-                this.setState({
-                    wins: win
-                });
-            }
-        }
-    }, {
-        key: 'removeLost',
-        value: function removeLost() {
-            var lost = +this.state.lost - +1;
-            if (lost >= 0) {
-                this.setState({
-                    lost: lost
-                });
-            }
-        }
-    }, {
-        key: 'removeDraw',
-        value: function removeDraw() {
-            var draw = +this.state.draws - +1;
-            if (draw >= 0) {
-                this.setState({
-                    draws: draw
-                });
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'Modal' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                    { to: '/', className: 'Cancel-button' },
-                    'X'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'Form' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col-md-8' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'card' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'card-header' },
-                                'Edit Player'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'form',
-                                { onSubmit: this.submitHandler },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    {
-                                        className: 'form-group' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'Name',
-                                        value: this.state.name,
-                                        onChange: this.nameChangeHandler,
-                                        required: true
-
-                                    }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'Type',
-                                        required: true,
-                                        value: this.state.type,
-                                        onChange: this.typeChangeHandler
-                                    }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'Url',
-                                        required: true,
-                                        value: this.state.url,
-                                        onChange: this.urlChangeHandler
-                                    })
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'h2',
-                                    null,
-                                    'Wins :',
-                                    this.state.wins,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addWin },
-                                        '++++'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeWin },
-                                        '----'
-                                    )
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'h2',
-                                    null,
-                                    'Lost: ',
-                                    this.state.lost,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addLost },
-                                        '++++'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeLost },
-                                        '----'
-                                    )
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'h2',
-                                    null,
-                                    'Draws: ',
-                                    this.state.draws,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addDraw },
-                                        '++++'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeDraw },
-                                        '----'
-                                    )
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'button',
-                                    {
-                                        type: 'submit',
-                                        className: 'btn btn-primary'
-
-                                    },
-                                    'Edit player'
-                                )
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Player;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Player);
-
-/***/ }),
-/* 37 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var League = function (_Component) {
-    _inherits(League, _Component);
-
-    function League(props) {
-        _classCallCheck(this, League);
-
-        var _this = _possibleConstructorReturn(this, (League.__proto__ || Object.getPrototypeOf(League)).call(this, props));
-
-        _this.state = {
-            id: 0,
-            name: 'name',
-            win_point_value: 0,
-            lost_point_value: 0,
-            draw_point_value: 0,
-            number_of_games: '',
-            number_of_players: '',
-            number_of_points: '',
-            allPlayers: [],
-            leaguePlayers: [],
-            action: 'minus'
-
-        };
-
-        _this.changeHandler = _this.changeHandler.bind(_this);
-        _this.submitHandler = _this.submitHandler.bind(_this);
-        _this.contains = _this.contains.bind(_this);
-        _this.addPlayer = _this.addPlayer.bind(_this);
-        _this.renderResultsDynamic = _this.renderResultsDynamic.bind(_this);
-        _this.renderResults = _this.renderResults.bind(_this);
-
-        return _this;
-    }
-
-    _createClass(League, [{
-        key: 'actionController',
-        value: function actionController() {
-            if (this.state.action === 'minus') {
-                this.setState({
-                    action: 'add'
-                });
-            } else {
-                this.setState({
-                    action: 'minus'
-                });
-            }
-        }
-    }, {
-        key: 'changeHandler',
-        value: function changeHandler(e) {
-
-            var property = e.target.placeholder;
-            this.setState(_defineProperty({}, property, e.target.value));
-        }
-    }, {
-        key: 'submitHandler',
-        value: function submitHandler(e) {
-            var _this2 = this;
-
-            e.preventDefault();
-            axios.put('/leagues/' + this.props.match.params.id, {
-                name: this.state.name,
-                win_point_value: this.state.win_point_value,
-                lost_point_value: this.state.lost_point_value,
-                draw_point_value: this.state.draw_point_value,
-                number_of_games: this.state.number_of_games,
-                number_of_players: this.state.number_of_players,
-                number_of_points: this.state.number_of_points
-
-            }).then(function (response) {
-                _this2.props.history.push('/home');
-            });
-        }
-    }, {
-        key: 'compareValues',
-        value: function compareValues(key) {
-            var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
-
-            return function (a, b) {
-                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-                    // property doesn't exist on either object
-                    return 0;
-                }
-
-                var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
-                var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
-
-                var comparison = 0;
-                if (varA > varB) {
-                    comparison = 1;
-                } else if (varA < varB) {
-                    comparison = -1;
-                }
-                return order == 'desc' ? comparison * -1 : comparison;
-            };
-        }
-    }, {
-        key: 'getLeague',
-        value: function getLeague() {
-            var _this3 = this;
-
-            axios.get('/leagues/' + this.props.match.params.id + '/edit').then(function (response) {
-                return _this3.setState({
-
-                    id: response.data.league.id,
-                    name: response.data.league.name,
-                    win_point_value: response.data.league.win_point_value,
-                    lost_point_value: response.data.league.lost_point_value,
-                    draw_point_value: response.data.league.draw_point_value,
-                    number_of_games: response.data.league.number_of_games,
-                    number_of_players: response.data.league.number_of_players,
-                    number_of_points: response.data.league.number_of_points,
-                    leaguePlayers: response.data.players
-                });
-            });
-        }
-    }, {
-        key: 'addPlayer',
-        value: function addPlayer(player) {
-            var _this4 = this;
-
-            axios.get('/leagues/' + this.props.match.params.id + '/addPlayer/' + player.id).then(function (response) {
-                return _this4.setState({
-                    leaguePlayers: [].concat(_toConsumableArray(response.data))
-                }).then(_this4.getPlayers());
-            });
-        }
-    }, {
-        key: 'removePlayer',
-        value: function removePlayer(player) {
-            var _this5 = this;
-
-            axios.get('/leagues/' + this.props.match.params.id + '/removePlayer/' + player.id).then(function (response) {
-                return _this5.setState({
-                    leaguePlayers: [].concat(_toConsumableArray(response.data))
-                }).then(_this5.getPlayers());
-            });
-        }
-    }, {
-        key: 'contains',
-        value: function contains(a, obj) {
-            for (var i = 0; i < a.length; i++) {
-
-                if (a[i].id === obj.id) {
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-    }, {
-        key: 'resultChangeController',
-        value: function resultChangeController(player_id, category, key) {
-            var _this6 = this;
-
-            var leaguePlayersUpdate = [].concat(_toConsumableArray(this.state.leaguePlayers));
-            leaguePlayersUpdate.map(function (leaguePlayer) {
-                return leaguePlayer.pivot.result = leaguePlayer.pivot.win * _this6.state.win_point_value + leaguePlayer.pivot.lost * _this6.state.lost_point_value + leaguePlayer.pivot.draw * _this6.state.draw_point_value;
-            });
-            var number = 1;
-            if (this.state.action === 'minus') {
-                number = -1;
-            };
-            if (category === 'Win') {
-                leaguePlayersUpdate[key].pivot.win += number;
-            }
-            if (category === 'Lost') {
-                leaguePlayersUpdate[key].pivot.lost += number;
-            }
-            if (category === 'Draw') {
-                leaguePlayersUpdate[key].pivot.draw += number;
-            }
-
-            this.setState({
-                leaguePlayers: leaguePlayersUpdate
-
-            });
-            axios.get('/players/' + this.props.match.params.id + '/addResult/' + player_id + '/' + category + '/' + this.state.action);
-        }
-    }, {
-        key: 'renderResults',
-        value: function renderResults() {
-            var _this7 = this;
-
-            var leaguePlayersResults = [].concat(_toConsumableArray(this.state.leaguePlayers));
-            leaguePlayersResults.map(function (leaguePlayer) {
-                return leaguePlayer.pivot.result = leaguePlayer.pivot.win * _this7.state.win_point_value + leaguePlayer.pivot.lost * _this7.state.lost_point_value + leaguePlayer.pivot.draw * _this7.state.draw_point_value;
-            });
-
-            this.setState({
-                leaguePlayers: leaguePlayersResults
-            });
-        }
-    }, {
-        key: 'renderResultsDynamic',
-        value: function renderResultsDynamic(player) {
-            var _this8 = this;
-
-            return this.state.leaguePlayers.sort(this.compareValues('result', 'desc')).map(function (leaguePlayer, index) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { key: leaguePlayer.id },
-                    _this8.state.leaguePlayers[index].pivot && _this8.state.leaguePlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        null,
-                        console.log('1st' + _this8.state.leaguePlayers),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'btn btn-sm btn-success float-right' },
-                            _this8.state.leaguePlayers[index].pivot.result,
-                            ' '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: function onClick() {
-                                    return _this8.resultChangeController(player.id, 'Win', index);
-                                }, className: 'btn btn-sm btn-info float-right' },
-                            _this8.state.leaguePlayers[index].pivot.win
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: function onClick() {
-                                    return _this8.resultChangeController(player.id, 'Lost', index);
-                                }, className: 'btn btn-sm btn-danger float-right' },
-                            _this8.state.leaguePlayers[index].pivot.lost
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: function onClick() {
-                                    return _this8.resultChangeController(player.id, 'Draw', index);
-                                }, className: 'btn btn-sm btn-warning float-right' },
-                            _this8.state.leaguePlayers[index].pivot.draw
-                        )
-                    ) : null
-                );
-            });
-        }
-    }, {
-        key: 'renderPlayers',
-        value: function renderPlayers() {
-            var _this9 = this;
-
-            return this.state.allPlayers.map(function (player) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { key: player.id, className: 'media' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'media-body' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            null,
-                            player.id,
-                            player.name,
-                            !_this9.contains(_this9.state.leaguePlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { onClick: function onClick() {
-                                        return _this9.addPlayer(player);
-                                    },
-                                    className: 'btn btn-sm btn-warning float-right' },
-                                'Add Player'
-                            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { onClick: function onClick() {
-                                        return _this9.removePlayer(player);
-                                    },
-                                    className: 'btn btn-sm btn-warning float-right' },
-                                '  X  '
-                            ),
-                            _this9.renderResultsDynamic(player)
-                        )
-                    )
-                );
-            });
-        }
-    }, {
-        key: 'getPlayers',
-        value: function getPlayers() {
-            var _this10 = this;
-
-            axios.get('/players').then(function (response) {
-                return _this10.setState({
-                    allPlayers: [].concat(_toConsumableArray(response.data.allplayers))
-                });
-            });
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.getLeague();
-            this.getPlayers();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'Modal' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                        { to: '/', className: 'Cancel-button' },
-                        'X'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Form' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'card' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'card-header' },
-                                'Edit Leauge'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'form',
-                                { onSubmit: this.submitHandler },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    {
-                                        className: 'form-group' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'name',
-                                        value: this.state.name,
-                                        onChange: this.changeHandler,
-                                        required: true
-
-                                    }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'win_point_value',
-                                        required: true,
-                                        type: 'number',
-                                        value: this.state.win_point_value,
-                                        onChange: this.changeHandler
-                                    }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'lost_point_value',
-                                        required: true,
-                                        type: 'number',
-                                        value: this.state.lost_point_value,
-                                        onChange: this.changeHandler
-                                    }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'draw_point_value',
-                                        required: true,
-                                        type: 'number',
-                                        value: this.state.draw_point_value,
-                                        onChange: this.changeHandler
-                                    }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'number_of_games',
-                                        required: true,
-                                        type: 'number',
-                                        value: this.state.number_of_games,
-                                        onChange: this.changeHandler
-                                    }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'number_of_players',
-                                        required: true,
-                                        type: 'number',
-                                        value: this.state.number_of_players,
-                                        onChange: this.changeHandler
-                                    }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'number_of_points',
-                                        required: true,
-                                        type: 'number',
-                                        value: this.state.number_of_points,
-                                        onChange: this.changeHandler
-                                    })
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'button',
-                                    {
-                                        type: 'submit',
-                                        className: 'btn btn-primary'
-
-                                    },
-                                    'Edit League'
-                                )
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return League;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (League);
-
-/***/ }),
-/* 38 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(5);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-var Scoreboard = function (_Component) {
-    _inherits(Scoreboard, _Component);
-
-    function Scoreboard(props) {
-        _classCallCheck(this, Scoreboard);
-
-        var _this = _possibleConstructorReturn(this, (Scoreboard.__proto__ || Object.getPrototypeOf(Scoreboard)).call(this, props));
-
-        _this.state = {
-            name: '',
-            type: '',
-            allPlayers: [],
-            ScoreboardPlayers: [],
-            action: 'minus'
-        };
-        _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
-        _this.typeChangeHandler = _this.typeChangeHandler.bind(_this);
-        _this.submitHandler = _this.submitHandler.bind(_this);
-        _this.contains = _this.contains.bind(_this);
-        _this.renderResultsDynamic = _this.renderResultsDynamic.bind(_this);
-        _this.addPlayer = _this.addPlayer.bind(_this);
-        _this.getPlayers = _this.getPlayers.bind(_this);
-
-        return _this;
-    }
-
-    _createClass(Scoreboard, [{
-        key: 'actionController',
-        value: function actionController() {
-            if (this.state.action === 'minus') {
-                this.setState({
-                    action: 'add'
-                });
-            } else {
-                this.setState({
-                    action: 'minus'
-                });
-            }
-        }
-    }, {
-        key: 'contains',
-        value: function contains(a, obj) {
-            for (var i = 0; i < a.length; i++) {
-
-                if (a[i].id === obj.id) {
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-    }, {
-        key: 'nameChangeHandler',
-        value: function nameChangeHandler(e) {
-            this.setState({
-                name: e.target.value
-            });
-        }
-    }, {
-        key: 'typeChangeHandler',
-        value: function typeChangeHandler(e) {
-            this.setState({
-                type: e.target.value
-            });
-        }
-    }, {
-        key: 'submitHandler',
-        value: function submitHandler(e) {
-            var _this2 = this;
-
-            e.preventDefault();
-
-            axios.put('/scoreboards/' + this.props.match.params.id, {
-                name: this.state.name,
-                type: this.state.type
-
-            }).then(function (response) {
-                _this2.props.history.push('/home');
-            });
-        }
-    }, {
-        key: 'getScoreboards',
-        value: function getScoreboards() {
-            var _this3 = this;
-
-            axios.get('/scoreboards/' + this.props.match.params.id + '/edit').then(function (response) {
-                return _this3.setState({
-                    name: response.data.scoreboard.name,
-                    type: response.data.scoreboard.type,
-                    ScoreboardPlayers: response.data.scoreboardPlayers
-
-                });
-            });
-        }
-    }, {
-        key: 'getPlayers',
-        value: function getPlayers() {
-            var _this4 = this;
-
-            axios.get('/players').then(function (response) {
-                return _this4.setState({
-                    allPlayers: [].concat(_toConsumableArray(response.data.allplayers))
-                });
-            });
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.getScoreboards();
-            this.getPlayers();
-        }
-    }, {
-        key: 'addPlayer',
-        value: function addPlayer(player) {
-            var _this5 = this;
-
-            axios.get('/scoreboards/' + this.props.match.params.id + '/addPlayer/' + player.id).then(function (response) {
-                return _this5.setState({
-                    ScoreboardPlayers: [].concat(_toConsumableArray(response.data))
-                });
-            });
-        }
-    }, {
-        key: 'removePlayer',
-        value: function removePlayer(player) {
-            var _this6 = this;
-
-            axios.get('/scoreboards/' + this.props.match.params.id + '/removePlayer/' + player.id).then(function (response) {
-                return _this6.setState({
-                    ScoreboardPlayers: [].concat(_toConsumableArray(response.data))
-                });
-            });
-        }
-    }, {
-        key: 'renderPlayers',
-        value: function renderPlayers() {
-            var _this7 = this;
-
-            return this.state.allPlayers.map(function (player) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { key: player.id, className: 'media' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'media-body' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            null,
-                            player.id,
-                            player.name,
-                            !_this7.contains(_this7.state.ScoreboardPlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { onClick: function onClick() {
-                                        return _this7.addPlayer(player);
-                                    },
-                                    className: 'btn btn-sm btn-warning float-right' },
-                                'Add Player'
-                            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { onClick: function onClick() {
-                                        return _this7.removePlayer(player);
-                                    },
-                                    className: 'btn btn-sm btn-warning float-right' },
-                                '  X  '
-                            ),
-                            _this7.renderResultsDynamic(player)
-                        )
-                    )
-                );
-            });
-        }
-    }, {
-        key: 'resultChangeController',
-        value: function resultChangeController(player_id, category, key) {
-            var scoreboardPlayersUpdate = [].concat(_toConsumableArray(this.state.ScoreboardPlayers));
-
-            var number = 1;
-            if (this.state.action === 'minus') {
-                number = -1;
-            };
-            if (category === 'Win') {
-                scoreboardPlayersUpdate[key].pivot.win += number;
-            }
-            if (category === 'Lost') {
-                scoreboardPlayersUpdate[key].pivot.lost += number;
-            }
-            if (category === 'Draw') {
-                scoreboardPlayersUpdate[key].pivot.draw += number;
-            }
-
-            this.setState({
-                ScoreboardPlayers: scoreboardPlayersUpdate
-
-            });
-            axios.get('/scoreboards/' + this.props.match.params.id + '/addResult/' + player_id + '/' + category + '/' + this.state.action);
-        }
-    }, {
-        key: 'renderResultsDynamic',
-        value: function renderResultsDynamic(player) {
-            var _this8 = this;
-
-            return this.state.ScoreboardPlayers.sort(this.compareValues('result', 'desc')).map(function (ScoreboardPlayer, index) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { key: ScoreboardPlayer.id },
-                    _this8.state.ScoreboardPlayers[index].pivot && _this8.state.ScoreboardPlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: function onClick() {
-                                    return _this8.resultChangeController(player.id, 'Win', index);
-                                }, className: 'btn btn-sm btn-info float-right' },
-                            _this8.state.ScoreboardPlayers[index].pivot.win
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: function onClick() {
-                                    return _this8.resultChangeController(player.id, 'Lost', index);
-                                }, className: 'btn btn-sm btn-danger float-right' },
-                            _this8.state.ScoreboardPlayers[index].pivot.lost
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: function onClick() {
-                                    return _this8.resultChangeController(player.id, 'Draw', index);
-                                }, className: 'btn btn-sm btn-warning float-right' },
-                            _this8.state.ScoreboardPlayers[index].pivot.draw
-                        )
-                    ) : null
-                );
-            });
-        }
-    }, {
-        key: 'compareValues',
-        value: function compareValues(key) {
-            var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
-
-            return function (a, b) {
-                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-                    // property doesn't exist on either object
-                    return 0;
-                }
-
-                var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
-                var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
-
-                var comparison = 0;
-                if (varA > varB) {
-                    comparison = 1;
-                } else if (varA < varB) {
-                    comparison = -1;
-                }
-                return order == 'desc' ? comparison * -1 : comparison;
-            };
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this9 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'Modal' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                    { to: '/', className: 'Cancel-button' },
-                    'X'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'Form' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col-md-8' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'card' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'card-header' },
-                                'Edit Scoreboard'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'form',
-                                { onSubmit: this.submitHandler },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    {
-                                        className: 'form-group' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'Name',
-                                        value: this.state.name,
-                                        onChange: this.nameChangeHandler,
-                                        required: true
-
-                                    }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'Type',
-                                        required: true,
-                                        value: this.state.type,
-                                        onChange: this.typeChangeHandler
-                                    })
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'button',
-                                    {
-                                        type: 'submit',
-                                        className: 'btn btn-primary'
-
-                                    },
-                                    'Edit Scoreboard'
-                                )
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { onClick: function onClick() {
-                                        return _this9.actionController();
-                                    }, className: 'btn btn-sm btn-dark float-right' },
-                                this.state.action
-                            ),
-                            this.renderPlayers()
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Scoreboard;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Scoreboard);
-
-/***/ }),
-/* 39 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var Newleague = function (_Component) {
-    _inherits(Newleague, _Component);
-
-    function Newleague(props) {
-        _classCallCheck(this, Newleague);
-
-        var _this = _possibleConstructorReturn(this, (Newleague.__proto__ || Object.getPrototypeOf(Newleague)).call(this, props));
-
-        _this.state = {
-            name: '',
-            win_point_value: 0,
-            lost_point_value: 0,
-            draw_point_value: 0,
-            number_of_games: 0,
-            number_of_players: 0,
-            number_of_points: 0
-
-        };
-
-        return _this;
-    }
-
-    _createClass(Newleague, [{
-        key: 'changeHandler',
-        value: function changeHandler(e) {
-            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
-        }
-    }, {
-        key: 'submitHandler',
-        value: function submitHandler(e) {
-            var _this2 = this;
-
-            //  e.preventDefault();
-            axios.post('/leagues', {
-                name: this.state.name,
-                win_point_value: this.state.win_point_value,
-                lost_point_value: this.state.lost_point_value,
-                draw_point_value: this.state.draw_point_value,
-                number_of_games: this.state.number_of_games,
-                number_of_players: this.state.number_of_players,
-                number_of_points: this.state.number_of_points
-
-            }).then(function (response) {
-
-                _this2.setState({
-                    name: '',
-                    win_point_value: '',
-                    lost_point_value: '',
-                    draw_point_value: '',
-                    number_of_games: '',
-                    number_of_players: '',
-                    number_of_points: ''
-                });
-                if (response.status == 200) {
-                    alert("SUCCESS");
-                }
-                e.target.value = 'action';
-                e.target.name = 'legue';
-
-                _this2.props.button(e);
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this3 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'maincontent' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { className: 'myform', onSubmit: function onSubmit(e) {
-                            return _this3.submitHandler(e);
-                        } },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        className: 'myform-control',
-                        placeholder: 'name',
-                        onChange: function onChange(e) {
-                            return _this3.changeHandler(e);
-                        },
-                        required: true
-
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        className: 'myform-control',
-                        placeholder: 'win_point_value',
-                        required: true,
-                        onChange: function onChange(e) {
-                            return _this3.changeHandler(e);
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        className: 'myform-control',
-                        placeholder: 'lost_point_value',
-                        required: true,
-                        onChange: function onChange(e) {
-                            return _this3.changeHandler(e);
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        className: 'myform-control',
-                        placeholder: 'draw_point_value',
-                        required: true,
-                        onChange: function onChange(e) {
-                            return _this3.changeHandler(e);
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        className: 'myform-control',
-                        placeholder: 'number_of_games',
-                        required: true,
-                        onChange: function onChange(e) {
-                            return _this3.changeHandler(e);
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        className: 'myform-control',
-                        placeholder: 'number_of_players',
-                        required: true,
-                        onChange: function onChange(e) {
-                            return _this3.changeHandler(e);
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        className: 'myform-control',
-                        placeholder: 'number_of_points',
-                        required: true,
-                        onChange: function onChange(e) {
-                            return _this3.changeHandler(e);
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        {
-                            type: 'submit',
-                            className: 'submit-button'
-
-                        },
-                        'Add new League'
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Newleague;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Newleague);
-
-/***/ }),
-/* 40 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var Newplayer = function (_Component) {
-    _inherits(Newplayer, _Component);
-
-    function Newplayer(props) {
-        _classCallCheck(this, Newplayer);
-
-        var _this = _possibleConstructorReturn(this, (Newplayer.__proto__ || Object.getPrototypeOf(Newplayer)).call(this, props));
-
-        _this.state = {
-            name: '',
-            type: 'planeswalker',
-            url: 'url',
-            wins: 0,
-            lost: 0,
-            draws: 0
-
-        };
-
-        return _this;
-    }
-
-    _createClass(Newplayer, [{
-        key: 'changeHandler',
-        value: function changeHandler(e) {
-            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
-        }
-    }, {
-        key: 'optionChangeHandler',
-        value: function optionChangeHandler(e) {
-
-            this.setState({
-                type: e.target.value
-            });
-        }
-    }, {
-        key: 'submitHandler',
-        value: function submitHandler() {
-            var _this2 = this;
-
-            //  e.preventDefault();
-
-            axios.post('/players', {
-                name: this.state.name,
-                type: this.state.type,
-                url: this.state.url,
-                wins: this.state.wins,
-                lost: this.state.lost,
-                draws: this.state.draws
-            }).then(function (response) {
-
-                _this2.setState({
-                    name: '',
-                    type: 'blank',
-                    url: 'url',
-                    wins: 0,
-                    lost: 0,
-                    draws: 0
-                });
-                if (response.status == 200) {
-                    alert("SUCCESS");
-                }
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this3 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'maincontent' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { className: 'myform', onSubmit: function onSubmit(e) {
-                            return _this3.submitHandler(e);
-                        } },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        className: 'myform-control',
-                        placeholder: 'name',
-                        onChange: function onChange(e) {
-                            return _this3.changeHandler(e);
-                        },
-                        required: true
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'select',
-                        {
-                            className: 'myform-control',
-
-                            onChange: function onChange(e) {
-                                return _this3.optionChangeHandler(e);
-                            }
-                        },
-                        this.props.types.map(function (type) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'option',
-                                { key: type.id },
-                                type.type
-                            );
-                        })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        {
-                            type: 'submit',
-                            className: 'submit-button'
-                        },
-                        'Add new player'
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Newplayer;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Newplayer);
-
-/***/ }),
-/* 41 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navigation_css__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navigation_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Navigation_css__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-// import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
-
-
-var Navigation = function (_Component) {
-    _inherits(Navigation, _Component);
-
-    function Navigation() {
-        _classCallCheck(this, Navigation);
-
-        return _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).apply(this, arguments));
-    }
-
-    _createClass(Navigation, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'ul',
-                    { className: 'navigation top' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'li',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: function onClick(e) {
-                                    return _this2.props.button(e);
-                                }, name: 'player', value: 'object' },
-                            'Player'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'li',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: this.props.button, name: 'league', value: 'object' },
-                            'League'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'li',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: this.props.button, name: 'scoreboard', value: 'object' },
-                            'Scoreboard'
-                        )
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'ul',
-                    { className: 'navigation bottom' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'li',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: this.props.button, name: 'new', value: 'action' },
-                            'New'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'li',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: this.props.button, name: 'list', value: 'action' },
-                            'Lists'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'li',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: this.props.button, name: 'reset', value: ' ' },
-                            'empty'
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Navigation;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Navigation);
-
-/***/ }),
-/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(43);
+__webpack_require__(37);
 module.exports = __webpack_require__(116);
 
 
 /***/ }),
-/* 43 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -17207,7 +15707,7 @@ module.exports = __webpack_require__(116);
  * building robust, powerful web applications using React + Laravel.
  */
 
-__webpack_require__(44);
+__webpack_require__(38);
 
 /**
  * Next, we will create a fresh React component instance and attach it to
@@ -17215,14 +15715,14 @@ __webpack_require__(44);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-__webpack_require__(68);
+__webpack_require__(62);
 
 /***/ }),
-/* 44 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(45);
+window._ = __webpack_require__(39);
 window.Popper = __webpack_require__(19).default;
 
 /**
@@ -17234,7 +15734,7 @@ window.Popper = __webpack_require__(19).default;
 try {
   window.$ = window.jQuery = __webpack_require__(20);
 
-  __webpack_require__(47);
+  __webpack_require__(41);
 } catch (e) {}
 
 /**
@@ -17243,7 +15743,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(48);
+window.axios = __webpack_require__(42);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -17279,7 +15779,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 45 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -34389,10 +32889,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(46)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(40)(module)))
 
 /***/ }),
-/* 46 */
+/* 40 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -34420,7 +32920,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 47 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -38370,13 +36870,13 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 48 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(49);
+module.exports = __webpack_require__(43);
 
 /***/ }),
-/* 49 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38384,7 +36884,7 @@ module.exports = __webpack_require__(49);
 
 var utils = __webpack_require__(1);
 var bind = __webpack_require__(21);
-var Axios = __webpack_require__(51);
+var Axios = __webpack_require__(45);
 var defaults = __webpack_require__(10);
 
 /**
@@ -38419,14 +36919,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(25);
-axios.CancelToken = __webpack_require__(66);
+axios.CancelToken = __webpack_require__(60);
 axios.isCancel = __webpack_require__(24);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(67);
+axios.spread = __webpack_require__(61);
 
 module.exports = axios;
 
@@ -38435,7 +36935,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 50 */
+/* 44 */
 /***/ (function(module, exports) {
 
 /*!
@@ -38462,7 +36962,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 51 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38470,8 +36970,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(10);
 var utils = __webpack_require__(1);
-var InterceptorManager = __webpack_require__(61);
-var dispatchRequest = __webpack_require__(62);
+var InterceptorManager = __webpack_require__(55);
+var dispatchRequest = __webpack_require__(56);
 
 /**
  * Create a new instance of Axios
@@ -38548,7 +37048,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 52 */
+/* 46 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -38738,7 +37238,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 53 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38757,7 +37257,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 54 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38790,7 +37290,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 55 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38818,7 +37318,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 56 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38891,7 +37391,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 57 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38951,7 +37451,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 58 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39026,7 +37526,7 @@ module.exports = (
 
 
 /***/ }),
-/* 59 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39069,7 +37569,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 60 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39129,7 +37629,7 @@ module.exports = (
 
 
 /***/ }),
-/* 61 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39188,18 +37688,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 62 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(1);
-var transformData = __webpack_require__(63);
+var transformData = __webpack_require__(57);
 var isCancel = __webpack_require__(24);
 var defaults = __webpack_require__(10);
-var isAbsoluteURL = __webpack_require__(64);
-var combineURLs = __webpack_require__(65);
+var isAbsoluteURL = __webpack_require__(58);
+var combineURLs = __webpack_require__(59);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -39281,7 +37781,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 63 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39308,7 +37808,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 64 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39329,7 +37829,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 65 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39350,7 +37850,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 66 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39414,7 +37914,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 67 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39448,17 +37948,17 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 68 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__containers_Battlemind__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__containers_Battlemind__ = __webpack_require__(101);
 
 
 
@@ -39478,7 +37978,7 @@ if (document.getElementById('root')) {
 }
 
 /***/ }),
-/* 69 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40971,7 +39471,7 @@ module.exports = react;
 
 
 /***/ }),
-/* 70 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41011,12 +39511,12 @@ if (false) {
   checkDCE();
   module.exports = require('./cjs/react-dom.production.min.js');
 } else {
-  module.exports = __webpack_require__(71);
+  module.exports = __webpack_require__(65);
 }
 
 
 /***/ }),
-/* 71 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41040,16 +39540,16 @@ if (true) {
 var invariant = __webpack_require__(26);
 var React = __webpack_require__(0);
 var warning = __webpack_require__(28);
-var ExecutionEnvironment = __webpack_require__(72);
+var ExecutionEnvironment = __webpack_require__(66);
 var _assign = __webpack_require__(11);
 var emptyFunction = __webpack_require__(12);
 var checkPropTypes = __webpack_require__(13);
-var getActiveElement = __webpack_require__(73);
-var shallowEqual = __webpack_require__(74);
-var containsNode = __webpack_require__(75);
+var getActiveElement = __webpack_require__(67);
+var shallowEqual = __webpack_require__(68);
+var containsNode = __webpack_require__(69);
 var emptyObject = __webpack_require__(27);
-var hyphenateStyleName = __webpack_require__(78);
-var camelizeStyleName = __webpack_require__(80);
+var hyphenateStyleName = __webpack_require__(72);
+var camelizeStyleName = __webpack_require__(74);
 
 // Relying on the `invariant()` implementation lets us
 // have preserve the format and params in the www builds.
@@ -58454,7 +56954,7 @@ module.exports = reactDom;
 
 
 /***/ }),
-/* 72 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58493,7 +56993,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 73 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58535,7 +57035,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 74 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58606,7 +57106,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 75 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58621,7 +57121,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(76);
+var isTextNode = __webpack_require__(70);
 
 /*eslint-disable no-bitwise */
 
@@ -58649,7 +57149,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 76 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58664,7 +57164,7 @@ module.exports = containsNode;
  * @typechecks
  */
 
-var isNode = __webpack_require__(77);
+var isNode = __webpack_require__(71);
 
 /**
  * @param {*} object The object to check.
@@ -58677,7 +57177,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 77 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58705,7 +57205,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 78 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58720,7 +57220,7 @@ module.exports = isNode;
 
 
 
-var hyphenate = __webpack_require__(79);
+var hyphenate = __webpack_require__(73);
 
 var msPattern = /^ms-/;
 
@@ -58747,7 +57247,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 79 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58783,7 +57283,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 80 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58798,7 +57298,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(81);
+var camelize = __webpack_require__(75);
 
 var msPattern = /^-ms-/;
 
@@ -58826,7 +57326,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 81 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58861,7 +57361,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 82 */
+/* 76 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58927,7 +57427,7 @@ BrowserRouter.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (BrowserRouter);
 
 /***/ }),
-/* 83 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59489,7 +57989,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 /***/ }),
-/* 84 */
+/* 78 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59793,7 +58293,7 @@ var createBrowserHistory = function createBrowserHistory() {
 /* harmony default export */ __webpack_exports__["a"] = (createBrowserHistory);
 
 /***/ }),
-/* 85 */
+/* 79 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59869,7 +58369,7 @@ function resolvePathname(to) {
 /* harmony default export */ __webpack_exports__["a"] = (resolvePathname);
 
 /***/ }),
-/* 86 */
+/* 80 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59913,7 +58413,7 @@ function valueEqual(a, b) {
 /* harmony default export */ __webpack_exports__["a"] = (valueEqual);
 
 /***/ }),
-/* 87 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60234,7 +58734,7 @@ var createHashHistory = function createHashHistory() {
 /* harmony default export */ __webpack_exports__["a"] = (createHashHistory);
 
 /***/ }),
-/* 88 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60402,7 +58902,7 @@ var createMemoryHistory = function createMemoryHistory() {
 /* harmony default export */ __webpack_exports__["a"] = (createMemoryHistory);
 
 /***/ }),
-/* 89 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60467,18 +58967,18 @@ HashRouter.propTypes = {
 /* unused harmony default export */ var _unused_webpack_default_export = (HashRouter);
 
 /***/ }),
-/* 90 */
+/* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_MemoryRouter__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_MemoryRouter__ = __webpack_require__(85);
 // Written in this round about way for babel-transform-imports
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_MemoryRouter__["a" /* default */]);
 
 /***/ }),
-/* 91 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60544,7 +59044,7 @@ MemoryRouter.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (MemoryRouter);
 
 /***/ }),
-/* 92 */
+/* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60630,7 +59130,7 @@ NavLink.defaultProps = {
 /* unused harmony default export */ var _unused_webpack_default_export = (NavLink);
 
 /***/ }),
-/* 93 */
+/* 87 */
 /***/ (function(module, exports) {
 
 module.exports = Array.isArray || function (arr) {
@@ -60639,18 +59139,18 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 94 */
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Prompt__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Prompt__ = __webpack_require__(89);
 // Written in this round about way for babel-transform-imports
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Prompt__["a" /* default */]);
 
 /***/ }),
-/* 95 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60741,18 +59241,18 @@ Prompt.contextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Prompt);
 
 /***/ }),
-/* 96 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Redirect__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Redirect__ = __webpack_require__(91);
 // Written in this round about way for babel-transform-imports
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Redirect__["a" /* default */]);
 
 /***/ }),
-/* 97 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60881,18 +59381,18 @@ Redirect.contextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Redirect);
 
 /***/ }),
-/* 98 */
+/* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_StaticRouter__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_StaticRouter__ = __webpack_require__(93);
 // Written in this round about way for babel-transform-imports
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_StaticRouter__["a" /* default */]);
 
 /***/ }),
-/* 99 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61058,18 +59558,18 @@ StaticRouter.childContextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (StaticRouter);
 
 /***/ }),
-/* 100 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Switch__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Switch__ = __webpack_require__(95);
 // Written in this round about way for babel-transform-imports
 
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Switch__["a" /* default */]);
 
 /***/ }),
-/* 101 */
+/* 95 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61161,7 +59661,7 @@ Switch.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Switch);
 
 /***/ }),
-/* 102 */
+/* 96 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61172,7 +59672,7 @@ Switch.propTypes = {
 /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_generatePath__["a" /* default */]);
 
 /***/ }),
-/* 103 */
+/* 97 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61183,18 +59683,18 @@ Switch.propTypes = {
 /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_matchPath__["a" /* default */]);
 
 /***/ }),
-/* 104 */
+/* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_withRouter__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_withRouter__ = __webpack_require__(99);
 // Written in this round about way for babel-transform-imports
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_withRouter__["a" /* default */]);
 
 /***/ }),
-/* 105 */
+/* 99 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61202,7 +59702,7 @@ Switch.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(33);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -61243,7 +59743,7 @@ var withRouter = function withRouter(Component) {
 /* harmony default export */ __webpack_exports__["a"] = (withRouter);
 
 /***/ }),
-/* 106 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61318,56 +59818,245 @@ module.exports = hoistNonReactStatics;
 
 
 /***/ }),
-/* 107 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export compareValues */
-/* unused harmony export contains */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Players_Player__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Leagues_League__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboard__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_router_dom__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_List__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Event__ = __webpack_require__(118);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function compareValues(key) {
-  var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-  return function (a, b) {
-    if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-      return 0;
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Battlemind = function (_Component) {
+    _inherits(Battlemind, _Component);
+
+    function Battlemind(props) {
+        _classCallCheck(this, Battlemind);
+
+        var _this = _possibleConstructorReturn(this, (Battlemind.__proto__ || Object.getPrototypeOf(Battlemind)).call(this, props));
+
+        _this.state = {
+            action: 'new',
+            object: 'league',
+            types: [{ id: 0,
+                type: 'test' }]
+
+        };
+
+        return _this;
     }
 
-    var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
-    var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
+    _createClass(Battlemind, [{
+        key: 'buttonHandler',
+        value: function buttonHandler(e) {
+            if (e.target.value === ' ') {
+                this.setState({
+                    action: '',
+                    object: ''
+                });
+            } else {
+                this.setState(_defineProperty({}, e.target.value, e.target.name));
+            }
+        }
+    }, {
+        key: 'getTypes',
+        value: function getTypes() {
+            var _this2 = this;
 
-    var comparison = 0;
-    if (varA > varB) {
-      comparison = 1;
-    } else if (varA < varB) {
-      comparison = -1;
-    }
-    return order == 'desc' ? comparison * -1 : comparison;
-  };
-};
+            axios.get('/types').then(function (response) {
+                return _this2.setState({
+                    types: [].concat(_toConsumableArray(response.data.types))
+                });
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.getTypes();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
 
-function contains(a, obj) {
-  for (var i = 0; i < a.length; i++) {
+            return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+                'div',
+                { className: 'Battlemind' },
+                __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], { button: function button(e) {
+                        return _this3.buttonHandler(e);
+                    } }),
+                __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_8_react_router_dom__["d" /* Switch */],
+                    null,
+                    console.log(this.state),
+                    __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/players/:id/edit', component: __WEBPACK_IMPORTED_MODULE_4__components_Players_Player__["a" /* default */] }),
+                    __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues/:id/edit', component: __WEBPACK_IMPORTED_MODULE_5__components_Leagues_League__["a" /* default */] }),
+                    __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/scoreboards/:id/edit', component: __WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboard__["a" /* default */] }),
+                    this.state.action === 'event' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], null) : null,
+                    this.state.action === 'list' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["a" /* default */], { object: this.state.object }) : null,
+                    this.state.action === 'new' && this.state.object === 'player' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], { types: this.state.types }) : null,
+                    this.state.action === 'new' && this.state.object === 'league' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], null) : null,
+                    this.state.action === 'new' && this.state.object === 'scoreboard' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], { types: this.state.types }) : null
+                )
+            );
+        }
+    }]);
 
-    if (a[i].id === obj.id) {
+    return Battlemind;
+}(__WEBPACK_IMPORTED_MODULE_7_react__["Component"]);
 
-      return true;
-    }
-  }
-
-  return false;
-}
-
-
+/* harmony default export */ __webpack_exports__["a"] = (Battlemind);
 
 /***/ }),
-/* 108 */
+/* 102 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navigation_css__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navigation_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Navigation_css__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+// import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
+
+
+var Navigation = function (_Component) {
+    _inherits(Navigation, _Component);
+
+    function Navigation() {
+        _classCallCheck(this, Navigation);
+
+        return _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).apply(this, arguments));
+    }
+
+    _createClass(Navigation, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'ul',
+                    { className: 'navigation top' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'li',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: function onClick(e) {
+                                    return _this2.props.button(e);
+                                }, name: 'player', value: 'object' },
+                            'Player'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'li',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: this.props.button, name: 'league', value: 'object' },
+                            'League'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'li',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: this.props.button, name: 'scoreboard', value: 'object' },
+                            'Scoreboard'
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'ul',
+                    { className: 'navigation bottom' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'li',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: this.props.button, name: 'new', value: 'action' },
+                            'New'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'li',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: this.props.button, name: 'list', value: 'action' },
+                            'Lists'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'li',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: this.props.button, name: 'event', value: 'action' },
+                            'Event'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Navigation;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Navigation);
+
+/***/ }),
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(109);
+var content = __webpack_require__(104);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -61375,7 +60064,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(111)(content, options);
+var update = __webpack_require__(106)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -61392,10 +60081,10 @@ if(false) {
 }
 
 /***/ }),
-/* 109 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(110)(false);
+exports = module.exports = __webpack_require__(105)(false);
 // imports
 
 
@@ -61406,7 +60095,7 @@ exports.push([module.i, ".navigation{\r\n    display: flex;\r\n    position: fix
 
 
 /***/ }),
-/* 110 */
+/* 105 */
 /***/ (function(module, exports) {
 
 /*
@@ -61488,7 +60177,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 111 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -61534,7 +60223,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(112);
+var	fixUrls = __webpack_require__(107);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -61847,7 +60536,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 112 */
+/* 107 */
 /***/ (function(module, exports) {
 
 
@@ -61942,24 +60631,13 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 113 */
+/* 108 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Players_Player__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Leagues_League__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboard__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_router_dom__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_List__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -61971,95 +60649,297 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+var Newplayer = function (_Component) {
+    _inherits(Newplayer, _Component);
 
+    function Newplayer(props) {
+        _classCallCheck(this, Newplayer);
 
-
-
-
-
-
-
-
-var Battlemind = function (_Component) {
-    _inherits(Battlemind, _Component);
-
-    function Battlemind(props) {
-        _classCallCheck(this, Battlemind);
-
-        var _this = _possibleConstructorReturn(this, (Battlemind.__proto__ || Object.getPrototypeOf(Battlemind)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Newplayer.__proto__ || Object.getPrototypeOf(Newplayer)).call(this, props));
 
         _this.state = {
-            action: 'list',
-            object: 'scoreboard',
-            types: [{ id: 0,
-                type: 'test' }]
+            name: '',
+            type: 'planeswalker',
+            url: 'url',
+            wins: 0,
+            lost: 0,
+            draws: 0
 
         };
 
         return _this;
     }
 
-    _createClass(Battlemind, [{
-        key: 'buttonHandler',
-        value: function buttonHandler(e) {
-            if (e.target.value === ' ') {
-                this.setState({
-                    action: '',
-                    object: ''
-                });
-            } else {
-                this.setState(_defineProperty({}, e.target.value, e.target.name));
-            }
+    _createClass(Newplayer, [{
+        key: 'changeHandler',
+        value: function changeHandler(e) {
+            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
         }
     }, {
-        key: 'getTypes',
-        value: function getTypes() {
-            var _this2 = this;
+        key: 'optionChangeHandler',
+        value: function optionChangeHandler(e) {
 
-            axios.get('/types').then(function (response) {
-                return _this2.setState({
-                    types: [].concat(_toConsumableArray(response.data.types))
-                });
+            this.setState({
+                type: e.target.value
             });
         }
     }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.getTypes();
+        key: 'submitHandler',
+        value: function submitHandler() {
+            var _this2 = this;
+
+            //  e.preventDefault();
+
+            axios.post('/players', {
+                name: this.state.name,
+                type: this.state.type,
+                url: this.state.url,
+                wins: this.state.wins,
+                lost: this.state.lost,
+                draws: this.state.draws
+            }).then(function (response) {
+
+                _this2.setState({
+                    name: '',
+                    type: 'blank',
+                    url: 'url',
+                    wins: 0,
+                    lost: 0,
+                    draws: 0
+                });
+                if (response.status == 200) {
+                    alert("SUCCESS");
+                }
+            });
         }
     }, {
         key: 'render',
         value: function render() {
             var _this3 = this;
 
-            return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'Battlemind' },
-                __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], { button: function button(e) {
-                        return _this3.buttonHandler(e);
-                    } }),
-                __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_8_react_router_dom__["d" /* Switch */],
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/players/:id/edit', component: __WEBPACK_IMPORTED_MODULE_4__components_Players_Player__["a" /* default */] }),
-                    __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues/:id/edit', component: __WEBPACK_IMPORTED_MODULE_5__components_Leagues_League__["a" /* default */] }),
-                    __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/scoreboards/:id/edit', component: __WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboard__["a" /* default */] }),
-                    this.state.action === 'list' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["a" /* default */], { object: this.state.object }) : null,
-                    this.state.action === 'new' && this.state.object === 'player' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], { types: this.state.types }) : null,
-                    this.state.action === 'new' && this.state.object === 'league' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], null) : null,
-                    this.state.action === 'new' && this.state.object === 'scoreboard' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], { types: this.state.types }) : null
+                { className: 'Workarea' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    { className: 'myform', onSubmit: function onSubmit(e) {
+                            return _this3.submitHandler(e);
+                        } },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'name',
+                        onChange: function onChange(e) {
+                            return _this3.changeHandler(e);
+                        },
+                        required: true
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'select',
+                        {
+                            className: 'myform-control',
+
+                            onChange: function onChange(e) {
+                                return _this3.optionChangeHandler(e);
+                            }
+                        },
+                        this.props.types.map(function (type) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'option',
+                                { key: type.id },
+                                type.type
+                            );
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        {
+                            type: 'submit',
+                            className: 'submit-button'
+                        },
+                        'Add new player'
+                    )
                 )
             );
         }
     }]);
 
-    return Battlemind;
-}(__WEBPACK_IMPORTED_MODULE_7_react__["Component"]);
+    return Newplayer;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Battlemind);
+/* harmony default export */ __webpack_exports__["a"] = (Newplayer);
 
 /***/ }),
-/* 114 */
+/* 109 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Newleague = function (_Component) {
+    _inherits(Newleague, _Component);
+
+    function Newleague(props) {
+        _classCallCheck(this, Newleague);
+
+        var _this = _possibleConstructorReturn(this, (Newleague.__proto__ || Object.getPrototypeOf(Newleague)).call(this, props));
+
+        _this.state = {
+            name: '',
+            win_point_value: 0,
+            lost_point_value: 0,
+            draw_point_value: 0,
+            number_of_games: 0,
+            number_of_players: 0,
+            number_of_points: 0
+
+        };
+
+        return _this;
+    }
+
+    _createClass(Newleague, [{
+        key: 'changeHandler',
+        value: function changeHandler(e) {
+            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
+        }
+    }, {
+        key: 'submitHandler',
+        value: function submitHandler(e) {
+            var _this2 = this;
+
+            //  e.preventDefault();
+            axios.post('/leagues', {
+                name: this.state.name,
+                win_point_value: this.state.win_point_value,
+                lost_point_value: this.state.lost_point_value,
+                draw_point_value: this.state.draw_point_value,
+                number_of_games: this.state.number_of_games,
+                number_of_players: this.state.number_of_players,
+                number_of_points: this.state.number_of_points
+
+            }).then(function (response) {
+
+                _this2.setState({
+                    name: '',
+                    win_point_value: '',
+                    lost_point_value: '',
+                    draw_point_value: '',
+                    number_of_games: '',
+                    number_of_players: '',
+                    number_of_points: ''
+                });
+                if (response.status == 200) {
+                    alert("SUCCESS");
+                }
+                e.target.value = 'action';
+                e.target.name = 'legue';
+
+                _this2.props.button(e);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'Workarea' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    { className: 'myform', onSubmit: function onSubmit(e) {
+                            return _this3.submitHandler(e);
+                        } },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'name',
+                        onChange: function onChange(e) {
+                            return _this3.changeHandler(e);
+                        },
+                        required: true
+
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'win_point_value',
+                        required: true,
+                        onChange: function onChange(e) {
+                            return _this3.changeHandler(e);
+                        }
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'lost_point_value',
+                        required: true,
+                        onChange: function onChange(e) {
+                            return _this3.changeHandler(e);
+                        }
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'draw_point_value',
+                        required: true,
+                        onChange: function onChange(e) {
+                            return _this3.changeHandler(e);
+                        }
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'number_of_games',
+                        required: true,
+                        onChange: function onChange(e) {
+                            return _this3.changeHandler(e);
+                        }
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'number_of_players',
+                        required: true,
+                        onChange: function onChange(e) {
+                            return _this3.changeHandler(e);
+                        }
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'number_of_points',
+                        required: true,
+                        onChange: function onChange(e) {
+                            return _this3.changeHandler(e);
+                        }
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        {
+                            type: 'submit',
+                            className: 'submit-button'
+
+                        },
+                        'Add new League'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Newleague;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Newleague);
+
+/***/ }),
+/* 110 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62139,7 +61019,7 @@ var Newscoreboard = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'maincontent' },
+                { className: 'Workarea' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
                     { className: 'myform', onSubmit: function onSubmit() {
@@ -62189,6 +61069,1133 @@ var Newscoreboard = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Newscoreboard);
+
+/***/ }),
+/* 111 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var Player = function (_Component) {
+    _inherits(Player, _Component);
+
+    function Player(props) {
+        _classCallCheck(this, Player);
+
+        var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, props));
+
+        _this.state = {
+            name: '',
+            type: '',
+            url: '',
+            wins: 0,
+            lost: 0,
+            draws: 0
+        };
+        _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
+        _this.typeChangeHandler = _this.typeChangeHandler.bind(_this);
+        _this.urlChangeHandler = _this.urlChangeHandler.bind(_this);
+        _this.submitHandler = _this.submitHandler.bind(_this);
+        _this.addWin = _this.addWin.bind(_this);
+        _this.addLost = _this.addLost.bind(_this);
+        _this.addDraw = _this.addDraw.bind(_this);
+        _this.removeWin = _this.removeWin.bind(_this);
+        _this.removeLost = _this.removeLost.bind(_this);
+        _this.removeDraw = _this.removeDraw.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(Player, [{
+        key: 'nameChangeHandler',
+        value: function nameChangeHandler(e) {
+            this.setState({
+                name: e.target.value
+            });
+        }
+    }, {
+        key: 'typeChangeHandler',
+        value: function typeChangeHandler(e) {
+            this.setState({
+                type: e.target.value
+            });
+        }
+    }, {
+        key: 'urlChangeHandler',
+        value: function urlChangeHandler(e) {
+            this.setState({
+                url: e.target.value
+            });
+        }
+    }, {
+        key: 'submitHandler',
+        value: function submitHandler(e) {
+            var _this2 = this;
+
+            e.preventDefault();
+
+            axios.put('/players/' + this.props.match.params.id, {
+                name: this.state.name,
+                type: this.state.type,
+                url: this.state.url,
+                wins: this.state.wins,
+                lost: this.state.lost,
+                draws: this.state.draws
+            }).then(function (response) {
+                _this2.props.history.push('/home');
+            });
+        }
+    }, {
+        key: 'getPlayers',
+        value: function getPlayers() {
+            var _this3 = this;
+
+            axios.get('/players/' + this.props.match.params.id + '/edit').then(function (response) {
+                return _this3.setState({
+                    name: response.data.player.name,
+                    type: response.data.player.type,
+                    url: response.data.player.url,
+                    wins: response.data.player.wins,
+                    lost: response.data.player.lost,
+                    draws: response.data.player.draws
+                });
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.getPlayers();
+        }
+    }, {
+        key: 'addWin',
+        value: function addWin() {
+
+            var win = +this.state.wins + +1;
+            this.setState({
+                wins: win
+            });
+        }
+    }, {
+        key: 'addLost',
+        value: function addLost() {
+            var lost = +this.state.lost + +1;
+            this.setState({
+                lost: lost
+            });
+        }
+    }, {
+        key: 'addDraw',
+        value: function addDraw() {
+            var draw = +this.state.draws + +1;
+            this.setState({
+                draws: draw
+            });
+        }
+    }, {
+        key: 'removeWin',
+        value: function removeWin() {
+
+            var win = +this.state.wins - +1;
+            if (win >= 0) {
+                this.setState({
+                    wins: win
+                });
+            }
+        }
+    }, {
+        key: 'removeLost',
+        value: function removeLost() {
+            var lost = +this.state.lost - +1;
+            if (lost >= 0) {
+                this.setState({
+                    lost: lost
+                });
+            }
+        }
+    }, {
+        key: 'removeDraw',
+        value: function removeDraw() {
+            var draw = +this.state.draws - +1;
+            if (draw >= 0) {
+                this.setState({
+                    draws: draw
+                });
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Modal' }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                    { to: '/', className: 'Cancel-button' },
+                    'X'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'Form' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col-md-8' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'card' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'card-header' },
+                                'Edit Player'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'form',
+                                { onSubmit: this.submitHandler },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    {
+                                        className: 'form-group' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        className: 'form-control',
+                                        placeholder: 'Name',
+                                        value: this.state.name,
+                                        onChange: this.nameChangeHandler,
+                                        required: true
+
+                                    }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        className: 'form-control',
+                                        placeholder: 'Type',
+                                        required: true,
+                                        value: this.state.type,
+                                        onChange: this.typeChangeHandler
+                                    }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        className: 'form-control',
+                                        placeholder: 'Url',
+                                        required: true,
+                                        value: this.state.url,
+                                        onChange: this.urlChangeHandler
+                                    })
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'h2',
+                                    null,
+                                    'Wins :',
+                                    this.state.wins,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addWin },
+                                        '++++'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeWin },
+                                        '----'
+                                    )
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'h2',
+                                    null,
+                                    'Lost: ',
+                                    this.state.lost,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addLost },
+                                        '++++'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeLost },
+                                        '----'
+                                    )
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'h2',
+                                    null,
+                                    'Draws: ',
+                                    this.state.draws,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addDraw },
+                                        '++++'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeDraw },
+                                        '----'
+                                    )
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'button',
+                                    {
+                                        type: 'submit',
+                                        className: 'btn btn-primary'
+
+                                    },
+                                    'Edit player'
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Player;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Player);
+
+/***/ }),
+/* 112 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var League = function (_Component) {
+    _inherits(League, _Component);
+
+    function League(props) {
+        _classCallCheck(this, League);
+
+        var _this = _possibleConstructorReturn(this, (League.__proto__ || Object.getPrototypeOf(League)).call(this, props));
+
+        _this.state = {
+            id: 0,
+            name: 'name',
+            win_point_value: 0,
+            lost_point_value: 0,
+            draw_point_value: 0,
+            number_of_games: '',
+            number_of_players: '',
+            number_of_points: '',
+            allPlayers: [],
+            leaguePlayers: [],
+            action: 'minus'
+
+        };
+
+        _this.changeHandler = _this.changeHandler.bind(_this);
+        _this.submitHandler = _this.submitHandler.bind(_this);
+        _this.contains = _this.contains.bind(_this);
+        _this.addPlayer = _this.addPlayer.bind(_this);
+        _this.renderResultsDynamic = _this.renderResultsDynamic.bind(_this);
+        _this.renderResults = _this.renderResults.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(League, [{
+        key: 'actionController',
+        value: function actionController() {
+            if (this.state.action === 'minus') {
+                this.setState({
+                    action: 'add'
+                });
+            } else {
+                this.setState({
+                    action: 'minus'
+                });
+            }
+        }
+    }, {
+        key: 'changeHandler',
+        value: function changeHandler(e) {
+
+            var property = e.target.placeholder;
+            this.setState(_defineProperty({}, property, e.target.value));
+        }
+    }, {
+        key: 'submitHandler',
+        value: function submitHandler(e) {
+            var _this2 = this;
+
+            e.preventDefault();
+            axios.put('/leagues/' + this.props.match.params.id, {
+                name: this.state.name,
+                win_point_value: this.state.win_point_value,
+                lost_point_value: this.state.lost_point_value,
+                draw_point_value: this.state.draw_point_value,
+                number_of_games: this.state.number_of_games,
+                number_of_players: this.state.number_of_players,
+                number_of_points: this.state.number_of_points
+
+            }).then(function (response) {
+                _this2.props.history.push('/home');
+            });
+        }
+    }, {
+        key: 'compareValues',
+        value: function compareValues(key) {
+            var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
+
+            return function (a, b) {
+                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    return 0;
+                }
+
+                var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
+                var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
+
+                var comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return order == 'desc' ? comparison * -1 : comparison;
+            };
+        }
+    }, {
+        key: 'getLeague',
+        value: function getLeague() {
+            var _this3 = this;
+
+            axios.get('/leagues/' + this.props.match.params.id + '/edit').then(function (response) {
+                return _this3.setState({
+
+                    id: response.data.league.id,
+                    name: response.data.league.name,
+                    win_point_value: response.data.league.win_point_value,
+                    lost_point_value: response.data.league.lost_point_value,
+                    draw_point_value: response.data.league.draw_point_value,
+                    number_of_games: response.data.league.number_of_games,
+                    number_of_players: response.data.league.number_of_players,
+                    number_of_points: response.data.league.number_of_points,
+                    leaguePlayers: response.data.players
+                });
+            });
+        }
+    }, {
+        key: 'addPlayer',
+        value: function addPlayer(player) {
+            var _this4 = this;
+
+            axios.get('/leagues/' + this.props.match.params.id + '/addPlayer/' + player.id).then(function (response) {
+                return _this4.setState({
+                    leaguePlayers: [].concat(_toConsumableArray(response.data))
+                }).then(_this4.getPlayers());
+            });
+        }
+    }, {
+        key: 'removePlayer',
+        value: function removePlayer(player) {
+            var _this5 = this;
+
+            axios.get('/leagues/' + this.props.match.params.id + '/removePlayer/' + player.id).then(function (response) {
+                return _this5.setState({
+                    leaguePlayers: [].concat(_toConsumableArray(response.data))
+                }).then(_this5.getPlayers());
+            });
+        }
+    }, {
+        key: 'contains',
+        value: function contains(a, obj) {
+            for (var i = 0; i < a.length; i++) {
+
+                if (a[i].id === obj.id) {
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }, {
+        key: 'resultChangeController',
+        value: function resultChangeController(player_id, category, key) {
+            var _this6 = this;
+
+            var leaguePlayersUpdate = [].concat(_toConsumableArray(this.state.leaguePlayers));
+            leaguePlayersUpdate.map(function (leaguePlayer) {
+                return leaguePlayer.pivot.result = leaguePlayer.pivot.win * _this6.state.win_point_value + leaguePlayer.pivot.lost * _this6.state.lost_point_value + leaguePlayer.pivot.draw * _this6.state.draw_point_value;
+            });
+            var number = 1;
+            if (this.state.action === 'minus') {
+                number = -1;
+            };
+            if (category === 'Win') {
+                leaguePlayersUpdate[key].pivot.win += number;
+            }
+            if (category === 'Lost') {
+                leaguePlayersUpdate[key].pivot.lost += number;
+            }
+            if (category === 'Draw') {
+                leaguePlayersUpdate[key].pivot.draw += number;
+            }
+
+            this.setState({
+                leaguePlayers: leaguePlayersUpdate
+
+            });
+            axios.get('/players/' + this.props.match.params.id + '/addResult/' + player_id + '/' + category + '/' + this.state.action);
+        }
+    }, {
+        key: 'renderResults',
+        value: function renderResults() {
+            var _this7 = this;
+
+            var leaguePlayersResults = [].concat(_toConsumableArray(this.state.leaguePlayers));
+            leaguePlayersResults.map(function (leaguePlayer) {
+                return leaguePlayer.pivot.result = leaguePlayer.pivot.win * _this7.state.win_point_value + leaguePlayer.pivot.lost * _this7.state.lost_point_value + leaguePlayer.pivot.draw * _this7.state.draw_point_value;
+            });
+
+            this.setState({
+                leaguePlayers: leaguePlayersResults
+            });
+        }
+    }, {
+        key: 'renderResultsDynamic',
+        value: function renderResultsDynamic(player) {
+            var _this8 = this;
+
+            return this.state.leaguePlayers.sort(this.compareValues('result', 'desc')).map(function (leaguePlayer, index) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { key: leaguePlayer.id },
+                    _this8.state.leaguePlayers[index].pivot && _this8.state.leaguePlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        console.log('1st' + _this8.state.leaguePlayers),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'btn btn-sm btn-success float-right' },
+                            _this8.state.leaguePlayers[index].pivot.result,
+                            ' '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: function onClick() {
+                                    return _this8.resultChangeController(player.id, 'Win', index);
+                                }, className: 'btn btn-sm btn-info float-right' },
+                            _this8.state.leaguePlayers[index].pivot.win
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: function onClick() {
+                                    return _this8.resultChangeController(player.id, 'Lost', index);
+                                }, className: 'btn btn-sm btn-danger float-right' },
+                            _this8.state.leaguePlayers[index].pivot.lost
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: function onClick() {
+                                    return _this8.resultChangeController(player.id, 'Draw', index);
+                                }, className: 'btn btn-sm btn-warning float-right' },
+                            _this8.state.leaguePlayers[index].pivot.draw
+                        )
+                    ) : null
+                );
+            });
+        }
+    }, {
+        key: 'renderPlayers',
+        value: function renderPlayers() {
+            var _this9 = this;
+
+            return this.state.allPlayers.map(function (player) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { key: player.id, className: 'media' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'media-body' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            player.id,
+                            player.name,
+                            !_this9.contains(_this9.state.leaguePlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        return _this9.addPlayer(player);
+                                    },
+                                    className: 'btn btn-sm btn-warning float-right' },
+                                'Add Player'
+                            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        return _this9.removePlayer(player);
+                                    },
+                                    className: 'btn btn-sm btn-warning float-right' },
+                                '  X  '
+                            ),
+                            _this9.renderResultsDynamic(player)
+                        )
+                    )
+                );
+            });
+        }
+    }, {
+        key: 'getPlayers',
+        value: function getPlayers() {
+            var _this10 = this;
+
+            axios.get('/players').then(function (response) {
+                return _this10.setState({
+                    allPlayers: [].concat(_toConsumableArray(response.data.allplayers))
+                });
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.getLeague();
+            this.getPlayers();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'Modal' },
+                    ' '
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                    { to: '/', className: 'Cancel-button' },
+                    'X'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'Form' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'card-header' },
+                            'Edit Leauge'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'form',
+                            { onSubmit: this.submitHandler },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                {
+                                    className: 'form-group' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                    className: 'form-control',
+                                    placeholder: 'name',
+                                    value: this.state.name,
+                                    onChange: this.changeHandler,
+                                    required: true
+
+                                }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                    className: 'form-control',
+                                    placeholder: 'win_point_value',
+                                    required: true,
+                                    type: 'number',
+                                    value: this.state.win_point_value,
+                                    onChange: this.changeHandler
+                                }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                    className: 'form-control',
+                                    placeholder: 'lost_point_value',
+                                    required: true,
+                                    type: 'number',
+                                    value: this.state.lost_point_value,
+                                    onChange: this.changeHandler
+                                }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                    className: 'form-control',
+                                    placeholder: 'draw_point_value',
+                                    required: true,
+                                    type: 'number',
+                                    value: this.state.draw_point_value,
+                                    onChange: this.changeHandler
+                                }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                    className: 'form-control',
+                                    placeholder: 'number_of_games',
+                                    required: true,
+                                    type: 'number',
+                                    value: this.state.number_of_games,
+                                    onChange: this.changeHandler
+                                }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                    className: 'form-control',
+                                    placeholder: 'number_of_players',
+                                    required: true,
+                                    type: 'number',
+                                    value: this.state.number_of_players,
+                                    onChange: this.changeHandler
+                                }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                    className: 'form-control',
+                                    placeholder: 'number_of_points',
+                                    required: true,
+                                    type: 'number',
+                                    value: this.state.number_of_points,
+                                    onChange: this.changeHandler
+                                })
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                {
+                                    type: 'submit',
+                                    className: 'btn btn-primary'
+
+                                },
+                                'Edit League'
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
+                    )
+                )
+            );
+        }
+    }]);
+
+    return League;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (League);
+
+/***/ }),
+/* 113 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__functions__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(5);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+var Scoreboard = function (_Component) {
+    _inherits(Scoreboard, _Component);
+
+    function Scoreboard(props) {
+        _classCallCheck(this, Scoreboard);
+
+        var _this = _possibleConstructorReturn(this, (Scoreboard.__proto__ || Object.getPrototypeOf(Scoreboard)).call(this, props));
+
+        _this.state = {
+            name: '',
+            type: '',
+            allPlayers: [],
+            ScoreboardPlayers: [],
+            action: 'minus'
+        };
+        _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
+        _this.typeChangeHandler = _this.typeChangeHandler.bind(_this);
+        _this.submitHandler = _this.submitHandler.bind(_this);
+        _this.contains = _this.contains.bind(_this);
+        _this.renderResultsDynamic = _this.renderResultsDynamic.bind(_this);
+        _this.addPlayer = _this.addPlayer.bind(_this);
+        _this.getPlayers = _this.getPlayers.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(Scoreboard, [{
+        key: 'actionController',
+        value: function actionController() {
+            if (this.state.action === 'minus') {
+                this.setState({
+                    action: 'add'
+                });
+            } else {
+                this.setState({
+                    action: 'minus'
+                });
+            }
+        }
+    }, {
+        key: 'contains',
+        value: function contains(a, obj) {
+            for (var i = 0; i < a.length; i++) {
+
+                if (a[i].id === obj.id) {
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }, {
+        key: 'nameChangeHandler',
+        value: function nameChangeHandler(e) {
+            this.setState({
+                name: e.target.value
+            });
+        }
+    }, {
+        key: 'typeChangeHandler',
+        value: function typeChangeHandler(e) {
+            this.setState({
+                type: e.target.value
+            });
+        }
+    }, {
+        key: 'submitHandler',
+        value: function submitHandler(e) {
+            var _this2 = this;
+
+            e.preventDefault();
+
+            axios.put('/scoreboards/' + this.props.match.params.id, {
+                name: this.state.name,
+                type: this.state.type
+
+            }).then(function (response) {
+                _this2.props.history.push('/home');
+            });
+        }
+    }, {
+        key: 'getScoreboards',
+        value: function getScoreboards() {
+            var _this3 = this;
+
+            axios.get('/scoreboards/' + this.props.match.params.id + '/edit').then(function (response) {
+                return _this3.setState({
+                    name: response.data.scoreboard.name,
+                    type: response.data.scoreboard.type,
+                    ScoreboardPlayers: response.data.scoreboardPlayers
+
+                });
+            });
+        }
+    }, {
+        key: 'getPlayers',
+        value: function getPlayers() {
+            var _this4 = this;
+
+            axios.get('/players').then(function (response) {
+                return _this4.setState({
+                    allPlayers: [].concat(_toConsumableArray(response.data.allplayers))
+                });
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.getScoreboards();
+            this.getPlayers();
+        }
+    }, {
+        key: 'addPlayer',
+        value: function addPlayer(player) {
+            var _this5 = this;
+
+            axios.get('/scoreboards/' + this.props.match.params.id + '/addPlayer/' + player.id).then(function (response) {
+                return _this5.setState({
+                    ScoreboardPlayers: [].concat(_toConsumableArray(response.data))
+                });
+            });
+        }
+    }, {
+        key: 'removePlayer',
+        value: function removePlayer(player) {
+            var _this6 = this;
+
+            axios.get('/scoreboards/' + this.props.match.params.id + '/removePlayer/' + player.id).then(function (response) {
+                return _this6.setState({
+                    ScoreboardPlayers: [].concat(_toConsumableArray(response.data))
+                });
+            });
+        }
+    }, {
+        key: 'renderPlayers',
+        value: function renderPlayers() {
+            var _this7 = this;
+
+            return this.state.allPlayers.map(function (player) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { key: player.id, className: 'media' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'media-body' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            player.id,
+                            player.name,
+                            !_this7.contains(_this7.state.ScoreboardPlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        return _this7.addPlayer(player);
+                                    },
+                                    className: 'btn btn-sm btn-warning float-right' },
+                                'Add Player'
+                            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        return _this7.removePlayer(player);
+                                    },
+                                    className: 'btn btn-sm btn-warning float-right' },
+                                '  X  '
+                            ),
+                            _this7.renderResultsDynamic(player)
+                        )
+                    )
+                );
+            });
+        }
+    }, {
+        key: 'resultChangeController',
+        value: function resultChangeController(player_id, category, key) {
+            var scoreboardPlayersUpdate = [].concat(_toConsumableArray(this.state.ScoreboardPlayers));
+
+            var number = 1;
+            if (this.state.action === 'minus') {
+                number = -1;
+            };
+            if (category === 'Win') {
+                scoreboardPlayersUpdate[key].pivot.win += number;
+            }
+            if (category === 'Lost') {
+                scoreboardPlayersUpdate[key].pivot.lost += number;
+            }
+            if (category === 'Draw') {
+                scoreboardPlayersUpdate[key].pivot.draw += number;
+            }
+
+            this.setState({
+                ScoreboardPlayers: scoreboardPlayersUpdate
+
+            });
+            axios.get('/scoreboards/' + this.props.match.params.id + '/addResult/' + player_id + '/' + category + '/' + this.state.action);
+        }
+    }, {
+        key: 'renderResultsDynamic',
+        value: function renderResultsDynamic(player) {
+            var _this8 = this;
+
+            return this.state.ScoreboardPlayers.sort(this.compareValues('result', 'desc')).map(function (ScoreboardPlayer, index) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { key: ScoreboardPlayer.id },
+                    _this8.state.ScoreboardPlayers[index].pivot && _this8.state.ScoreboardPlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: function onClick() {
+                                    return _this8.resultChangeController(player.id, 'Win', index);
+                                }, className: 'btn btn-sm btn-info float-right' },
+                            _this8.state.ScoreboardPlayers[index].pivot.win
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: function onClick() {
+                                    return _this8.resultChangeController(player.id, 'Lost', index);
+                                }, className: 'btn btn-sm btn-danger float-right' },
+                            _this8.state.ScoreboardPlayers[index].pivot.lost
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { onClick: function onClick() {
+                                    return _this8.resultChangeController(player.id, 'Draw', index);
+                                }, className: 'btn btn-sm btn-warning float-right' },
+                            _this8.state.ScoreboardPlayers[index].pivot.draw
+                        )
+                    ) : null
+                );
+            });
+        }
+    }, {
+        key: 'compareValues',
+        value: function compareValues(key) {
+            var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
+
+            return function (a, b) {
+                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    return 0;
+                }
+
+                var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
+                var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
+
+                var comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return order == 'desc' ? comparison * -1 : comparison;
+            };
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this9 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Modal' }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                    { to: '/', className: 'Cancel-button' },
+                    'X'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'Form' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col-md-8' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'card' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'card-header' },
+                                'Edit Scoreboard'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'form',
+                                { onSubmit: this.submitHandler },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    {
+                                        className: 'form-group' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        className: 'form-control',
+                                        placeholder: 'Name',
+                                        value: this.state.name,
+                                        onChange: this.nameChangeHandler,
+                                        required: true
+
+                                    }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        className: 'form-control',
+                                        placeholder: 'Type',
+                                        required: true,
+                                        value: this.state.type,
+                                        onChange: this.typeChangeHandler
+                                    })
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'button',
+                                    {
+                                        type: 'submit',
+                                        className: 'btn btn-primary'
+
+                                    },
+                                    'Edit Scoreboard'
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        return _this9.actionController();
+                                    }, className: 'btn btn-sm btn-dark float-right' },
+                                this.state.action
+                            ),
+                            this.renderPlayers()
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Scoreboard;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Scoreboard);
+
+/***/ }),
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export compareValues */
+/* unused harmony export contains */
+
+function compareValues(key) {
+  var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
+
+  return function (a, b) {
+    if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+      return 0;
+    }
+
+    var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
+    var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
+
+    var comparison = 0;
+    if (varA > varB) {
+      comparison = 1;
+    } else if (varA < varB) {
+      comparison = -1;
+    }
+    return order == 'desc' ? comparison * -1 : comparison;
+  };
+};
+
+function contains(a, obj) {
+  for (var i = 0; i < a.length; i++) {
+
+    if (a[i].id === obj.id) {
+
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
 
 /***/ }),
 /* 115 */
@@ -62295,7 +62302,7 @@ var List = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'maincontent' },
+                { className: 'Workarea' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'list-grid' },
@@ -62315,6 +62322,82 @@ var List = function (_Component) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 117 */,
+/* 118 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+// import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
+
+
+var Event = function (_Component) {
+    _inherits(Event, _Component);
+
+    function Event(props) {
+        _classCallCheck(this, Event);
+
+        var _this = _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).call(this, props));
+
+        _this.state = {
+            scoreboard: '',
+            players: []
+
+        };
+
+        return _this;
+    }
+
+    _createClass(Event, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'Workarea' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'Event-grid' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'Event-grid-item' },
+                        'Scoreboard'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'Event-grid-item' },
+                        'Players'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'Event-grid-item' },
+                        'Results'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'Event-grid-item' },
+                        'Spare'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Event;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Event);
 
 /***/ })
 /******/ ]);

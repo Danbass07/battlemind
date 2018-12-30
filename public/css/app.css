@@ -10477,42 +10477,25 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.maincontainer {
+.Battlemind {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 55px;
   background-color: black;
-  height: 600px;
-  overflow: scroll;
+  overflow: hidden;
+}
+
+.Workarea {
+  width: 80%;
+  height: 70%;
+  margin: 10% auto;
+  border: solid 2px  white;
 }
 
 .navbar {
   position: fixed;
   width: 100%;
-}
-
-.maincontent {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  margin-top: 95px;
-}
-
-.content {
-  height: 78vh;
-  width: 100%;
-  overflow: auto;
-  position: absolute;
-  margin-bottom: 70px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: black;
 }
 
 .myform {
@@ -10523,19 +10506,56 @@ a.text-dark:focus {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 40%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .myform-control {
   height: 30px;
-  width: 100%;
-  margin: 5%;
+  width: 80%;
+  margin: 5px auto;
 }
 
 .submit-button {
   background-color: chocolate;
-  width: 100%;
-  margin: 5%;
+  width: 80%;
+  height: 50px;
+  margin: 5px auto;
+}
+
+.Modal {
+  position: fixed;
+  height: 100vw;
+  width: 100vw;
+  top: 0;
+  background-color: black;
+  opacity: 0.7;
+  z-index: 1000;
+  padding: 5%;
+}
+
+.Cancel-button {
+  position: relative;
+  z-index: 1001;
+  width: 50px;
+  height: 50px;
+  top: 50px;
+  right: 0px;
+  font-size: 3em;
+  text-decoration: none;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  border: solid 2px white;
+  border-radius: 50% 50% 50% 50%;
+  padding: 5px;
+}
+
+a:hover {
+  color: white;
 }
 
 .button {
@@ -10552,7 +10572,10 @@ a.text-dark:focus {
 }
 
 .list-grid {
+  height: 100%;
+  opacity: 1;
   color: cornsilk;
+  overflow: scroll;
 }
 
 .list-item {
@@ -10569,43 +10592,24 @@ a.text-dark:focus {
   text-align: center;
 }
 
-/* global edit list */
-
-.Modal {
-  position: fixed;
-  height: 100vw;
-  width: 100vw;
-  top: 0;
-  background-color: black;
-  opacity: 0.7;
-  z-index: 1000;
-  padding: 5%;
+.Event-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 1px;
+  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.Form {
-  position: relative;
-  z-index: 1001;
-  width: 50%;
-  margin: 5% auto;
-}
-
-.Cancel-button {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  margin: 70% 70%;
-  font-size: 3em;
-  text-decoration: none;
-  -ms-flex-line-pack: center;
-      align-content: center;
+.Event-grid-item {
+  height: 100%;
+  width: 100%;
   border: solid 2px white;
-  border-radius: 50% 50% 50% 50%;
-  padding: 5px;
-}
-
-a:hover {
   color: white;
 }
+
+/* Madia */
 
 @media only screen and (min-width: 700px) {
   .content {

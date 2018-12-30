@@ -253,7 +253,7 @@ class League extends Component {
        
         return (
             <div>
-                <div className="Modal">
+                <div className="Modal"> </div>
                 <Link to={`/`} className="Cancel-button">X</Link>
                     <div className="Form">
                         <div className="card">
@@ -339,7 +339,7 @@ class League extends Component {
                             {/* {this.renderPlayers()} */}
                         </div>
                     </div>
-                </div>
+                
             </div>
         );
     

@@ -29,7 +29,7 @@ class Navigation extends Component {
                         <button onClick={this.props.button} name="list" value="action">Lists</button>
                     </li>
                     <li>
-                        <button onClick={this.props.button} name="reset" value=" ">empty</button>
+                        <button onClick={this.props.button} name="event" value="action">Event</button>
                     </li>
                 </ul> 
                

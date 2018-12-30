@@ -50,7 +50,7 @@ class Newscoreboard extends Component {
     }
     render() {
         return (
-            <div className="maincontent">
+            <div className="Workarea">
                 <form className="myform" onSubmit={() => this.submitHandler()} >
                
                                 <input 

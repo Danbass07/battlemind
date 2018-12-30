@@ -1,0 +1,13 @@
+.Event-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 1px;
+    height: 100%;
+    justify-content: center;
+}
+.Event-grid-item {
+    height: 100%;
+    width:100%;
+    border: solid 2px white;
+    color: white;
+}

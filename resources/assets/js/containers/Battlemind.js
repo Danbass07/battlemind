@@ -8,13 +8,14 @@ import Scoreboard from '../components/Scoreboards/Scoreboard';
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
 import List from '../components/List';
+import Event from '../components/Event';
 
 class Battlemind extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            action: 'list',
-            object: 'scoreboard',
+            action: 'new',
+            object: 'league',
             types: [
                 { id: 0,
                   type: 'test' },
@@ -55,13 +56,13 @@ componentWillMount(){
                 <Navigation button={(e) => this.buttonHandler(e)} />
             <Switch>
                 
-               
+               {console.log(this.state)}
   
                 <Route exact path="/players/:id/edit" component={Player}></Route>
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
 
-
+                {this.state.action === 'event'  ? <Event /> : null}
                 {this.state.action === 'list'  ? <List object={this.state.object} /> : null}
                 {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
                 {this.state.action === 'new' && this.state.object === 'league' ? <Newleague  /> : null}

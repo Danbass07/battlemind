@@ -126,7 +126,8 @@ class Player extends Component {
     render() {
         
         return (
-            <div className="Modal">
+        <div>
+            <div className="Modal"></div>
                  <Link to={`/`} className="Cancel-button">X</Link>
             <div className="Form">
                     <div className="col-md-8">
@@ -188,9 +189,10 @@ class Player extends Component {
                             <hr />
                             
                         </div>
-                    </div>
+                   
                 </div>
             </div>
+        </div>
         );
     }
 }

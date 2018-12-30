@@ -53,7 +53,7 @@ class List extends Component {
     render() {
       
         return (
-            <div className="maincontent">
+            <div className="Workarea">
              
                 <div className="list-grid">{this.renderContent()}</div>
             </div>

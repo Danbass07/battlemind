@@ -1,0 +1,29 @@
+
+.button {
+    background-color: red;
+    width: 65px;
+    padding: 8px;
+    border: 1px solid coral;
+    text-align: center;
+  }
+  .update {
+    background-color: rgb(20, 8, 122);
+    margin-left: auto;
+  }
+  
+  .list-grid {
+    height:100%;
+    opacity: 1;
+    color: cornsilk;
+    overflow: scroll;
+  }
+  .list-item {
+    display: flex;
+    justify-items: flex-end;
+    border: 1px solid cornsilk;
+  }
+  .list-item-name {
+    width:85px;
+    padding: 8px;
+    text-align: center;
+  }

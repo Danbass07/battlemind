@@ -57,7 +57,7 @@ class Newleague extends Component {
     }
     render() {
         return (
-            <div className="maincontent">
+            <div className="Workarea">
                 <form className="myform" onSubmit={(e) => this.submitHandler(e)}>
 
                                 <input 
