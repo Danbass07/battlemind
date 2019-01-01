@@ -14,12 +14,14 @@ class Battlemind extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            action: 'new',
+            action: 'event',
             object: 'league',
             types: [
                 { id: 0,
                   type: 'test' },
             ],
+            scoreboards: [{}],
+            players: [{}],
             
         };
     
@@ -45,9 +47,30 @@ getTypes() {
          })
     );
 }
-componentWillMount(){
-    this.getTypes();
+getScoreboards() {
+    axios.get(`/scoreboards`).then(response =>
+     this.setState({
+        scoreboards: response.data.content,
+
+         })
+    );
+   
 }
+
+getPlayers() {
+    axios.get('/players').then(response =>
+     this.setState({
+        players: [...response.data.content]
+         })
+    );
+    
+}
+componentWillMount() {
+  this.getScoreboards(); 
+  this.getPlayers();
+  this.getTypes();
+}
+ 
 
 
     render() {
@@ -56,13 +79,12 @@ componentWillMount(){
                 <Navigation button={(e) => this.buttonHandler(e)} />
             <Switch>
                 
-               {console.log(this.state)}
   
                 <Route exact path="/players/:id/edit" component={Player}></Route>
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
 
-                {this.state.action === 'event'  ? <Event /> : null}
+                {this.state.action === 'event'  ? <Event scoreboards={this.state.scoreboards} players={this.state.players}/> : null}
                 {this.state.action === 'list'  ? <List object={this.state.object} /> : null}
                 {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
                 {this.state.action === 'new' && this.state.object === 'league' ? <Newleague  /> : null}

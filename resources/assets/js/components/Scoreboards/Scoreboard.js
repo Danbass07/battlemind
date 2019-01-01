@@ -76,30 +76,30 @@ class Scoreboard extends Component {
     }
     
 
-    getScoreboards() {
-        axios.get(`/scoreboards/${this.props.match.params.id}/edit`).then(response =>
-         this.setState({
-            name: response.data.scoreboard.name,            
-            type: response.data.scoreboard.type,
-            ScoreboardPlayers: response.data.scoreboardPlayers,
+    // getScoreboards() {
+    //     axios.get(`/scoreboards/${this.props.match.params.id}/edit`).then(response =>
+    //      this.setState({
+    //         name: response.data.scoreboard.name,            
+    //         type: response.data.scoreboard.type,
+    //         ScoreboardPlayers: response.data.scoreboardPlayers,
    
-             })
-        );
+    //          })
+    //     );
        
-    }
+    // }
 
-    getPlayers() {
-        axios.get('/players').then(response =>
-         this.setState({
-            allPlayers: [...response.data.allplayers]
-             })
-        );
+    // getPlayers() {
+    //     axios.get('/players').then(response =>
+    //      this.setState({
+    //         allPlayers: [...response.data.allplayers]
+    //          })
+    //     );
         
-    }
-    componentWillMount() {
-      this.getScoreboards(); 
-      this.getPlayers();
-    }
+    // }
+    // componentWillMount() {
+    //   this.getScoreboards(); 
+    //   this.getPlayers();
+    // }
     addPlayer(player) {
         
         axios.get(`/scoreboards/${this.props.match.params.id}/addPlayer/${player.id}`).then(response =>
