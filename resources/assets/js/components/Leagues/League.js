@@ -189,7 +189,7 @@ class League extends Component {
             <div key={leaguePlayer.id}>
                 {this.state.leaguePlayers[index].pivot && this.state.leaguePlayers[index].pivot.player_id === player.id ?
                     <div>
-                        {console.log('1st'+this.state.leaguePlayers)}
+                        
                        <div className="btn btn-sm btn-success float-right">{this.state.leaguePlayers[index].pivot.result} </div>
                         <button onClick={() => this.resultChangeController(player.id ,'Win', index)} className="btn btn-sm btn-info float-right">
                             { this.state.leaguePlayers[index].pivot.win}
@@ -255,7 +255,7 @@ class League extends Component {
             <div>
                 <div className="Modal"> </div>
                 <Link to={`/`} className="Cancel-button">X</Link>
-                    <div className="Form">
+                    <div className="myform">
                         <div className="card">
                             <div className="card-header">Edit Leauge</div>
 

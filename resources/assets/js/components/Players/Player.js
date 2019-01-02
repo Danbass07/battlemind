@@ -126,10 +126,10 @@ class Player extends Component {
     render() {
         
         return (
-        <div>
+        <div > 
             <div className="Modal"></div>
-                 <Link to={`/`} className="Cancel-button">X</Link>
-            <div className="Form">
+            <Link to={`/`} className="Cancel-button">X</Link>
+            <div className="myform">
                     <div className="col-md-8">
                         <div className="card">
                             <div className="card-header">Edit Player</div>

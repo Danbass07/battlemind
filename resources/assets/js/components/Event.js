@@ -7,7 +7,6 @@ class Event extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           scoreboards: this.props.scoreboards,
            players: this.props.players,
            scoreboard: '',
             
@@ -15,10 +14,21 @@ class Event extends Component {
 
     }
     scoreboardChangeHandler(e) {
-        console.log(e.target.name);
+        
         this.setState({
             scoreboard: e.target.value,
         });
+    }
+    renderOptions(scoreboards) {
+        {console.log(scoreboards)  } 
+        return (
+        <select className="myform-control"
+        onChange={(e) => this.scoreboardChangeHandler(e)}>
+        {scoreboards.map(scoreboard => (
+                          
+            <option key={scoreboard.id+scoreboard.name}>{scoreboard.name}</option> ))
+        }
+        </select> )
     }
     render() {
         return (
@@ -26,12 +36,10 @@ class Event extends Component {
                 <div className='Event-grid'>
                  <div className='Event-grid-item'>
                     <form className="myform">
-                        <select className="myform-control"
-                        onChange={(e) => this.scoreboardChangeHandler(e)}>
+                        
                 
-                        {this.props.scoreboards.map(scoreboard => (
-                        <option name={scoreboard.id} key={scoreboard.id}>{scoreboard.name}</option> ))}
-                        </select>
+                        {this.renderOptions(this.props.scoreboards)}
+                        
                         
                     </form>
                  

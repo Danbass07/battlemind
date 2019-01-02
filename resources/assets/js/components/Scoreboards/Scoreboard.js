@@ -9,9 +9,11 @@ class Scoreboard extends Component {
         this.state = {
             name: '',
             type: '',
+            types: [],
             allPlayers: [],
             ScoreboardPlayers: [],
             action: 'minus',
+        
         };
         this.nameChangeHandler = this.nameChangeHandler.bind(this);
         this.typeChangeHandler = this.typeChangeHandler.bind(this);
@@ -20,7 +22,7 @@ class Scoreboard extends Component {
         this.renderResultsDynamic = this.renderResultsDynamic.bind(this);
         this.addPlayer = this.addPlayer.bind(this);
         this.getPlayers = this.getPlayers.bind(this);
-     
+        this.getTypes = this.getTypes.bind(this);
         
     }
     actionController() {
@@ -76,30 +78,38 @@ class Scoreboard extends Component {
     }
     
 
-    // getScoreboards() {
-    //     axios.get(`/scoreboards/${this.props.match.params.id}/edit`).then(response =>
-    //      this.setState({
-    //         name: response.data.scoreboard.name,            
-    //         type: response.data.scoreboard.type,
-    //         ScoreboardPlayers: response.data.scoreboardPlayers,
+    getScoreboards() {
+        axios.get(`/scoreboards/${this.props.match.params.id}/edit`).then(response =>
+         this.setState({
+            name: response.data.scoreboard.name,            
+            type: response.data.scoreboard.type,
+            ScoreboardPlayers: response.data.scoreboardPlayers,
    
-    //          })
-    //     );
+             })
+        );
        
-    // }
+    }
 
-    // getPlayers() {
-    //     axios.get('/players').then(response =>
-    //      this.setState({
-    //         allPlayers: [...response.data.allplayers]
-    //          })
-    //     );
+    getPlayers() {
+        axios.get('/players').then(response =>
+         this.setState({
+            allPlayers: [...response.data.allplayers]
+             })
+        );
         
-    // }
-    // componentWillMount() {
-    //   this.getScoreboards(); 
-    //   this.getPlayers();
-    // }
+    }
+    getTypes() {
+        axios.get('/types').then(response =>
+         this.setState({
+            types: [...response.data.types]
+             })
+        );
+    }
+    componentWillMount() {
+      this.getScoreboards(); 
+      this.getPlayers();
+      this.getTypes();
+}
     addPlayer(player) {
         
         axios.get(`/scoreboards/${this.props.match.params.id}/addPlayer/${player.id}`).then(response =>
@@ -223,10 +233,10 @@ class Scoreboard extends Component {
     render() {
         
         return (
-        <div>
+        <div >
             <div className="Modal"></div>
             <Link to={`/`} className="Cancel-button">X</Link>
-             <div className="Form">
+             <div className="myform">
                     <div className="col-md-8">
                         <div className="card">
                             <div className="card-header">Edit Scoreboard</div>
@@ -242,14 +252,17 @@ class Scoreboard extends Component {
                                 required
                                 
                                 />
-                                <input 
-                                className="form-control"
-                                placeholder="Type"
+
+                        <select className="myform-control" 
+                                aceholder="Type"
                                 required
                                 value={this.state.type}
-                                onChange={this.typeChangeHandler}
-                                />
-                                
+                                onChange={(e) => this.typeChangeHandler(e)}>
+                
+                        {this.state.types.map(type => (
+                            
+                        <option key={type.id}>{type.type}</option> ))}
+                        </select>
                                 
                              
                                 

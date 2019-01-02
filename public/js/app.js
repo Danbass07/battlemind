@@ -61276,7 +61276,7 @@ var Player = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'Form' },
+                    { className: 'myform' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'col-md-8' },
@@ -61617,7 +61617,6 @@ var League = function (_Component) {
                     _this8.state.leaguePlayers[index].pivot && _this8.state.leaguePlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
-                        console.log('1st' + _this8.state.leaguePlayers),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'btn btn-sm btn-success float-right' },
@@ -61723,7 +61722,7 @@ var League = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'Form' },
+                    { className: 'myform' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'card' },
@@ -61852,9 +61851,11 @@ var Scoreboard = function (_Component) {
         _this.state = {
             name: '',
             type: '',
+            types: [],
             allPlayers: [],
             ScoreboardPlayers: [],
             action: 'minus'
+
         };
         _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
         _this.typeChangeHandler = _this.typeChangeHandler.bind(_this);
@@ -61863,6 +61864,7 @@ var Scoreboard = function (_Component) {
         _this.renderResultsDynamic = _this.renderResultsDynamic.bind(_this);
         _this.addPlayer = _this.addPlayer.bind(_this);
         _this.getPlayers = _this.getPlayers.bind(_this);
+        _this.getTypes = _this.getTypes.bind(_this);
 
         return _this;
     }
@@ -61922,39 +61924,56 @@ var Scoreboard = function (_Component) {
                 _this2.props.history.push('/home');
             });
         }
+    }, {
+        key: 'getScoreboards',
+        value: function getScoreboards() {
+            var _this3 = this;
 
-        // getScoreboards() {
-        //     axios.get(`/scoreboards/${this.props.match.params.id}/edit`).then(response =>
-        //      this.setState({
-        //         name: response.data.scoreboard.name,            
-        //         type: response.data.scoreboard.type,
-        //         ScoreboardPlayers: response.data.scoreboardPlayers,
+            axios.get('/scoreboards/' + this.props.match.params.id + '/edit').then(function (response) {
+                return _this3.setState({
+                    name: response.data.scoreboard.name,
+                    type: response.data.scoreboard.type,
+                    ScoreboardPlayers: response.data.scoreboardPlayers
 
-        //          })
-        //     );
+                });
+            });
+        }
+    }, {
+        key: 'getPlayers',
+        value: function getPlayers() {
+            var _this4 = this;
 
-        // }
+            axios.get('/players').then(function (response) {
+                return _this4.setState({
+                    allPlayers: [].concat(_toConsumableArray(response.data.allplayers))
+                });
+            });
+        }
+    }, {
+        key: 'getTypes',
+        value: function getTypes() {
+            var _this5 = this;
 
-        // getPlayers() {
-        //     axios.get('/players').then(response =>
-        //      this.setState({
-        //         allPlayers: [...response.data.allplayers]
-        //          })
-        //     );
-
-        // }
-        // componentWillMount() {
-        //   this.getScoreboards(); 
-        //   this.getPlayers();
-        // }
-
+            axios.get('/types').then(function (response) {
+                return _this5.setState({
+                    types: [].concat(_toConsumableArray(response.data.types))
+                });
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.getScoreboards();
+            this.getPlayers();
+            this.getTypes();
+        }
     }, {
         key: 'addPlayer',
         value: function addPlayer(player) {
-            var _this3 = this;
+            var _this6 = this;
 
             axios.get('/scoreboards/' + this.props.match.params.id + '/addPlayer/' + player.id).then(function (response) {
-                return _this3.setState({
+                return _this6.setState({
                     ScoreboardPlayers: [].concat(_toConsumableArray(response.data))
                 });
             });
@@ -61962,10 +61981,10 @@ var Scoreboard = function (_Component) {
     }, {
         key: 'removePlayer',
         value: function removePlayer(player) {
-            var _this4 = this;
+            var _this7 = this;
 
             axios.get('/scoreboards/' + this.props.match.params.id + '/removePlayer/' + player.id).then(function (response) {
-                return _this4.setState({
+                return _this7.setState({
                     ScoreboardPlayers: [].concat(_toConsumableArray(response.data))
                 });
             });
@@ -61973,7 +61992,7 @@ var Scoreboard = function (_Component) {
     }, {
         key: 'renderPlayers',
         value: function renderPlayers() {
-            var _this5 = this;
+            var _this8 = this;
 
             return this.state.allPlayers.map(function (player) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -61987,22 +62006,22 @@ var Scoreboard = function (_Component) {
                             null,
                             player.id,
                             player.name,
-                            !_this5.contains(_this5.state.ScoreboardPlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            !_this8.contains(_this8.state.ScoreboardPlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this5.addPlayer(player);
+                                        return _this8.addPlayer(player);
                                     },
                                     className: 'btn btn-sm btn-warning float-right' },
                                 'Add Player'
                             ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this5.removePlayer(player);
+                                        return _this8.removePlayer(player);
                                     },
                                     className: 'btn btn-sm btn-warning float-right' },
                                 '  X  '
                             ),
-                            _this5.renderResultsDynamic(player)
+                            _this8.renderResultsDynamic(player)
                         )
                     )
                 );
@@ -62036,35 +62055,35 @@ var Scoreboard = function (_Component) {
     }, {
         key: 'renderResultsDynamic',
         value: function renderResultsDynamic(player) {
-            var _this6 = this;
+            var _this9 = this;
 
             return this.state.ScoreboardPlayers.sort(this.compareValues('result', 'desc')).map(function (ScoreboardPlayer, index) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { key: ScoreboardPlayer.id },
-                    _this6.state.ScoreboardPlayers[index].pivot && _this6.state.ScoreboardPlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    _this9.state.ScoreboardPlayers[index].pivot && _this9.state.ScoreboardPlayers[index].pivot.player_id === player.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { onClick: function onClick() {
-                                    return _this6.resultChangeController(player.id, 'Win', index);
+                                    return _this9.resultChangeController(player.id, 'Win', index);
                                 }, className: 'btn btn-sm btn-info float-right' },
-                            _this6.state.ScoreboardPlayers[index].pivot.win
+                            _this9.state.ScoreboardPlayers[index].pivot.win
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { onClick: function onClick() {
-                                    return _this6.resultChangeController(player.id, 'Lost', index);
+                                    return _this9.resultChangeController(player.id, 'Lost', index);
                                 }, className: 'btn btn-sm btn-danger float-right' },
-                            _this6.state.ScoreboardPlayers[index].pivot.lost
+                            _this9.state.ScoreboardPlayers[index].pivot.lost
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { onClick: function onClick() {
-                                    return _this6.resultChangeController(player.id, 'Draw', index);
+                                    return _this9.resultChangeController(player.id, 'Draw', index);
                                 }, className: 'btn btn-sm btn-warning float-right' },
-                            _this6.state.ScoreboardPlayers[index].pivot.draw
+                            _this9.state.ScoreboardPlayers[index].pivot.draw
                         )
                     ) : null
                 );
@@ -62096,7 +62115,7 @@ var Scoreboard = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this7 = this;
+            var _this10 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -62109,7 +62128,7 @@ var Scoreboard = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'Form' },
+                    { className: 'myform' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'col-md-8' },
@@ -62136,13 +62155,23 @@ var Scoreboard = function (_Component) {
                                         required: true
 
                                     }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'Type',
-                                        required: true,
-                                        value: this.state.type,
-                                        onChange: this.typeChangeHandler
-                                    })
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'select',
+                                        { className: 'myform-control',
+                                            aceholder: 'Type',
+                                            required: true,
+                                            value: this.state.type,
+                                            onChange: function onChange(e) {
+                                                return _this10.typeChangeHandler(e);
+                                            } },
+                                        this.state.types.map(function (type) {
+                                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'option',
+                                                { key: type.id },
+                                                type.type
+                                            );
+                                        })
+                                    )
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'button',
@@ -62158,7 +62187,7 @@ var Scoreboard = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
                                 { onClick: function onClick() {
-                                        return _this7.actionController();
+                                        return _this10.actionController();
                                     }, className: 'btn btn-sm btn-dark float-right' },
                                 this.state.action
                             ),
@@ -62366,7 +62395,6 @@ var Event = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).call(this, props));
 
         _this.state = {
-            scoreboards: _this.props.scoreboards,
             players: _this.props.players,
             scoreboard: ''
 
@@ -62378,16 +62406,37 @@ var Event = function (_Component) {
     _createClass(Event, [{
         key: 'scoreboardChangeHandler',
         value: function scoreboardChangeHandler(e) {
-            console.log(e.target.name);
+
             this.setState({
                 scoreboard: e.target.value
             });
         }
     }, {
-        key: 'render',
-        value: function render() {
+        key: 'renderOptions',
+        value: function renderOptions(scoreboards) {
             var _this2 = this;
 
+            {
+                console.log(scoreboards);
+            }
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'select',
+                { className: 'myform-control',
+                    onChange: function onChange(e) {
+                        return _this2.scoreboardChangeHandler(e);
+                    } },
+                scoreboards.map(function (scoreboard) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'option',
+                        { key: scoreboard.id + scoreboard.name },
+                        scoreboard.name
+                    );
+                })
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'Workarea' },
@@ -62400,20 +62449,7 @@ var Event = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'form',
                             { className: 'myform' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'select',
-                                { className: 'myform-control',
-                                    onChange: function onChange(e) {
-                                        return _this2.scoreboardChangeHandler(e);
-                                    } },
-                                this.props.scoreboards.map(function (scoreboard) {
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'option',
-                                        { name: scoreboard.id, key: scoreboard.id },
-                                        scoreboard.name
-                                    );
-                                })
-                            )
+                            this.renderOptions(this.props.scoreboards)
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
