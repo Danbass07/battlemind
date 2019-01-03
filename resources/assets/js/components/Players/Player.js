@@ -8,6 +8,7 @@ class Player extends Component {
         this.state = {
             name: '',
             type: '',
+            types: [],
             url: '',
             wins: 0,
             lost: 0,
@@ -39,6 +40,7 @@ class Player extends Component {
             type: e.target.value
         });
     }
+
     urlChangeHandler(e) {
         this.setState({
             url: e.target.value
@@ -76,8 +78,16 @@ class Player extends Component {
              })
         );
     }
+    getTypes() {
+        axios.get('/types').then(response =>
+         this.setState({
+            types: [...response.data.types]
+             })
+        );
+    }
     componentWillMount() {
       this.getPlayers(); 
+      this.getTypes();
     }
     addWin(){
         
@@ -145,13 +155,15 @@ class Player extends Component {
                                 required
                                 
                                 />
-                                <input 
-                                className="form-control"
-                                placeholder="Type"
+                        <select className="myform-control" 
+                                placeholder="Types"
                                 required
-                                value={this.state.type}
-                                onChange={this.typeChangeHandler}
-                                />
+                                onChange={(e) => this.typeChangeHandler(e)}>
+                
+                        {this.state.types.map(type => (
+                            
+                        <option  key={type.id}>{type.type}</option> ))}
+                        </select>
                                 
                                 
                                 <input 

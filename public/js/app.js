@@ -61106,6 +61106,8 @@ var Newscoreboard = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -61126,6 +61128,7 @@ var Player = function (_Component) {
         _this.state = {
             name: '',
             type: '',
+            types: [],
             url: '',
             wins: 0,
             lost: 0,
@@ -61201,9 +61204,21 @@ var Player = function (_Component) {
             });
         }
     }, {
+        key: 'getTypes',
+        value: function getTypes() {
+            var _this4 = this;
+
+            axios.get('/types').then(function (response) {
+                return _this4.setState({
+                    types: [].concat(_toConsumableArray(response.data.types))
+                });
+            });
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.getPlayers();
+            this.getTypes();
         }
     }, {
         key: 'addWin',
@@ -61264,6 +61279,7 @@ var Player = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this5 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -61303,13 +61319,22 @@ var Player = function (_Component) {
                                         required: true
 
                                     }),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        className: 'form-control',
-                                        placeholder: 'Type',
-                                        required: true,
-                                        value: this.state.type,
-                                        onChange: this.typeChangeHandler
-                                    }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'select',
+                                        { className: 'myform-control',
+                                            placeholder: 'Types',
+                                            required: true,
+                                            onChange: function onChange(e) {
+                                                return _this5.typeChangeHandler(e);
+                                            } },
+                                        this.state.types.map(function (type) {
+                                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'option',
+                                                { key: type.id },
+                                                type.type
+                                            );
+                                        })
+                                    ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
                                         className: 'form-control',
                                         placeholder: 'Url',
@@ -62396,7 +62421,8 @@ var Event = function (_Component) {
 
         _this.state = {
             players: _this.props.players,
-            scoreboard: ''
+            scoreboard: 1,
+            ScoreboardPlayers: []
 
         };
 
@@ -62404,7 +62430,20 @@ var Event = function (_Component) {
     }
 
     _createClass(Event, [{
-        key: 'scoreboardChangeHandler',
+        key: "contains",
+        value: function contains(a, obj) {
+            for (var i = 0; i < a.length; i++) {
+
+                if (a[i].id === obj.id) {
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }, {
+        key: "scoreboardChangeHandler",
         value: function scoreboardChangeHandler(e) {
 
             this.setState({
@@ -62412,60 +62451,95 @@ var Event = function (_Component) {
             });
         }
     }, {
-        key: 'renderOptions',
+        key: "renderOptions",
         value: function renderOptions(scoreboards) {
             var _this2 = this;
 
-            {
-                console.log(scoreboards);
-            }
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'select',
-                { className: 'myform-control',
+                "select",
+                { className: "myform-control",
                     onChange: function onChange(e) {
                         return _this2.scoreboardChangeHandler(e);
                     } },
                 scoreboards.map(function (scoreboard) {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'option',
-                        { key: scoreboard.id + scoreboard.name },
+                        "option",
+                        { value: scoreboard.id, key: scoreboard.id + scoreboard.name },
                         scoreboard.name
                     );
                 })
             );
         }
     }, {
-        key: 'render',
+        key: "renderPlayers",
+        value: function renderPlayers(id) {
+            var _this3 = this;
+
+            axios.get("/scoreboards/" + id + "/edit").then(function (response) {
+                return _this3.setState({
+                    ScoreboardPlayers: response.data.scoreboardPlayers
+
+                });
+            });
+
+            return this.props.players.map(function (player) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { key: player.id + player.name, className: "media" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "media-body" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            null,
+                            player.id,
+                            player.name,
+                            player.type,
+                            !_this3.contains(_this3.state.ScoreboardPlayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "button",
+                                { onClick: function onClick() {
+                                        return _this3.addPlayer(player);
+                                    },
+                                    className: "btn btn-sm btn-warning float-right" },
+                                "Add Player"
+                            ) : null
+                        )
+                    )
+                );
+            });
+        }
+    }, {
+        key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'Workarea' },
+                "div",
+                { className: "Workarea" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'Event-grid' },
+                    "div",
+                    { className: "Event-grid" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Event-grid-item' },
+                        "div",
+                        { className: "Event-grid-item" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'form',
-                            { className: 'myform' },
+                            "form",
+                            { className: "myform" },
                             this.renderOptions(this.props.scoreboards)
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Event-grid-item' },
-                        this.state.scoreboard
+                        "div",
+                        { className: "Event-grid-item" },
+                        this.renderPlayers(this.state.scoreboard)
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Event-grid-item' },
-                        'Results'
+                        "div",
+                        { className: "Event-grid-item" },
+                        this.state.id
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Event-grid-item' },
-                        'Spare'
+                        "div",
+                        { className: "Event-grid-item" },
+                        this.state.iid
                     )
                 )
             );
