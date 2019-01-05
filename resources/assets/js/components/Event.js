@@ -72,7 +72,7 @@ class Event extends Component {
                     ))
                 ) 
         }
-\
+
     render() {
         return (
             <div className="Workarea">
