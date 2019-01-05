@@ -10,6 +10,7 @@ class Event extends Component {
            players: this.props.players,
            scoreboard: 1,
            ScoreboardPlayers: [],
+           type: 'planeswalker',
 
             
         };
@@ -27,9 +28,11 @@ class Event extends Component {
         return false;
     }  
     scoreboardChangeHandler(e) {
-        
+        const value = e.target.value.split('break');
+        console.log(value);
         this.setState({
-            scoreboard: e.target.value,
+            scoreboard: value[0],
+            type: value[1],
         });
     }
     renderOptions(scoreboards) {
@@ -38,36 +41,38 @@ class Event extends Component {
         onChange={(e) => this.scoreboardChangeHandler(e)}>
         {scoreboards.map(scoreboard => (
                           
-            <option value={scoreboard.id}  key={scoreboard.id+scoreboard.name}>{scoreboard.name}</option> ))
+            <option value={scoreboard.id+'break'+scoreboard.type}  key={scoreboard.id+scoreboard.name}>{scoreboard.name}</option> ))
         }
         </select> )
     }
-    renderPlayers(id) {
-        axios.get(`/scoreboards/${id}/edit`).then(response =>
-            this.setState({
-               ScoreboardPlayers: response.data.scoreboardPlayers,
-      
-                }));
+    renderPlayers() {
+
         
         return (
-                this.props.players.map(player => (
-                    <div key={player.id+player.name} className="media">
-                    <div className="media-body">
-                       <div>
-                           {player.id}
-                           {player.name}
-                           {player.type}
-                         
-                           { !this.contains(this.state.ScoreboardPlayers, player) ? 
-                           
-                           <button onClick={() => this.addPlayer(player)}
-                               className="btn btn-sm btn-warning float-right">Add Player</button> : null }
+                    this.props.players.map(player => (
+                        <div> {!this.contains(this.state.ScoreboardPlayers, player) && (this.state.type==player.type)? 
+                            <div key={player.id+player.name} className="media">
+                           {console.log("Type " + player.type)}
+                           {console.log("StateType " + this.state.type)}
+                                <div className="media-body">
+                                        <div>
+                                            --{player.id}
+                                            --{player.name}
+                                            --{player.type}
+                                            
+                                            
+                                            
+                                            <button onClick={() => this.addPlayer(player)}
+                                                className="btn btn-sm btn-warning float-right">Add Player</button> 
 
-                           </div>
+                                        </div>
+                                </div>
+                            </div> : null }
                         </div>
-                    </div>
-                           ))
-                 ) }
+                    ))
+                ) 
+        }
+\
     render() {
         return (
             <div className="Workarea">

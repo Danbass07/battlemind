@@ -65,10 +65,18 @@ getPlayers() {
     );
     
 }
+getLeagues() {
+    axios.get(`/$leagues`).then(response =>
+     this.setState({
+        leagues: [...response.data.content]
+         })
+    );
+}
 componentWillMount() {
   this.getScoreboards(); 
   this.getPlayers();
   this.getTypes();
+  this.getLeagues();
 }
  
 
@@ -84,7 +92,7 @@ componentWillMount() {
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
 
-                {this.state.action === 'event'  ? <Event scoreboards={this.state.scoreboards} players={this.state.players}/> : null}
+                {this.state.action === 'event'  ? <Event scoreboards={this.state.scoreboards} players={this.state.players} leagues={this.state.leagues}/> : null}
                 {this.state.action === 'list'  ? <List object={this.state.object} /> : null}
                 {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
                 {this.state.action === 'new' && this.state.object === 'league' ? <Newleague  /> : null}

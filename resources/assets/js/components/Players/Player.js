@@ -7,7 +7,7 @@ class Player extends Component {
         super(props);
         this.state = {
             name: '',
-            type: '',
+            type: 'planeswalker',
             types: [],
             url: '',
             wins: 0,
@@ -36,9 +36,11 @@ class Player extends Component {
         });
     }
     typeChangeHandler(e) {
+        console.log(this.state.type);
         this.setState({
             type: e.target.value
         });
+        console.log(this.state.type);
     }
 
     urlChangeHandler(e) {
@@ -88,6 +90,7 @@ class Player extends Component {
     componentWillMount() {
       this.getPlayers(); 
       this.getTypes();
+      console.log(this.state.type);
     }
     addWin(){
         
@@ -156,13 +159,14 @@ class Player extends Component {
                                 
                                 />
                         <select className="myform-control" 
-                                placeholder="Types"
+                                placeholder="type"
                                 required
+                                value={this.state.type}
                                 onChange={(e) => this.typeChangeHandler(e)}>
                 
                         {this.state.types.map(type => (
                             
-                        <option  key={type.id}>{type.type}</option> ))}
+                        <option value={type.type} key={type.id}>{type.type}</option> ))}
                         </select>
                                 
                                 
