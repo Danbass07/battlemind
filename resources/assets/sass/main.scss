@@ -7,7 +7,7 @@
     height: 100vh;
     position: fixed;
     top: 55px;
-    background-color: black;
+    background-color: $maincolor;
     overflow: hidden;
     
   }
@@ -16,7 +16,8 @@
     height: 60%;
     margin: 80px auto;
     border:  solid 2px  white;
-    overflow: scroll;
+    background-color: darken($maincolor, 5%);
+    overflow: hidden;
   }
 
   .navbar {

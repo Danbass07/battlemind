@@ -1,13 +1,29 @@
 .Event-grid {
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-gap: 1px;
-    height: 100%;
-    justify-content: center;
+    grid-template-columns: 24% 24% 24% 24%;
+    grid-gap: 1%;
+    height: 90%;
+    width: 98%;
+    justify-content: space-between;
+    
+    margin:0 1%;
 }
 .Event-grid-item {
-    height: 100%;
-    width:100%;
+    height: 98%;
+    width: 100%;
     border: solid 2px white;
     color: white;
+    overflow:scroll;
+    overflow-x:hidden;
+
+    
+}
+.Event-grid-list {
+
+}
+.Event-form {
+    width:60%;
+    margin: 2px auto;
+    border-radius: 25%;
+    align-content: center;
 }

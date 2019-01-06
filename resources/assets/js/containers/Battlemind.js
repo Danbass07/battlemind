@@ -15,7 +15,7 @@ class Battlemind extends Component {
         super(props);
         this.state = {
             action: 'event',
-            object: 'league',
+            object: '',
             types: [
                 { id: 0,
                   type: 'test' },
@@ -28,16 +28,15 @@ class Battlemind extends Component {
     }
 
 buttonHandler(e) {
-    if (e.target.value === ' ') {
+    if (e.target.name === 'event') {
         this.setState({
-            action: '',
             object: '',
-        })  
-    } else {
+        }) 
+    }
         this.setState({
             [e.target.value]: e.target.name
         });
-    }
+    
 }
 
 getTypes() {
@@ -66,7 +65,7 @@ getPlayers() {
     
 }
 getLeagues() {
-    axios.get(`/$leagues`).then(response =>
+    axios.get(`/leagues`).then(response =>
      this.setState({
         leagues: [...response.data.content]
          })
@@ -84,7 +83,7 @@ componentWillMount() {
     render() {
         return (
             <div className="Battlemind">  
-                <Navigation button={(e) => this.buttonHandler(e)} />
+                <Navigation button={(e) => this.buttonHandler(e)} object={this.state.object} action={this.state.action} />
             <Switch>
                 
   

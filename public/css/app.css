@@ -10482,7 +10482,7 @@ a.text-dark:focus {
   height: 100vh;
   position: fixed;
   top: 55px;
-  background-color: black;
+  background-color: #053155;
   overflow: hidden;
 }
 
@@ -10491,7 +10491,8 @@ a.text-dark:focus {
   height: 60%;
   margin: 80px auto;
   border: solid 2px  white;
-  overflow: scroll;
+  background-color: #04233d;
+  overflow: hidden;
 }
 
 .navbar {
@@ -10580,6 +10581,7 @@ a:hover {
   opacity: 1;
   color: cornsilk;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 .list-item {
@@ -10598,19 +10600,120 @@ a:hover {
 
 .Event-grid {
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-gap: 1px;
-  height: 100%;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  grid-template-columns: 24% 24% 24% 24%;
+  grid-gap: 1%;
+  height: 90%;
+  width: 98%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0 1%;
 }
 
 .Event-grid-item {
-  height: 100%;
+  height: 98%;
   width: 100%;
   border: solid 2px white;
   color: white;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.Event-form {
+  width: 60%;
+  margin: 2px auto;
+  border-radius: 25%;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.navigation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 70px;
+  list-style-type: none;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  background-color: #992604;
+}
+
+.top {
+  position: fixed;
+  top: 50px;
+  margin: 0;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0;
+  margin: 0;
+  z-index: 2;
+}
+
+.navButton {
+  height: 50px;
+  width: 160px;
+  background-color: #053155;
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.6em;
+  margin-top: 10px;
+  border-radius: 25%;
+}
+
+.active {
+  background-color: #992604;
+  border-color: #053155;
+  color: #053155;
+}
+
+@-webkit-keyframes mymove {
+  0% {
+    text-align: left;
+  }
+
+  25% {
+    text-align: center;
+  }
+
+  50% {
+    text-align: right;
+  }
+
+  75% {
+    text-align: center;
+  }
+
+  100% {
+    text-align: left;
+  }
+}
+
+@keyframes mymove {
+  0% {
+    text-align: left;
+  }
+
+  25% {
+    text-align: center;
+  }
+
+  50% {
+    text-align: right;
+  }
+
+  75% {
+    text-align: center;
+  }
+
+  100% {
+    text-align: left;
+  }
 }
 
 /* Madia */
