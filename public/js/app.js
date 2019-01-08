@@ -59872,6 +59872,7 @@ var Battlemind = function (_Component) {
             types: [{ id: 0,
                 type: 'test' }],
             scoreboards: [{}],
+            scorboardplayers: [{}],
             players: [{}]
 
         };
@@ -59935,6 +59936,41 @@ var Battlemind = function (_Component) {
             });
         }
     }, {
+        key: 'getScoreboardPlayers',
+        value: function getScoreboardPlayers(e) {
+            var _this6 = this;
+
+            var value = e.target.value.split('break');
+            axios.get('/scoreboards/' + value[0] + '/edit').then(function (response) {
+                return _this6.setState({
+                    scorboardplayers: response.data.scoreboardPlayers
+                });
+            });
+            console.log(this.state.scorboardplayers);
+        }
+    }, {
+        key: 'addPlayer',
+        value: function addPlayer(scoreobard, player) {
+            var _this7 = this;
+
+            axios.get('/scoreboards/' + scoreobard + '/addPlayer/' + player).then(function (response) {
+                return _this7.setState({
+                    scoreboardplayers: [].concat(_toConsumableArray(response.data))
+                });
+            });
+        }
+    }, {
+        key: 'removePlayer',
+        value: function removePlayer(scoreobard, player) {
+            var _this8 = this;
+
+            axios.get('/scoreboards/' + scoreobard + '/removePlayer/' + player.id).then(function (response) {
+                return _this8.setState({
+                    scoreboardplayers: [].concat(_toConsumableArray(response.data))
+                });
+            });
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.getScoreboards();
@@ -59945,13 +59981,13 @@ var Battlemind = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this9 = this;
 
             return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                 'div',
                 { className: 'Battlemind' },
                 __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], { button: function button(e) {
-                        return _this6.buttonHandler(e);
+                        return _this9.buttonHandler(e);
                     }, object: this.state.object, action: this.state.action }),
                 __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_8_react_router_dom__["d" /* Switch */],
@@ -59959,7 +59995,21 @@ var Battlemind = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/players/:id/edit', component: __WEBPACK_IMPORTED_MODULE_4__components_Players_Player__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues/:id/edit', component: __WEBPACK_IMPORTED_MODULE_5__components_Leagues_League__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/scoreboards/:id/edit', component: __WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboard__["a" /* default */] }),
-                    this.state.action === 'event' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], { scoreboards: this.state.scoreboards, players: this.state.players, leagues: this.state.leagues }) : null,
+                    this.state.action === 'event' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], {
+                        addplayer: function addplayer(scoreobard, player) {
+                            return _this9.addPlayer(scoreobard, player);
+                        },
+                        removeplayer: function removeplayer(scoreobard, player) {
+                            return _this9.removePlayer(scoreobard, player);
+                        },
+                        getscorboardplayers: function getscorboardplayers(e) {
+                            return _this9.getScoreboardPlayers(e);
+                        },
+                        scorboardplayers: this.state.scorboardplayers,
+                        scoreboards: this.state.scoreboards,
+                        players: this.state.players,
+                        leagues: this.state.leagues
+                    }) : null,
                     this.state.action === 'list' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["a" /* default */], { object: this.state.object }) : null,
                     this.state.action === 'new' && this.state.object === 'player' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], { types: this.state.types }) : null,
                     this.state.action === 'new' && this.state.object === 'league' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], null) : null,
@@ -61828,13 +61878,7 @@ var Event = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).call(this, props));
 
-        _this.state = {
-            players: _this.props.players,
-            scoreboard: 1,
-            ScoreboardPlayers: [],
-            type: 'planeswalker'
-
-        };
+        _this.state = {};
 
         return _this;
     }
@@ -61869,6 +61913,9 @@ var Event = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'select',
                 { className: 'myform-control',
+                    onClick: function onClick(e) {
+                        return _this2.props.getscorboardplayers(e);
+                    },
                     onChange: function onChange(e) {
                         return _this2.scoreboardChangeHandler(e);
                     } },
@@ -61883,22 +61930,38 @@ var Event = function (_Component) {
         }
     }, {
         key: 'renderPlayers',
-        value: function renderPlayers() {
+        value: function renderPlayers(option) {
             var _this3 = this;
 
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'Event-list-grid' },
-                this.props.players.map(function (player) {
-                    return !_this3.contains(_this3.state.ScoreboardPlayers, player) && _this3.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Event-list-item', onClick: function onClick() {
-                                return _this3.addPlayer(player);
-                            }, key: player.type + player.id + player.name },
-                        player.name
-                    ) : null;
-                })
-            );
+            if (option == 'noexist') {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'Event-list-grid' },
+                    this.props.players.map(function (player) {
+                        return !_this3.contains(_this3.props.scorboardplayers, player) && _this3.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'Event-list-item', onClick: function onClick() {
+                                    return _this3.props.addplayer(_this3.state.scoreboard, player.id);
+                                }, key: player.type + player.id + player.name },
+                            player.name
+                        ) : null;
+                    })
+                );
+            } else {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'Event-list-grid' },
+                    this.props.players.map(function (player) {
+                        return _this3.contains(_this3.props.scorboardplayers, player) && _this3.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'Event-list-item', onClick: function onClick() {
+                                    return _this3.props.removeplayer(_this3.state.scoreboard, player.id);
+                                }, key: player.type + player.id + player.name },
+                            player.name
+                        ) : null;
+                    })
+                );
+            }
         }
     }, {
         key: 'render',
@@ -61917,9 +61980,13 @@ var Event = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'Event-grid-item' },
-                        this.renderPlayers(this.state.scoreboard)
+                        this.renderPlayers('noexist')
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Event-grid-item' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'Event-grid-item' },
+                        this.renderPlayers('')
+                    ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'Event-grid-item' },

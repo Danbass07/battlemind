@@ -7,15 +7,13 @@ class Event extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           players: this.props.players,
-           scoreboard: 1,
-           ScoreboardPlayers: [],
-           type: 'planeswalker',
+  
 
             
         };
 
     }
+
     contains(a, obj) {
         for (var i = 0; i < a.length; i++) {
           
@@ -37,6 +35,7 @@ class Event extends Component {
     renderOptions(scoreboards) {
         return (
         <select className="myform-control"
+        onClick={(e)=>this.props.getscorboardplayers(e)}
         onChange={(e) => this.scoreboardChangeHandler(e)}>
         {scoreboards.map(scoreboard => (
                           
@@ -44,24 +43,42 @@ class Event extends Component {
         }
         </select> )
     }
-    renderPlayers() {
+    renderPlayers(option) {
+        if (option == 'noexist') {
+            return (    <div  className="Event-list-grid">
+            { this.props.players.map(player => (
+                                    
+                  !this.contains(this.props.scorboardplayers, player) && (this.state.type==player.type)? 
+                  <div className="Event-list-item" onClick={() => this.props.addplayer(this.state.scoreboard, player.id )} key={player.type+player.id+player.name}>
+                     
+                  {player.name}
+                     
+      
+                 </div> : null 
+             )) }
+                 </div>
+                 
+             
+         ) 
+        } else {
+            return (    <div  className="Event-list-grid">
+            { this.props.players.map(player => (
+                                    
+                  this.contains(this.props.scorboardplayers, player) && (this.state.type==player.type)? 
+                  <div className="Event-list-item" onClick={() => this.props.removeplayer(this.state.scoreboard, player.id )} key={player.type+player.id+player.name}>
+                     
+                  {player.name}
+                     
+      
+                 </div> : null 
+             )) }
+                 </div>
+                 
+             
+         ) 
+        }
 
-        
-        return (    <div  className="Event-list-grid">
-                   { this.props.players.map(player => (
-                                               
-                         !this.contains(this.state.ScoreboardPlayers, player) && (this.state.type==player.type)? 
-                         <div className="Event-list-item" onClick={() => this.addPlayer(player)} key={player.type+player.id+player.name}>
-                            
-                         {player.name}
-                            
-                            
-                        </div> : null 
-                    )) }
-                        </div>
-                        
-                    
-                ) 
+
         }
 
     render() {
@@ -71,8 +88,8 @@ class Event extends Component {
                 {this.renderOptions(this.props.scoreboards)}
             </form>
                 <div className='Event-grid'>
-                 <div className='Event-grid-item'>{this.renderPlayers(this.state.scoreboard)}</div>
-                 <div className='Event-grid-item'></div>
+                 <div className='Event-grid-item'>{this.renderPlayers('noexist')}</div>
+                 <div className='Event-grid-item'>{this.renderPlayers('')}</div>
                  <div className='Event-grid-item'>{this.state.id}</div>
                  <div className='Event-grid-item'>{this.state.iid}</div>
                 </div>

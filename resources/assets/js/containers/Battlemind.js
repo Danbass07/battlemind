@@ -21,6 +21,7 @@ class Battlemind extends Component {
                   type: 'test' },
             ],
             scoreboards: [{}],
+            scorboardplayers: [{}],
             players: [{}],
             
         };
@@ -71,6 +72,33 @@ getLeagues() {
          })
     );
 }
+getScoreboardPlayers(e) {
+    const value = e.target.value.split('break');
+    axios.get(`/scoreboards/${value[0]}/edit`).then(response =>
+        this.setState({
+            scorboardplayers: response.data.scoreboardPlayers
+        })
+    );
+    console.log(this.state.scorboardplayers)
+}
+addPlayer(scoreobard, player) {
+
+    axios.get(`/scoreboards/${scoreobard}/addPlayer/${player}`).then(response =>
+        this.setState ({
+            scoreboardplayers:[...response.data ],
+        })
+      
+    );
+   
+}
+removePlayer(scoreobard, player) {
+    axios.get(`/scoreboards/${scoreobard}/removePlayer/${player.id}`).then(response =>
+        this.setState ({
+            scoreboardplayers:[...response.data ],
+        })
+        
+    );
+}
 componentWillMount() {
   this.getScoreboards(); 
   this.getPlayers();
@@ -91,7 +119,16 @@ componentWillMount() {
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
 
-                {this.state.action === 'event'  ? <Event scoreboards={this.state.scoreboards} players={this.state.players} leagues={this.state.leagues}/> : null}
+                {this.state.action === 'event'  ? 
+                <Event 
+                    addplayer={(scoreobard, player)=> this.addPlayer(scoreobard, player)} 
+                    removeplayer={(scoreobard, player)=> this.removePlayer(scoreobard, player)} 
+                    getscorboardplayers={(e) => this.getScoreboardPlayers(e)} 
+                    scorboardplayers={this.state.scorboardplayers} 
+                    scoreboards={this.state.scoreboards} 
+                    players={this.state.players} 
+                    leagues={this.state.leagues}
+                /> : null}
                 {this.state.action === 'list'  ? <List object={this.state.object} /> : null}
                 {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
                 {this.state.action === 'new' && this.state.object === 'league' ? <Newleague  /> : null}
