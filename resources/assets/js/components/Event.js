@@ -51,14 +51,11 @@ class Event extends Component {
                    { this.props.players.map(player => (
                                                
                          !this.contains(this.state.ScoreboardPlayers, player) && (this.state.type==player.type)? 
-                         <div className="Event-list-item" key={player.type+player.id+player.name}>
+                         <div className="Event-list-item" onClick={() => this.addPlayer(player)} key={player.type+player.id+player.name}>
                             
-                            --{player.id}
-                            --{player.name}
-                            --{player.type}
+                         {player.name}
                             
-                            <button onClick={() => this.addPlayer(player)}
-                            className="btn btn-sm btn-warning float-right">Add Player</button> 
+                            
                         </div> : null 
                     )) }
                         </div>
@@ -74,8 +71,8 @@ class Event extends Component {
                 {this.renderOptions(this.props.scoreboards)}
             </form>
                 <div className='Event-grid'>
-                 <div className='Event-grid-item'></div>
                  <div className='Event-grid-item'>{this.renderPlayers(this.state.scoreboard)}</div>
+                 <div className='Event-grid-item'></div>
                  <div className='Event-grid-item'>{this.state.id}</div>
                  <div className='Event-grid-item'>{this.state.iid}</div>
                 </div>

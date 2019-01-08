@@ -15,7 +15,7 @@ class Battlemind extends Component {
         super(props);
         this.state = {
             action: 'event',
-            object: '',
+            object: 'none',
             types: [
                 { id: 0,
                   type: 'test' },

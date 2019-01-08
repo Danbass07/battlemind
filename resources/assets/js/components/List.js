@@ -32,11 +32,13 @@ class List extends Component {
         ))
     }
     getContent() {
-        axios.get(`/${this.props.object}s`).then(response =>
-         this.setState({
-            content: [...response.data.content]
-             })
-        );
+        if (this.props.object !== 'none') {
+            axios.get(`/${this.props.object}s`).then(response =>
+            this.setState({
+                content: [...response.data.content]
+                })
+            );
+        }
     }
     componentWillMount() {
       this.getContent(); 
