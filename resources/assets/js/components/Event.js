@@ -8,7 +8,9 @@ class Event extends Component {
         super(props);
         this.state = {
   
-
+            scoreboard: 1,
+            scorboardplayers: [{}],
+            type:'planeswalker',
             
         };
 
@@ -26,16 +28,42 @@ class Event extends Component {
         return false;
     }  
     scoreboardChangeHandler(e) {
+        // !this.contains(this.props.scorboardplayers, player)
         const value = e.target.value.split('break');
-        this.setState({
-            scoreboard: value[0],
-            type: value[1],
-        });
+        axios.get(`/scoreboards/${value[0]}/edit`).then(response =>
+            this.setState({
+                scoreboard: value[0],
+                type: value[1],
+                scorboardplayers: response.data.scoreboardPlayers
+            })
+        );
+        
+    
+    }
+    addPlayer(scoreboard, player) {
+
+        axios.get(`/scoreboards/${scoreboard}/addPlayer/${player}`).then(response =>
+            this.setState ({
+                scoreboard: scoreboard,
+                scorboardplayers:[...response.data ],
+            }) 
+           
+          
+        );
+       
+    }
+    removePlayer(scoreboard, player) {
+        axios.get(`/scoreboards/${scoreboard}/removePlayer/${player}`).then(response =>
+            this.setState ({
+                scoreboard: scoreboard,
+                scorboardplayers:[...response.data],
+            })
+            
+        );
     }
     renderOptions(scoreboards) {
         return (
         <select className="myform-control"
-        onClick={(e)=>this.props.getscorboardplayers(e)}
         onChange={(e) => this.scoreboardChangeHandler(e)}>
         {scoreboards.map(scoreboard => (
                           
@@ -43,13 +71,13 @@ class Event extends Component {
         }
         </select> )
     }
-    renderPlayers(option) {
+    renderPlayers(option ,players) {
         if (option == 'noexist') {
             return (    <div  className="Event-list-grid">
-            { this.props.players.map(player => (
+            { players.map(player => (
                                     
-                  !this.contains(this.props.scorboardplayers, player) && (this.state.type==player.type)? 
-                  <div className="Event-list-item" onClick={() => this.props.addplayer(this.state.scoreboard, player.id )} key={player.type+player.id+player.name}>
+                  !this.contains(this.state.scorboardplayers, player) && (this.state.type==player.type)? 
+                  <div className="Event-list-item" onClick={() => this.addPlayer(this.state.scoreboard, player.id )} key={player.type+player.id+player.name}>
                      
                   {player.name}
                      
@@ -62,16 +90,15 @@ class Event extends Component {
          ) 
         } else {
             return (    <div  className="Event-list-grid">
-            { this.props.players.map(player => (
-                                    
-                  this.contains(this.props.scorboardplayers, player) && (this.state.type==player.type)? 
-                  <div className="Event-list-item" onClick={() => this.props.removeplayer(this.state.scoreboard, player.id )} key={player.type+player.id+player.name}>
+            { players ? players.map(player => (
+            
+                  <div className="Event-list-item" onClick={() => this.removePlayer(this.state.scoreboard, player.id)}  key={player.type+player.id+player.name}>
                      
                   {player.name}
                      
       
-                 </div> : null 
-             )) }
+                 </div> 
+             )) : null }
                  </div>
                  
              
@@ -88,9 +115,9 @@ class Event extends Component {
                 {this.renderOptions(this.props.scoreboards)}
             </form>
                 <div className='Event-grid'>
-                 <div className='Event-grid-item'>{this.renderPlayers('noexist')}</div>
-                 <div className='Event-grid-item'>{this.renderPlayers('')}</div>
-                 <div className='Event-grid-item'>{this.state.id}</div>
+                 <div className='Event-grid-item'>{this.renderPlayers('noexist',this.props.players)}</div>
+                 <div className='Event-grid-item'>{this.renderPlayers('',this.state.scorboardplayers)}</div>
+                 <div className='Event-grid-item'>{console.log(this.state.scorboardplayers)}</div>
                  <div className='Event-grid-item'>{this.state.iid}</div>
                 </div>
             </div>

@@ -91,14 +91,14 @@ class ScoreboardController extends Controller
 
     public function removePlayer($scoreboard_id, $player_id )
     {
-        $scoreboards = \App\Scoreboard::find($scoreboard_id);
+        $scoreboard = \App\Scoreboard::find($scoreboard_id);
         $player = \App\Player::find($player_id);
         
-        $scoreboards->players()->detach($player);
+        $scoreboard->players()->detach($player);
         $scoreboardPlayers = Scoreboard::findOrFail($scoreboard_id)->players()->get();
 
        
-       return response()->json($scoreboardPlayers);
+       return response()->json($scoreboard->players);
     }
 
     public function addResult($id, $pid, $category, $action)

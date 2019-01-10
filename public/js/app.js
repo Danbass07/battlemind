@@ -59872,7 +59872,6 @@ var Battlemind = function (_Component) {
             types: [{ id: 0,
                 type: 'test' }],
             scoreboards: [{}],
-            scorboardplayers: [{}],
             players: [{}]
 
         };
@@ -59881,6 +59880,19 @@ var Battlemind = function (_Component) {
     }
 
     _createClass(Battlemind, [{
+        key: 'contains',
+        value: function contains(a, obj) {
+            for (var i = 0; i < a.length; i++) {
+
+                if (a[i].id === obj.id) {
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }, {
         key: 'buttonHandler',
         value: function buttonHandler(e) {
             if (e.target.name === 'event') {
@@ -59936,41 +59948,6 @@ var Battlemind = function (_Component) {
             });
         }
     }, {
-        key: 'getScoreboardPlayers',
-        value: function getScoreboardPlayers(e) {
-            var _this6 = this;
-
-            var value = e.target.value.split('break');
-            axios.get('/scoreboards/' + value[0] + '/edit').then(function (response) {
-                return _this6.setState({
-                    scorboardplayers: response.data.scoreboardPlayers
-                });
-            });
-            console.log(this.state.scorboardplayers);
-        }
-    }, {
-        key: 'addPlayer',
-        value: function addPlayer(scoreobard, player) {
-            var _this7 = this;
-
-            axios.get('/scoreboards/' + scoreobard + '/addPlayer/' + player).then(function (response) {
-                return _this7.setState({
-                    scoreboardplayers: [].concat(_toConsumableArray(response.data))
-                });
-            });
-        }
-    }, {
-        key: 'removePlayer',
-        value: function removePlayer(scoreobard, player) {
-            var _this8 = this;
-
-            axios.get('/scoreboards/' + scoreobard + '/removePlayer/' + player.id).then(function (response) {
-                return _this8.setState({
-                    scoreboardplayers: [].concat(_toConsumableArray(response.data))
-                });
-            });
-        }
-    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.getScoreboards();
@@ -59981,13 +59958,13 @@ var Battlemind = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this9 = this;
+            var _this6 = this;
 
             return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                 'div',
                 { className: 'Battlemind' },
                 __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], { button: function button(e) {
-                        return _this9.buttonHandler(e);
+                        return _this6.buttonHandler(e);
                     }, object: this.state.object, action: this.state.action }),
                 __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_8_react_router_dom__["d" /* Switch */],
@@ -59996,19 +59973,12 @@ var Battlemind = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues/:id/edit', component: __WEBPACK_IMPORTED_MODULE_5__components_Leagues_League__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/scoreboards/:id/edit', component: __WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboard__["a" /* default */] }),
                     this.state.action === 'event' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], {
-                        addplayer: function addplayer(scoreobard, player) {
-                            return _this9.addPlayer(scoreobard, player);
-                        },
-                        removeplayer: function removeplayer(scoreobard, player) {
-                            return _this9.removePlayer(scoreobard, player);
-                        },
-                        getscorboardplayers: function getscorboardplayers(e) {
-                            return _this9.getScoreboardPlayers(e);
-                        },
-                        scorboardplayers: this.state.scorboardplayers,
+
                         scoreboards: this.state.scoreboards,
+
                         players: this.state.players,
-                        leagues: this.state.leagues
+                        leagues: this.state.leagues,
+                        type: this.state.type
                     }) : null,
                     this.state.action === 'list' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["a" /* default */], { object: this.state.object }) : null,
                     this.state.action === 'new' && this.state.object === 'player' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], { types: this.state.types }) : null,
@@ -61860,6 +61830,8 @@ var List = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -61878,7 +61850,13 @@ var Event = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+
+            scoreboard: 1,
+            scorboardplayers: [{}],
+            type: 'planeswalker'
+
+        };
 
         return _this;
     }
@@ -61899,25 +61877,52 @@ var Event = function (_Component) {
     }, {
         key: 'scoreboardChangeHandler',
         value: function scoreboardChangeHandler(e) {
+            var _this2 = this;
+
+            // !this.contains(this.props.scorboardplayers, player)
             var value = e.target.value.split('break');
-            this.setState({
-                scoreboard: value[0],
-                type: value[1]
+            axios.get('/scoreboards/' + value[0] + '/edit').then(function (response) {
+                return _this2.setState({
+                    scoreboard: value[0],
+                    type: value[1],
+                    scorboardplayers: response.data.scoreboardPlayers
+                });
+            });
+        }
+    }, {
+        key: 'addPlayer',
+        value: function addPlayer(scoreboard, player) {
+            var _this3 = this;
+
+            axios.get('/scoreboards/' + scoreboard + '/addPlayer/' + player).then(function (response) {
+                return _this3.setState({
+                    scoreboard: scoreboard,
+                    scorboardplayers: [].concat(_toConsumableArray(response.data))
+                });
+            });
+        }
+    }, {
+        key: 'removePlayer',
+        value: function removePlayer(scoreboard, player) {
+            var _this4 = this;
+
+            axios.get('/scoreboards/' + scoreboard + '/removePlayer/' + player).then(function (response) {
+                return _this4.setState({
+                    scoreboard: scoreboard,
+                    scorboardplayers: [].concat(_toConsumableArray(response.data))
+                });
             });
         }
     }, {
         key: 'renderOptions',
         value: function renderOptions(scoreboards) {
-            var _this2 = this;
+            var _this5 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'select',
                 { className: 'myform-control',
-                    onClick: function onClick(e) {
-                        return _this2.props.getscorboardplayers(e);
-                    },
                     onChange: function onChange(e) {
-                        return _this2.scoreboardChangeHandler(e);
+                        return _this5.scoreboardChangeHandler(e);
                     } },
                 scoreboards.map(function (scoreboard) {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -61930,18 +61935,18 @@ var Event = function (_Component) {
         }
     }, {
         key: 'renderPlayers',
-        value: function renderPlayers(option) {
-            var _this3 = this;
+        value: function renderPlayers(option, players) {
+            var _this6 = this;
 
             if (option == 'noexist') {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'Event-list-grid' },
-                    this.props.players.map(function (player) {
-                        return !_this3.contains(_this3.props.scorboardplayers, player) && _this3.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    players.map(function (player) {
+                        return !_this6.contains(_this6.state.scorboardplayers, player) && _this6.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'Event-list-item', onClick: function onClick() {
-                                    return _this3.props.addplayer(_this3.state.scoreboard, player.id);
+                                    return _this6.addPlayer(_this6.state.scoreboard, player.id);
                                 }, key: player.type + player.id + player.name },
                             player.name
                         ) : null;
@@ -61951,15 +61956,15 @@ var Event = function (_Component) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'Event-list-grid' },
-                    this.props.players.map(function (player) {
-                        return _this3.contains(_this3.props.scorboardplayers, player) && _this3.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    players ? players.map(function (player) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'Event-list-item', onClick: function onClick() {
-                                    return _this3.props.removeplayer(_this3.state.scoreboard, player.id);
+                                    return _this6.removePlayer(_this6.state.scoreboard, player.id);
                                 }, key: player.type + player.id + player.name },
                             player.name
-                        ) : null;
-                    })
+                        );
+                    }) : null
                 );
             }
         }
@@ -61980,17 +61985,17 @@ var Event = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'Event-grid-item' },
-                        this.renderPlayers('noexist')
+                        this.renderPlayers('noexist', this.props.players)
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'Event-grid-item' },
-                        this.renderPlayers('')
+                        this.renderPlayers('', this.state.scorboardplayers)
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'Event-grid-item' },
-                        this.state.id
+                        console.log(this.state.scorboardplayers)
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',

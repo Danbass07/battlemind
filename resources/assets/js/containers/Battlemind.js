@@ -21,13 +21,23 @@ class Battlemind extends Component {
                   type: 'test' },
             ],
             scoreboards: [{}],
-            scorboardplayers: [{}],
             players: [{}],
+
             
         };
     
     }
-
+    contains(a, obj) {
+        for (var i = 0; i < a.length; i++) {
+          
+            if (a[i].id === obj.id) {
+              
+                return true;
+            }
+        }
+      
+        return false;
+    }  
 buttonHandler(e) {
     if (e.target.name === 'event') {
         this.setState({
@@ -57,6 +67,8 @@ getScoreboards() {
    
 }
 
+
+
 getPlayers() {
     axios.get('/players').then(response =>
      this.setState({
@@ -72,33 +84,8 @@ getLeagues() {
          })
     );
 }
-getScoreboardPlayers(e) {
-    const value = e.target.value.split('break');
-    axios.get(`/scoreboards/${value[0]}/edit`).then(response =>
-        this.setState({
-            scorboardplayers: response.data.scoreboardPlayers
-        })
-    );
-    console.log(this.state.scorboardplayers)
-}
-addPlayer(scoreobard, player) {
 
-    axios.get(`/scoreboards/${scoreobard}/addPlayer/${player}`).then(response =>
-        this.setState ({
-            scoreboardplayers:[...response.data ],
-        })
-      
-    );
-   
-}
-removePlayer(scoreobard, player) {
-    axios.get(`/scoreboards/${scoreobard}/removePlayer/${player.id}`).then(response =>
-        this.setState ({
-            scoreboardplayers:[...response.data ],
-        })
-        
-    );
-}
+
 componentWillMount() {
   this.getScoreboards(); 
   this.getPlayers();
@@ -121,13 +108,13 @@ componentWillMount() {
 
                 {this.state.action === 'event'  ? 
                 <Event 
-                    addplayer={(scoreobard, player)=> this.addPlayer(scoreobard, player)} 
-                    removeplayer={(scoreobard, player)=> this.removePlayer(scoreobard, player)} 
-                    getscorboardplayers={(e) => this.getScoreboardPlayers(e)} 
-                    scorboardplayers={this.state.scorboardplayers} 
+                 
+                
                     scoreboards={this.state.scoreboards} 
+                 
                     players={this.state.players} 
                     leagues={this.state.leagues}
+                    type={this.state.type}
                 /> : null}
                 {this.state.action === 'list'  ? <List object={this.state.object} /> : null}
                 {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}
