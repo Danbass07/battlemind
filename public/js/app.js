@@ -61828,6 +61828,7 @@ var List = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Card__ = __webpack_require__(119);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -61839,7 +61840,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
-// import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
 
 
 var Event = function (_Component) {
@@ -61854,7 +61854,8 @@ var Event = function (_Component) {
 
             scoreboard: 1,
             scorboardplayers: [{}],
-            type: 'planeswalker'
+            type: 'planeswalker',
+            url: 'jace'
 
         };
 
@@ -61879,13 +61880,13 @@ var Event = function (_Component) {
         value: function scoreboardChangeHandler(e) {
             var _this2 = this;
 
-            // !this.contains(this.props.scorboardplayers, player)
             var value = e.target.value.split('break');
             axios.get('/scoreboards/' + value[0] + '/edit').then(function (response) {
                 return _this2.setState({
                     scoreboard: value[0],
                     type: value[1],
                     scorboardplayers: response.data.scoreboardPlayers
+
                 });
             });
         }
@@ -61911,6 +61912,13 @@ var Event = function (_Component) {
                     scoreboard: scoreboard,
                     scorboardplayers: [].concat(_toConsumableArray(response.data))
                 });
+            });
+        }
+    }, {
+        key: 'selectPlayer',
+        value: function selectPlayer(url) {
+            this.setState({
+                url: url
             });
         }
     }, {
@@ -61960,9 +61968,16 @@ var Event = function (_Component) {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'Event-list-item', onClick: function onClick() {
-                                    return _this6.removePlayer(_this6.state.scoreboard, player.id);
+                                    return _this6.selectPlayer(player.url);
                                 }, key: player.type + player.id + player.name },
-                            player.name
+                            player.name,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { onClick: function onClick() {
+                                        return _this6.removePlayer(_this6.state.scoreboard, player.id);
+                                    } },
+                                ' X '
+                            )
                         );
                     }) : null
                 );
@@ -61971,6 +61986,7 @@ var Event = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'Workarea' },
@@ -61995,13 +62011,9 @@ var Event = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'Event-grid-item' },
-                        console.log(this.state.scorboardplayers)
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Card__["a" /* default */], { url: this.state.url })
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Event-grid-item' },
-                        this.state.iid
-                    )
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Event-grid-item' })
                 )
             );
         }
@@ -62017,6 +62029,87 @@ var Event = function (_Component) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Card = function (_Component) {
+    _inherits(Card, _Component);
+
+    function Card(props) {
+        _classCallCheck(this, Card);
+
+        var _this = _possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).call(this, props));
+
+        _this.state = {};
+
+        return _this;
+    }
+
+    _createClass(Card, [{
+        key: 'resultChangeController',
+        value: function resultChangeController(player_id, category, key) {
+            var _this2 = this;
+
+            var leaguePlayersUpdate = [].concat(_toConsumableArray(this.state.leaguePlayers));
+            leaguePlayersUpdate.map(function (leaguePlayer) {
+                return leaguePlayer.pivot.result = leaguePlayer.pivot.win * _this2.state.win_point_value + leaguePlayer.pivot.lost * _this2.state.lost_point_value + leaguePlayer.pivot.draw * _this2.state.draw_point_value;
+            });
+            var number = 1;
+            if (this.state.action === 'minus') {
+                number = -1;
+            };
+            if (category === 'Win') {
+                leaguePlayersUpdate[key].pivot.win += number;
+            }
+            if (category === 'Lost') {
+                leaguePlayersUpdate[key].pivot.lost += number;
+            }
+            if (category === 'Draw') {
+                leaguePlayersUpdate[key].pivot.draw += number;
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var style = {
+                height: '100%',
+                width: '100%',
+                backgroundColor: 'black',
+                backgroundImage: 'url("/images/' + this.props.url + '.jpeg")',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover'
+            };
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: style });
+        }
+    }]);
+
+    return Card;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Card);
 
 /***/ })
 /******/ ]);

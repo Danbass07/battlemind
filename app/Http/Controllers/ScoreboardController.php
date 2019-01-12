@@ -83,8 +83,9 @@ class ScoreboardController extends Controller
     {
         $scoreboard = \App\Scoreboard::find($scoreboard_id);
         $player = \App\Player::find($player_id);
-        
+        if (! $scoreboard->players->contains($player->id)) {
         $scoreboard->players()->save($player);
+        }
        return response()->json($scoreboard->players); 
     
     }

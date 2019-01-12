@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
+import Card from './Card';
 
 
 
@@ -11,6 +11,7 @@ class Event extends Component {
             scoreboard: 1,
             scorboardplayers: [{}],
             type:'planeswalker',
+            url: 'jace'
             
         };
 
@@ -28,13 +29,13 @@ class Event extends Component {
         return false;
     }  
     scoreboardChangeHandler(e) {
-        // !this.contains(this.props.scorboardplayers, player)
         const value = e.target.value.split('break');
         axios.get(`/scoreboards/${value[0]}/edit`).then(response =>
             this.setState({
                 scoreboard: value[0],
                 type: value[1],
-                scorboardplayers: response.data.scoreboardPlayers
+                scorboardplayers: response.data.scoreboardPlayers,
+                
             })
         );
         
@@ -61,6 +62,11 @@ class Event extends Component {
             
         );
     }
+    selectPlayer(url) {
+        this.setState({
+            url: url,
+        })
+    }
     renderOptions(scoreboards) {
         return (
         <select className="myform-control"
@@ -77,7 +83,7 @@ class Event extends Component {
             { players.map(player => (
                                     
                   !this.contains(this.state.scorboardplayers, player) && (this.state.type==player.type)? 
-                  <div className="Event-list-item" onClick={() => this.addPlayer(this.state.scoreboard, player.id )} key={player.type+player.id+player.name}>
+                  <div className="Event-list-item"  onClick={() => this.addPlayer(this.state.scoreboard, player.id )} key={player.type+player.id+player.name}>
                      
                   {player.name}
                      
@@ -92,10 +98,10 @@ class Event extends Component {
             return (    <div  className="Event-list-grid">
             { players ? players.map(player => (
             
-                  <div className="Event-list-item" onClick={() => this.removePlayer(this.state.scoreboard, player.id)}  key={player.type+player.id+player.name}>
+                  <div className="Event-list-item"  onClick={() => this.selectPlayer(player.url )} key={player.type+player.id+player.name}>
                      
                   {player.name}
-                     
+                    <div onClick={() => this.removePlayer(this.state.scoreboard, player.id)} > X </div>
       
                  </div> 
              )) : null }
@@ -109,6 +115,7 @@ class Event extends Component {
         }
 
     render() {
+
         return (
             <div className="Workarea">
             <form className="Event-form">
@@ -117,8 +124,8 @@ class Event extends Component {
                 <div className='Event-grid'>
                  <div className='Event-grid-item'>{this.renderPlayers('noexist',this.props.players)}</div>
                  <div className='Event-grid-item'>{this.renderPlayers('',this.state.scorboardplayers)}</div>
-                 <div className='Event-grid-item'>{console.log(this.state.scorboardplayers)}</div>
-                 <div className='Event-grid-item'>{this.state.iid}</div>
+                 <div className='Event-grid-item'><Card url={this.state.url}/></div>
+                 <div className='Event-grid-item'></div>
                 </div>
             </div>
         );   
