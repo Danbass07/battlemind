@@ -15693,7 +15693,7 @@ var generatePath = function generatePath() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(37);
-module.exports = __webpack_require__(112);
+module.exports = __webpack_require__(113);
 
 
 /***/ }),
@@ -61828,7 +61828,7 @@ var List = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Card__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Card__ = __webpack_require__(112);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -61853,9 +61853,11 @@ var Event = function (_Component) {
         _this.state = {
 
             scoreboard: 1,
-            scorboardplayers: [{}],
+            scoreboardplayers: [],
             type: 'planeswalker',
-            url: 'jace'
+            url: 'jace',
+            playerid: 0,
+            index: 1
 
         };
 
@@ -61876,6 +61878,23 @@ var Event = function (_Component) {
             return false;
         }
     }, {
+        key: 'buttonController',
+        value: function buttonController(id, category, value) {
+            var scoreboardPlayersUpdate = [].concat(_toConsumableArray(this.state.scoreboardplayers));
+            if (category === 'Win') {
+                console.log(scoreboardPlayersUpdate[this.state.index].pivot.win += value);
+            }
+            if (category === 'Lost') {
+                console.log(scoreboardPlayersUpdate[this.state.index].pivot.lost += value);
+            }
+            if (category === 'Draw') {
+                console.log(scoreboardPlayersUpdate[this.state.index].pivot.draw += value);
+            }
+            this.setState({
+                scoreboardplayers: scoreboardPlayersUpdate
+            });
+        }
+    }, {
         key: 'scoreboardChangeHandler',
         value: function scoreboardChangeHandler(e) {
             var _this2 = this;
@@ -61885,7 +61904,7 @@ var Event = function (_Component) {
                 return _this2.setState({
                     scoreboard: value[0],
                     type: value[1],
-                    scorboardplayers: response.data.scoreboardPlayers
+                    scoreboardplayers: response.data.scoreboardPlayers
 
                 });
             });
@@ -61898,7 +61917,7 @@ var Event = function (_Component) {
             axios.get('/scoreboards/' + scoreboard + '/addPlayer/' + player).then(function (response) {
                 return _this3.setState({
                     scoreboard: scoreboard,
-                    scorboardplayers: [].concat(_toConsumableArray(response.data))
+                    scoreboardplayers: [].concat(_toConsumableArray(response.data))
                 });
             });
         }
@@ -61910,15 +61929,17 @@ var Event = function (_Component) {
             axios.get('/scoreboards/' + scoreboard + '/removePlayer/' + player).then(function (response) {
                 return _this4.setState({
                     scoreboard: scoreboard,
-                    scorboardplayers: [].concat(_toConsumableArray(response.data))
+                    scoreboardplayers: [].concat(_toConsumableArray(response.data))
                 });
             });
         }
     }, {
         key: 'selectPlayer',
-        value: function selectPlayer(url) {
+        value: function selectPlayer(url, playerId, index) {
             this.setState({
-                url: url
+                url: url,
+                playerid: playerId,
+                index: index
             });
         }
     }, {
@@ -61951,7 +61972,7 @@ var Event = function (_Component) {
                     'div',
                     { className: 'Event-list-grid' },
                     players.map(function (player) {
-                        return !_this6.contains(_this6.state.scorboardplayers, player) && _this6.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        return !_this6.contains(_this6.state.scoreboardplayers, player) && _this6.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'Event-list-item', onClick: function onClick() {
                                     return _this6.addPlayer(_this6.state.scoreboard, player.id);
@@ -61964,11 +61985,11 @@ var Event = function (_Component) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'Event-list-grid' },
-                    players ? players.map(function (player) {
+                    players ? players.map(function (player, index) {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'Event-list-item', onClick: function onClick() {
-                                    return _this6.selectPlayer(player.url);
+                                    return _this6.selectPlayer(player.url, player.id, index);
                                 }, key: player.type + player.id + player.name },
                             player.name,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -61984,8 +62005,26 @@ var Event = function (_Component) {
             }
         }
     }, {
+        key: 'renderResults',
+        value: function renderResults() {
+            var _this7 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                this.state.scoreboardplayers.length > 0 ? this.state.scoreboardplayers.map(function (player) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { key: _this7.state.scoreboard + player.id },
+                        player.name + ' wins ' + player.pivot.win + ' lost ' + player.pivot.lost + ' draws ' + player.pivot.draw
+                    );
+                }) : null
+            );
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this8 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -62006,14 +62045,20 @@ var Event = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'Event-grid-item' },
-                        this.renderPlayers('', this.state.scorboardplayers)
+                        this.renderPlayers('', this.state.scoreboardplayers)
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'Event-grid-item' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Card__["a" /* default */], { url: this.state.url })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Card__["a" /* default */], { buttoncontroller: function buttoncontroller(id, category, value) {
+                                return _this8.buttonController(id, category, value);
+                            }, id: this.state.playerid, url: this.state.url })
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Event-grid-item' })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'Event-grid-item' },
+                        this.renderResults()
+                    )
                 )
             );
         }
@@ -62026,26 +62071,12 @@ var Event = function (_Component) {
 
 /***/ }),
 /* 112 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -62063,37 +62094,46 @@ var Card = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+
+            action: true
+
+        };
 
         return _this;
     }
 
     _createClass(Card, [{
+        key: 'actionController',
+        value: function actionController() {
+            this.setState({
+                action: !this.state.action
+            });
+            console.log(this.state.action);
+        }
+    }, {
         key: 'resultChangeController',
         value: function resultChangeController(player_id, category, key) {
-            var _this2 = this;
-
-            var leaguePlayersUpdate = [].concat(_toConsumableArray(this.state.leaguePlayers));
-            leaguePlayersUpdate.map(function (leaguePlayer) {
-                return leaguePlayer.pivot.result = leaguePlayer.pivot.win * _this2.state.win_point_value + leaguePlayer.pivot.lost * _this2.state.lost_point_value + leaguePlayer.pivot.draw * _this2.state.draw_point_value;
-            });
             var number = 1;
-            if (this.state.action === 'minus') {
+            if (this.state.action === false) {
                 number = -1;
             };
-            if (category === 'Win') {
-                leaguePlayersUpdate[key].pivot.win += number;
-            }
-            if (category === 'Lost') {
-                leaguePlayersUpdate[key].pivot.lost += number;
-            }
-            if (category === 'Draw') {
-                leaguePlayersUpdate[key].pivot.draw += number;
-            }
+            // if (category === 'Win') {
+            //  leaguePlayersUpdate[key].pivot.win += number;
+            // }
+            // if (category === 'Lost') {
+            //    leaguePlayersUpdate[key].pivot.lost += number;
+            //     }
+            // if (category === 'Draw') {
+            //       leaguePlayersUpdate[key].pivot.draw += number;
+
+            //  }
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var style = {
                 height: '100%',
                 width: '100%',
@@ -62102,7 +62142,47 @@ var Card = function (_Component) {
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover'
             };
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: style });
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { style: style },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'button',
+                    { onClick: function onClick() {
+                            return _this2.props.buttoncontroller(_this2.props.id, 'Win', 1);
+                        } },
+                    'Win'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'button',
+                    { onClick: function onClick() {
+                            return _this2.props.buttoncontroller(_this2.props.id, 'Lost', 1);
+                        } },
+                    'Lost'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'button',
+                    { onClick: function onClick() {
+                            return _this2.props.buttoncontroller(_this2.props.id, 'Draw', 1);
+                        } },
+                    'Draw'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'button',
+                    { onClick: function onClick() {
+                            return _this2.actionController();
+                        } },
+                    this.state.action ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        null,
+                        'Now you add results'
+                    ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        null,
+                        'Now you remove results '
+                    ),
+                    ' '
+                )
+            );
         }
     }]);
 
@@ -62110,6 +62190,12 @@ var Card = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Card);
+
+/***/ }),
+/* 113 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
