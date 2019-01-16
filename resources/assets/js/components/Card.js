@@ -17,7 +17,7 @@ class Card extends Component {
         this.setState({
             action: !this.state.action,
         })
-        console.log(this.state.action);
+        
     }
     resultChangeController(player_id, category, key) {
         let number = 1;  

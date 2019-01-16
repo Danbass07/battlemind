@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Player;
 use App\League;
 use App\User;
@@ -121,5 +122,30 @@ class ScoreboardController extends Controller
             }            
         
         }
+    }
+    public function updateResults(Request $request, $id){
+        $scoreboard = Scoreboard::findOrFail($id);
+        $scoreboardplayers = json_decode(json_encode($request->scoreboardplayers ), FALSE);
+    
+
+         foreach ($scoreboard->players as $player) {
+             foreach ($scoreboardplayers as $scoreboardplayer) {
+                 if ((string)$player->pivot->player_id === (string)$scoreboardplayer->pivot->player_id) {
+                    $player->pivot->win = $scoreboardplayer->pivot->win; 
+                    $player->pivot->lost = $scoreboardplayer->pivot->lost;
+                    $player->pivot->draw = $scoreboardplayer->pivot->draw; 
+                   $player->pivot->save();
+                }
+        
+           
+            }
+
+        }
+                
+           
+            
+ 
+        
+        return response($scoreboardplayers);
     }
 }

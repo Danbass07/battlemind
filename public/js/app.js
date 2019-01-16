@@ -62022,6 +62022,17 @@ var Event = function (_Component) {
             );
         }
     }, {
+        key: 'submitHandler',
+        value: function submitHandler(e) {
+            e.preventDefault();
+            axios.post('/scoreboards/' + this.state.scoreboard + '/updateResults', {
+
+                scoreboardplayers: [].concat(_toConsumableArray(this.state.scoreboardplayers))
+            }).then(function (response) {
+                if (response.status == 200) {}
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this8 = this;
@@ -62031,8 +62042,11 @@ var Event = function (_Component) {
                 { className: 'Workarea' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
-                    { className: 'Event-form' },
-                    this.renderOptions(this.props.scoreboards)
+                    { className: 'Event-form', onSubmit: function onSubmit(e) {
+                            return _this8.submitHandler(e);
+                        } },
+                    this.renderOptions(this.props.scoreboards),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit' })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
@@ -62109,7 +62123,6 @@ var Card = function (_Component) {
             this.setState({
                 action: !this.state.action
             });
-            console.log(this.state.action);
         }
     }, {
         key: 'resultChangeController',

@@ -143,13 +143,26 @@ class Event extends Component {
             </div>
         )
     }
+    submitHandler(e) {
+        e.preventDefault();
+        axios.post(`/scoreboards/${this.state.scoreboard}/updateResults`, {
+           
+         
+            scoreboardplayers:[...this.state.scoreboardplayers ],
+        }).then(response => {           if (response.status == 200){
 
+            
+        }
+    });
+
+    }
     render() { 
 
         return (
             <div className="Workarea">
-            <form className="Event-form">
+            <form className="Event-form" onSubmit={(e) => this.submitHandler(e)}> 
                 {this.renderOptions(this.props.scoreboards)}
+                <input type='submit'></input>
             </form>
                 <div className='Event-grid'>
                  <div className='Event-grid-item'>{this.renderPlayers('noexist',this.props.players)}</div>

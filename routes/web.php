@@ -26,6 +26,7 @@ Route::resource('/types', 'TypeController');
 
 Route::get('/players/{id}/addResult/{pid}/{category}/{action}', 'PlayerController@addResult');
 Route::get('/scoreboards/{id}/addResult/{pid}/{category}/{action}', 'ScoreboardController@addResult');
+Route::post('/scoreboards/{id}/updateResults', 'ScoreboardController@updateResults');
 
 
 Route::get('/leagues/{id}/addPlayer/{pid}', 'LeagueController@addPlayer');
