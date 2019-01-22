@@ -18,12 +18,37 @@
 
     
 }
-.Event-grid-list {
-
+.Event-list-item {
+    background-color: $secondarycolor;
+    border:1px solid white;
+    color: $white;
+    height:30px;
+    width: 100%;
+    padding-left: 5px;
+    font-size:1.5em;
+    text-align: center;
+    
+}
+.Select-player{
+    display:flex;
+    flex-direction: row;
+}
+.Remove-button{
+    margin-left:auto;
+    border: 1px solid white;
+    width:35px;
+    align-content: center;
+    padding-bottom: 9px;
 }
 .Event-form {
     width:60%;
     margin: 2px auto;
     border-radius: 25%;
     align-content: center;
+}
+.Score-button{
+    background-color: $buttonactivecolor;
+    position: relative;
+    bottom: -65%;   
+    margin: 1px; 
 }

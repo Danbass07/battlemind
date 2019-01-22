@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
 import List from '../components/List';
 import Event from '../components/Event';
+import Result from '../components/Result';
 
 class Battlemind extends Component {
     constructor(props) {
@@ -22,6 +23,7 @@ class Battlemind extends Component {
             ],
             scoreboards: [{}],
             players: [{}],
+            leagues: [{}],
 
             
         };
@@ -106,7 +108,7 @@ componentWillMount() {
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
 
-                {this.state.action === 'event'  ? 
+                {this.state.action === 'event' ? 
                 <Event 
                  
                 
@@ -115,6 +117,17 @@ componentWillMount() {
                     players={this.state.players} 
                     leagues={this.state.leagues}
                     type={this.state.type}
+                /> : null}
+
+                {this.state.action === 'results'  ? 
+                <Result 
+                 
+                
+                    scoreboards={this.state.scoreboards} 
+                 
+                    players={this.state.players} 
+                    leagues={this.state.leagues}
+                    
                 /> : null}
                 {this.state.action === 'list'  ? <List object={this.state.object} /> : null}
                 {this.state.action === 'new' && this.state.object === 'player' ? <Newplayer  types={this.state.types}/> : null}

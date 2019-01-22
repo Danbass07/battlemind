@@ -10487,7 +10487,7 @@ a.text-dark:focus {
 }
 
 .Workarea {
-  width: 90%;
+  width: 740px;
   height: 60%;
   margin: 80px auto;
   border: solid 2px  white;
@@ -10563,6 +10563,15 @@ a:hover {
   color: white;
 }
 
+.Inline {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 .button {
   background-color: red;
   width: 65px;
@@ -10619,12 +10628,49 @@ a:hover {
   overflow-x: hidden;
 }
 
+.Event-list-item {
+  background-color: #992604;
+  border: 1px solid white;
+  color: #fff;
+  height: 30px;
+  width: 100%;
+  padding-left: 5px;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.Select-player {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.Remove-button {
+  margin-left: auto;
+  border: 1px solid white;
+  width: 35px;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  padding-bottom: 9px;
+}
+
 .Event-form {
   width: 60%;
   margin: 2px auto;
   border-radius: 25%;
   -ms-flex-line-pack: center;
       align-content: center;
+}
+
+.Score-button {
+  background-color: #e2de00;
+  position: relative;
+  bottom: -65%;
+  margin: 1px;
 }
 
 .navigation {
@@ -10714,6 +10760,12 @@ a:hover {
   100% {
     text-align: left;
   }
+}
+
+.Results-table {
+  color: white;
+  border: 1px solid red;
+  margin: 5% 20%;
 }
 
 /* Madia */

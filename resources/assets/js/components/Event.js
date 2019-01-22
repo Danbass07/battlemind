@@ -7,10 +7,11 @@ class Event extends Component {
     constructor(props) {
         super(props);
         this.state = {
-  
+
+            action: 1,
             scoreboard: 1,
             scoreboardplayers: [],
-            type:'planeswalker',
+            type:'',
             url: 'jace',
             playerid: 0,
             index:1,
@@ -20,6 +21,7 @@ class Event extends Component {
     }
 
     contains(a, obj) {
+
         for (var i = 0; i < a.length; i++) {
           
             if (a[i].id === obj.id) {
@@ -30,40 +32,56 @@ class Event extends Component {
       
         return false;
     }
-    buttonController(id,category,value){
+    actionController()  {
+
+        this.setState({
+            action: this.state.action * -1,
+        })
+        
+    }
+
+    buttonController(category,value)    {
+
         const scoreboardPlayersUpdate = [...this.state.scoreboardplayers];
         if (category === 'Win') {
-            console.log(scoreboardPlayersUpdate[this.state.index].pivot.win += value);
+            scoreboardPlayersUpdate[this.state.index].pivot.win += value;
         }
         if (category === 'Lost') {
-            console.log(scoreboardPlayersUpdate[this.state.index].pivot.lost += value);
+            scoreboardPlayersUpdate[this.state.index].pivot.lost += value;
         }
         if (category === 'Draw') {
-            console.log(scoreboardPlayersUpdate[this.state.index].pivot.draw += value);
+            scoreboardPlayersUpdate[this.state.index].pivot.draw += value;
         }
-      this.setState({
-        scoreboardplayers: scoreboardPlayersUpdate,
+        this.setState({
+            scoreboardplayers: scoreboardPlayersUpdate,
       })
-    
-      
-        
-    }  
+    } 
+
     scoreboardChangeHandler(e) {
-        const value = e.target.value.split('break');
-        axios.get(`/scoreboards/${value[0]}/edit`).then(response =>
-            this.setState({
-                scoreboard: value[0],
-                type: value[1],
-                scoreboardplayers: response.data.scoreboardPlayers,
-                
-            })
-        );
+        this.setState({
+            playerid: 0,
+        })
+
+        if (e.target.value !== "Choose a scoreboard") {
+            
+            const value = e.target.value.split('break');
         
-    
+            axios.get(`/scoreboards/${value[0]}/edit`).then(response =>
+
+                this.setState({
+                    scoreboard: value[0],
+                    type: value[1],
+                    scoreboardplayers: response.data.scoreboardPlayers,
+                    
+                })
+            );
+        }
     }
+
     addPlayer(scoreboard, player) {
 
         axios.get(`/scoreboards/${scoreboard}/addPlayer/${player}`).then(response =>
+
             this.setState ({
                 scoreboard: scoreboard,
                 scoreboardplayers:[...response.data ],
@@ -73,8 +91,11 @@ class Event extends Component {
         );
        
     }
+
     removePlayer(scoreboard, player) {
+
         axios.get(`/scoreboards/${scoreboard}/removePlayer/${player}`).then(response =>
+
             this.setState ({
                 scoreboard: scoreboard,
                 scoreboardplayers:[...response.data],
@@ -82,53 +103,82 @@ class Event extends Component {
             
         );
     }
+
     selectPlayer(url,playerId,index) {
+
         this.setState({
             url: url,
             playerid: playerId,
             index: index,
         })
     }
+
     renderOptions(scoreboards) {
+
         return (
-        <select className="myform-control"
-        onChange={(e) => this.scoreboardChangeHandler(e)}>
-        {scoreboards.map(scoreboard => (
-                          
-            <option value={scoreboard.id+'break'+scoreboard.type}  key={scoreboard.id+scoreboard.name}>{scoreboard.name}</option> ))
-        }
-        </select> )
+
+            <select name="Choose a scoreboard" className="myform-control" onChange={(e) => this.scoreboardChangeHandler(e)}>
+                <option>Choose a scoreboard</option>
+                {scoreboards.map(scoreboard => (
+                                
+                    <option 
+                    value={scoreboard.id+'break'+scoreboard.type}  
+                    key={scoreboard.id+scoreboard.name}>
+                    {scoreboard.name}
+                    </option> 
+                ))}
+
+            </select> 
+        )
     }
+
     renderPlayers(option ,players) {
+
         if (option == 'noexist') {
-            return (    <div  className="Event-list-grid">
-            { players.map(player => (
-                                    
-                  !this.contains(this.state.scoreboardplayers, player) && (this.state.type==player.type)? 
-                  <div className="Event-list-item"  onClick={() => this.addPlayer(this.state.scoreboard, player.id )} key={player.type+player.id+player.name}>
-                     
-                  {player.name}
-                     
-      
-                 </div> : null 
-             )) }
-                 </div>
-                 
-             
-         ) 
-        } else {
-            return (    <div  className="Event-list-grid">
-            { players ? players.map((player, index) => (
 
-                    <div className="Event-list-item"  onClick={() => this.selectPlayer(player.url, player.id, index )} key={player.type+player.id+player.name}>
-                    {player.name}
-                    <div  onClick={() => this.removePlayer(this.state.scoreboard, player.id)} > X </div>
+            return (    
 
-                    </div> 
-                )) : null }
-                    </div>
+                <div  className="Event-list-grid">
                     
-                
+                    {players.map(player => (
+                                        
+                        !this.contains(this.state.scoreboardplayers, player) && (this.state.type==player.type) ? 
+
+                        <div className="Event-list-item"  
+                        onClick={() => this.addPlayer(this.state.scoreboard, player.id )} 
+                        key={player.type+player.id+player.name}
+                        >
+                        
+                            {player.name}
+                        
+                        </div> : null 
+                    ))}
+
+                </div>
+            ) 
+        } else {
+
+            return (    
+            
+                <div  className="Event-list-grid">
+                    
+                    {players ? players.map((player, index) => (
+
+                        <div className="Event-list-item Select-player"  
+                        onClick={() => this.selectPlayer(player.url, player.id, index )} 
+                        key={player.type+player.id+player.name}
+                        >
+
+                            {player.name}
+
+                            <div className="Remove-button" onClick={() => this.removePlayer(this.state.scoreboard, player.id)} > X </div>
+
+                        </div> 
+
+                    )) : null }
+
+                </div>
+                     
             ) 
         }
     }
@@ -137,7 +187,7 @@ class Event extends Component {
             <div>
                 {this.state.scoreboardplayers.length > 0 ? this.state.scoreboardplayers.map(player => (
                     <div key ={this.state.scoreboard + player.id}>
-                        {player.name + ' wins '+player.pivot.win+' lost '+player.pivot.lost+' draws '+player.pivot.draw }
+                        {player.name + '  W-'+player.pivot.win+' L-'+player.pivot.lost+' D-'+player.pivot.draw }
                     </div> 
                 )) :null }
             </div>
@@ -160,14 +210,25 @@ class Event extends Component {
 
         return (
             <div className="Workarea">
-            <form className="Event-form" onSubmit={(e) => this.submitHandler(e)}> 
+            <form className="Event-form Inline" onSubmit={(e) => this.submitHandler(e)}> 
                 {this.renderOptions(this.props.scoreboards)}
                 <input type='submit'></input>
             </form>
                 <div className='Event-grid'>
-                 <div className='Event-grid-item'>{this.renderPlayers('noexist',this.props.players)}</div>
-                 <div className='Event-grid-item'>{this.renderPlayers('',this.state.scoreboardplayers)}</div>
-                 <div className='Event-grid-item'><Card buttoncontroller={(id,category,value) => this.buttonController(id,category,value)} id={this.state.playerid} url={this.state.url}/></div>
+                <div className='Event-grid-item'>{this.renderPlayers('noexist',this.props.players)}</div>
+                <div className='Event-grid-item'>{this.renderPlayers('',this.state.scoreboardplayers)}</div>
+                <div className='Event-grid-item'>
+                    {this.state.playerid !== 0 ?
+                            <Card 
+                                actioncontroller={() => this.actionController()} 
+                                action={this.state.action}
+                                buttoncontroller={(category,value) => this.buttonController(category,value)} 
+                                id={this.state.playerid} 
+                                url={this.state.url}
+                                />
+                                
+                            : null}
+                </div> 
                  <div className='Event-grid-item'>{this.renderResults() }</div>
                 </div>
             </div>
