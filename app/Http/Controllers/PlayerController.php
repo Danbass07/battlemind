@@ -73,7 +73,7 @@ class PlayerController extends Controller
         $input = $request->all();
         $player = Player::findOrFail($id);
         
-        $player->scoreboards()->detach(); 
+        //$player->scoreboards()->detach(); 
         
         $player->update($input);
         return response()->json($player->with('user')->find($player->id));
