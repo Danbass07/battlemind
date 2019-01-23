@@ -62255,16 +62255,43 @@ var Result = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Result.__proto__ || Object.getPrototypeOf(Result)).call(this, props));
 
         _this.state = {
-            win_point_value: '',
-            lost_point_value: '',
-            draw_point_value: '',
-            id: 0
+            win_point_value: 0,
+            lost_point_value: 0,
+            draw_point_value: 0,
+            id: 0,
+            scoreboardplayers: []
         };
 
         return _this;
     }
 
     _createClass(Result, [{
+        key: 'scoreboardChangeHandler',
+        value: function scoreboardChangeHandler(e) {
+            var _this2 = this;
+
+            this.setState({
+                playerid: 0
+            });
+
+            if (e.target.value !== "Choose a scoreboard") {
+                var myFunction = function myFunction(value, key) {
+                    value.result = value.wins * this.state.win_point_value + value.lost * this.state.lost_point_value + value.draws * this.state.draw_point_value;
+                };
+
+                var value = e.target.value.split('break');
+
+                axios.get('/scoreboards/' + value[0] + '/edit').then(function (response) {
+                    return _this2.setState({
+                        scoreboard: value[0],
+                        type: value[1],
+                        scoreboardplayers: response.data.scoreboardPlayers
+
+                    });
+                }).then(this.state.scoreboardplayers.forEach(myFunction)).then(console.log(this.state));
+            }
+        }
+    }, {
         key: 'leagueChangeHandler',
         value: function leagueChangeHandler(e) {
             var value = e.target.value.split('break');
@@ -62274,21 +62301,26 @@ var Result = function (_Component) {
                 draw_point_value: parseInt(value[2]),
                 id: parseInt(value[3])
             });
-            console.log(this.state.id);
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'Workarea' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h2',
+                    { style: { color: 'white' } },
+                    'Choose your legue (scoring)'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'select',
                     { name: 'Choose a league', className: 'myform-control', onChange: function onChange(e) {
-                            return _this2.leagueChangeHandler(e);
+                            return _this3.leagueChangeHandler(e);
                         } },
+                    ' Ch',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'option',
                         { value: '0break0break0break0' },
@@ -62304,6 +62336,32 @@ var Result = function (_Component) {
                         );
                     })
                 ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h2',
+                    { style: { color: 'white' } },
+                    'Choose your scorboard (players list)'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'select',
+                    { name: 'Choose a scoreboard', className: 'myform-control', onChange: function onChange(e) {
+                            return _this3.scoreboardChangeHandler(e);
+                        } },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'option',
+                        null,
+                        'Choose a scoreboard'
+                    ),
+                    this.props.scoreboards.map(function (scoreboard) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'option',
+                            {
+                                value: scoreboard.id + 'break' + scoreboard.type,
+                                key: scoreboard.id + scoreboard.name },
+                            scoreboard.name
+                        );
+                    })
+                ),
+                ' s',
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     null,
@@ -62331,7 +62389,7 @@ var Result = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'tbody',
                             null,
-                            this.state.id !== 0 ? this.props.players.map(function (player) {
+                            this.state.scoreboardplayers !== '' ? this.state.scoreboardplayers.map(function (player) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'tr',
                                     { key: player.id },
@@ -62340,10 +62398,11 @@ var Result = function (_Component) {
                                         null,
                                         player.name
                                     ),
+                                    console.log(_this3.state.win_point_value + ' ' + player.wins),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'td',
                                         null,
-                                        console.log(_this2.props)
+                                        player.wins * _this3.state.win_point_value + player.lost * _this3.state.lost_point_value + player.draws * _this3.state.draw_point_value
                                     )
                                 );
                             }) : null
