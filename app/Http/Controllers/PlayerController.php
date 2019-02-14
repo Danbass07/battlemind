@@ -36,13 +36,12 @@ class PlayerController extends Controller
             'type' => 'required|max:50',
             
         ]);
-        $url ='avatar';
       
         
         $player = $request->user()->players()->create([
             'name' => $request->name,
             'type' => $request->type,
-            'url' => $url,
+            'url' => $request->url,
             'wins' => $request->wins,
             'lost' => $request->lost,
             'draws' => $request->draws,

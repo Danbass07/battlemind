@@ -60034,56 +60034,64 @@ var Navigation = function (_Component) {
     }
 
     _createClass(Navigation, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this2 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
+                "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'navigation top' },
+                    "div",
+                    { className: "navigation top" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.object == 'player' ? "navButton active" : "navButton", onClick: function onClick(e) {
-                                return _this2.props.button(e);
-                            }, name: 'player', value: 'object' },
-                        'Player'
+                        "div",
+                        { className: "navigation-top-toprow" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.action == 'new' ? "navButton active" : "navButton", onClick: this.props.button, name: "new", value: "action" },
+                            "New"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.action == 'list' ? "navButton active" : "navButton", onClick: this.props.button, name: "list", value: "action" },
+                            "Lists"
+                        )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.object == 'league' ? "navButton active" : "navButton", onClick: this.props.button, name: 'league', value: 'object' },
-                        'League'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.object == 'scoreboard' ? "navButton active" : "navButton", onClick: this.props.button, name: 'scoreboard', value: 'object' },
-                        'Scoreboard'
+                        "div",
+                        { className: this.props.action == 'new' || this.props.action == 'list' ? "navigation-top-bottomrow" : 'navigation-top-bottomrow-disable' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.object == 'player' ? "navButton active" : "navButton", onClick: function onClick(e) {
+                                    return _this2.props.button(e);
+                                }, name: "player", value: "object" },
+                            "Player"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.object == 'league' ? "navButton active" : "navButton", onClick: this.props.button, name: "league", value: "object" },
+                            "League"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.object == 'scoreboard' ? "navButton active" : "navButton", onClick: this.props.button, name: "scoreboard", value: "object" },
+                            "Scoreboard"
+                        )
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'navigation bottom' },
+                    "div",
+                    { className: "navigation bottom" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.action == 'new' ? "navButton active" : "navButton", onClick: this.props.button, name: 'new', value: 'action' },
-                        'New'
+                        "button",
+                        { className: this.props.action == 'event' ? "navButton active" : "navButton", onClick: this.props.button, name: "event", value: "action" },
+                        "Event"
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.action == 'list' ? "navButton active" : "navButton", onClick: this.props.button, name: 'list', value: 'action' },
-                        'Lists'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.action == 'event' ? "navButton active" : "navButton", onClick: this.props.button, name: 'event', value: 'action' },
-                        'Event'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.action == 'results' ? "navButton active" : "navButton", onClick: this.props.button, name: 'results', value: 'action' },
-                        'Results'
+                        "button",
+                        { className: this.props.action == 'results' ? "navButton active" : "navButton", onClick: this.props.button, name: "results", value: "action" },
+                        "Results"
                     )
                 )
             );
@@ -62258,7 +62266,8 @@ var Result = function (_Component) {
             win_point_value: '',
             lost_point_value: '',
             draw_point_value: '',
-            id: 0
+            id: 0,
+            ScoreboardPlayers: []
         };
 
         return _this;
@@ -62274,20 +62283,53 @@ var Result = function (_Component) {
                 draw_point_value: parseInt(value[2]),
                 id: parseInt(value[3])
             });
-            console.log(this.state.id);
+        }
+    }, {
+        key: 'scoreboardChangeHandler',
+        value: function scoreboardChangeHandler(e) {
+            var _this2 = this;
+
+            axios.get('/scoreboards/' + e.target.value + '/edit').then(function (response) {
+                return _this2.setState({
+                    name: response.data.scoreboard.name,
+                    type: response.data.scoreboard.type,
+                    ScoreboardPlayers: response.data.scoreboardPlayers
+
+                });
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'Workarea' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'select',
+                    { name: 'Choose a scoreboard', className: 'myform-control', onChange: function onChange(e) {
+                            return _this3.scoreboardChangeHandler(e);
+                        } },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'option',
+                        { value: '0break0break0break0' },
+                        'Choose a Scoreboard'
+                    ),
+                    this.props.scoreboards.map(function (scoreboard) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'option',
+                            {
+                                value: scoreboard.id,
+                                key: scoreboard.id },
+                            console.log(scoreboard)
+                        );
+                    })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'select',
                     { name: 'Choose a league', className: 'myform-control', onChange: function onChange(e) {
-                            return _this2.leagueChangeHandler(e);
+                            return _this3.leagueChangeHandler(e);
                         } },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'option',
@@ -62343,7 +62385,7 @@ var Result = function (_Component) {
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'td',
                                         null,
-                                        console.log(_this2.props)
+                                        console.log(_this3.props)
                                     )
                                 );
                             }) : null

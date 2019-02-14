@@ -10,6 +10,7 @@ class Result extends Component {
             lost_point_value: '', 
             draw_point_value: '', 
             id: 0,
+            ScoreboardPlayers:[],
         };
 
     }
@@ -22,13 +23,33 @@ class Result extends Component {
             draw_point_value: parseInt(value[2]), 
             id: parseInt(value[3]),
         });
-        console.log(this.state.id)
     }
-    
+    scoreboardChangeHandler(e){
+    axios.get(`/scoreboards/${e.target.value}/edit`).then(response =>
+        this.setState({
+           name: response.data.scoreboard.name,            
+           type: response.data.scoreboard.type,
+           ScoreboardPlayers: response.data.scoreboardPlayers,
+  
+            })
+       );
+        }
     render() {
        
         return (
             <div className="Workarea">
+                <select name="Choose a scoreboard" className="myform-control" onChange={(e) => this.scoreboardChangeHandler(e)}>
+                <option value='0break0break0break0'>Choose a Scoreboard</option>
+                {this.props.scoreboards.map(scoreboard => (
+                                
+                    <option 
+                    value={scoreboard.id}  
+                    key={scoreboard.id}>
+                    {console.log(scoreboard)}
+
+                    </option> 
+                ))}
+                </select>
                          <select name="Choose a league" className="myform-control" onChange={(e) => this.leagueChangeHandler(e)}>
                 <option value='0break0break0break0'>Choose a league</option>
                 {this.props.leagues.map(league => (
