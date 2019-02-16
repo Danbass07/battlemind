@@ -10,8 +10,14 @@ class Navigation extends Component {
             <div>
    
                 <div className="navigation top">
-                
-                    
+                    <div className="navigation-top-toprow">
+
+                        <button className={this.props.action == 'new' ? "navButton active" : "navButton"} onClick={this.props.button} name="new" value="action">New</button>
+                            
+                        <button className={this.props.action == 'list' ? "navButton active" : "navButton"} onClick={this.props.button} name="list" value="action">Lists</button>
+                        
+                    </div>
+                    <div className={this.props.action == 'new' || this.props.action == 'list' ? "navigation-top-bottomrow" : 'navigation-top-bottomrow-disable'}>
                         <button className={this.props.object == 'player' ? "navButton active" : "navButton"} onClick={(e) => this.props.button(e)} name="player" value="object">Player</button>
                     
                     
@@ -19,15 +25,10 @@ class Navigation extends Component {
                     
                     
                         <button className={this.props.object == 'scoreboard' ? "navButton active" : "navButton"} onClick={this.props.button} name="scoreboard" value="object">Scoreboard</button>
-                    
+                    </div>
                 </div>
                 <div className="navigation bottom">
-                    
-                        <button className={this.props.action == 'new' ? "navButton active" : "navButton"} onClick={this.props.button} name="new" value="action">New</button>
-                    
-                    
-                        <button className={this.props.action == 'list' ? "navButton active" : "navButton"} onClick={this.props.button} name="list" value="action">Lists</button>
-                    
+                           
                     
                         <button className={this.props.action == 'event' ? "navButton active" : "navButton"} onClick={this.props.button} name="event" value="action">Event</button>
                     

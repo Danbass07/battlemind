@@ -10489,7 +10489,7 @@ a.text-dark:focus {
 .Workarea {
   width: 740px;
   height: 60%;
-  margin: 80px auto;
+  margin: 120px auto;
   border: solid 2px  white;
   background-color: #04233d;
   overflow: hidden;
@@ -10674,27 +10674,48 @@ a:hover {
 }
 
 .navigation {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   position: fixed;
   left: 0;
   overflow: hidden;
   width: 100%;
-  height: 70px;
+  height: 60px;
   list-style-type: none;
   -ms-flex-pack: distribute;
       justify-content: space-around;
   background-color: #992604;
 }
 
+.navigation-top-toprow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.navigation-top-bottomrow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.navigation-top-bottomrow-disable {
+  display: none;
+}
+
 .top {
   position: fixed;
-  top: 50px;
+  top: 40px;
   margin: 0;
+  height: 110px;
 }
 
 .bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   position: fixed;
   bottom: 0;
   margin: 0;

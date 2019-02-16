@@ -10,7 +10,7 @@ class Result extends Component {
             lost_point_value: 0, 
             draw_point_value: 0, 
             id: 0,
-            scoreboardplayers: [],
+            scoreboardPlayers:[],
         };
 
     }
@@ -31,7 +31,7 @@ class Result extends Component {
                 this.setState({
                     scoreboard: value[0],
                     type: value[1],
-                    scoreboardplayers: response.data.scoreboardPlayers,
+                    scoreboardPlayers: response.data.scoreboardPlayers,
                     
                 })
                 
@@ -49,15 +49,35 @@ class Result extends Component {
             draw_point_value: parseInt(value[2]), 
             id: parseInt(value[3]),
         });
-      
     }
-    
+    scoreboardChangeHandler(e){
+    axios.get(`/scoreboards/${e.target.value}/edit`).then(response =>
+        
+        this.setState({
+           name: response.data.scoreboard.name,            
+           type: response.data.scoreboard.type,
+           scoreboardPlayers: response.data.scoreboardPlayers,
+  
+            })
+       )
+        }
     render() {
        
         return (
             <div className="Workarea">
-            <h2 style={{color: 'white'}}>Choose your legue (scoring)</h2>
-                         <select name="Choose a league" className="myform-control" onChange={(e) => this.leagueChangeHandler(e)}> Ch
+                <select name="Choose a scoreboard" className="myform-control" onChange={(e) => this.scoreboardChangeHandler(e)}>
+                <option value='0break0break0break0'>Choose a Scoreboard</option>
+                {this.props.scoreboards.map(scoreboard => (
+                                
+                    <option 
+                    value={scoreboard.id}  
+                    key={scoreboard.id}>
+                    {scoreboard.name}
+
+                    </option> 
+                ))}
+                </select>
+                         <select name="Choose a league" className="myform-control" onChange={(e) => this.leagueChangeHandler(e)}>
                 <option value='0break0break0break0'>Choose a league</option>
                 {this.props.leagues.map(league => (
                                 
@@ -68,21 +88,8 @@ class Result extends Component {
                     </option> 
                 ))}
 
-            </select> 
-            <h2 style={{color: 'white'}}>Choose your scorboard (players list)</h2>
-            <select name="Choose a scoreboard" className="myform-control" onChange={(e) => this.scoreboardChangeHandler(e)}>
-                <option>Choose a scoreboard</option>
-                {this.props.scoreboards.map(scoreboard => (
-                                
-                    <option 
-                    value={scoreboard.id+'break'+scoreboard.type}  
-                    key={scoreboard.id+scoreboard.name}>
-                    {scoreboard.name}
-                    </option> 
-                ))}
-
-            </select> s
-            
+   
+                    </select>
                 <div>
                     <table className="Results-table">
                         <thead>
@@ -92,15 +99,12 @@ class Result extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.scoreboardplayers !== '' ? this.state.scoreboardplayers.map(player => (
-
-                           
-                            <tr key={player.id}>
-                                <td>{player.name}</td>{console.log(this.state.win_point_value+' '+player.wins )}
-                                <td>{player.wins * this.state.win_point_value + player.lost * this.state.lost_point_value + player.draws * this.state.draw_point_value}</td>
-                            </tr> 
-                          
-                        )): null}
+                        {this.state.scoreboardPlayers.map(player => (
+                               <tr>
+                               <th>{player.name}</th>
+                               <th>{ parseInt(player.wins) + this.state.win_point_value} </th>
+                           </tr>
+                        ))}
                         </tbody>
                     </table>
 

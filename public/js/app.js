@@ -60034,56 +60034,64 @@ var Navigation = function (_Component) {
     }
 
     _createClass(Navigation, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this2 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
+                "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'navigation top' },
+                    "div",
+                    { className: "navigation top" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.object == 'player' ? "navButton active" : "navButton", onClick: function onClick(e) {
-                                return _this2.props.button(e);
-                            }, name: 'player', value: 'object' },
-                        'Player'
+                        "div",
+                        { className: "navigation-top-toprow" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.action == 'new' ? "navButton active" : "navButton", onClick: this.props.button, name: "new", value: "action" },
+                            "New"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.action == 'list' ? "navButton active" : "navButton", onClick: this.props.button, name: "list", value: "action" },
+                            "Lists"
+                        )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.object == 'league' ? "navButton active" : "navButton", onClick: this.props.button, name: 'league', value: 'object' },
-                        'League'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.object == 'scoreboard' ? "navButton active" : "navButton", onClick: this.props.button, name: 'scoreboard', value: 'object' },
-                        'Scoreboard'
+                        "div",
+                        { className: this.props.action == 'new' || this.props.action == 'list' ? "navigation-top-bottomrow" : 'navigation-top-bottomrow-disable' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.object == 'player' ? "navButton active" : "navButton", onClick: function onClick(e) {
+                                    return _this2.props.button(e);
+                                }, name: "player", value: "object" },
+                            "Player"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.object == 'league' ? "navButton active" : "navButton", onClick: this.props.button, name: "league", value: "object" },
+                            "League"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.object == 'scoreboard' ? "navButton active" : "navButton", onClick: this.props.button, name: "scoreboard", value: "object" },
+                            "Scoreboard"
+                        )
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'navigation bottom' },
+                    "div",
+                    { className: "navigation bottom" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.action == 'new' ? "navButton active" : "navButton", onClick: this.props.button, name: 'new', value: 'action' },
-                        'New'
+                        "button",
+                        { className: this.props.action == 'event' ? "navButton active" : "navButton", onClick: this.props.button, name: "event", value: "action" },
+                        "Event"
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.action == 'list' ? "navButton active" : "navButton", onClick: this.props.button, name: 'list', value: 'action' },
-                        'Lists'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.action == 'event' ? "navButton active" : "navButton", onClick: this.props.button, name: 'event', value: 'action' },
-                        'Event'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { className: this.props.action == 'results' ? "navButton active" : "navButton", onClick: this.props.button, name: 'results', value: 'action' },
-                        'Results'
+                        "button",
+                        { className: this.props.action == 'results' ? "navButton active" : "navButton", onClick: this.props.button, name: "results", value: "action" },
+                        "Results"
                     )
                 )
             );
@@ -62259,7 +62267,7 @@ var Result = function (_Component) {
             lost_point_value: 0,
             draw_point_value: 0,
             id: 0,
-            scoreboardplayers: []
+            scoreboardPlayers: []
         };
 
         return _this;
@@ -62285,7 +62293,7 @@ var Result = function (_Component) {
                     return _this2.setState({
                         scoreboard: value[0],
                         type: value[1],
-                        scoreboardplayers: response.data.scoreboardPlayers
+                        scoreboardPlayers: response.data.scoreboardPlayers
 
                     });
                 }).then(this.state.scoreboardplayers.forEach(myFunction)).then(console.log(this.state));
@@ -62303,24 +62311,52 @@ var Result = function (_Component) {
             });
         }
     }, {
+        key: 'scoreboardChangeHandler',
+        value: function scoreboardChangeHandler(e) {
+            var _this3 = this;
+
+            axios.get('/scoreboards/' + e.target.value + '/edit').then(function (response) {
+                return _this3.setState({
+                    name: response.data.scoreboard.name,
+                    type: response.data.scoreboard.type,
+                    scoreboardPlayers: response.data.scoreboardPlayers
+
+                });
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'Workarea' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
-                    { style: { color: 'white' } },
-                    'Choose your legue (scoring)'
+                    'select',
+                    { name: 'Choose a scoreboard', className: 'myform-control', onChange: function onChange(e) {
+                            return _this4.scoreboardChangeHandler(e);
+                        } },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'option',
+                        { value: '0break0break0break0' },
+                        'Choose a Scoreboard'
+                    ),
+                    this.props.scoreboards.map(function (scoreboard) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'option',
+                            {
+                                value: scoreboard.id,
+                                key: scoreboard.id },
+                            scoreboard.name
+                        );
+                    })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'select',
                     { name: 'Choose a league', className: 'myform-control', onChange: function onChange(e) {
-                            return _this3.leagueChangeHandler(e);
+                            return _this4.leagueChangeHandler(e);
                         } },
-                    ' Ch',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'option',
                         { value: '0break0break0break0' },
@@ -62336,32 +62372,6 @@ var Result = function (_Component) {
                         );
                     })
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
-                    { style: { color: 'white' } },
-                    'Choose your scorboard (players list)'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'select',
-                    { name: 'Choose a scoreboard', className: 'myform-control', onChange: function onChange(e) {
-                            return _this3.scoreboardChangeHandler(e);
-                        } },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'option',
-                        null,
-                        'Choose a scoreboard'
-                    ),
-                    this.props.scoreboards.map(function (scoreboard) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'option',
-                            {
-                                value: scoreboard.id + 'break' + scoreboard.type,
-                                key: scoreboard.id + scoreboard.name },
-                            scoreboard.name
-                        );
-                    })
-                ),
-                ' s',
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     null,
@@ -62389,23 +62399,23 @@ var Result = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'tbody',
                             null,
-                            this.state.scoreboardplayers !== '' ? this.state.scoreboardplayers.map(function (player) {
+                            this.state.scoreboardPlayers.map(function (player) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'tr',
-                                    { key: player.id },
+                                    null,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'td',
+                                        'th',
                                         null,
                                         player.name
                                     ),
-                                    console.log(_this3.state.win_point_value + ' ' + player.wins),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'td',
+                                        'th',
                                         null,
-                                        player.wins * _this3.state.win_point_value + player.lost * _this3.state.lost_point_value + player.draws * _this3.state.draw_point_value
+                                        parseInt(player.wins) + _this4.state.win_point_value,
+                                        ' '
                                     )
                                 );
-                            }) : null
+                            })
                         )
                     )
                 )
