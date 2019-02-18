@@ -10,7 +10,7 @@ class Card extends Component {
         const style = {
             height: '100%',
             width: 'auto',
-            backgroundImage: 'url("/images/'+this.props.url+'.jpeg")',
+            backgroundImage: 'url("/images/'+this.props.url+'")',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
             padding: '2px',

@@ -87,7 +87,7 @@ class Result extends Component {
     }
     componentDidUpdate(prevProps, prevState){
       
-        if(prevState.scoreboardPlayers !== this.state.scoreboardPlayers){
+        if(prevState.scoreboardPlayers !== this.state.scoreboardPlayers || prevState.id !== this.state.id ){
             this.countSortPoints();        }
     }
 

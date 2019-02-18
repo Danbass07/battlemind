@@ -10,44 +10,21 @@ class Player extends Component {
             type: 'planeswalker',
             types: [],
             url: '',
-            wins: 0,
-            lost: 0,
-            draws: 0,
+  
         };
-        this.nameChangeHandler = this.nameChangeHandler.bind(this);
-        this.typeChangeHandler = this.typeChangeHandler.bind(this);
-        this.urlChangeHandler = this.urlChangeHandler.bind(this);
-        this.submitHandler = this.submitHandler.bind(this);
-        this.addWin = this.addWin.bind(this);
-        this.addLost = this.addLost.bind(this);
-        this.addDraw = this.addDraw.bind(this);
-        this.removeWin = this.removeWin.bind(this);
-        this.removeLost = this.removeLost.bind(this);
-        this.removeDraw = this.removeDraw.bind(this);
+
         
     }
    
         
     
 
-    nameChangeHandler(e) {
+    changeHandler(e) {
         this.setState({
-            name: e.target.value
+            [e.target.placeholder]: e.target.value
         });
-    }
-    typeChangeHandler(e) {
-        console.log(this.state.type);
-        this.setState({
-            type: e.target.value
-        });
-        console.log(this.state.type);
     }
 
-    urlChangeHandler(e) {
-        this.setState({
-            url: e.target.value
-        });
-    }
 
    
     submitHandler(e) {
@@ -58,11 +35,6 @@ class Player extends Component {
             name: this.state.name,
             type: this.state.type,
             url: this.state.url,
-            wins: this.state.wins,
-            lost: this.state.lost,
-            draws: this.state.draws
-        }).then(response => {
-           this.props.history.push('/home');
         });
 
     }
@@ -74,9 +46,6 @@ class Player extends Component {
             name: response.data.player.name,            
             type: response.data.player.type,
             url: response.data.player.url,
-            wins: response.data.player.wins,
-            lost: response.data.player.lost,
-            draws: response.data.player.draws,
              })
         );
     }
@@ -90,52 +59,9 @@ class Player extends Component {
     componentWillMount() {
       this.getPlayers(); 
       this.getTypes();
-      console.log(this.state.type);
     }
-    addWin(){
-        
-        const win = +this.state.wins + +1;
-        this.setState({
-            wins: win
-        });
-    }
-    addLost(){
-        const lost = +this.state.lost + +1;
-        this.setState({
-            lost: lost
-        });
-    }
-    addDraw(){
-        const draw = +this.state.draws + +1;
-        this.setState({
-            draws: draw
-        });
-    }
-    removeWin(){
-        
-        const win = +this.state.wins - +1;
-        if (win >= 0) {
-            this.setState({
-                wins: win
-            });
-        }
-    }
-    removeLost(){
-        const lost = +this.state.lost - +1;
-        if (lost >= 0) {
-            this.setState({
-                lost: lost
-            });
-        }
-    }
-    removeDraw(){
-        const draw = +this.state.draws - +1;
-        if (draw >= 0) {
-            this.setState({
-                draws: draw
-            });
-        }
-    }
+
+
     render() {
         
         return (
@@ -147,14 +73,14 @@ class Player extends Component {
                         <div className="card">
                             <div className="card-header">Edit Player</div>
 
-                           <form onSubmit={this.submitHandler}>
+                           <form onSubmit={(e) => this.submitHandler(e)}>
                 <div 
                                className="form-group">
                                 <input 
                                 className="form-control"
-                                placeholder="Name"
+                                placeholder="name"
                                 value={this.state.name}
-                                onChange={this.nameChangeHandler}
+                                onChange={(e) => this.changeHandler(e)}
                                 required
                                 
                                 />
@@ -162,7 +88,7 @@ class Player extends Component {
                                 placeholder="type"
                                 required
                                 value={this.state.type}
-                                onChange={(e) => this.typeChangeHandler(e)}>
+                                onChange={(e) => this.changeHandler(e)}>
                 
                         {this.state.types.map(type => (
                             
@@ -172,27 +98,16 @@ class Player extends Component {
                                 
                                 <input 
                                 className="form-control" 
-                                placeholder="Url"
+                                placeholder="url"
                                 required
                                 value={this.state.url}
-                                onChange={this.urlChangeHandler}
+                                onChange={(e) => this.changeHandler(e)}
                                 />
                                 
                                 
                                 </div>
                                 
-                                <h2>Wins :{this.state.wins}
-                                <div className="btn btn-sm btn-info float-right" onClick={this.addWin}>++++</div>
-                                <div className="btn btn-sm btn-warning float-right" onClick={this.removeWin}>----</div>
-                                </h2>
-                                <h2>Lost: {this.state.lost}
-                                <div className="btn btn-sm btn-info float-right" onClick={this.addLost}>++++</div>
-                                <div className="btn btn-sm btn-warning float-right"  onClick={this.removeLost}>----</div>
-                                </h2>
-                                <h2>Draws: {this.state.draws}
-                                <div className="btn btn-sm btn-info float-right" onClick={this.addDraw}>++++</div>
-                                <div className="btn btn-sm btn-warning float-right" onClick={this.removeDraw}>----</div>
-                                </h2>
+                              
                                 
                                 <button 
                                 type="submit" 

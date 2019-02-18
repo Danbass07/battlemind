@@ -60555,6 +60555,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -60576,89 +60578,50 @@ var Player = function (_Component) {
             name: '',
             type: 'planeswalker',
             types: [],
-            url: '',
-            wins: 0,
-            lost: 0,
-            draws: 0
+            url: ''
+
         };
-        _this.nameChangeHandler = _this.nameChangeHandler.bind(_this);
-        _this.typeChangeHandler = _this.typeChangeHandler.bind(_this);
-        _this.urlChangeHandler = _this.urlChangeHandler.bind(_this);
-        _this.submitHandler = _this.submitHandler.bind(_this);
-        _this.addWin = _this.addWin.bind(_this);
-        _this.addLost = _this.addLost.bind(_this);
-        _this.addDraw = _this.addDraw.bind(_this);
-        _this.removeWin = _this.removeWin.bind(_this);
-        _this.removeLost = _this.removeLost.bind(_this);
-        _this.removeDraw = _this.removeDraw.bind(_this);
 
         return _this;
     }
 
     _createClass(Player, [{
-        key: 'nameChangeHandler',
-        value: function nameChangeHandler(e) {
-            this.setState({
-                name: e.target.value
-            });
-        }
-    }, {
-        key: 'typeChangeHandler',
-        value: function typeChangeHandler(e) {
-            console.log(this.state.type);
-            this.setState({
-                type: e.target.value
-            });
-            console.log(this.state.type);
-        }
-    }, {
-        key: 'urlChangeHandler',
-        value: function urlChangeHandler(e) {
-            this.setState({
-                url: e.target.value
-            });
+        key: 'changeHandler',
+        value: function changeHandler(e) {
+            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
         }
     }, {
         key: 'submitHandler',
         value: function submitHandler(e) {
-            var _this2 = this;
 
             e.preventDefault();
 
             axios.put('/players/' + this.props.match.params.id, {
                 name: this.state.name,
                 type: this.state.type,
-                url: this.state.url,
-                wins: this.state.wins,
-                lost: this.state.lost,
-                draws: this.state.draws
-            }).then(function (response) {
-                _this2.props.history.push('/home');
+                url: this.state.url
             });
         }
     }, {
         key: 'getPlayers',
         value: function getPlayers() {
-            var _this3 = this;
+            var _this2 = this;
 
             axios.get('/players/' + this.props.match.params.id + '/edit').then(function (response) {
-                return _this3.setState({
+                return _this2.setState({
                     name: response.data.player.name,
                     type: response.data.player.type,
-                    url: response.data.player.url,
-                    wins: response.data.player.wins,
-                    lost: response.data.player.lost,
-                    draws: response.data.player.draws
+                    url: response.data.player.url
                 });
             });
         }
     }, {
         key: 'getTypes',
         value: function getTypes() {
-            var _this4 = this;
+            var _this3 = this;
 
             axios.get('/types').then(function (response) {
-                return _this4.setState({
+                return _this3.setState({
                     types: [].concat(_toConsumableArray(response.data.types))
                 });
             });
@@ -60668,68 +60631,11 @@ var Player = function (_Component) {
         value: function componentWillMount() {
             this.getPlayers();
             this.getTypes();
-            console.log(this.state.type);
-        }
-    }, {
-        key: 'addWin',
-        value: function addWin() {
-
-            var win = +this.state.wins + +1;
-            this.setState({
-                wins: win
-            });
-        }
-    }, {
-        key: 'addLost',
-        value: function addLost() {
-            var lost = +this.state.lost + +1;
-            this.setState({
-                lost: lost
-            });
-        }
-    }, {
-        key: 'addDraw',
-        value: function addDraw() {
-            var draw = +this.state.draws + +1;
-            this.setState({
-                draws: draw
-            });
-        }
-    }, {
-        key: 'removeWin',
-        value: function removeWin() {
-
-            var win = +this.state.wins - +1;
-            if (win >= 0) {
-                this.setState({
-                    wins: win
-                });
-            }
-        }
-    }, {
-        key: 'removeLost',
-        value: function removeLost() {
-            var lost = +this.state.lost - +1;
-            if (lost >= 0) {
-                this.setState({
-                    lost: lost
-                });
-            }
-        }
-    }, {
-        key: 'removeDraw',
-        value: function removeDraw() {
-            var draw = +this.state.draws - +1;
-            if (draw >= 0) {
-                this.setState({
-                    draws: draw
-                });
-            }
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this4 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -60756,16 +60662,20 @@ var Player = function (_Component) {
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'form',
-                                { onSubmit: this.submitHandler },
+                                { onSubmit: function onSubmit(e) {
+                                        return _this4.submitHandler(e);
+                                    } },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'div',
                                     {
                                         className: 'form-group' },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
                                         className: 'form-control',
-                                        placeholder: 'Name',
+                                        placeholder: 'name',
                                         value: this.state.name,
-                                        onChange: this.nameChangeHandler,
+                                        onChange: function onChange(e) {
+                                            return _this4.changeHandler(e);
+                                        },
                                         required: true
 
                                     }),
@@ -60776,7 +60686,7 @@ var Player = function (_Component) {
                                             required: true,
                                             value: this.state.type,
                                             onChange: function onChange(e) {
-                                                return _this5.typeChangeHandler(e);
+                                                return _this4.changeHandler(e);
                                             } },
                                         this.state.types.map(function (type) {
                                             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60788,59 +60698,13 @@ var Player = function (_Component) {
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
                                         className: 'form-control',
-                                        placeholder: 'Url',
+                                        placeholder: 'url',
                                         required: true,
                                         value: this.state.url,
-                                        onChange: this.urlChangeHandler
+                                        onChange: function onChange(e) {
+                                            return _this4.changeHandler(e);
+                                        }
                                     })
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'h2',
-                                    null,
-                                    'Wins :',
-                                    this.state.wins,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addWin },
-                                        '++++'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeWin },
-                                        '----'
-                                    )
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'h2',
-                                    null,
-                                    'Lost: ',
-                                    this.state.lost,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addLost },
-                                        '++++'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeLost },
-                                        '----'
-                                    )
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'h2',
-                                    null,
-                                    'Draws: ',
-                                    this.state.draws,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-info float-right', onClick: this.addDraw },
-                                        '++++'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'btn btn-sm btn-warning float-right', onClick: this.removeDraw },
-                                        '----'
-                                    )
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'button',
@@ -62104,7 +61968,11 @@ var Event = function (_Component) {
                             return _this8.submitHandler(e);
                         } },
                     this.renderOptions(this.props.scoreboards),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit' })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        { className: 'Submit-button', type: 'submit' },
+                        'SAVE'
+                    )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
@@ -62183,7 +62051,7 @@ var Card = function (_Component) {
             var style = {
                 height: '100%',
                 width: 'auto',
-                backgroundImage: 'url("/images/' + this.props.url + '.jpeg")',
+                backgroundImage: 'url("/images/' + this.props.url + '")',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain',
                 padding: '2px'
@@ -62353,7 +62221,7 @@ var Result = function (_Component) {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
 
-            if (prevState.scoreboardPlayers !== this.state.scoreboardPlayers) {
+            if (prevState.scoreboardPlayers !== this.state.scoreboardPlayers || prevState.id !== this.state.id) {
                 this.countSortPoints();
             }
         }
