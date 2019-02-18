@@ -62267,13 +62267,37 @@ var Result = function (_Component) {
             lost_point_value: 0,
             draw_point_value: 0,
             id: 0,
-            scoreboardPlayers: []
+            scoreboardPlayers: [],
+            pointsCountedSorted: []
         };
 
         return _this;
     }
 
     _createClass(Result, [{
+        key: 'compareValues',
+        value: function compareValues(key) {
+            var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+            return function (a, b) {
+                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    return 0;
+                }
+
+                var varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
+                var varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
+
+                var comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return ascending == false ? comparison * -1 : comparison;
+            };
+        }
+    }, {
         key: 'countSortPoints',
         value: function countSortPoints() {
             var _this2 = this;
@@ -62281,9 +62305,19 @@ var Result = function (_Component) {
             var pointsCountedSorted = [{}];
             this.state.scoreboardPlayers.forEach(function (player) {
 
-                pointsCountedSorted.push({ name: player.name, points: player.pivot.win * _this2.state.win_point_value });
+                pointsCountedSorted.push({
+
+                    name: player.name,
+                    points: player.pivot.win * _this2.state.win_point_value + player.pivot.lost * _this2.state.lost_point_value + player.pivot.draw * _this2.state.draw_point_value
+
+                });
+                pointsCountedSorted.sort(_this2.compareValues('points', false));
             });
-            console.log(pointsCountedSorted);
+            this.setState({
+
+                pointsCountedSorted: pointsCountedSorted
+
+            });
         }
     }, {
         key: 'scoreboardChangeHandler',
@@ -62297,7 +62331,7 @@ var Result = function (_Component) {
                     scoreboardPlayers: response.data.scoreboardPlayers
 
                 });
-            });
+            }).then();
         }
     }, {
         key: 'leagueChangeHandler',
@@ -62311,11 +62345,23 @@ var Result = function (_Component) {
             });
         }
     }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.countSortPoints();
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+
+            if (prevState.scoreboardPlayers !== this.state.scoreboardPlayers) {
+                this.countSortPoints();
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this4 = this;
 
-            this.countSortPoints();
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'Workarea' },
@@ -62386,7 +62432,7 @@ var Result = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'tbody',
                             null,
-                            this.state.scoreboardPlayers.map(function (player) {
+                            this.state.pointsCountedSorted.map(function (player) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'tr',
                                     { key: player.id },
@@ -62395,7 +62441,11 @@ var Result = function (_Component) {
                                         null,
                                         player.name
                                     ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('th', null)
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'th',
+                                        null,
+                                        player.points
+                                    )
                                 );
                             })
                         )

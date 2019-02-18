@@ -11,17 +11,51 @@ class Result extends Component {
             draw_point_value: 0, 
             id: 0,
             scoreboardPlayers:[],
+            pointsCountedSorted: [],
         };
 
+    }
+    compareValues(key, ascending=true) {
+        return function(a, b) {
+          if(!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            // property doesn't exist on either object
+              return 0; 
+          }
+      
+          const varA = (typeof a[key] === 'string') ? 
+            a[key].toUpperCase() : a[key];
+          const varB = (typeof b[key] === 'string') ? 
+            b[key].toUpperCase() : b[key];
+      
+          let comparison = 0;
+          if (varA > varB) {
+            comparison = 1;
+          } else if (varA < varB) {
+            comparison = -1;
+          }
+          return (
+            (ascending == false) ? (comparison * -1) : comparison
+          );
+        };
     }
     countSortPoints() {
         let pointsCountedSorted = [{}]
         this.state.scoreboardPlayers.forEach(player => {
 
-            pointsCountedSorted.push({name: player.name, points: player.pivot.win * this.state.win_point_value})
+            pointsCountedSorted.push({
+                
+                name: player.name, 
+                points: player.pivot.win * this.state.win_point_value + player.pivot.lost * this.state.lost_point_value + player.pivot.draw * this.state.draw_point_value
+            
+            });
+            pointsCountedSorted.sort(this.compareValues('points', false));
 
         })
-        console.log(pointsCountedSorted);
+        this.setState({
+
+            pointsCountedSorted: pointsCountedSorted
+            
+        });
        
      }
     scoreboardChangeHandler(e) {
@@ -35,7 +69,7 @@ class Result extends Component {
                     
                 })
                 
-            );
+            ).then();
           
         
     }
@@ -48,9 +82,16 @@ class Result extends Component {
             id: parseInt(value[3]),
         });
     }
+    componentDidMount(){
+        this.countSortPoints()
+    }
+    componentDidUpdate(prevProps, prevState){
+      
+        if(prevState.scoreboardPlayers !== this.state.scoreboardPlayers){
+            this.countSortPoints();        }
+    }
 
     render() {
-        this.countSortPoints()
         return (
             <div className="Workarea">
                 <select name="Choose a scoreboard" className="myform-control" onChange={(e) => this.scoreboardChangeHandler(e)}>
@@ -87,10 +128,10 @@ class Result extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.scoreboardPlayers.map(player => (
+                        {this.state.pointsCountedSorted.map(player => (
                                <tr key={player.id}>
                                <th>{player.name}</th>
-                               <th></th>
+                               <th>{player.points}</th>
                            </tr>
                         ))}
                         </tbody>
