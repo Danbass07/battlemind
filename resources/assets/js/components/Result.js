@@ -14,32 +14,30 @@ class Result extends Component {
         };
 
     }
-    scoreboardChangeHandler(e) {
-        this.setState({
-            playerid: 0,
-        })
+    countSortPoints() {
+        let pointsCountedSorted = [{}]
+        this.state.scoreboardPlayers.forEach(player => {
 
-        if (e.target.value !== "Choose a scoreboard") {
-            
-            const value = e.target.value.split('break');
-            function myFunction(value, key) {
-                value.result = value.wins * this.state.win_point_value + value.lost * this.state.lost_point_value + value.draws * this.state.draw_point_value ; 
-              
-             }
-            axios.get(`/scoreboards/${value[0]}/edit`).then(response =>
+            pointsCountedSorted.push({name: player.name, points: player.pivot.win * this.state.win_point_value})
+
+        })
+        console.log(pointsCountedSorted);
+       
+     }
+    scoreboardChangeHandler(e) {
+
+            const value = e.target.value;
+
+            axios.get(`/scoreboards/${value}/edit`).then(response =>
 
                 this.setState({
-                    scoreboard: value[0],
-                    type: value[1],
                     scoreboardPlayers: response.data.scoreboardPlayers,
                     
                 })
                 
-            ).then(  
-            this.state.scoreboardplayers.forEach(myFunction)
-            ).then(console.log(this.state));
+            );
           
-        }
+        
     }
     leagueChangeHandler(e){
         const value = e.target.value.split('break');
@@ -50,23 +48,13 @@ class Result extends Component {
             id: parseInt(value[3]),
         });
     }
-    scoreboardChangeHandler(e){
-    axios.get(`/scoreboards/${e.target.value}/edit`).then(response =>
-        
-        this.setState({
-           name: response.data.scoreboard.name,            
-           type: response.data.scoreboard.type,
-           scoreboardPlayers: response.data.scoreboardPlayers,
-  
-            })
-       )
-        }
+
     render() {
-       
+        this.countSortPoints()
         return (
             <div className="Workarea">
                 <select name="Choose a scoreboard" className="myform-control" onChange={(e) => this.scoreboardChangeHandler(e)}>
-                <option value='0break0break0break0'>Choose a Scoreboard</option>
+                <option value='0'>Choose a Scoreboard</option>
                 {this.props.scoreboards.map(scoreboard => (
                                 
                     <option 
@@ -100,9 +88,9 @@ class Result extends Component {
                         </thead>
                         <tbody>
                         {this.state.scoreboardPlayers.map(player => (
-                               <tr>
+                               <tr key={player.id}>
                                <th>{player.name}</th>
-                               <th>{ parseInt(player.wins) + this.state.win_point_value} </th>
+                               <th></th>
                            </tr>
                         ))}
                         </tbody>

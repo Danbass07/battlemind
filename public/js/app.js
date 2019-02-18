@@ -62274,30 +62274,30 @@ var Result = function (_Component) {
     }
 
     _createClass(Result, [{
-        key: 'scoreboardChangeHandler',
-        value: function scoreboardChangeHandler(e) {
+        key: 'countSortPoints',
+        value: function countSortPoints() {
             var _this2 = this;
 
-            this.setState({
-                playerid: 0
+            var pointsCountedSorted = [{}];
+            this.state.scoreboardPlayers.forEach(function (player) {
+
+                pointsCountedSorted.push({ name: player.name, points: player.pivot.win * _this2.state.win_point_value });
             });
+            console.log(pointsCountedSorted);
+        }
+    }, {
+        key: 'scoreboardChangeHandler',
+        value: function scoreboardChangeHandler(e) {
+            var _this3 = this;
 
-            if (e.target.value !== "Choose a scoreboard") {
-                var myFunction = function myFunction(value, key) {
-                    value.result = value.wins * this.state.win_point_value + value.lost * this.state.lost_point_value + value.draws * this.state.draw_point_value;
-                };
+            var value = e.target.value;
 
-                var value = e.target.value.split('break');
+            axios.get('/scoreboards/' + value + '/edit').then(function (response) {
+                return _this3.setState({
+                    scoreboardPlayers: response.data.scoreboardPlayers
 
-                axios.get('/scoreboards/' + value[0] + '/edit').then(function (response) {
-                    return _this2.setState({
-                        scoreboard: value[0],
-                        type: value[1],
-                        scoreboardPlayers: response.data.scoreboardPlayers
-
-                    });
-                }).then(this.state.scoreboardplayers.forEach(myFunction)).then(console.log(this.state));
-            }
+                });
+            });
         }
     }, {
         key: 'leagueChangeHandler',
@@ -62311,24 +62311,11 @@ var Result = function (_Component) {
             });
         }
     }, {
-        key: 'scoreboardChangeHandler',
-        value: function scoreboardChangeHandler(e) {
-            var _this3 = this;
-
-            axios.get('/scoreboards/' + e.target.value + '/edit').then(function (response) {
-                return _this3.setState({
-                    name: response.data.scoreboard.name,
-                    type: response.data.scoreboard.type,
-                    scoreboardPlayers: response.data.scoreboardPlayers
-
-                });
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this4 = this;
 
+            this.countSortPoints();
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'Workarea' },
@@ -62339,7 +62326,7 @@ var Result = function (_Component) {
                         } },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'option',
-                        { value: '0break0break0break0' },
+                        { value: '0' },
                         'Choose a Scoreboard'
                     ),
                     this.props.scoreboards.map(function (scoreboard) {
@@ -62402,18 +62389,13 @@ var Result = function (_Component) {
                             this.state.scoreboardPlayers.map(function (player) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'tr',
-                                    null,
+                                    { key: player.id },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'th',
                                         null,
                                         player.name
                                     ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'th',
-                                        null,
-                                        parseInt(player.wins) + _this4.state.win_point_value,
-                                        ' '
-                                    )
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('th', null)
                                 );
                             })
                         )
