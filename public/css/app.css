@@ -10675,7 +10675,7 @@ a:hover {
   margin: 1px;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 500px) {
   .Event-grid {
     display: -webkit-box;
     display: -ms-flexbox;
