@@ -10487,18 +10487,20 @@ a.text-dark:focus {
 }
 
 .Workarea {
-  width: 740px;
+  width: 80%;
   height: 60%;
   margin: 120px auto;
   border: solid 2px  white;
   background-color: #04233d;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .navbar {
   position: fixed;
   width: 100%;
 }
+
+/* Madia */
 
 .myform {
   display: -webkit-box;
@@ -10524,10 +10526,10 @@ a.text-dark:focus {
   margin: 5px auto;
 }
 
-.submit-button {
+.Submit-button {
   background-color: chocolate;
-  width: 80%;
-  height: 50px;
+  width: 100%;
+  height: 30px;
   margin: 5px auto;
 }
 
@@ -10611,7 +10613,7 @@ a:hover {
   display: grid;
   grid-template-columns: 24% 24% 24% 24%;
   grid-gap: 1%;
-  height: 90%;
+  height: 100%;
   width: 98%;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -10671,6 +10673,54 @@ a:hover {
   position: relative;
   bottom: -65%;
   margin: 1px;
+}
+
+@media only screen and (max-width: 400px) {
+  .Event-grid {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    height: 80%;
+    width: 98%;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+
+  .Event-grid-item {
+    height: 98%;
+    width: 100%;
+    border: solid 2px white;
+    color: white;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  .Event-list-item {
+    width: 100%;
+    font-size: 1em;
+  }
+
+  .Remove-button {
+    margin-left: auto;
+    border: 1px solid white;
+    width: 35px;
+    -ms-flex-line-pack: none;
+        align-content: none;
+    padding-bottom: 0;
+  }
+
+  .Score-button {
+    background-color: #e2de00;
+    position: relative;
+    bottom: 0;
+    left: 50%;
+    margin: 1px;
+  }
 }
 
 .navigation {

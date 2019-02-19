@@ -210,7 +210,7 @@ class Event extends Component {
 
         return (
             <div className="Workarea">
-            <form className="Event-form Inline" onSubmit={(e) => this.submitHandler(e)}> 
+            <form className="" onSubmit={(e) => this.submitHandler(e)}> 
                 {this.renderOptions(this.props.scoreboards)}
                 <button className='Submit-button' type='submit'>SAVE</button>
             </form>

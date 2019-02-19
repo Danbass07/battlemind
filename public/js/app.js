@@ -61964,7 +61964,7 @@ var Event = function (_Component) {
                 { className: 'Workarea' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
-                    { className: 'Event-form Inline', onSubmit: function onSubmit(e) {
+                    { className: '', onSubmit: function onSubmit(e) {
                             return _this8.submitHandler(e);
                         } },
                     this.renderOptions(this.props.scoreboards),

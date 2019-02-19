@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 24% 24% 24% 24%;
     grid-gap: 1%;
-    height: 90%;
+    height: 100%;
     width: 98%;
     justify-content: space-between;
     
@@ -52,6 +52,44 @@
     bottom: -65%;   
     margin: 1px; 
 }
-.Submit-button{
-    background-color: $buttonactivecolor;
-}
+
+@media only screen and (max-width: 400px) {
+    .Event-grid {
+        display: flex;
+        flex-direction: column;
+        height: 80%;
+        width: 98%;
+        justify-content: space-between;
+        
+    }
+    .Event-grid-item {
+        height: 98%;
+        width: 100%;
+        border: solid 2px white;
+        color: white;
+        overflow:scroll;
+        overflow-x:hidden;
+    
+        
+    }
+    .Event-list-item {
+        
+        width: 100%;
+        font-size: 1em;
+        
+    }
+    .Remove-button{
+        margin-left:auto;
+        border: 1px solid white;
+        width:35px;
+        align-content: none;
+        padding-bottom: 0;
+    }
+    .Score-button{
+        background-color: $buttonactivecolor;
+        position: relative;
+        bottom: 0;
+        left: 50%;   
+        margin: 1px; 
+    }
+    }

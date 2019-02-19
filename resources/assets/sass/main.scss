@@ -12,17 +12,30 @@
     
   }
   .Workarea {
-    width: 740px;
+    width: 80%;
     height: 60%;
     margin: 120px auto;
     border:  solid 2px  white;
     background-color: darken($maincolor, 5%);
-    overflow: hidden;
+    overflow: scroll;
   }
 
   .navbar {
     position: fixed;
     width: 100%;
   }
+  
+  /* Madia */
+
+
+@media only screen and (max-width: 350px) {
+  .Workarea {
+    
+    }
+  }
+  
+  @media only screen and (max-width: 1000px) {
+  
+    }
 
   
