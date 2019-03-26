@@ -15693,7 +15693,7 @@ var generatePath = function generatePath() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(37);
-module.exports = __webpack_require__(114);
+module.exports = __webpack_require__(115);
 
 
 /***/ }),
@@ -59835,6 +59835,9 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_List__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Event__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Result__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Profile__ = __webpack_require__(114);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -59846,6 +59849,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -59875,7 +59879,10 @@ var Battlemind = function (_Component) {
                 type: 'test' }],
             scoreboards: [{}],
             players: [{}],
-            leagues: [{}]
+            leagues: [{}],
+            user: {},
+            groups: [{}],
+            userGroups: [{}]
 
         };
 
@@ -59906,8 +59913,8 @@ var Battlemind = function (_Component) {
             this.setState(_defineProperty({}, e.target.value, e.target.name));
         }
     }, {
-        key: 'getTypes',
-        value: function getTypes() {
+        key: 'getAll',
+        value: function getAll() {
             var _this2 = this;
 
             axios.get('/types').then(function (response) {
@@ -59915,59 +59922,75 @@ var Battlemind = function (_Component) {
                     types: [].concat(_toConsumableArray(response.data.types))
                 });
             });
-        }
-    }, {
-        key: 'getScoreboards',
-        value: function getScoreboards() {
-            var _this3 = this;
+
+            axios.get('/users').then(function (response) {
+                return _this2.setState({
+                    user: _extends({}, response.data)
+                });
+            });
 
             axios.get('/scoreboards').then(function (response) {
-                return _this3.setState({
+                return _this2.setState({
                     scoreboards: response.data.content
 
                 });
             });
-        }
-    }, {
-        key: 'getPlayers',
-        value: function getPlayers() {
-            var _this4 = this;
 
-            axios.get('/players').then(function (response) {
-                return _this4.setState({
-                    players: [].concat(_toConsumableArray(response.data.content))
+            axios.get('/groups').then(function (response) {
+                return _this2.setState({
+                    groups: [].concat(_toConsumableArray(response.data.groups)),
+                    userGroups: [].concat(_toConsumableArray(response.data.userGroups))
+                }, function () {
+
+                    axios.get('/players').then(function (response) {
+                        return _this2.setState({
+                            players: [].concat(_toConsumableArray(response.data.content))
+                        });
+                    });
                 });
             });
         }
     }, {
-        key: 'getLeagues',
-        value: function getLeagues() {
-            var _this5 = this;
+        key: 'addUser',
+        value: function addUser(group) {
+            var _this3 = this;
 
-            axios.get('/leagues').then(function (response) {
-                return _this5.setState({
-                    leagues: [].concat(_toConsumableArray(response.data.content))
+            console.log('addUser');
+            console.log(group);
+            console.log(this.state.user.id);
+            console.log(this.state.userGroups);
+
+            if (!this.contains(this.state.userGroups, group)) {
+
+                axios.get('/groups/' + group.id + '/addUser').then(function (response) {
+                    return _this3.setState({
+                        userGroups: [].concat(_toConsumableArray(response.data))
+                    });
                 });
-            });
+            } else {
+
+                axios.get('/groups/' + group.id + '/removeUser').then(function (response) {
+                    return _this3.setState({
+                        userGroups: [].concat(_toConsumableArray(response.data))
+                    });
+                });
+            }
         }
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            this.getScoreboards();
-            this.getPlayers();
-            this.getTypes();
-            this.getLeagues();
+            this.getAll();
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this4 = this;
 
             return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                 'div',
                 { className: 'Battlemind' },
                 __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], { button: function button(e) {
-                        return _this6.buttonHandler(e);
+                        return _this4.buttonHandler(e);
                     }, object: this.state.object, action: this.state.action }),
                 __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_8_react_router_dom__["d" /* Switch */],
@@ -59975,6 +59998,17 @@ var Battlemind = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/players/:id/edit', component: __WEBPACK_IMPORTED_MODULE_4__components_Players_Player__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/leagues/:id/edit', component: __WEBPACK_IMPORTED_MODULE_5__components_Leagues_League__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8_react_router_dom__["c" /* Route */], { exact: true, path: '/scoreboards/:id/edit', component: __WEBPACK_IMPORTED_MODULE_6__components_Scoreboards_Scoreboard__["a" /* default */] }),
+                    this.state.action === 'profile' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__components_Profile__["a" /* default */], {
+                        user: this.state.user,
+                        groups: this.state.groups,
+                        userGroups: this.state.userGroups,
+                        addUser: function addUser(group_id) {
+                            return _this4.addUser(group_id);
+                        },
+                        contains: function contains(userGroups, groups) {
+                            return _this4.contains(userGroups, groups);
+                        }
+                    }) : null,
                     this.state.action === 'event' ? __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], {
 
                         scoreboards: this.state.scoreboards,
@@ -60092,6 +60126,11 @@ var Navigation = function (_Component) {
                         "button",
                         { className: this.props.action == 'results' ? "navButton active" : "navButton", onClick: this.props.button, name: "results", value: "action" },
                         "Results"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        { className: this.props.action == 'profile' ? "navButton active" : "navButton", onClick: this.props.button, name: "profile", value: "action" },
+                        "Profile"
                     )
                 )
             );
@@ -61642,6 +61681,7 @@ var List = function (_Component) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { key: content.id, className: 'list-item' },
+                    console.log(content),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'list-item-name' },
@@ -62062,6 +62102,21 @@ var Card = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'button',
                     { className: "Score-button", onClick: function onClick() {
+                            return _this2.props.actioncontroller();
+                        } },
+                    this.props.action === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        null,
+                        'Add'
+                    ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        null,
+                        'Remove'
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'button',
+                    { className: "Score-button", onClick: function onClick() {
                             return _this2.props.buttoncontroller('Win', _this2.props.action);
                         } },
                     'Win'
@@ -62079,22 +62134,6 @@ var Card = function (_Component) {
                             return _this2.props.buttoncontroller('Draw', _this2.props.action);
                         } },
                     'Draw'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    { className: "Score-button", onClick: function onClick() {
-                            return _this2.props.actioncontroller();
-                        } },
-                    this.props.action === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'p',
-                        null,
-                        'Now you add results'
-                    ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'p',
-                        null,
-                        'Now you remove results '
-                    ),
-                    ' '
                 )
             );
         }
@@ -62330,6 +62369,77 @@ var Result = function (_Component) {
 
 /***/ }),
 /* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Profile = function (_Component) {
+    _inherits(Profile, _Component);
+
+    function Profile() {
+        _classCallCheck(this, Profile);
+
+        return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).apply(this, arguments));
+    }
+
+    _createClass(Profile, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var style = {
+                height: '100%',
+                width: 'auto',
+                backgroundColor: 'gray',
+                marginTop: '120px',
+                padding: '2px'
+            };
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { style: style },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h1',
+                    null,
+                    this.props.user.name
+                ),
+                this.props.groups.map(function (group) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                            onChange: function onChange() {
+                                return _this2.props.addUser(group);
+                            },
+                            defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
+                            type: 'checkbox', name: 'group', value: group.id
+
+                        }),
+                        group.name
+                    );
+                })
+            );
+        }
+    }]);
+
+    return Profile;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Profile);
+
+/***/ }),
+/* 115 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

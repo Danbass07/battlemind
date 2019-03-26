@@ -33,6 +33,8 @@ class Navigation extends Component {
                         <button className={this.props.action == 'event' ? "navButton active" : "navButton"} onClick={this.props.button} name="event" value="action">Event</button>
                     
                         <button className={this.props.action == 'results' ? "navButton active" : "navButton"} onClick={this.props.button} name="results" value="action">Results</button>
+
+                        <button className={this.props.action == 'profile' ? "navButton active" : "navButton"} onClick={this.props.button} name="profile" value="action">Profile</button>
                 </div> 
                
 

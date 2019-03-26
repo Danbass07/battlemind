@@ -10,6 +10,7 @@ import { BrowserRouter, Switch, Router, Route, Link} from 'react-router-dom';
 import List from '../components/List';
 import Event from '../components/Event';
 import Result from '../components/Result';
+import Profile from '../components/Profile';
 
 class Battlemind extends Component {
     constructor(props) {
@@ -24,6 +25,9 @@ class Battlemind extends Component {
             scoreboards: [{}],
             players: [{}],
             leagues: [{}],
+            user:{},
+            groups:[{}],
+            userGroups:[{}],
 
             
         };
@@ -51,48 +55,84 @@ buttonHandler(e) {
         });
     
 }
-
-getTypes() {
+getAll() {
     axios.get('/types').then(response =>
-     this.setState({
-        types: [...response.data.types]
-         })
-    );
-}
-getScoreboards() {
-    axios.get(`/scoreboards`).then(response =>
-     this.setState({
-        scoreboards: response.data.content,
+        this.setState({
+           types: [...response.data.types]
+            })
+       );
 
-         })
-    );
+    axios.get(`/users`).then(response =>
+        this.setState({
+           user: {...response.data}
+            })
+       );
+
+       axios.get(`/scoreboards`).then(response =>
+        this.setState({
+           scoreboards: response.data.content,
+   
+            })
+       );
+
+       
+       axios.get(`/groups`).then(response =>
+        this.setState({
+           groups: [...response.data.groups],
+           userGroups:[...response.data.userGroups],
+            }, () => {
+
+             
+        
+            
+                   axios.get('/players').then(response =>
+                    this.setState({
+                       players: [...response.data.content]
+                        })
+                   );
+            
+
+            })
+       );
+ 
+
+
+}
+
+
+addUser(group) {
+    console.log('addUser')
+    console.log(group)
+    console.log(this.state.user.id)
+    console.log(this.state.userGroups)
+
+    if(!this.contains(this.state.userGroups, group)) {
+
+        axios.get(`/groups/${group.id}/addUser`).then(response =>
+            this.setState ({
+                userGroups:[...response.data ],
+            })
+          
+        );
+        
+    } else {
+
+        axios.get(`/groups/${group.id}/removeUser`).then(response =>
+            this.setState ({
+                userGroups:[...response.data ],
+            })
+          
+        );
+
+    }
+   
    
 }
 
 
 
-getPlayers() {
-    axios.get('/players').then(response =>
-     this.setState({
-        players: [...response.data.content]
-         })
-    );
-    
-}
-getLeagues() {
-    axios.get(`/leagues`).then(response =>
-     this.setState({
-        leagues: [...response.data.content]
-         })
-    );
-}
-
-
 componentWillMount() {
-  this.getScoreboards(); 
-  this.getPlayers();
-  this.getTypes();
-  this.getLeagues();
+  this.getAll();
 }
  
 
@@ -107,6 +147,17 @@ componentWillMount() {
                 <Route exact path="/players/:id/edit" component={Player}></Route>
                 <Route exact path="/leagues/:id/edit" component={League}></Route>
                 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
+
+                
+                {this.state.action === 'profile' ? 
+                <Profile 
+                    user={this.state.user}
+                    groups={this.state.groups}
+                    userGroups={this.state.userGroups}
+                    addUser={(group_id) => this.addUser(group_id)}
+                    contains={(userGroups, groups) =>this.contains(userGroups, groups)}
+                /> : null}
+
 
                 {this.state.action === 'event' ? 
                 <Event 

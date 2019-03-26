@@ -21,7 +21,7 @@ class List extends Component {
         return this.state.content.map(content => (
             <div key={content.id} className="list-item">
                  
-                    
+                        {console.log(content)}
                         <div className="list-item-name">{content.name}</div>
                         <Link to={`/${this.props.object}s/${content.id}/edit`} className="button update">Update</Link>
                         <button onClick={() => this.deleteHandler(content.id)}

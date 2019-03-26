@@ -38,3 +38,11 @@ Route::get('/scoreboards/{id}/removePlayer/{pid}', 'ScoreboardController@removeP
 Route::get('/leagues/{id}/getResults', 'LeagueController@getResults');
 
 Route::resource('fileupload', 'FileuploadController');
+
+Route::resource('/users', 'UserController');
+
+
+
+Route::resource('/groups', 'GroupController');
+Route::get('/groups/{id}/addUser', 'GroupController@addUser');
+Route::get('/groups/{id}/removeUser', 'GroupController@removeUser');

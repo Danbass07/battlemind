@@ -17,11 +17,11 @@ class Card extends Component {
         }
         return(
             <div style={style}>
+                    <button className={"Score-button"} onClick={() => this.props.actioncontroller()}>{this.props.action === 1 ? <p>Add</p> : <p>Remove</p>}</button>
                     <button className={"Score-button"} onClick={() => this.props.buttoncontroller('Win', this.props.action)}>Win</button>
                     <button className={"Score-button"} onClick={() => this.props.buttoncontroller('Lost', this.props.action)}>Lost</button>
                     <button className={"Score-button"} onClick={() => this.props.buttoncontroller('Draw', this.props.action)}>Draw</button>
-                    <button className={"Score-button"} onClick={() => this.props.actioncontroller()}>{this.props.action === 1 ? <p>Now you add results</p> : <p>Now you remove results </p> } </button>
-            </div>
+                     </div>
         )
     }
 }

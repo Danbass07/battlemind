@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Player;
 use App\League;
 use App\Scoreboard;
+use App\Group;
 
 class User extends Authenticatable
 {
@@ -37,5 +38,8 @@ class User extends Authenticatable
     }
     public function scoreboards() {
         return $this->hasMany(Scoreboard::class);
+    }
+    public function groups() {
+        return $this->belongsToMany(Group::class);
     }
 }

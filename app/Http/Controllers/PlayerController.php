@@ -8,9 +8,7 @@ use App\League;
 
 class PlayerController extends Controller
 {
-    public function __construct() {
-        $this->middleware('auth');
-    }
+  
 
     public function index(Request $request, Player $player) {
          $allplayers = Player::all();

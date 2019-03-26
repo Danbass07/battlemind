@@ -10500,6 +10500,12 @@ a.text-dark:focus {
   width: 100%;
 }
 
+.dropdown-menu-right2 {
+  top: -10px;
+  right: 130px;
+  left: auto;
+}
+
 /* Madia */
 
 .myform {
@@ -10673,6 +10679,7 @@ a:hover {
   position: relative;
   bottom: -65%;
   margin: 1px;
+  opacity: 0.9;
 }
 
 @media only screen and (max-width: 500px) {
@@ -10715,10 +10722,10 @@ a:hover {
   }
 
   .Score-button {
-    background-color: #e2de00;
+    background-color: grey;
+    color: darkred;
     position: relative;
-    bottom: 0;
-    left: 50%;
+    left: 15%;
     margin: 1px;
   }
 }
