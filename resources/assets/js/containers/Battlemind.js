@@ -75,24 +75,24 @@ getAll() {
             })
        );
 
-       
-       axios.get(`/groups`).then(response =>
+       axios.get('/players').then(response =>
         this.setState({
-           groups: [...response.data.groups],
-           userGroups:[...response.data.userGroups],
-            }, () => {
+           players: [...response.data.content]
+            })
+       );
+    //    axios.get(`/groups`).then(response =>
+    //     this.setState({
+    //        groups: [...response.data.groups],
+    //        userGroups:[...response.data.userGroups],
+    //         }, () => {
 
              
         
             
-                   axios.get('/players').then(response =>
-                    this.setState({
-                       players: [...response.data.content]
-                        })
-                   );
+            
             
 
-            })
+    //         })
        );
  
 
