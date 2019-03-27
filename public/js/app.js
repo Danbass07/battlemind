@@ -59941,6 +59941,12 @@ var Battlemind = function (_Component) {
                     players: [].concat(_toConsumableArray(response.data.content))
                 });
             });
+
+            axios.get('/leagues').then(function (response) {
+                return _this2.setState({
+                    leagues: [].concat(_toConsumableArray(response.data.content))
+                });
+            });
             //    axios.get(`/groups`).then(response =>
             //     this.setState({
             //        groups: [...response.data.groups],
@@ -59988,6 +59994,7 @@ var Battlemind = function (_Component) {
         value: function render() {
             var _this4 = this;
 
+            console.log(this.state.leagues);
             return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                 'div',
                 { className: 'Battlemind' },

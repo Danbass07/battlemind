@@ -80,6 +80,13 @@ getAll() {
            players: [...response.data.content]
             })
        );
+
+       
+       axios.get('/leagues').then(response =>
+        this.setState({
+            leagues: [...response.data.content]
+            })
+       );
     //    axios.get(`/groups`).then(response =>
     //     this.setState({
     //        groups: [...response.data.groups],
@@ -138,6 +145,7 @@ componentWillMount() {
 
 
     render() {
+        console.log(this.state.leagues)
         return (
             <div className="Battlemind">  
                 <Navigation button={(e) => this.buttonHandler(e)} object={this.state.object} action={this.state.action} />

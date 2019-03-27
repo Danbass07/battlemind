@@ -13,8 +13,8 @@ class LeagueController extends Controller
     }
 
     public function index(Request $request, League $league) {
-         $allLeagues = $league->whereIn('user_id', $request->user())->with('user');
-         $leagues = $allLeagues->get();
+         //$allLeagues = $league->whereIn('user_id', $request->user())->with('user');
+         $leagues = League::all();
          return response()->json(['content' => $leagues,]);
     }
     
