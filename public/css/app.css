@@ -10506,6 +10506,23 @@ a.text-dark:focus {
   left: auto;
 }
 
+.Closing-div {
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  z-index: 990;
+  font-size: 1.4em;
+  margin-left: auto;
+  position: relative;
+  right: -5px;
+  top: -5px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  overflow: hidden;
+  padding: 0;
+}
+
 /* Madia */
 
 .myform {
@@ -10675,11 +10692,59 @@ a:hover {
 }
 
 .Score-button {
-  background-color: #e2de00;
+  background-color: grey;
+  color: darkred;
   position: relative;
-  bottom: -65%;
+  width: 100%;
+  height: 50px;
   margin: 1px;
-  opacity: 0.9;
+  font-size: 1.8em;
+}
+
+.Pop-up {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(13, 0, 131, 0.8);
+}
+
+.Card-wrapper {
+  margin: 50px auto;
+  width: 350px;
+  height: 200px;
+  background-color: rgba(13, 0, 131, 0);
+}
+
+.Player-results-board {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+  height: 60px;
+  background-color: darkgray;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.Player-results {
+  width: 30%;
+  height: 45px;
+  background-color: black;
+  color: white;
+  font-size: 1.4em;
+  border-radius: 45%;
+  margin-top: 5px;
+  text-align: center;
+  padding: 7px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 @media only screen and (max-width: 500px) {
@@ -10719,14 +10784,6 @@ a:hover {
     -ms-flex-line-pack: none;
         align-content: none;
     padding-bottom: 0;
-  }
-
-  .Score-button {
-    background-color: grey;
-    color: darkred;
-    position: relative;
-    left: 15%;
-    margin: 1px;
   }
 }
 

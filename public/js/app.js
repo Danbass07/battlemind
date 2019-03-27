@@ -61831,13 +61831,23 @@ var Event = function (_Component) {
             var scoreboardPlayersUpdate = [].concat(_toConsumableArray(this.state.scoreboardplayers));
             if (category === 'Win') {
                 scoreboardPlayersUpdate[this.state.index].pivot.win += value;
+                if (scoreboardPlayersUpdate[this.state.index].pivot.win < 0) {
+                    scoreboardPlayersUpdate[this.state.index].pivot.win = 0;
+                }
             }
             if (category === 'Lost') {
                 scoreboardPlayersUpdate[this.state.index].pivot.lost += value;
+                if (scoreboardPlayersUpdate[this.state.index].pivot.lost < 0) {
+                    scoreboardPlayersUpdate[this.state.index].pivot.lost = 0;
+                }
             }
             if (category === 'Draw') {
                 scoreboardPlayersUpdate[this.state.index].pivot.draw += value;
+                if (scoreboardPlayersUpdate[this.state.index].pivot.draw < 0) {
+                    scoreboardPlayersUpdate[this.state.index].pivot.draw = 0;
+                }
             }
+
             this.setState({
                 scoreboardplayers: scoreboardPlayersUpdate
             });
@@ -62036,21 +62046,55 @@ var Event = function (_Component) {
                         { className: 'Event-grid-item' },
                         this.renderPlayers('', this.state.scoreboardplayers)
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    this.state.playerid !== 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'Event-grid-item' },
-                        this.state.playerid !== 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Card__["a" /* default */], {
-                            actioncontroller: function actioncontroller() {
-                                return _this8.actionController();
-                            },
-                            action: this.state.action,
-                            buttoncontroller: function buttoncontroller(category, value) {
-                                return _this8.buttonController(category, value);
-                            },
-                            id: this.state.playerid,
-                            url: this.state.url
-                        }) : null
-                    ),
+                        { className: 'Pop-up' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'Card-wrapper' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'Closing-div', onClick: function onClick() {
+                                        return _this8.setState({ playerid: 0 });
+                                    } },
+                                'X'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'Player-results-board' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'Player-results' },
+                                    'Wins -',
+                                    this.state.scoreboardplayers[this.state.index].pivot.win
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'Player-results' },
+                                    'Losts -',
+                                    this.state.scoreboardplayers[this.state.index].pivot.lost
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'Player-results' },
+                                    'Draws -',
+                                    this.state.scoreboardplayers[this.state.index].pivot.draw
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Card__["a" /* default */], {
+                                actioncontroller: function actioncontroller() {
+                                    return _this8.actionController();
+                                },
+                                action: this.state.action,
+                                buttoncontroller: function buttoncontroller(category, value) {
+                                    return _this8.buttonController(category, value);
+                                },
+                                name: this.state.scoreboardplayers[this.state.index].name,
+                                id: this.state.playerid,
+                                url: this.state.url
+                            })
+                        )
+                    ) : null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'Event-grid-item' },
@@ -62098,29 +62142,37 @@ var Card = function (_Component) {
             var _this2 = this;
 
             var style = {
-                height: '100%',
-                width: 'auto',
+                height: '250px',
                 backgroundImage: 'url("/images/' + this.props.url + '")',
                 backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
                 backgroundSize: 'contain',
                 padding: '2px'
             };
+            var style2 = {
+                width: '100%',
+                backgroundColor: 'rgb(245, 222, 179, 0.6)',
+                margin: '25% auto',
+                textAlign: 'center'
+
+            };
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { style: style },
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'button',
                     { className: "Score-button", onClick: function onClick() {
                             return _this2.props.actioncontroller();
                         } },
-                    this.props.action === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'p',
-                        null,
-                        'Add'
-                    ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'p',
-                        null,
-                        'Remove'
+                    this.props.action === 1 ? 'ADD click to change' : 'REMOVE clickto change'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { style: style },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h1',
+                        { style: style2 },
+                        this.props.name
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

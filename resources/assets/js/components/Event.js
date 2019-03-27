@@ -45,16 +45,30 @@ class Event extends Component {
         const scoreboardPlayersUpdate = [...this.state.scoreboardplayers];
         if (category === 'Win') {
             scoreboardPlayersUpdate[this.state.index].pivot.win += value;
+            if (scoreboardPlayersUpdate[this.state.index].pivot.win < 0) {
+                scoreboardPlayersUpdate[this.state.index].pivot.win = 0
+            }
         }
         if (category === 'Lost') {
             scoreboardPlayersUpdate[this.state.index].pivot.lost += value;
+            if (scoreboardPlayersUpdate[this.state.index].pivot.lost < 0) {
+                scoreboardPlayersUpdate[this.state.index].pivot.lost = 0
+            }
         }
         if (category === 'Draw') {
             scoreboardPlayersUpdate[this.state.index].pivot.draw += value;
+            if (scoreboardPlayersUpdate[this.state.index].pivot.draw < 0) {
+                scoreboardPlayersUpdate[this.state.index].pivot.draw = 0
+            }
         }
-        this.setState({
-            scoreboardplayers: scoreboardPlayersUpdate,
-      })
+        
+       
+
+            this.setState({
+                scoreboardplayers: scoreboardPlayersUpdate,
+          })
+        
+      
     } 
 
     scoreboardChangeHandler(e) {
@@ -217,18 +231,28 @@ class Event extends Component {
                 <div className='Event-grid'>
                 <div className='Event-grid-item'>{this.renderPlayers('noexist',this.props.players)}</div>
                 <div className='Event-grid-item'>{this.renderPlayers('',this.state.scoreboardplayers)}</div>
-                <div className='Event-grid-item'>
+                
                     {this.state.playerid !== 0 ?
-                            <Card 
-                                actioncontroller={() => this.actionController()} 
-                                action={this.state.action}
-                                buttoncontroller={(category,value) => this.buttonController(category,value)} 
-                                id={this.state.playerid} 
-                                url={this.state.url}
-                                />
-                                
+                        <div className='Pop-up'>
+                            <div className="Card-wrapper">
+                            <div className="Closing-div" onClick={() => this.setState({playerid: 0})}>X</div>
+                            <div className="Player-results-board">
+                            <div className="Player-results">Wins -{this.state.scoreboardplayers[this.state.index].pivot.win}</div>
+                            <div className="Player-results">Losts -{this.state.scoreboardplayers[this.state.index].pivot.lost}</div>
+                            <div className="Player-results">Draws -{this.state.scoreboardplayers[this.state.index].pivot.draw}</div>
+                            </div>
+                                <Card 
+                                    actioncontroller={() => this.actionController()} 
+                                    action={this.state.action}
+                                    buttoncontroller={(category,value) => this.buttonController(category,value)} 
+                                    name={this.state.scoreboardplayers[this.state.index].name}
+                                    id={this.state.playerid} 
+                                    url={this.state.url}
+                                    />
+                            </div>
+                         </div>   
                             : null}
-                </div> 
+               
                  <div className='Event-grid-item'>{this.renderResults() }</div>
                 </div>
             </div>

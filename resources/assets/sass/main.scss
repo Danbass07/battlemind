@@ -29,6 +29,22 @@
     right: 130px;
     left: auto;
   }
+  .Closing-div {
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    z-index:990;
+    font-size:1.4em;
+    margin-left: auto;
+    position: relative;
+    right: -5px;
+    top: -5px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    overflow: hidden;
+    padding: 0;
+}
   
   /* Madia */
 
