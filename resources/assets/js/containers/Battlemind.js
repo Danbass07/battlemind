@@ -25,7 +25,9 @@ class Battlemind extends Component {
             scoreboards: [{}],
             players: [{}],
             leagues: [{}],
-            user:{},
+            user:{
+                groups:[],
+            },
             groups:[{}],
             userGroups:[{}],
 
@@ -64,7 +66,7 @@ getAll() {
 
     axios.get(`/users`).then(response =>
         this.setState({
-           user: {...response.data}
+           user: {...response.data},
             })
        );
 
@@ -87,11 +89,10 @@ getAll() {
             leagues: [...response.data.content]
             })
        );
-    //    axios.get(`/groups`).then(response =>
-    //     this.setState({
-    //        groups: [...response.data.groups],
-    //        userGroups:[...response.data.userGroups],
-    //         }, () => {
+       axios.get(`/groups`).then(response =>
+        this.setState({
+           groups: [...response.data.groups],
+            }, () => {
 
              
         
@@ -99,8 +100,8 @@ getAll() {
             
             
 
-    //         })
-     //  );
+            })
+      );
  
 
 
@@ -108,26 +109,20 @@ getAll() {
 
 
 addUser(group) {
-    console.log('addUser')
-    console.log(group)
-    console.log(this.state.user.id)
-    console.log(this.state.userGroups)
+  
+    if(!this.contains(this.state.user.groups, group)) {
 
-    if(!this.contains(this.state.userGroups, group)) {
-
-        axios.get(`/groups/${group.id}/addUser`).then(response =>
-            this.setState ({
-                userGroups:[...response.data ],
-            })
+        axios.get(`/groups/${group.id}/addUser`).then(() =>
+           
+            this.getAll()
           
         );
         
     } else {
 
-        axios.get(`/groups/${group.id}/removeUser`).then(response =>
-            this.setState ({
-                userGroups:[...response.data ],
-            })
+        axios.get(`/groups/${group.id}/removeUser`).then(() =>
+            
+            this.getAll()
           
         );
 
@@ -145,7 +140,7 @@ componentWillMount() {
 
 
     render() {
-        console.log(this.state.leagues)
+        console.log(this.state.groups);
         return (
             <div className="Battlemind">  
                 <Navigation button={(e) => this.buttonHandler(e)} object={this.state.object} action={this.state.action} />
@@ -161,7 +156,7 @@ componentWillMount() {
                 <Profile 
                     user={this.state.user}
                     groups={this.state.groups}
-                    userGroups={this.state.userGroups}
+                    userGroups={this.state.user.groups}
                     addUser={(group_id) => this.addUser(group_id)}
                     contains={(userGroups, groups) =>this.contains(userGroups, groups)}
                 /> : null}

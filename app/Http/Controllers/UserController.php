@@ -14,7 +14,8 @@ class UserController extends Controller
     public function index()
     {
        $user =  Auth::user();
-       return response()->json($user);
+       $userFullInfo = Auth::user()->with('groups')->where('id',$user->id)->get();
+       return response()->json($userFullInfo[0]);
 
     }
 

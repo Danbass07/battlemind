@@ -15,14 +15,14 @@ class Profile extends Component {
             marginTop: '120px',
             padding: '2px',
         }
-        
+        // console.log(this.props.userGroups)
         return(
             <div style={style}>
                 <h1>{this.props.user.name}</h1>
 
                     {this.props.groups.map((group) => {
                         return (
-                            <div>
+                            <div key={group.id}>
 
                                 <input 
                                 onChange={() => this.props.addUser(group)} 

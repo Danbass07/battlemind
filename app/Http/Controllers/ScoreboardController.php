@@ -17,22 +17,10 @@ class ScoreboardController extends Controller
     }
 
     public function index(Request $request, Scoreboard $scoreboard) {
-        // $players = Player::all();
-        // $leagues = League::all();
-        // $users = User::all();
-       
-       
-          
-        // return response()->json([
-        //     'players' => $players,
-        //     'leagues' => $leagues,
-        //     'users' => $users,
-            
-            
-        // ]);
+      
        
             $allScoreboards = $scoreboard->whereIn('user_id', $request->user())->with('user');
-            $scoreboards = $allScoreboards->get();
+            $scoreboards = $scoreboard->get();
             return response()->json(['content' => $scoreboards,]);
       
        

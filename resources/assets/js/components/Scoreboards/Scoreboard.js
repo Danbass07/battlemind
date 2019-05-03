@@ -278,11 +278,11 @@ class Scoreboard extends Component {
                                Edit Scoreboard
                                 </button>
                 </form>
-                            <hr />
+                            {/* <hr />
                             <button onClick={() => this.actionController()} className="btn btn-sm btn-dark float-right">
                             { this.state.action}
                             </button>
-                            {this.renderPlayers()}
+                            {this.renderPlayers()} */}
                         </div>
                     </div>
                
