@@ -225,7 +225,7 @@ class Event extends Component {
         )
     }
     submitHandler() {
-        this.setState({focusOn: 'viewPlayers'});
+        this.setState({focusOn: ''});
         axios.post(`/scoreboards/${this.state.scoreboard}/updateResults`, {
            
          

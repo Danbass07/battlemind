@@ -61979,7 +61979,7 @@ var Event = function (_Component) {
     }, {
         key: 'submitHandler',
         value: function submitHandler() {
-            this.setState({ focusOn: 'viewPlayers' });
+            this.setState({ focusOn: '' });
             axios.post('/scoreboards/' + this.state.scoreboard + '/updateResults', {
 
                 scoreboardplayers: [].concat(_toConsumableArray(this.state.scoreboardplayers))

@@ -10686,10 +10686,10 @@ a:hover {
 .Result-mini-item {
   margin-right: 9px;
   background-color: black;
-  width: 70px;
+  width: 39px;
   border-radius: 45%;
-  font-size: 0.9em;
-  padding-top: 5px;
+  font-size: 0.7em;
+  padding-top: 7px;
 }
 
 .Scoreboard-dropdown {
