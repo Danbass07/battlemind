@@ -87,7 +87,7 @@ class Newleague extends Component {
                                 required
                                 onChange={(e) => this.changeHandler(e)}
                                 />
-                                 <input 
+                                 {/* <input 
                                 className="myform-control" 
                                 placeholder="number_of_games"
                                 required
@@ -104,7 +104,7 @@ class Newleague extends Component {
                                 placeholder="number_of_points"
                                 required
                                 onChange={(e) => this.changeHandler(e)}
-                                />
+                                /> */}
                                 
 
                                 

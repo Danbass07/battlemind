@@ -10481,17 +10481,17 @@ a.text-dark:focus {
   width: 100%;
   height: 100vh;
   position: fixed;
-  top: 55px;
+  top: 115px;
   background-color: #053155;
   overflow: hidden;
 }
 
 .Workarea {
-  width: 80%;
-  height: 60%;
-  margin: 120px auto;
-  border: solid 2px  white;
-  background-color: #04233d;
+  position: relative;
+  top: 7px;
+  width: 100%;
+  height: 68vh;
+  background-color: #053155, 5%;
   overflow: scroll;
 }
 
@@ -10515,7 +10515,7 @@ a.text-dark:focus {
   margin-left: auto;
   position: relative;
   right: -5px;
-  top: -5px;
+  top: 7px;
   width: 30px;
   height: 30px;
   text-align: center;
@@ -10533,19 +10533,16 @@ a.text-dark:focus {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  position: relative;
-  width: 60%;
-  height: 100%;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  z-index: 1001;
-  margin: 10px 20%;
+  width: 90%;
+  margin: auto auto;
 }
 
 .myform-control {
   height: 30px;
-  width: 100%;
+  width: 240px;
   margin: 5px auto;
 }
 
@@ -10657,7 +10654,7 @@ a:hover {
   background-color: #992604;
   border: 1px solid white;
   color: #fff;
-  height: 30px;
+  height: 40px;
   width: 100%;
   padding-left: 5px;
   font-size: 1.5em;
@@ -10672,6 +10669,39 @@ a:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  font-size: 1.5em;
+}
+
+.Result-mini-strip {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin-left: auto;
+}
+
+.Result-mini-item {
+  margin-right: 9px;
+  background-color: black;
+  width: 70px;
+  border-radius: 45%;
+  font-size: 0.9em;
+  padding-top: 5px;
+}
+
+.Scoreboard-dropdown {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.Scoreboard-addPlayer-button {
+  background-color: darkred;
+  color: white;
+  margin-left: 18px;
 }
 
 .Remove-button {
@@ -10695,7 +10725,7 @@ a:hover {
   background-color: grey;
   color: darkred;
   position: relative;
-  width: 100%;
+  width: 16%;
   height: 50px;
   margin: 1px;
   font-size: 1.8em;
@@ -10711,7 +10741,7 @@ a:hover {
 }
 
 .Card-wrapper {
-  margin: 50px auto;
+  margin: 10px auto;
   width: 350px;
   height: 200px;
   background-color: rgba(13, 0, 131, 0);
@@ -10774,7 +10804,6 @@ a:hover {
 
   .Event-list-item {
     width: 100%;
-    font-size: 1em;
   }
 
   .Remove-button {
@@ -10792,7 +10821,7 @@ a:hover {
   left: 0;
   overflow: hidden;
   width: 100%;
-  height: 60px;
+  height: 45px;
   list-style-type: none;
   -ms-flex-pack: distribute;
       justify-content: space-around;
@@ -10821,9 +10850,9 @@ a:hover {
 
 .top {
   position: fixed;
-  top: 40px;
+  top: 25px;
   margin: 0;
-  height: 110px;
+  height: 90px;
 }
 
 .bottom {
@@ -10837,13 +10866,13 @@ a:hover {
 }
 
 .navButton {
-  height: 50px;
+  height: 40px;
   width: 160px;
   background-color: #053155;
   color: white;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 1.6em;
-  margin-top: 10px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.4em;
+  margin-top: 4px;
   border-radius: 25%;
 }
 
@@ -10901,6 +10930,12 @@ a:hover {
   color: white;
   border: 1px solid red;
   margin: 5% 20%;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: -12px;
 }
 
 /* Madia */

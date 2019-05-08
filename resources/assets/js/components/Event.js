@@ -9,17 +9,23 @@ class Event extends Component {
         this.state = {
 
             action: 1,
-            scoreboard: 1,
+            scoreboard: 0,
             scoreboardplayers: [],
             type:'',
             url: 'jace',
             playerid: 0,
             index:1,
+            player: {
+                url: 'url',
+                name: 'empty'
+            }
             
         };
 
     }
-
+    checkAvailability(arr, val) {
+        return arr.some(arrVal => val === arrVal);
+      }
     contains(a, obj) {
 
         for (var i = 0; i < a.length; i++) {
@@ -89,7 +95,11 @@ class Event extends Component {
                     
                 })
             );
-        }
+        } else { 
+            this.setState({
+                scoreboard: 0
+                
+            })}
     }
 
     addPlayer(scoreboard, player) {
@@ -111,6 +121,7 @@ class Event extends Component {
         axios.get(`/scoreboards/${scoreboard}/removePlayer/${player}`).then(response =>
 
             this.setState ({
+                focusOn: '',
                 scoreboard: scoreboard,
                 scoreboardplayers:[...response.data],
             })
@@ -118,12 +129,11 @@ class Event extends Component {
         );
     }
 
-    selectPlayer(url,playerId,index) {
-
+    selectPlayer(player,index) {
         this.setState({
-            url: url,
-            playerid: playerId,
-            index: index,
+            focusOn: 'player',
+            editedPlayer: {...player},
+            index: index ,
         })
     }
 
@@ -154,7 +164,9 @@ class Event extends Component {
 
                 <div  className="Event-list-grid">
                     
-                    {players.map(player => (
+                    {players.map(player => 
+                        
+                        (
                                         
                         !this.contains(this.state.scoreboardplayers, player) && (this.state.type==player.type) ? 
 
@@ -165,7 +177,7 @@ class Event extends Component {
                         
                             {player.name}
                         
-                        </div> : null 
+                        </div> : null
                     ))}
 
                 </div>
@@ -176,20 +188,25 @@ class Event extends Component {
             
                 <div  className="Event-list-grid">
                     
-                    {players ? players.map((player, index) => (
-
+                    {this.state.scoreboardplayers.map((player, index) => (
+                        this.contains(this.state.scoreboardplayers, player) ?
                         <div className="Event-list-item Select-player"  
-                        onClick={() => this.selectPlayer(player.url, player.id, index )} 
+                        onClick={() => this.selectPlayer(player, index )} 
                         key={player.type+player.id+player.name}
                         >
-
-                            {player.name}
+                           
+                            {player.name}   
+                            <div className="Result-mini-strip"> 
+                             <div className="Result-mini-item">{'W : '+player.pivot.win}</div>   
+                             <div className="Result-mini-item">{'L : '+player.pivot.lost}</div>
+                             <div className="Result-mini-item">{'D : '+player.pivot.draw}</div> 
+                            </div>
 
                             <div className="Remove-button" onClick={() => this.removePlayer(this.state.scoreboard, player.id)} > X </div>
 
-                        </div> 
+                        </div> : null
 
-                    )) : null }
+                    )) }
 
                 </div>
                      
@@ -207,8 +224,8 @@ class Event extends Component {
             </div>
         )
     }
-    submitHandler(e) {
-        e.preventDefault();
+    submitHandler() {
+        this.setState({focusOn: 'viewPlayers'});
         axios.post(`/scoreboards/${this.state.scoreboard}/updateResults`, {
            
          
@@ -224,37 +241,64 @@ class Event extends Component {
 
         return (
             <div className="Workarea">
-            <form className="" onSubmit={(e) => this.submitHandler(e)}> 
+                {this.state.focusOn === 'player' ?
+                <div className='Pop-up'>
+                    <div className="Card-wrapper">
+                    <div className="Closing-div" onClick={() => this.submitHandler()}>X</div>
+        
+                        <Card 
+                            actioncontroller={() => this.actionController()} 
+                            action={this.state.action}
+                            buttoncontroller={(category,value) => this.buttonController(category,value)} 
+                            player={this.state.editedPlayer}
+                            name={this.state.scoreboardplayers[this.state.index].name}
+                            // id={this.state.playerid} 
+                            // win={this.state.scoreboardplayers[this.state.index].pivot.win}
+                            // lost={this.state.scoreboardplayers[this.state.index].pivot.lost}
+                            // draw={this.state.scoreboardplayers[this.state.index].pivot.draw}
+                            />
+                    </div>
+                    </div>   
+                    : null}
+
+                {this.state.focusOn === 'addPlayers' ?
+                <div className='Pop-up'>
+                    <div className="Card-wrapper">
+                    <div className="Closing-div" onClick={() => this.setState({focusOn: ''})}>X</div>
+           
+                    {this.renderPlayers('noexist',this.props.players)}
+                    </div>
+                    </div>   
+                    : null}
+
+            {this.state.focusOn === 'viewPlayers' ?
+                <div className='Pop-up'>
+                    <div className="Card-wrapper">
+                    <div className="Closing-div" onClick={() => this.setState({focusOn: ''})}>X</div>
+           
+                    {this.renderPlayers('',this.props.players)}
+                    </div>
+                    </div>   
+                    : null}     
+
+
+
+
+
+
+
+            <form className="Scoreboard-dropdown"> 
                 {this.renderOptions(this.props.scoreboards)}
-                <button className='Submit-button' type='submit'>SAVE</button>
+                <button className="Scoreboard-addPlayer-button" onClick={(e) => {e.preventDefault(); this.setState({focusOn: 'addPlayers'})}}>ADD PLAYERS</button>
             </form>
-                <div className='Event-grid'>
-                <div className='Event-grid-item'>{this.renderPlayers('noexist',this.props.players)}</div>
-                <div className='Event-grid-item'>{this.renderPlayers('',this.state.scoreboardplayers)}</div>
-                
-                    {this.state.playerid !== 0 ?
-                        <div className='Pop-up'>
-                            <div className="Card-wrapper">
-                            <div className="Closing-div" onClick={() => this.setState({playerid: 0})}>X</div>
-                            <div className="Player-results-board">
-                            <div className="Player-results">Wins -{this.state.scoreboardplayers[this.state.index].pivot.win}</div>
-                            <div className="Player-results">Losts -{this.state.scoreboardplayers[this.state.index].pivot.lost}</div>
-                            <div className="Player-results">Draws -{this.state.scoreboardplayers[this.state.index].pivot.draw}</div>
-                            </div>
-                                <Card 
-                                    actioncontroller={() => this.actionController()} 
-                                    action={this.state.action}
-                                    buttoncontroller={(category,value) => this.buttonController(category,value)} 
-                                    name={this.state.scoreboardplayers[this.state.index].name}
-                                    id={this.state.playerid} 
-                                    url={this.state.url}
-                                    />
-                            </div>
-                         </div>   
-                            : null}
-               
-                 <div className='Event-grid-item'>{this.renderResults() }</div>
-                </div>
+                    {this.state.scoreboard !== 0 ? 
+                    <React.Fragment>
+                        {this.renderPlayers('',this.props.players)}
+                  
+                    </React.Fragment> : null }
+
+
+
             </div>
         );   
     }

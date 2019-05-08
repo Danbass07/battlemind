@@ -1,49 +1,51 @@
-.navigation{
-    
-    position: fixed; 
+.navigation {
+    position: fixed;
     left: 0;
     overflow: hidden;
     width: 100%;
-    height: 60px;
+    height: 45px;
     list-style-type: none;
     justify-content: space-around;
-    background-color: #992604;  
+    background-color: #992604;
 }
-.navigation-top-toprow{
- display: flex;
- justify-content: space-around
-}
-.navigation-top-bottomrow{
+
+.navigation-top-toprow {
     display: flex;
- justify-content: space-around;
+    justify-content: space-around;
 }
+
+.navigation-top-bottomrow {
+    display: flex;
+    justify-content: space-around;
+}
+
 .navigation-top-bottomrow-disable {
-    display:none;
+    display: none;
 }
 
 .top {
     position: fixed;
-    top: 40px;
+    top: 25px;
     margin: 0;
-    height: 110px;
-    
+    height: 90px;
 }
+
 .bottom {
     display: flex;
     position: fixed;
     bottom: 0;
     margin: 0;
     z-index: 2;
-   
 }
+
 .navButton {
-    height: 50px;
+    height: 40px;
     width: 160px;
     background-color: $maincolor;
     color: $fontcolor;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.6em;
-    margin-top: 10px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.4em;
+    margin-top: 4px;
     border-radius: 25%;
 }
 .active {
@@ -53,9 +55,19 @@
 }
 
 @keyframes mymove {
-    0% {text-align: left;}
-    25% {text-align: center;}
-    50% {text-align: right;}
-    75% {text-align: center;}
-    100% {text-align: left;}
+    0% {
+        text-align: left;
+    }
+    25% {
+        text-align: center;
+    }
+    50% {
+        text-align: right;
+    }
+    75% {
+        text-align: center;
+    }
+    100% {
+        text-align: left;
+    }
 }
