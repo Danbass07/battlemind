@@ -3,19 +3,59 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Player;
 use App\League;
+use App\User;
+use App\Group;
 
 class PlayerController extends Controller
 {
   
 
     public function index(Request $request, Player $player) {
+        $user = $request->user();
+        $users = User::all();
+        $userGroups = $user->groups;
+        $friendsPlayers = [];
+        // $result = $users->with('players')->map->players->collapse()->filter(function ($player) use ($user){
+        //     return Log::info($player);
+        // });
+        foreach ($userGroups as $group) {
+
+            $groupUsers = $group->users;
+        
+            foreach ($groupUsers as $groupUser) {
+
+                if ($groupUser->id !== $user->id ) {
+
+                    $userPlayer = $groupUser->players;
+
+                    foreach ($userPlayer as $player) {
+
+                        if(!in_array($player, $friendsPlayers)){
+
+                            $friendsPlayers[]=$player;
+
+                        }
+
+                    }
+            
+                }
+            
+            }
+           
+            
+        }
+        $userPlayers = $user->players;
          $allplayers = Player::all();
          $allPlayersWithUser = $player->whereIn('user_id', $request->user())->with('user');
          $players = $allPlayersWithUser->orderBy('wins','desc')->get();
-         return response()->json(['content' => $players,
+         return response()->json(['content' => [$userPlayers,$friendsPlayers],
                                     'allplayers' => $allplayers,
+                                    'friendsplayers' => $friendsPlayers,
+                                    'userplayers' => $userPlayers
+                                    // 'test'=> $result,
                                     ]);
     }
     

@@ -233,8 +233,7 @@ class Scoreboard extends Component {
     render() {
         
         return (
-        <div >
-            <div className="Modal"></div>
+            <div className="Modal">
             <Link to={`/`} className="Cancel-button">X</Link>
              <div className="myform">
                     <div className="col-md-8">
@@ -287,7 +286,8 @@ class Scoreboard extends Component {
                     </div>
                
             </div>
-        </div>
+            </div>
+
         );
     }
 }

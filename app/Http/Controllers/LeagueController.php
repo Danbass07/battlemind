@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\League;
 use App\Player;
@@ -13,9 +13,40 @@ class LeagueController extends Controller
     }
 
     public function index(Request $request, League $league) {
-         //$allLeagues = $league->whereIn('user_id', $request->user())->with('user');
+        $user = $request->user();
+        $userGroups = $user->groups;
+        $friendsLeagues = [];
+  
+        foreach ($userGroups as $group) {
+
+            $groupUsers = $group->users;
+        
+            foreach ($groupUsers as $groupUser) {
+
+                if ($groupUser->id !== $user->id ) {
+
+                    $userLeagues = $groupUser->leagues;
+
+                    foreach ($userLeagues as $league) {
+                   
+                        if(!in_array($league, $friendsLeagues)){
+
+                            $friendsLeagues[]=$league;
+
+                        }
+
+                    }
+            
+                }
+            
+            }
+           
+            
+        }
+        
          $leagues = League::all();
-         return response()->json(['content' => $leagues,]);
+         $userLeagues = $user->leagues;
+         return response()->json(['content' => [$userLeagues, $friendsLeagues]]);
     }
     
 

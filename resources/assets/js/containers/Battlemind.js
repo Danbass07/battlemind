@@ -2,11 +2,11 @@ import Navigation from "../components/Navigation/Navigation";
 import Newplayer from "../components/Players/Newplayer";
 import Newleague from "../components/Leagues/Newleague";
 import Newscoreboard from "../components/Scoreboards/Newscoreboard";
+import { BrowserRouter, Switch, Router, Route, Link } from "react-router-dom";
 import Player from "../components/Players/Player";
 import League from "../components/Leagues/League";
 import Scoreboard from "../components/Scoreboards/Scoreboard";
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Router, Route, Link } from "react-router-dom";
 import List from "../components/List";
 import Event from "../components/Event";
 import Result from "../components/Result";
@@ -20,8 +20,8 @@ class Battlemind extends Component {
             action: "event",
             object: "none",
             types: [{ id: 0, type: "test" }],
-            scoreboards: [{}],
-            players: [{}],
+            scoreboards: [],
+            userPlayers: [{}],
             leagues: [{}],
             user: {
                 groups: []
@@ -30,12 +30,14 @@ class Battlemind extends Component {
             userGroups: [{}],
             message: [
                 [
-                    "Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself. All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."
+                    "Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself."+
+                    " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."
                 ],
                 ["Second Message"],
                 ["Third Message"]
             ],
-            messageNumber: 0
+            messageNumber: 0,
+            result: [],
         };
     }
 
@@ -63,12 +65,15 @@ class Battlemind extends Component {
         );
         axios.get(`/scoreboards`).then(response =>
             this.setState({
-                scoreboards: response.data.content
+                scoreboards: response.data.content[0],
+                FriendsScoreboards: response.data.content[1],
             })
         );
-        axios.get("/players").then(response =>
+        axios.get("/players",  ).then(response =>
             this.setState({
-                players: [...response.data.content]
+                players: [...response.data.content],
+                userPlayers: [...response.data.userplayers],
+                friendsPlayers: [...response.data.friendsplayers],
             })
         );
         axios.get("/leagues").then(response =>
@@ -78,8 +83,8 @@ class Battlemind extends Component {
         );
         axios.get(`/groups`).then(response =>
             this.setState({
-                    groups: [...response.data.groups]
-                })
+                groups: [...response.data.groups]
+            })
         );
     }
 
@@ -118,6 +123,12 @@ class Battlemind extends Component {
                     object={this.state.object}
                     action={this.state.action}
                 />
+               <Switch>
+
+
+<Route exact path="/players/:id/edit" component={Player}></Route>
+<Route exact path="/leagues/:id/edit" component={League}></Route>
+<Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
 
                 {this.state.action === "profile" ? (
                     <Profile
@@ -134,7 +145,7 @@ class Battlemind extends Component {
                 {this.state.action === "event" ? (
                     <Event
                         scoreboards={this.state.scoreboards}
-                        players={this.state.players}
+                        userPlayers={this.state.userPlayers}
                         leagues={this.state.leagues}
                         type={this.state.type}
                     />
@@ -143,7 +154,6 @@ class Battlemind extends Component {
                 {this.state.action === "results" ? (
                     <Result
                         scoreboards={this.state.scoreboards}
-                        players={this.state.players}
                         leagues={this.state.leagues}
                     />
                 ) : null}
@@ -162,6 +172,7 @@ class Battlemind extends Component {
                 this.state.object === "scoreboard" ? (
                     <Newscoreboard types={this.state.types} />
                 ) : null}
+                </Switch>
             </div>
         );
     }

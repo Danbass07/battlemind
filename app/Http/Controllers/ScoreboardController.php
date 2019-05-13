@@ -18,10 +18,41 @@ class ScoreboardController extends Controller
 
     public function index(Request $request, Scoreboard $scoreboard) {
       
-       
-            $allScoreboards = $scoreboard->whereIn('user_id', $request->user())->with('user');
-            $scoreboards = $scoreboard->get();
-            return response()->json(['content' => $scoreboards,]);
+        $user = $request->user();
+        $userGroups = $user->groups;
+        $friendsScoreboards = [];
+  
+        foreach ($userGroups as $group) {
+
+            $groupUsers = $group->users;
+        
+            foreach ($groupUsers as $groupUser) {
+
+                if ($groupUser->id !== $user->id ) {
+
+                    $userScoreboards = $groupUser->scoreboards;
+
+                    foreach ($userScoreboards as $scoreboard) {
+                   
+                        if(!in_array($scoreboard, $friendsScoreboards)){
+
+                            $friendsScoreboards[]=$scoreboard;
+
+                        }
+
+                    }
+            
+                }
+            
+            }
+           
+            
+        }
+        
+         $allScoreboards = League::all();
+         $userScoreboards = $user->scoreboards;
+         return response()->json(['content' => [$userScoreboards, $friendsScoreboards]]);
+      
       
        
    }

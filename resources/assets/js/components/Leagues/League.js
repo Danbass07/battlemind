@@ -252,8 +252,8 @@ class League extends Component {
        
        
         return (
-            <div>
-                <div className="Modal"> </div>
+
+                <div className="Modal"> 
                 <Link to={`/`} className="Cancel-button">X</Link>
                     <div className="myform">
                         <div className="card">
@@ -296,7 +296,7 @@ class League extends Component {
                                 value={this.state.draw_point_value}
                                 onChange={this.changeHandler}
                                 />
-                                 <input 
+                                 {/* <input 
                                 className="form-control" 
                                 placeholder="number_of_games"
                                 required
@@ -319,7 +319,7 @@ class League extends Component {
                                 type="number"
                                 value={this.state.number_of_points}
                                 onChange={this.changeHandler}
-                                />
+                                /> */}
                                 
                                 </div>
                                 
@@ -339,8 +339,8 @@ class League extends Component {
                             {/* {this.renderPlayers()} */}
                         </div>
                     </div>
-                
-            </div>
+                </div>
+
         );
     
     }

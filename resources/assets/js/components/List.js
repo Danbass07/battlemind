@@ -21,7 +21,7 @@ class List extends Component {
         return this.state.content.map(content => (
             <div key={content.id} className="list-item">
                  
-                        {console.log(content)}
+                       
                         <div className="list-item-name">{content.name}</div>
                         <Link to={`/${this.props.object}s/${content.id}/edit`} className="button update">Update</Link>
                         <button onClick={() => this.deleteHandler(content.id)}
@@ -35,7 +35,9 @@ class List extends Component {
         if (this.props.object !== 'none') {
             axios.get(`/${this.props.object}s`).then(response =>
             this.setState({
-                content: [...response.data.content]
+                myContent: [...response.data.content[0]],
+                friendsContent: [...response.data.content[1]],
+                content: [...response.data.content[0]]
                 })
             );
         }
@@ -50,12 +52,34 @@ class List extends Component {
             
         }
     }
+    myOnlyButtonHandler() {
+        this.setState({
+            content: [...this.state.myContent]
+        })
 
+    }
+    myFriendsOnlyButtonHandler() {
+        this.setState({
+            content: [...this.state.friendsContent]
+        })
+
+    }
+    allButtonHandler() {
+        const all = this.state.myContent.concat(this.state.friendsContent)
+        this.setState({
+            content: [...all]
+        })
+
+    }
+   
     
     render() {
       
         return (
             <div className="Workarea">
+            <button onClick={() => this.myOnlyButtonHandler()}> My only toggler</button>
+            <button onClick={() => this.myFriendsOnlyButtonHandler()}> My Friends only toggler</button>
+            <button onClick={() => this.allButtonHandler()}> All toggler</button>
              
                 <div className="list-grid">{this.renderContent()}</div>
             </div>
