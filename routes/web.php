@@ -22,7 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/players', 'PlayerController');
 Route::resource('/leagues', 'LeagueController');
 Route::resource('/scoreboards', 'ScoreboardController');
-Route::resource('/types', 'TypeController');
+
 
 Route::get('/players/{id}/addResult/{pid}/{category}/{action}', 'PlayerController@addResult');
 Route::get('/scoreboards/{id}/addResult/{pid}/{category}/{action}', 'ScoreboardController@addResult');
@@ -46,3 +46,6 @@ Route::resource('/users', 'UserController');
 Route::resource('/groups', 'GroupController');
 Route::get('/groups/{id}/addUser', 'GroupController@addUser');
 Route::get('/groups/{id}/removeUser', 'GroupController@removeUser');
+
+Route::resource('/types', 'TypeController');
+ Route::get('/types/{typeid}/addToTheGroup/{groupid}','TypeController@addToTheGroup' );

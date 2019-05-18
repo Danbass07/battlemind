@@ -253,7 +253,7 @@ class Scoreboard extends Component {
                                 />
 
                         <select className="myform-control" 
-                                aceholder="Type"
+                                placeholder="Type"
                                 required
                                 value={this.state.type}
                                 onChange={(e) => this.typeChangeHandler(e)}>

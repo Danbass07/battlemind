@@ -17,19 +17,25 @@ class List extends Component {
         axios.delete(`/${this.props.object}s/${id}`);
 
     }
-    renderContent(){
-        return this.state.content.map(content => (
-            <div key={content.id} className="list-item">
+    renderContent(type){
+     return  this.state.content.map(content =>  {
+       if( content.type === type ) {
+
+        return   <div key={content.id} className="list-item">
                  
                        
-                        <div className="list-item-name">{content.name}</div>
-                        <Link to={`/${this.props.object}s/${content.id}/edit`} className="button update">Update</Link>
-                        <button onClick={() => this.deleteHandler(content.id)}
-                        className="button">Delete</button>
-                    
-               
-             </div>
-        ))
+        <div className="list-item-name">{content.name}</div>
+        <Link to={`/${this.props.object}s/${content.id}/edit`} className="button update">Update</Link>
+        <button onClick={() => this.deleteHandler(content.id)}
+        className="button">Delete</button>
+    
+
+</div>
+       }
+    
+        }
+            
+        )
     }
     getContent() {
         if (this.props.object !== 'none') {
@@ -38,7 +44,7 @@ class List extends Component {
                 myContent: [...response.data.content[0]],
                 friendsContent: [...response.data.content[1]],
                 content: [...response.data.content[0]]
-                })
+                }, console.log(response.data.content[0]))
             );
         }
     }
@@ -71,6 +77,12 @@ class List extends Component {
         })
 
     }
+    typeChangeHandler(e){
+        e.preventDefault();
+        this.setState({
+            type: e.target.value
+        })
+    }
    
     
     render() {
@@ -80,8 +92,22 @@ class List extends Component {
             <button onClick={() => this.myOnlyButtonHandler()}> My only toggler</button>
             <button onClick={() => this.myFriendsOnlyButtonHandler()}> My Friends only toggler</button>
             <button onClick={() => this.allButtonHandler()}> All toggler</button>
-             
-                <div className="list-grid">{this.renderContent()}</div>
+            <select
+                name="Choose a type"
+                className="myform-control"
+                onChange={e => this.typeChangeHandler(e)}
+            >
+                <option>Choose a Type</option>
+                {this.props.types.map(type => (
+                    <option
+                        value={type.name}
+                        key={type.id }
+                    >
+                        {type.type}
+                    </option>
+                ))}
+            </select>
+                <div className="list-grid">{this.renderContent(this.state.type)}</div>
             </div>
         );
     }

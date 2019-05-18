@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Matrix from './Matrix';
 
 
 
@@ -19,6 +19,9 @@ class Profile extends Component {
         return(
             <div style={style}>
                 <h1>{this.props.user.name}</h1>
+                <Matrix
+                groups={this.props.groups}
+                types={this.props.types}/>
 
                     {this.props.groups.map((group) => {
                         return (

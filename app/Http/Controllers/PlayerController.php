@@ -11,7 +11,9 @@ use App\Group;
 
 class PlayerController extends Controller
 {
-  
+    public function __construct() {
+        $this->middleware('auth');
+    }
 
     public function index(Request $request, Player $player) {
         $user = $request->user();

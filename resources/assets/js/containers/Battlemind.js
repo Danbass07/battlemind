@@ -55,7 +55,8 @@ class Battlemind extends Component {
     getAll() {
         axios.get("/types").then(response =>
             this.setState({
-                types: [...response.data.types]
+                types: [...response.data.types],
+                groupTypes:[...response.data.groupTypes]
             })
         );
         axios.get(`/users`).then(response =>
@@ -134,6 +135,7 @@ class Battlemind extends Component {
                     <Profile
                         user={this.state.user}
                         groups={this.state.groups}
+                        types={this.state.types}
                         userGroups={this.state.user.groups}
                         addUser={group_id => this.addUser(group_id)}
                         contains={(userGroups, groups) =>
@@ -158,7 +160,9 @@ class Battlemind extends Component {
                     />
                 ) : null}
                 {this.state.action === "list" ? (
-                    <List object={this.state.object} />
+                    <List 
+                    object={this.state.object}
+                    types={this.state.types} />
                 ) : null}
                 {this.state.action === "new" &&
                 this.state.object === "player" ? (

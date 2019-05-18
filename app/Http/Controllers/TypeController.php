@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Http\Request;
 use App\Type;
 
 class TypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $types = Type::all();
-        return response()->json(['types' => $types,]);
+        
+
+        $groupTypes =  Group::all()->types;
+
+      
+        return response()->json(['types' => $types,
+                                    'groupTypes' => $groupTypes]);
     }
 
     /**
@@ -83,4 +90,16 @@ class TypeController extends Controller
     {
         //
     }
+
+    public function addToTheGroup($typeId, $groupId)
+    {
+        $type = \App\Type::whereId($typeId)->first();
+        $group = \App\Group::whereId($groupId)->first();
+         if (!$group->types->contains($type->id)) {
+         $group->types()->save($type);
+         }
+        
+       return response()->json($type); 
+    }
+    
 }

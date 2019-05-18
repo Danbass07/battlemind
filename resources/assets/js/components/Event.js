@@ -289,7 +289,6 @@ class Event extends Component {
                 ) : null}
 
                 <form className="Scoreboard-dropdown">
-                {console.log(this.props.scoreboards)}
                     {this.renderOptions(this.props.scoreboards)}
                     <button
                         className="Scoreboard-addPlayer-button"
