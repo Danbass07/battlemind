@@ -59837,6 +59837,8 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Result__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Profile__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_FlashMessage__ = __webpack_require__(116);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -59911,8 +59913,9 @@ var Battlemind = function (_Component) {
             axios.get("/types").then(function (response) {
                 return _this2.setState({
                     types: [].concat(_toConsumableArray(response.data.types)),
-                    groupTypes: [].concat(_toConsumableArray(response.data.groupTypes))
-                });
+                    groupTypes: [].concat(_toConsumableArray(response.data.groupTypes)),
+                    user: [].concat(_toConsumableArray(response.data.user))
+                }, console.log(response.data.user));
             });
             axios.get("/users").then(function (response) {
                 return _this2.setState({
@@ -59946,12 +59949,16 @@ var Battlemind = function (_Component) {
     }, {
         key: "contains",
         value: function contains(a, obj) {
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].id === obj.id) {
-                    return true;
+            if ((typeof a === "undefined" ? "undefined" : _typeof(a)) === 'object') {
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].id === obj.id) {
+                        return true;
+                    }
                 }
+                return false;
+            } else {
+                console.log(a);
             }
-            return false;
         }
     }, {
         key: "addUser",
@@ -59999,8 +60006,8 @@ var Battlemind = function (_Component) {
                         groups: this.state.groups,
                         types: this.state.types,
                         userGroups: this.state.user.groups,
-                        addUser: function addUser(group_id) {
-                            return _this4.addUser(group_id);
+                        addUser: function addUser(group) {
+                            return _this4.addUser(group);
                         },
                         contains: function contains(userGroups, groups) {
                             return _this4.contains(userGroups, groups);
@@ -62568,7 +62575,7 @@ var Profile = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Matrix__["a" /* default */], {
                     groups: this.props.groups,
                     types: this.props.types }),
-                this.props.groups.map(function (group) {
+                this.props.groups.length ? this.props.groups.map(function (group) {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { key: group.id },
@@ -62582,7 +62589,7 @@ var Profile = function (_Component) {
                         }),
                         group.name
                     );
-                })
+                }) : null
             );
         }
     }]);

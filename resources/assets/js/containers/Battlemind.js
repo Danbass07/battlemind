@@ -56,8 +56,9 @@ class Battlemind extends Component {
         axios.get("/types").then(response =>
             this.setState({
                 types: [...response.data.types],
-                groupTypes:[...response.data.groupTypes]
-            })
+                groupTypes:[...response.data.groupTypes],
+                user:  [...response.data.user]
+            },console.log(response.data.user))
         );
         axios.get(`/users`).then(response =>
             this.setState({
@@ -90,12 +91,14 @@ class Battlemind extends Component {
     }
 
     contains(a, obj) {
+       if (typeof a === 'object'){
         for (var i = 0; i < a.length; i++) {
             if (a[i].id === obj.id) {
                 return true;
             }
         }
         return false;
+       }  else { console.log(a)}
     }
 
     addUser(group) {
@@ -137,7 +140,7 @@ class Battlemind extends Component {
                         groups={this.state.groups}
                         types={this.state.types}
                         userGroups={this.state.user.groups}
-                        addUser={group_id => this.addUser(group_id)}
+                        addUser={group => this.addUser(group)}
                         contains={(userGroups, groups) =>
                             this.contains(userGroups, groups)
                         }

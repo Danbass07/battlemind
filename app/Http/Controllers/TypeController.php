@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Type;
-
+use App\Group;
+use App\User;
 class TypeController extends Controller
 {
     public function __construct() {
@@ -14,15 +15,17 @@ class TypeController extends Controller
     }
     
     public function index()
-    {
+    {   
+        $user =  Auth::user()->with('groups')->where('id',Auth::user()->id)->get();
         $types = Type::all();
-        
-
-        $groupTypes =  Group::all()->types;
+        $groupTypes =  Group::find(1)->with('types')->get()->map(function ($item, $key) {
+            return Log::info($item);
+        });;
 
       
         return response()->json(['types' => $types,
-                                    'groupTypes' => $groupTypes]);
+                                    'groupTypes' => $groupTypes,
+                                    'user' => $user]);
     }
 
     /**

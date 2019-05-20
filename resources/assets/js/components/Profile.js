@@ -23,7 +23,7 @@ class Profile extends Component {
                 groups={this.props.groups}
                 types={this.props.types}/>
 
-                    {this.props.groups.map((group) => {
+                    {this.props.groups.length ? this.props.groups.map((group) => {
                         return (
                             <div key={group.id}>
 
@@ -38,7 +38,7 @@ class Profile extends Component {
                             
                           
                         )
-                    })}
+                    }): null}
            </div>
         )
     }
