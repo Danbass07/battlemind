@@ -8,6 +8,7 @@ use App\Player;
 use App\League;
 use App\Scoreboard;
 use App\Group;
+use App\Profile;
 
 class User extends Authenticatable
 {
@@ -41,5 +42,8 @@ class User extends Authenticatable
     }
     public function groups() {
         return $this->belongsToMany(Group::class);
+    }
+    public function profile() {
+        return $this->hasOne(Profile::class);
     }
 }

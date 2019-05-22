@@ -59913,9 +59913,9 @@ var Battlemind = function (_Component) {
             axios.get("/types").then(function (response) {
                 return _this2.setState({
                     types: [].concat(_toConsumableArray(response.data.types)),
-                    groupTypes: [].concat(_toConsumableArray(response.data.groupTypes)),
+                    groupsJoinedByUser: [].concat(_toConsumableArray(response.data.groupsJoinedByUser)),
                     user: [].concat(_toConsumableArray(response.data.user))
-                }, console.log(response.data.user));
+                }, console.log(response.data.groupsJoinedByUser));
             });
             axios.get("/users").then(function (response) {
                 return _this2.setState({
@@ -59943,7 +59943,7 @@ var Battlemind = function (_Component) {
             axios.get("/groups").then(function (response) {
                 return _this2.setState({
                     groups: [].concat(_toConsumableArray(response.data.groups))
-                });
+                }, console.log(response.data.result));
             });
         }
     }, {
@@ -61656,7 +61656,7 @@ var List = function (_Component) {
                         myContent: [].concat(_toConsumableArray(response.data.content[0])),
                         friendsContent: [].concat(_toConsumableArray(response.data.content[1])),
                         content: [].concat(_toConsumableArray(response.data.content[0]))
-                    }, console.log(response.data.content[0]));
+                    }, console.log());
                 });
             }
         }

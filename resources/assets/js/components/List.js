@@ -44,7 +44,7 @@ class List extends Component {
                 myContent: [...response.data.content[0]],
                 friendsContent: [...response.data.content[1]],
                 content: [...response.data.content[0]]
-                }, console.log(response.data.content[0]))
+                }, console.log())
             );
         }
     }

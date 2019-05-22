@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Group;
 use App\User;
+use App\Player;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -17,12 +18,34 @@ class GroupController extends Controller
 
     public function index(Request $request, Group $group)
     {
+
+
         $groups =  Group::with('users')->get();
         $user =  Auth::user();
- 
+        // $players = Player::all();
       
+
+
+
+        $result = $user->load('players','groups')->groups->map(function ($group , $key){
+            return $group;
+        })
+        ;
+
+
+
+
+
+
+
+
+
+
+
+
        return response()->json([
         'groups' => $groups,
+        'result' => $result,
        ]);
     }
 

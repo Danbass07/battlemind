@@ -10,21 +10,26 @@ use App\Group;
 use App\User;
 class TypeController extends Controller
 {
-    public function __construct() {
-        $this->middleware('auth');
-    }
+   
     
     public function index()
     {   
-        $user =  Auth::user()->with('groups')->where('id',Auth::user()->id)->get();
+        $user =  Auth::user();
+
+        $groupsJoinedByUser = Group::whereHas('users', function ($query) use ($user) {
+            $query->whereKey($user->id);
+        })->get();
+
+        $types = Type::select('types.*');
+
+  
+        
         $types = Type::all();
-        $groupTypes =  Group::find(1)->with('types')->get()->map(function ($item, $key) {
-            return Log::info($item);
-        });;
+        
 
       
         return response()->json(['types' => $types,
-                                    'groupTypes' => $groupTypes,
+                                    'groupsJoinedByUser' => $groupsJoinedByUser,
                                     'user' => $user]);
     }
 

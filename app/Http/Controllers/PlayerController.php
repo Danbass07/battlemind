@@ -16,13 +16,33 @@ class PlayerController extends Controller
     }
 
     public function index(Request $request, Player $player) {
+
         $user = $request->user();
+
+        $groupsJoinedByUser = Group::whereHas('users', function ($query) use ($user) {
+            $query->whereKey($user->id);
+        })->get();
+
+        $result = $user->load('players','groups')->groups->map(function ($group , $key){
+
+           
+        })
+        ;
+        $players = Player::select('players.*')
+        ->join('users', 'players.user_id', '=', 'users.id')
+        ->join('group_user', 'users.id', '=', 'group_user.user_id')
+        ->join('groups_joined_by_user', $groupsJoinedByUser , function($join) {
+            $join->on('group_user.group_id', '=', 'groups_joined_by_user.id');
+        })
+        ->where('users.id', '!=', $user->id)
+        ->distinct()
+        ->get();
+
+        
         $users = User::all();
         $userGroups = $user->groups;
         $friendsPlayers = [];
-        // $result = $users->with('players')->map->players->collapse()->filter(function ($player) use ($user){
-        //     return Log::info($player);
-        // });
+    
         foreach ($userGroups as $group) {
 
             $groupUsers = $group->users;
@@ -53,11 +73,11 @@ class PlayerController extends Controller
          $allplayers = Player::all();
          $allPlayersWithUser = $player->whereIn('user_id', $request->user())->with('user');
          $players = $allPlayersWithUser->orderBy('wins','desc')->get();
-         return response()->json(['content' => [$userPlayers,$friendsPlayers],
+         return response()->json(['content' => [$userPlayers,$players],
                                     'allplayers' => $allplayers,
                                     'friendsplayers' => $friendsPlayers,
-                                    'userplayers' => $userPlayers
-                                    // 'test'=> $result,
+                                    'userplayers' => $userPlayers,
+                                     'test'=> $groupsJoinedByUser,
                                     ]);
     }
     
