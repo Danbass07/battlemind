@@ -58,7 +58,7 @@ class Battlemind extends Component {
                 types: [...response.data.types],
                 groupsJoinedByUser:[...response.data.groupsJoinedByUser],
                 user:  [...response.data.user]
-            },console.log(response.data.groupsJoinedByUser))
+            })
         );
         axios.get(`/users`).then(response =>
             this.setState({
@@ -73,9 +73,8 @@ class Battlemind extends Component {
         );
         axios.get("/players",  ).then(response =>
             this.setState({
-                players: [...response.data.content],
-                userPlayers: [...response.data.userplayers],
-                friendsPlayers: [...response.data.friendsplayers],
+                userPlayers: [...response.data.content[0]],
+                friendsPlayers: [...response.data.content[1]],
             })
         );
         axios.get("/leagues").then(response =>
@@ -86,7 +85,7 @@ class Battlemind extends Component {
         axios.get(`/groups`).then(response =>
             this.setState({
                 groups: [...response.data.groups]
-            },console.log(response.data.result))
+            })
         );
     }
 

@@ -6,27 +6,27 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: [],
+            contentToDisplay: [],
         };
     }
     deleteHandler(id) {
         
-        const isNotId = content => content.id !== id;
-        const updatedContent = this.state.content.filter(isNotId);
-        this.setState({content: updatedContent});
+        const isNotId = contentToDisplay => contentToDisplay.id !== id;
+        const updatedContent = this.state.contentToDisplay.filter(isNotId);
+        this.setState({contentToDisplay: updatedContent});
         axios.delete(`/${this.props.object}s/${id}`);
 
     }
     renderContent(type){
-     return  this.state.content.map(content =>  {
-       if( content.type === type ) {
+     return  this.state.contentToDisplay.map(contentToDisplay =>  {
+       if( contentToDisplay.type === type ) {
 
-        return   <div key={content.id} className="list-item">
+        return   <div key={contentToDisplay.id} className="list-item">
                  
                        
-        <div className="list-item-name">{content.name}</div>
-        <Link to={`/${this.props.object}s/${content.id}/edit`} className="button update">Update</Link>
-        <button onClick={() => this.deleteHandler(content.id)}
+        <div className="list-item-name">{contentToDisplay.name}</div>
+        <Link to={`/${this.props.object}s/${contentToDisplay.id}/edit`} className="button update">Update</Link>
+        <button onClick={() => this.deleteHandler(contentToDisplay.id)}
         className="button">Delete</button>
     
 
@@ -43,8 +43,8 @@ class List extends Component {
             this.setState({
                 myContent: [...response.data.content[0]],
                 friendsContent: [...response.data.content[1]],
-                content: [...response.data.content[0]]
-                }, console.log())
+                contentToDisplay: [...response.data.content[0]]
+                })
             );
         }
     }
@@ -60,20 +60,20 @@ class List extends Component {
     }
     myOnlyButtonHandler() {
         this.setState({
-            content: [...this.state.myContent]
+            contentToDisplay: [...this.state.myContent]
         })
 
     }
     myFriendsOnlyButtonHandler() {
         this.setState({
-            content: [...this.state.friendsContent]
+            contentToDisplay: [...this.state.friendsContent]
         })
 
     }
     allButtonHandler() {
         const all = this.state.myContent.concat(this.state.friendsContent)
         this.setState({
-            content: [...all]
+            contentToDisplay: [...all]
         })
 
     }
@@ -86,6 +86,7 @@ class List extends Component {
    
     
     render() {
+        console.log(this.state);
       
         return (
             <div className="Workarea">

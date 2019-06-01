@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\League;
 use App\Player;
-
+use App\User;
 class LeagueController extends Controller
 {
     public function __construct() {
@@ -13,39 +13,16 @@ class LeagueController extends Controller
     }
 
     public function index(Request $request, League $league) {
-        $user = $request->user();
+
+
+        $user = User::with(['groups.types', 'groups.users.leagues', 'leagues', 'groups'])->where('id', '=' ,$request->user()->id)->first();
         $userGroups = $user->groups;
-        $friendsLeagues = [];
-  
-        foreach ($userGroups as $group) {
+        $userLeagues = $user->leagues;
+        $friendsUsers = $userGroups->pluck('users')->map->filter(function ($groupUser) use ($user) {
+            return $groupUser->isNot($user);
+            })->collapse();
+        $friendsLeagues =  $friendsUsers->pluck('leagues')->unique('id')->collapse();
 
-            $groupUsers = $group->users;
-        
-            foreach ($groupUsers as $groupUser) {
-
-                if ($groupUser->id !== $user->id ) {
-
-                    $userLeagues = $groupUser->leagues;
-
-                    foreach ($userLeagues as $league) {
-                   
-                        if(!in_array($league, $friendsLeagues)){
-
-                            $friendsLeagues[]=$league;
-
-                        }
-
-                    }
-            
-                }
-            
-            }
-           
-            
-        }
-        
-         $leagues = League::all();
-         $userLeagues = $user->leagues;
          return response()->json(['content' => [$userLeagues, $friendsLeagues]]);
     }
     
@@ -70,8 +47,7 @@ class LeagueController extends Controller
             'name' => $request->name,
             'win_point_value' => $request->win_point_value,
             'lost_point_value' => $request->lost_point_value,
-            'draw_point_value' => $request->draw_point_value,
-            
+            'draw_point_value' => $request->draw_point_value,    
         ]);
 
         return response()->json($league->with('user')->find($league->id));
@@ -113,30 +89,22 @@ class LeagueController extends Controller
     {
         $leagues = \App\League::find($league_id);
         $player = \App\Player::find($player_id);
-        
         $leagues->players()->save($player);
-       return response()->json($leagues->players);
+        return response()->json($leagues->players);
     }
 
     public function removePlayer($league_id, $player_id )
     {
         $leagues = \App\League::find($league_id);
         $player = \App\Player::find($player_id);
-        
         $leagues->players()->detach($player);
         $leaguePlayers = League::findOrFail($league_id)->players()->get();
-
-       
-       return response()->json($leaguePlayers);
+        return response()->json($leaguePlayers);
     }
     public function getResults($league_id)
     {
         $league = \App\League::find($league_id);
         $leaguePlayers = $league->players;
-       
-        return response()->json([
-         
-            $leaguePlayers
-            ]);
+        return response()->json([$leaguePlayers]);
     }
 }

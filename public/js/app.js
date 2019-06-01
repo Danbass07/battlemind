@@ -59915,7 +59915,7 @@ var Battlemind = function (_Component) {
                     types: [].concat(_toConsumableArray(response.data.types)),
                     groupsJoinedByUser: [].concat(_toConsumableArray(response.data.groupsJoinedByUser)),
                     user: [].concat(_toConsumableArray(response.data.user))
-                }, console.log(response.data.groupsJoinedByUser));
+                });
             });
             axios.get("/users").then(function (response) {
                 return _this2.setState({
@@ -59930,9 +59930,8 @@ var Battlemind = function (_Component) {
             });
             axios.get("/players").then(function (response) {
                 return _this2.setState({
-                    players: [].concat(_toConsumableArray(response.data.content)),
-                    userPlayers: [].concat(_toConsumableArray(response.data.userplayers)),
-                    friendsPlayers: [].concat(_toConsumableArray(response.data.friendsplayers))
+                    userPlayers: [].concat(_toConsumableArray(response.data.content[0])),
+                    friendsPlayers: [].concat(_toConsumableArray(response.data.content[1]))
                 });
             });
             axios.get("/leagues").then(function (response) {
@@ -59943,7 +59942,7 @@ var Battlemind = function (_Component) {
             axios.get("/groups").then(function (response) {
                 return _this2.setState({
                     groups: [].concat(_toConsumableArray(response.data.groups))
-                }, console.log(response.data.result));
+                });
             });
         }
     }, {
@@ -61596,7 +61595,7 @@ var List = function (_Component) {
         var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
         _this.state = {
-            content: []
+            contentToDisplay: []
         };
         return _this;
     }
@@ -61605,11 +61604,11 @@ var List = function (_Component) {
         key: 'deleteHandler',
         value: function deleteHandler(id) {
 
-            var isNotId = function isNotId(content) {
-                return content.id !== id;
+            var isNotId = function isNotId(contentToDisplay) {
+                return contentToDisplay.id !== id;
             };
-            var updatedContent = this.state.content.filter(isNotId);
-            this.setState({ content: updatedContent });
+            var updatedContent = this.state.contentToDisplay.filter(isNotId);
+            this.setState({ contentToDisplay: updatedContent });
             axios.delete('/' + this.props.object + 's/' + id);
         }
     }, {
@@ -61617,26 +61616,26 @@ var List = function (_Component) {
         value: function renderContent(type) {
             var _this2 = this;
 
-            return this.state.content.map(function (content) {
-                if (content.type === type) {
+            return this.state.contentToDisplay.map(function (contentToDisplay) {
+                if (contentToDisplay.type === type) {
 
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { key: content.id, className: 'list-item' },
+                        { key: contentToDisplay.id, className: 'list-item' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'list-item-name' },
-                            content.name
+                            contentToDisplay.name
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { to: '/' + _this2.props.object + 's/' + content.id + '/edit', className: 'button update' },
+                            { to: '/' + _this2.props.object + 's/' + contentToDisplay.id + '/edit', className: 'button update' },
                             'Update'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { onClick: function onClick() {
-                                    return _this2.deleteHandler(content.id);
+                                    return _this2.deleteHandler(contentToDisplay.id);
                                 },
                                 className: 'button' },
                             'Delete'
@@ -61655,8 +61654,8 @@ var List = function (_Component) {
                     return _this3.setState({
                         myContent: [].concat(_toConsumableArray(response.data.content[0])),
                         friendsContent: [].concat(_toConsumableArray(response.data.content[1])),
-                        content: [].concat(_toConsumableArray(response.data.content[0]))
-                    }, console.log());
+                        contentToDisplay: [].concat(_toConsumableArray(response.data.content[0]))
+                    });
                 });
             }
         }
@@ -61676,14 +61675,14 @@ var List = function (_Component) {
         key: 'myOnlyButtonHandler',
         value: function myOnlyButtonHandler() {
             this.setState({
-                content: [].concat(_toConsumableArray(this.state.myContent))
+                contentToDisplay: [].concat(_toConsumableArray(this.state.myContent))
             });
         }
     }, {
         key: 'myFriendsOnlyButtonHandler',
         value: function myFriendsOnlyButtonHandler() {
             this.setState({
-                content: [].concat(_toConsumableArray(this.state.friendsContent))
+                contentToDisplay: [].concat(_toConsumableArray(this.state.friendsContent))
             });
         }
     }, {
@@ -61691,7 +61690,7 @@ var List = function (_Component) {
         value: function allButtonHandler() {
             var all = this.state.myContent.concat(this.state.friendsContent);
             this.setState({
-                content: [].concat(_toConsumableArray(all))
+                contentToDisplay: [].concat(_toConsumableArray(all))
             });
         }
     }, {
@@ -61706,6 +61705,8 @@ var List = function (_Component) {
         key: 'render',
         value: function render() {
             var _this4 = this;
+
+            console.log(this.state);
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
