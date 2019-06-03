@@ -41,7 +41,7 @@ class Matrix extends Component {
                 
                                 <select onChange={(e) => this.setState({typeId: e.target.value})}>
                                 {this.props.types.map((type) => (
-                                    <option  key={type.id}  name="type" value={type.id} > {type.type} </option>
+                                    <option  key={type.type}  name="type" value={type.id} > {type.type} </option>
                                 ))}
                                 </select>
                                 <select onChange={(e) => this.setState({groupId: e.target.value})}>

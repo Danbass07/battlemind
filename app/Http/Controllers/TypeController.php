@@ -12,25 +12,18 @@ class TypeController extends Controller
 {
    
     
-    public function index()
+    public function index(Request $request )
     {   
-        $user =  Auth::user();
+        $user = User::with(['groups.types', 'groups'])->where('id', '=' ,$request->user()->id)->first();
+        $userGroups = $user->groups;
+        $userTypes = $userGroups->pluck('types')->collapse()->unique('id');
+        $allTypes = Type::all();
 
-        $groupsJoinedByUser = Group::whereHas('users', function ($query) use ($user) {
-            $query->whereKey($user->id);
-        })->get();
-
-        $types = Type::select('types.*');
-
-  
-        
-        $types = Type::all();
-        
-
-      
-        return response()->json(['types' => $types,
-                                    'groupsJoinedByUser' => $groupsJoinedByUser,
-                                    'user' => $user]);
+         return response()->json([
+             'userTypes' => $userTypes,
+             'allTypes' => $allTypes,
+             ]);
+    
     }
 
     /**
