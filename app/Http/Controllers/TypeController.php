@@ -16,10 +16,10 @@ class TypeController extends Controller
     {   
         $user = User::with(['groups.types', 'groups'])->where('id', '=' ,$request->user()->id)->first();
         $userGroups = $user->groups;
-        $userTypes = $userGroups->pluck('types')->collapse()->unique('id');
-        $allTypes = Type::all();
+        $userTypes =  $userGroups->pluck('types')->collapse()->unique('id')->flatten();
+        $allTypes = Type::all()->unique();
 
-         return response()->json([
+         return response()->json([ 
              'userTypes' => $userTypes,
              'allTypes' => $allTypes,
              ]);
@@ -101,6 +101,28 @@ class TypeController extends Controller
          }
         
        return response()->json($type); 
+    }
+
+    public function hypenotizer(Request $request) {
+    //   foreach ($request->userTypes as $userType) {
+    //     $type = \App\Type::whereId($userType->id)->first();
+
+    //   }
+   // $type = \App\Type::whereId(1)->first();
+       foreach ($request->userTypes as $userType) {
+        $type = \App\Type::whereId(1)->first();
+        Log::info($userType['id']);
+        $type->users()->attach($type);
+
+      }
+    $allTypes = Type::all()->unique();
+     
+    
+        return response()->json([ 
+           
+            
+            'nype' => $allTypes,
+            ]);
     }
     
 }

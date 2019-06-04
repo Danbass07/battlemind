@@ -9,9 +9,10 @@ use App\User;
 
 class Group extends Model
 {
-    protected $fillable = [
-        'name', 'info',
-    ];
+    // protected $fillable = [
+    //     'name', 'info',
+    // ];
+    protected $guarded = [];
     public function users() {
         return $this->belongsToMany(User::class);
     }

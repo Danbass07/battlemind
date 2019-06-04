@@ -20,7 +20,8 @@ class Battlemind extends Component {
             action: "event",
             object: "none",
             types: [{ id: 0, type: "test" }],
-            userTypes: [],
+            userTypes: [1,2],
+            allTypes: [1,1],
             scoreboards: [],
             userPlayers: [{}],
             leagues: [{}],
@@ -56,9 +57,10 @@ class Battlemind extends Component {
     getAll() {
         axios.get("/types").then(response =>
             this.setState({
+                userTypes:  [...response.data.userTypes],
                 types: [...response.data.allTypes],
-                userTypes:  [...response.data.userTypes]
-            })
+                
+            },)
         );
         axios.get(`/users`).then(response =>
             this.setState({

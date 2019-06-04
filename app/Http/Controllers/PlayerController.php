@@ -23,7 +23,7 @@ class PlayerController extends Controller
         $friendsUsers = $userGroups->pluck('users')->map->filter(function ($groupUser) use ($user) {
             return $groupUser->isNot($user);
             })->collapse();
-        $friendPlayers =  $friendsUsers->pluck('players')->unique('id')->collapse();
+        $friendPlayers =  $friendsUsers->pluck('players')->collapse()->unique('id');
 
          return response()->json(['content' => [$userPlayers, $friendPlayers]]);
     }

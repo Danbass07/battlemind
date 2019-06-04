@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Player;
+use App\Type;
 use App\League;
 use App\Scoreboard;
 use App\Group;
@@ -20,8 +21,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'id', 'name', 'email', 'password',
     ];
+    // protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -45,5 +47,8 @@ class User extends Authenticatable
     }
     public function profile() {
         return $this->belongsTo(Profile::class);
+    }
+    public function types() {
+        return $this->belongsToMany(Type::class, 'hypenotizer')->withPivot('hype')->withTimestamps();;
     }
 }

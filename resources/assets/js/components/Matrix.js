@@ -17,8 +17,7 @@ class Matrix extends Component {
     addTypeToGroup() {
         axios
         .get(`/types/${this.state.typeId}/addToTheGroup/${this.state.groupId}`)
-        .then(response =>{ console.log(response)
-            });
+        ;
         
     }
     componentDidMount() {
@@ -34,7 +33,6 @@ class Matrix extends Component {
             padding: '2px',
             color: 'wheat',
         }
-        // console.log(this.props.userGroups)
         return(
             <div style={style}>
                 <h1>Matrix</h1>

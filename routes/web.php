@@ -49,3 +49,4 @@ Route::get('/groups/{id}/removeUser', 'GroupController@removeUser');
 
 Route::resource('/types', 'TypeController');
  Route::get('/types/{typeid}/addToTheGroup/{groupid}','TypeController@addToTheGroup' );
+ Route::post('/types/hypenotizer', 'TypeController@hypenotizer');
