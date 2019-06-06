@@ -1,0 +1,22 @@
+.hype-wrapper {
+    height: 60%;
+    border: solid 2px red;
+    overflow: scroll;
+
+}
+.hype-button {
+    width: 100%;
+    background-color: lemonchiffon;
+    height: 60px;
+}
+.hype-row {
+    display: flex;
+    width: 100%;
+    background-color: black;
+    color: wheat;
+    font-size: 26px;
+    border: 1px solid wheat;
+}
+.hype-row-element {
+    margin-left: auto;
+}

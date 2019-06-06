@@ -14,7 +14,7 @@ class TypeController extends Controller
     
     public function index(Request $request )
     {   
-        $user = User::with(['groups.types', 'groups'])->where('id', '=' ,$request->user()->id)->first();
+        $user = User::with(['groups.types.users', 'groups',])->where('id', '=' ,$request->user()->id)->first();
         $userGroups = $user->groups;
         $userTypes =  $userGroups->pluck('types')->collapse()->unique('id')->flatten();
         $allTypes = Type::all()->unique();
@@ -104,16 +104,14 @@ class TypeController extends Controller
     }
 
     public function hypenotizer(Request $request) {
-    //   foreach ($request->userTypes as $userType) {
-    //     $type = \App\Type::whereId($userType->id)->first();
-
-    //   }
-   // $type = \App\Type::whereId(1)->first();
+        $user =  Auth::user();
+        $user->types()->detach();
        foreach ($request->userTypes as $userType) {
-        $type = \App\Type::whereId(1)->first();
-        Log::info($userType['id']);
-        $type->users()->attach($type);
-
+        $type = Type::find($userType['id']);
+        Log::info($userType);
+        $user->types()->save($type);
+        $type->users()->updateExistingPivot($user->id,['hype' => $userType['hype']]);
+ 
       }
     $allTypes = Type::all()->unique();
      

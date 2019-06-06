@@ -12,6 +12,7 @@ import Event from "../components/Event";
 import Result from "../components/Result";
 import Profile from "../components/Profile";
 import FlashMessage from "../components/FlashMessage";
+import Hypenotizer from "../components/Hypenotizer";
 
 class Battlemind extends Component {
     constructor(props) {
@@ -81,7 +82,7 @@ class Battlemind extends Component {
         );
         axios.get("/leagues").then(response =>
             this.setState({
-                leagues: [...response.data.content]
+                leagues: [...response.data.content[1]]
             })
         );
         axios.get(`/groups`).then(response =>
@@ -135,12 +136,17 @@ class Battlemind extends Component {
 <Route exact path="/leagues/:id/edit" component={League}></Route>
 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
 
+                {this.state.action === "hype" ? (
+                    <Hypenotizer
+                    userTypes={this.state.userTypes}
+                    />
+                ) : null}
                 {this.state.action === "profile" ? (
                     <Profile
                         user={this.state.user}
                         groups={this.state.groups}
                         types={this.state.types}
-                        userTypes={this.state.userTypes}
+                        
                         userGroups={this.state.user.groups}
                         addUser={group => this.addUser(group)}
                         contains={(userGroups, groups) =>

@@ -112,7 +112,7 @@ class Result extends Component {
                                 
                     <option 
                     value={league.win_point_value+'break'+league.lost_point_value+'break'+league.draw_point_value+'break'+league.id}  
-                    key={league.id+league.name}>
+                    key={league.name + league.id }>
                     {league.name}
                     </option> 
                 ))}

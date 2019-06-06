@@ -14,7 +14,7 @@ class Navigation extends Component {
 
                         <button className={this.props.action == 'new' ? "navButton active" : "navButton"} onClick={this.props.button} name="new" value="action">New</button>
                         <button className={this.props.action == 'list' ? "navButton active" : "navButton"} onClick={this.props.button} name="list" value="action">Lists</button>
-                        
+                        <button className={this.props.action == 'hype' ? "navButton active" : "navButton"} onClick={this.props.button} name="hype" value="action">Matrix</button>
                     </div>
 
                     <div className={this.props.action == 'new' || this.props.action == 'list' ? "navigation-top-bottomrow" : 'navigation-top-bottomrow-disable'}>

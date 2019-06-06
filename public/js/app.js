@@ -59837,6 +59837,7 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Result__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Profile__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_FlashMessage__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Hypenotizer__ = __webpack_require__(123);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -59852,6 +59853,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -59938,7 +59940,7 @@ var Battlemind = function (_Component) {
             });
             axios.get("/leagues").then(function (response) {
                 return _this2.setState({
-                    leagues: [].concat(_toConsumableArray(response.data.content))
+                    leagues: [].concat(_toConsumableArray(response.data.content[1]))
                 });
             });
             axios.get("/groups").then(function (response) {
@@ -60002,11 +60004,14 @@ var Battlemind = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], { exact: true, path: "/players/:id/edit", component: __WEBPACK_IMPORTED_MODULE_5__components_Players_Player__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], { exact: true, path: "/leagues/:id/edit", component: __WEBPACK_IMPORTED_MODULE_6__components_Leagues_League__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], { exact: true, path: "/scoreboards/:id/edit", component: __WEBPACK_IMPORTED_MODULE_7__components_Scoreboards_Scoreboard__["a" /* default */] }),
+                    this.state.action === "hype" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_14__components_Hypenotizer__["a" /* default */], {
+                        userTypes: this.state.userTypes
+                    }) : null,
                     this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__components_Profile__["a" /* default */], {
                         user: this.state.user,
                         groups: this.state.groups,
                         types: this.state.types,
-                        userTypes: this.state.userTypes,
+
                         userGroups: this.state.user.groups,
                         addUser: function addUser(group) {
                             return _this4.addUser(group);
@@ -60092,6 +60097,11 @@ var Navigation = function (_Component) {
                             "button",
                             { className: this.props.action == 'list' ? "navButton active" : "navButton", onClick: this.props.button, name: "list", value: "action" },
                             "Lists"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { className: this.props.action == 'hype' ? "navButton active" : "navButton", onClick: this.props.button, name: "hype", value: "action" },
+                            "Matrix"
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -62468,7 +62478,7 @@ var Result = function (_Component) {
                             'option',
                             {
                                 value: league.win_point_value + 'break' + league.lost_point_value + 'break' + league.draw_point_value + 'break' + league.id,
-                                key: league.id + league.name },
+                                key: league.name + league.id },
                             league.name
                         );
                     })
@@ -62538,8 +62548,6 @@ var Result = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Matrix__ = __webpack_require__(115);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -62552,54 +62560,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Profile = function (_Component) {
     _inherits(Profile, _Component);
 
-    function Profile(props) {
+    function Profile() {
         _classCallCheck(this, Profile);
 
-        var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
-
-        _this.state = {
-            hypeLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            userTypes: []
-
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).apply(this, arguments));
     }
 
     _createClass(Profile, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-
-            if (this.props.userTypes) {
-                this.props.userTypes.forEach(function (userType) {
-                    userType.hypeLevel = 5;
-                });
-                this.setState({
-                    userTypes: this.props.userTypes
-                });
-            }
-        }
-    }, {
-        key: 'hypeLevelHandler',
-        value: function hypeLevelHandler(e, userType) {
-            var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
-            userTypes.forEach(function (stateUserType) {
-                if (stateUserType === userType) {
-                    stateUserType.hypeLevel = +e.target.value;
-                }
-            });
-            this.setState({
-                userTypes: userTypes
-            });
-        }
-    }, {
-        key: 'hypenotizer',
-        value: function hypenotizer() {
-            axios.post('/types/hypenotizer', {
-                userTypes: this.state.userTypes
-
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
@@ -62614,39 +62581,7 @@ var Profile = function (_Component) {
                         'h1',
                         null,
                         this.props.user.name
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { onClick: function onClick() {
-                                return _this2.hypenotizer();
-                            } },
-                        'HYPE OR NOT HYPE'
-                    ),
-                    this.state.userTypes.map(function (userType) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { key: userType.type },
-                            userType.type,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'select',
-                                { onChange: function onChange(e) {
-                                        return _this2.hypeLevelHandler(e, userType);
-                                    } },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'option',
-                                    { key: 'default' + userType.type, defaultValue: 'Choose here', hidden: true },
-                                    'Choose here'
-                                ),
-                                _this2.state.hypeLevels.map(function (level, index) {
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'option',
-                                        { key: userType.type + index, value: level },
-                                        level
-                                    );
-                                })
-                            )
-                        );
-                    })
+                    )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Matrix__["a" /* default */], {
                     groups: this.props.groups,
@@ -63080,6 +63015,142 @@ var substr = 'ab'.substr(-1) === 'b'
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Hypenotizer = function (_Component) {
+    _inherits(Hypenotizer, _Component);
+
+    function Hypenotizer(props) {
+        _classCallCheck(this, Hypenotizer);
+
+        var _this = _possibleConstructorReturn(this, (Hypenotizer.__proto__ || Object.getPrototypeOf(Hypenotizer)).call(this, props));
+
+        _this.state = {
+            hypeLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            userTypes: []
+
+        };
+        return _this;
+    }
+
+    _createClass(Hypenotizer, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+
+            if (this.props.userTypes) {
+                this.props.userTypes.forEach(function (userType) {
+                    userType.hype = 5;
+                });
+                this.setState({
+                    userTypes: this.props.userTypes
+                });
+            }
+        }
+    }, {
+        key: 'hypeLevelHandler',
+        value: function hypeLevelHandler(e, userType) {
+            var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
+            userTypes.forEach(function (stateUserType) {
+                if (stateUserType === userType) {
+                    stateUserType.hype = +e.target.value;
+                }
+            });
+            this.setState({
+                userTypes: userTypes
+            });
+        }
+    }, {
+        key: 'hypenotizer',
+        value: function hypenotizer() {
+            axios.post('/types/hypenotizer', {
+                userTypes: this.state.userTypes
+
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'button',
+                    { className: 'hype-button', onClick: function onClick() {
+                            return _this2.hypenotizer();
+                        } },
+                    'HYPE OR NOT HYPE'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'hype-wrapper' },
+                    this.state.userTypes.map(function (userType) {
+
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'hype-row', key: userType.type },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'hype-row-element' },
+                                userType.type
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'hype-row-element' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'select',
+                                    { onChange: function onChange(e) {
+                                            return _this2.hypeLevelHandler(e, userType);
+                                        } },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'option',
+                                        { key: 'default' + userType.type, defaultValue: userType.users[0] ? userType.users[0].pivot.hype : 5 },
+                                        userType.users[0] ? userType.users[0].pivot.hype : 5,
+                                        ' '
+                                    ),
+                                    _this2.state.hypeLevels.map(function (level, index) {
+                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'option',
+                                            { key: userType.type + index, value: level },
+                                            level
+                                        );
+                                    })
+                                )
+                            )
+                        );
+                    })
+                )
+            );
+        }
+    }]);
+
+    return Hypenotizer;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Hypenotizer);
 
 /***/ })
 /******/ ]);
