@@ -15,20 +15,60 @@ class Hypenotizer extends Component {
         };
     }
     componentDidMount() {
-        
-
-        if (this.props.userTypes) {
-         this.props.userTypes.forEach(userType => {
-                userType.hype = 5;
+let data;
+        axios.get("/types").then(response =>{
+            response.data.userTypes.forEach( userType => {
+                if (userType.users.length !== 0) {
+                  
+                    userType.hype = userType.users[0].pivot.hype;
+                } else { userType.hype = 5 }
+               
             })
             this.setState({
-                userTypes: this.props.userTypes,
-            });
+                userTypes:  [...response.data.userTypes],
+               
+           }, console.log(response.data.userTypes))
         }
+            
+        );
+    
+            // if (this.state.userTypes.users) {
+            //     this.state.userTypes.forEach(userType => {
+            //        if (userType.users[0]) {
+            //            userType.hype = userType.users[0].pivot.hype
+            //        }  else { userType.hype = 5; }
+            //        })
+            //        this.setState({
+            //            userTypes: [...this.props.userTypes],
+            //        });
+            //    }
+           
+            //    let data;
+            //    axios.get("/types").then(response =>
+       
+            //      data =  response.data.userTypes.forEach(userType => {
+            //            if (userType.users[0]) {
+            //                userType.hype = userType.users[0].pivot.hype
+            //            }  else { userType.hype = 5; }
+                  
+       
+            //            })
+                   
+       
+                   
+            //    ).then (
+            //        this.setState({
+            //            userTypes:  [...data],
+                    
+                       
+            //        })
+            //    );
+              
       
         
        
     }
+  
     hypeLevelHandler(e, userType) {
         let userTypes = [...this.state.userTypes]
         userTypes.forEach(stateUserType => {
@@ -47,31 +87,34 @@ class Hypenotizer extends Component {
             userTypes: this.state.userTypes,
            
         });
+     
     }
 
     render() {
     
-     
+        
         return(
        <React.Fragment>
            <button className='hype-button' onClick={() => this.hypenotizer()}>HYPE OR NOT HYPE</button>
             <div className='hype-wrapper'>
 
             
-            {this.state.userTypes.map((userType) => {
-            
+            {this.state.userTypes.length !== 0 ? this.state.userTypes.map((userType) => {
+      
                     return (
                         
                         <div className="hype-row"key={userType.type} >
+                        
                         <div className="hype-row-element">
                         {userType.type}
                         </div>
                         <div className="hype-row-element">
                         <select onChange={(e) => this.hypeLevelHandler(e, userType)}>
                         <option key={'default'+userType.type} defaultValue=
-                        {userType.users[0] ? userType.users[0].pivot.hype : 5 }  >
+                        {userType.users.length !== 0 ? userType.users[0].pivot.hype: 
+                        5 }  >
                         
-                        {userType.users[0] ? userType.users[0].pivot.hype : 5 } </option>
+                        {userType.users.length !==0  ?  userType.users[0].pivot.hype : 5}</option>
                             {this.state.hypeLevels.map( (level, index) => {
                                 return ( <option key={userType.type+index} value={level}>{level}</option>)
                             })}
@@ -82,7 +125,7 @@ class Hypenotizer extends Component {
                         
                     
                     )
-                })}
+                }): null}
                 
             </div>
 

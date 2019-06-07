@@ -15883,7 +15883,7 @@ var generatePath = function generatePath() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(38);
-module.exports = __webpack_require__(118);
+module.exports = __webpack_require__(119);
 
 
 /***/ }),
@@ -59837,7 +59837,7 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Result__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Profile__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_FlashMessage__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Hypenotizer__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Hypenotizer__ = __webpack_require__(118);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -59979,8 +59979,8 @@ var Battlemind = function (_Component) {
             }
         }
     }, {
-        key: "componentWillMount",
-        value: function componentWillMount() {
+        key: "componentDidMount",
+        value: function componentDidMount() {
             this.getAll();
         }
     }, {
@@ -60004,8 +60004,11 @@ var Battlemind = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], { exact: true, path: "/players/:id/edit", component: __WEBPACK_IMPORTED_MODULE_5__components_Players_Player__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], { exact: true, path: "/leagues/:id/edit", component: __WEBPACK_IMPORTED_MODULE_6__components_Leagues_League__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], { exact: true, path: "/scoreboards/:id/edit", component: __WEBPACK_IMPORTED_MODULE_7__components_Scoreboards_Scoreboard__["a" /* default */] }),
-                    this.state.action === "hype" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_14__components_Hypenotizer__["a" /* default */], {
-                        userTypes: this.state.userTypes
+                    this.state.action === "hype" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_14__components_Hypenotizer__["a" /* default */]
+                    // userTypes={this.state.userTypes}
+                    , { getAll: function getAll() {
+                            return _this4.getAll();
+                        }
                     }) : null,
                     this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__components_Profile__["a" /* default */], {
                         user: this.state.user,
@@ -63012,16 +63015,6 @@ var substr = 'ab'.substr(-1) === 'b'
 
 /***/ }),
 /* 118 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63058,15 +63051,55 @@ var Hypenotizer = function (_Component) {
     _createClass(Hypenotizer, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            var _this2 = this;
 
-            if (this.props.userTypes) {
-                this.props.userTypes.forEach(function (userType) {
-                    userType.hype = 5;
+            var data = void 0;
+            axios.get("/types").then(function (response) {
+                response.data.userTypes.forEach(function (userType) {
+                    if (userType.users.length !== 0) {
+
+                        userType.hype = userType.users[0].pivot.hype;
+                    } else {
+                        userType.hype = 5;
+                    }
                 });
-                this.setState({
-                    userTypes: this.props.userTypes
-                });
-            }
+                _this2.setState({
+                    userTypes: [].concat(_toConsumableArray(response.data.userTypes))
+
+                }, console.log(response.data.userTypes));
+            });
+
+            // if (this.state.userTypes.users) {
+            //     this.state.userTypes.forEach(userType => {
+            //        if (userType.users[0]) {
+            //            userType.hype = userType.users[0].pivot.hype
+            //        }  else { userType.hype = 5; }
+            //        })
+            //        this.setState({
+            //            userTypes: [...this.props.userTypes],
+            //        });
+            //    }
+
+            //    let data;
+            //    axios.get("/types").then(response =>
+
+            //      data =  response.data.userTypes.forEach(userType => {
+            //            if (userType.users[0]) {
+            //                userType.hype = userType.users[0].pivot.hype
+            //            }  else { userType.hype = 5; }
+
+
+            //            })
+
+
+            //    ).then (
+            //        this.setState({
+            //            userTypes:  [...data],
+
+
+            //        })
+            //    );
+
         }
     }, {
         key: 'hypeLevelHandler',
@@ -63092,7 +63125,7 @@ var Hypenotizer = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
@@ -63100,14 +63133,14 @@ var Hypenotizer = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'button',
                     { className: 'hype-button', onClick: function onClick() {
-                            return _this2.hypenotizer();
+                            return _this3.hypenotizer();
                         } },
                     'HYPE OR NOT HYPE'
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'hype-wrapper' },
-                    this.state.userTypes.map(function (userType) {
+                    this.state.userTypes.length !== 0 ? this.state.userTypes.map(function (userType) {
 
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
@@ -63123,15 +63156,14 @@ var Hypenotizer = function (_Component) {
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'select',
                                     { onChange: function onChange(e) {
-                                            return _this2.hypeLevelHandler(e, userType);
+                                            return _this3.hypeLevelHandler(e, userType);
                                         } },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'option',
-                                        { key: 'default' + userType.type, defaultValue: userType.users[0] ? userType.users[0].pivot.hype : 5 },
-                                        userType.users[0] ? userType.users[0].pivot.hype : 5,
-                                        ' '
+                                        { key: 'default' + userType.type, defaultValue: userType.users.length !== 0 ? userType.users[0].pivot.hype : 5 },
+                                        userType.users.length !== 0 ? userType.users[0].pivot.hype : 5
                                     ),
-                                    _this2.state.hypeLevels.map(function (level, index) {
+                                    _this3.state.hypeLevels.map(function (level, index) {
                                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'option',
                                             { key: userType.type + index, value: level },
@@ -63141,7 +63173,7 @@ var Hypenotizer = function (_Component) {
                                 )
                             )
                         );
-                    })
+                    }) : null
                 )
             );
         }
@@ -63151,6 +63183,12 @@ var Hypenotizer = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Hypenotizer);
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

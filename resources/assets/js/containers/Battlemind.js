@@ -113,7 +113,7 @@ class Battlemind extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getAll();
     }
 
@@ -138,7 +138,8 @@ class Battlemind extends Component {
 
                 {this.state.action === "hype" ? (
                     <Hypenotizer
-                    userTypes={this.state.userTypes}
+                    // userTypes={this.state.userTypes}
+                    getAll={() => this.getAll()}
                     />
                 ) : null}
                 {this.state.action === "profile" ? (
