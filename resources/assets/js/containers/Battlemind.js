@@ -12,7 +12,7 @@ import Event from "../components/Event";
 import Result from "../components/Result";
 import Profile from "../components/Profile";
 import FlashMessage from "../components/FlashMessage";
-import Hypenotizer from "../components/Hypenotizer";
+import Hypenotizer from "../containers/Hypenotizer";
 
 class Battlemind extends Component {
     constructor(props) {
@@ -45,6 +45,7 @@ class Battlemind extends Component {
     }
 
     buttonHandler(e) {
+        console.log(e.target.value);
         if (e.target.name === "event") {
             this.setState({
                 object: ""
@@ -56,6 +57,7 @@ class Battlemind extends Component {
     }
 
     getAll() {
+        axios.get("/types/hypecheck/2");
         axios.get("/types").then(response =>
             this.setState({
                 userTypes:  [...response.data.userTypes],
@@ -118,6 +120,7 @@ class Battlemind extends Component {
     }
 
     render() {
+        
         return (
             <div className="Battlemind">
                 {/* {this.state.user.hints ? <FlashMessage 
@@ -136,12 +139,11 @@ class Battlemind extends Component {
 <Route exact path="/leagues/:id/edit" component={League}></Route>
 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
 
-                {this.state.action === "hype" ? (
+                {this.state.action === "hype"  ? (
                     <Hypenotizer
-                    // userTypes={this.state.userTypes}
-                    getAll={() => this.getAll()}
-                    />
+                    navigation={this.state.object}/>
                 ) : null}
+      
                 {this.state.action === "profile" ? (
                     <Profile
                         user={this.state.user}

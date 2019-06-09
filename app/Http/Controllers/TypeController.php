@@ -108,7 +108,6 @@ class TypeController extends Controller
         $user->types()->detach();
        foreach ($request->userTypes as $userType) {
         $type = Type::find($userType['id']);
-        Log::info($userType);
         $user->types()->save($type);
         $type->users()->updateExistingPivot($user->id,['hype' => $userType['hype']]);
  
@@ -116,11 +115,19 @@ class TypeController extends Controller
     $allTypes = Type::all()->unique();
      
     
+        return response();
+    }
+
+    public function hypecheck($groupId) {
+
+        $user =  Auth::user();
+        $group = \App\Group::whereId($groupId)->with(['types.users','users.types'])->first();
         return response()->json([ 
            
             
-            'nype' => $allTypes,
+            'group' => $group,
             ]);
+
     }
     
 }
