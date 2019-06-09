@@ -115,7 +115,7 @@ class TypeController extends Controller
     $allTypes = Type::all()->unique();
      
     
-        return response();
+        return response()->json($user);
     }
 
     public function hypecheck($groupId) {
