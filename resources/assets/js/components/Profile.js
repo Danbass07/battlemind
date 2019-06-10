@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Matrix from './Matrix';
+import Matrix from '../containers/Matrix';
 
 
 

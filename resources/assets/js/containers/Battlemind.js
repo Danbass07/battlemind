@@ -45,7 +45,6 @@ class Battlemind extends Component {
     }
 
     buttonHandler(e) {
-        console.log(e.target.value);
         if (e.target.name === "event") {
             this.setState({
                 object: ""
@@ -58,13 +57,28 @@ class Battlemind extends Component {
 
     getAll() {
         axios.get("/types/hypecheck/2");
-        axios.get("/types").then(response =>
-            this.setState({
-                userTypes:  [...response.data.userTypes],
-                types: [...response.data.allTypes],
+        axios.get("/types").then(response =>{
+            const    userTypes = [...response.data.userTypes]
+            userTypes.forEach( userType => {
                 
-            },)
-        );
+                    if (userType.users.length !== 0) {
+                       
+                        userType.users.map(user => {
+                            if (response.data.user.id === user.id) {
+                                userType.hype = user.pivot.hype;
+                     
+                            }
+                        })
+                        
+                    } else { userType.hype = 5 }
+                    this.setState({
+                        userTypes:  [...userTypes],
+                        types: [...response.data.allTypes],
+                        
+                    })
+                })
+            })
+
         axios.get(`/users`).then(response =>
             this.setState({
                 user: { ...response.data }
@@ -120,7 +134,7 @@ class Battlemind extends Component {
     }
 
     render() {
-        
+       
         return (
             <div className="Battlemind">
                 {/* {this.state.user.hints ? <FlashMessage 
@@ -141,6 +155,7 @@ class Battlemind extends Component {
 
                 {this.state.action === "hype"  ? (
                     <Hypenotizer
+                    userTypes={this.state.userTypes}
                     navigation={this.state.object}/>
                 ) : null}
       

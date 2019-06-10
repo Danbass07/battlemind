@@ -14,22 +14,43 @@ class Hypenotizer extends Component {
 
         };
     }
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(nextProps.userTypes !== prevState.userTypes){
+          return { userTypes: nextProps.userTypes};
+       }
+       else return null;
+     }
+     
+     componentDidUpdate(prevProps, prevState) {
+       if(prevProps.userTypes!==this.props.userTypes){
+         //Perform some operation here
+         this.setState({userTypes: this.props.userTypes});
+       
+       }
+     }
     componentDidMount() {
-        axios.get("/types").then(response =>{
-            response.data.userTypes.forEach( userType => {
-                if (userType.users.length !== 0) {
-                  
-                    userType.hype = userType.users[0].pivot.hype;
-                } else { userType.hype = 5 }
+        // axios.get("/types").then(response =>{
+        //     response.data.userTypes.forEach( userType => {
+        //         if (userType.users.length !== 0) {
+        //             userType.users.map(user => {
+        //                 if (response.data.user.id === user.id) {
+        //                     userType.hype = user.pivot.hype;
+        //                 }
+        //             })
+                    
+        //         } else { userType.hype = 5 }
                
-            })
-            this.setState({
-                userTypes:  [...response.data.userTypes],
+        //     })
+        //     this.setState({
+        //         userTypes:  [...response.data.userTypes],
+               
+        //    })
+        // })
+                 this.setState({
+                userTypes:  [...this.props.userTypes],
                
            })
-        }
-            
-        );}
+    }
   
     hypeLevelHandler(e, userType) {
         let userTypes = [...this.state.userTypes]
@@ -53,7 +74,6 @@ class Hypenotizer extends Component {
     }
 
     render() {
-        
         return(
        <React.Fragment>
            {this.props.navigation ===  'Hypeset' ?  <Hypeset

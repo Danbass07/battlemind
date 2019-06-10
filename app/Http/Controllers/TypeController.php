@@ -21,7 +21,6 @@ class TypeController extends Controller
 
          return response()->json([ 
              'user' => $user,
-             'user' => $user,
              'userTypes' => $userTypes,
              'allTypes' => $allTypes,
              ]);
@@ -115,9 +114,9 @@ class TypeController extends Controller
  
       }
     $allTypes = Type::all()->unique();
-        return response();
+     
     
-        return response()->json($user);
+        return response('success');
     }
 
     public function hypecheck($groupId) {

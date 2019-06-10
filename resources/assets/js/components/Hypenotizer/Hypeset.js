@@ -9,7 +9,7 @@ class Hypeset extends Component {
   
 
     render() {
-    
+    console.log()
         
         return(
        <React.Fragment>
@@ -17,7 +17,7 @@ class Hypeset extends Component {
             <div className='hype-wrapper'>
 
             
-            {this.props.userTypes.length !== 0 ? this.props.userTypes.map((userType) => {
+            {Array.isArray(this.props.userTypes) ? this.props.userTypes.map((userType) => {
       
                     return (
                         

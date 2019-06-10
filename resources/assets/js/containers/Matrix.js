@@ -49,10 +49,6 @@ class Matrix extends Component {
                                 </select>
                                 <button onClick={() => this.addTypeToGroup()}>ADD GAME</button>
 
-                       
-                            
-              
-           
            </div>
         )
     }
