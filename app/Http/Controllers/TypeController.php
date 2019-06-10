@@ -20,6 +20,8 @@ class TypeController extends Controller
         $allTypes = Type::all()->unique();
 
          return response()->json([ 
+             'user' => $user,
+             'user' => $user,
              'userTypes' => $userTypes,
              'allTypes' => $allTypes,
              ]);
@@ -113,7 +115,7 @@ class TypeController extends Controller
  
       }
     $allTypes = Type::all()->unique();
-     
+        return response();
     
         return response()->json($user);
     }
