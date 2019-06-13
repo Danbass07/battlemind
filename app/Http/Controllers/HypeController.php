@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -8,17 +8,21 @@ use App\Group;
 
 class HypeController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $group=Group::find(1)->with('types');
-        $types=$group->pluck('types')->collapse();
+        $group=Group::where('id', $id)->with('types')->get()->flatten();
+       $types=$group->pluck('types')->collapse();
 
-        return response()->toJson($types);
+        return response()->json([
+            'group' =>$group[0],
+            'types' => $types
+            ]);
     }
 
     /**

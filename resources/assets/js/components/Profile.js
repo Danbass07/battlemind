@@ -15,10 +15,10 @@ class Profile extends Component {
                 <h1>{this.props.user.name}</h1>
       
                 </div>
-               
+{/*                
                 <Matrix
                 groups={this.props.groups}
-                types={this.props.types}/>
+                types={this.props.types}/> */}
                 <div className="group-list">
                     {this.props.groups.length ? this.props.groups.map((group) => {
                         return (

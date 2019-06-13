@@ -59882,8 +59882,8 @@ var Battlemind = function (_Component) {
             action: "event",
             object: "none",
             types: [{ id: 0, type: "test" }],
-            userTypes: [1, 2],
-            allTypes: [1, 1],
+            userTypes: [],
+            allTypes: [],
             scoreboards: [],
             userPlayers: [{}],
             leagues: [{}],
@@ -62620,9 +62620,6 @@ var Profile = function (_Component) {
                         this.props.user.name
                     )
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__containers_Matrix__["a" /* default */], {
-                    groups: this.props.groups,
-                    types: this.props.types }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'group-list' },
@@ -62982,33 +62979,16 @@ var Hypenotizer = function (_Component) {
     }
 
     _createClass(Hypenotizer, [{
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps, prevState) {
-            if (prevProps.userTypes !== this.props.userTypes) {
-                //Perform some operation here
-                this.setState({ userTypes: this.props.userTypes });
-            }
-        }
-    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            // axios.get("/types").then(response =>{
-            //     response.data.userTypes.forEach( userType => {
-            //         if (userType.users.length !== 0) {
-            //             userType.users.map(user => {
-            //                 if (response.data.user.id === user.id) {
-            //                     userType.hype = user.pivot.hype;
-            //                 }
-            //             })
-
-            //         } else { userType.hype = 5 }
-
-            //     })
-            //     this.setState({
-            //         userTypes:  [...response.data.userTypes],
-
-            //    })
-            // })
+            this.props.userTypes.forEach(function (userType) {
+                var totalHype = 0;
+                userType.users.forEach(function (user) {
+                    totalHype += user.pivot.hype;
+                });
+                userType.totalHype = totalHype;
+                userType.average = (totalHype / userType.users.length).toFixed(1);
+            });
             this.setState({
                 userTypes: [].concat(_toConsumableArray(this.props.userTypes))
 
@@ -63017,12 +62997,24 @@ var Hypenotizer = function (_Component) {
     }, {
         key: 'hypeLevelHandler',
         value: function hypeLevelHandler(e, userType) {
+            console.log('totalHype');
             var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
             userTypes.forEach(function (stateUserType) {
                 if (stateUserType === userType) {
                     stateUserType.hype = +e.target.value;
                 }
             });
+            userTypes.forEach(function (userType) {
+
+                var totalHype = 0;
+                userType.users.forEach(function (user) {
+                    totalHype += user.pivot.hype;
+                    console.log(totalHype);
+                });
+                userType.totalHype = totalHype;
+                userType.average = (totalHype / userType.users.length).toFixed(1);
+            });
+
             this.setState({
                 userTypes: userTypes
             });
@@ -63054,21 +63046,13 @@ var Hypenotizer = function (_Component) {
                     }
                 }) : null,
                 this.props.navigation === 'Hypecheck' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
-                    userTypes: this.state.userTypes,
-                    hypeLevels: this.state.hypeLevels
+                    userTypes: this.state.userTypes
                 }) : null,
                 this.props.navigation === 'Hypevote' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
                     userTypes: this.state.userTypes,
                     hypeLevels: this.state.hypeLevels
                 }) : null
             );
-        }
-    }], [{
-        key: 'getDerivedStateFromProps',
-        value: function getDerivedStateFromProps(nextProps, prevState) {
-            if (nextProps.userTypes !== prevState.userTypes) {
-                return { userTypes: nextProps.userTypes };
-            } else return null;
         }
     }]);
 
@@ -63187,8 +63171,6 @@ var Hypeset = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -63203,31 +63185,10 @@ var Hypecheck = function (_Component) {
     function Hypecheck(props) {
         _classCallCheck(this, Hypecheck);
 
-        var _this = _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
-
-        _this.state = {
-            data: []
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
     }
 
     _createClass(Hypecheck, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.props.userTypes.forEach(function (userType) {
-                var totalHype = 0;
-                userType.users.forEach(function (user) {
-                    totalHype += user.pivot.hype;
-                });
-                userType.totalHype = totalHype;
-                userType.average = (totalHype / userType.users.length).toFixed(1);
-            });
-
-            this.setState({
-                data: [].concat(_toConsumableArray(this.props.userTypes))
-            });
-        }
-    }, {
         key: "render",
         value: function render() {
             var style = {
@@ -63435,7 +63396,7 @@ var Matrix = function (_Component) {
     return Matrix;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Matrix);
+/* unused harmony default export */ var _unused_webpack_default_export = (Matrix);
 
 /***/ })
 /******/ ]);

@@ -14,38 +14,16 @@ class Hypenotizer extends Component {
 
         };
     }
-    static getDerivedStateFromProps(nextProps, prevState){
-        if(nextProps.userTypes !== prevState.userTypes){
-          return { userTypes: nextProps.userTypes};
-       }
-       else return null;
-     }
-     
-     componentDidUpdate(prevProps, prevState) {
-       if(prevProps.userTypes!==this.props.userTypes){
-         //Perform some operation here
-         this.setState({userTypes: this.props.userTypes});
-       
-       }
-     }
+   
     componentDidMount() {
-        // axios.get("/types").then(response =>{
-        //     response.data.userTypes.forEach( userType => {
-        //         if (userType.users.length !== 0) {
-        //             userType.users.map(user => {
-        //                 if (response.data.user.id === user.id) {
-        //                     userType.hype = user.pivot.hype;
-        //                 }
-        //             })
-                    
-        //         } else { userType.hype = 5 }
-               
-        //     })
-        //     this.setState({
-        //         userTypes:  [...response.data.userTypes],
-               
-        //    })
-        // })
+        this.props.userTypes.forEach(userType => {
+            let totalHype = 0;
+            userType.users.forEach(user => {
+                totalHype += user.pivot.hype;
+            });
+            userType.totalHype = totalHype;
+            userType.average = (totalHype / userType.users.length).toFixed(1);
+        });
                  this.setState({
                 userTypes:  [...this.props.userTypes],
                
@@ -53,6 +31,7 @@ class Hypenotizer extends Component {
     }
   
     hypeLevelHandler(e, userType) {
+        console.log('totalHype')
         let userTypes = [...this.state.userTypes]
         userTypes.forEach(stateUserType => {
             if (stateUserType === userType) {
@@ -60,6 +39,17 @@ class Hypenotizer extends Component {
             }
             
         })
+        userTypes.forEach(userType => {
+            
+            let totalHype = 0;
+            userType.users.forEach(user => {
+                totalHype += user.pivot.hype;
+                console.log(totalHype)
+            });
+            userType.totalHype = totalHype;
+            userType.average = (totalHype / userType.users.length).toFixed(1);
+        });
+           
         this.setState({
             userTypes: userTypes
         })
@@ -74,6 +64,7 @@ class Hypenotizer extends Component {
     }
 
     render() {
+        
         return(
        <React.Fragment>
            {this.props.navigation ===  'Hypeset' ?  <Hypeset
@@ -85,7 +76,6 @@ class Hypenotizer extends Component {
 
             {this.props.navigation ===  'Hypecheck' ?  <Hypecheck
            userTypes={this.state.userTypes}
-           hypeLevels={this.state.hypeLevels}
             />:null}
            
            {this.props.navigation ===  'Hypevote' ?  <Hypevote

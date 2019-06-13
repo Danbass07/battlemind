@@ -17,4 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', "HypeController@index");
+Route::get('/hypenotizer/{id}', "HypeController@index");

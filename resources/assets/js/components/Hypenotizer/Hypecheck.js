@@ -3,24 +3,9 @@ import React, { Component } from "react";
 class Hypecheck extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: []
-        };
+       
     }
-    componentDidMount() {
-        this.props.userTypes.forEach(userType => {
-            let totalHype = 0;
-            userType.users.forEach(user => {
-                totalHype += user.pivot.hype;
-            });
-            userType.totalHype = totalHype;
-            userType.average = (totalHype / userType.users.length).toFixed(1);
-        });
-
-        this.setState({
-            data: [...this.props.userTypes]
-        });
-    }
+  
 
     render() {
         const style = {
