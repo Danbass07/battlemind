@@ -23,7 +23,8 @@ class Hypecheck extends Component {
         return (
             <React.Fragment>
                 <button onClick={() => this.props.refreshData()} className='hype-button'>Hype Fresh</button>
-                <table style={style}>
+                <div style={style}>
+                <table >
                     <tbody >
                         {this.props.userTypes.map(userType => {
                             return (
@@ -36,6 +37,8 @@ class Hypecheck extends Component {
                         })}
                     </tbody>
                 </table>
+                </div>
+           
             
             </React.Fragment>
         );

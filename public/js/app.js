@@ -63227,32 +63227,36 @@ var Hypecheck = function (_Component) {
                     "Hype Fresh"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "table",
+                    "div",
                     { style: style },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "tbody",
+                        "table",
                         null,
-                        this.props.userTypes.map(function (userType) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "tr",
-                                { style: style2, key: userType.id },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "td",
-                                    null,
-                                    userType.type
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "td",
-                                    { style: { marginLeft: 'auto' } },
-                                    userType.totalHype
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "td",
-                                    { style: { marginLeft: '20px' } },
-                                    userType.average
-                                )
-                            );
-                        })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "tbody",
+                            null,
+                            this.props.userTypes.map(function (userType) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "tr",
+                                    { style: style2, key: userType.id },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "td",
+                                        null,
+                                        userType.type
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "td",
+                                        { style: { marginLeft: 'auto' } },
+                                        userType.totalHype
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "td",
+                                        { style: { marginLeft: '20px' } },
+                                        userType.average
+                                    )
+                                );
+                            })
+                        )
                     )
                 )
             );
