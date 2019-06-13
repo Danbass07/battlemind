@@ -63124,7 +63124,7 @@ var Hypeset = function (_Component) {
                     { className: 'hype-button', onClick: function onClick() {
                             return _this2.props.hypenotizer();
                         } },
-                    'HYPE OR NOT HYPE'
+                    'CLICK HERE TO SAVE'
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',

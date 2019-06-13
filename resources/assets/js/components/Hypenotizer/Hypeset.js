@@ -13,7 +13,7 @@ class Hypeset extends Component {
         
         return(
        <React.Fragment>
-           <button className='hype-button' onClick={() => this.props.hypenotizer()}>HYPE OR NOT HYPE</button>
+           <button className='hype-button' onClick={() => this.props.hypenotizer()}>CLICK HERE TO SAVE</button>
             <div className='hype-wrapper'>
 
             
