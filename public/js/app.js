@@ -62989,6 +62989,7 @@ var Hypenotizer = function (_Component) {
                 userType.totalHype = totalHype;
                 userType.average = (totalHype / userType.users.length).toFixed(1);
             });
+            this.props.userTypes.sort(this.compareValues('totalHype'));
             this.setState({
                 userTypes: [].concat(_toConsumableArray(this.props.userTypes))
 
@@ -62997,26 +62998,11 @@ var Hypenotizer = function (_Component) {
     }, {
         key: 'hypeLevelHandler',
         value: function hypeLevelHandler(e, userType) {
-            console.log('totalHype');
             var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
             userTypes.forEach(function (stateUserType) {
                 if (stateUserType === userType) {
                     stateUserType.hype = +e.target.value;
                 }
-            });
-            userTypes.forEach(function (userType) {
-
-                var totalHype = 0;
-                userType.users.forEach(function (user) {
-                    totalHype += user.pivot.hype;
-                    console.log(totalHype);
-                });
-                userType.totalHype = totalHype;
-                userType.average = (totalHype / userType.users.length).toFixed(1);
-            });
-
-            this.setState({
-                userTypes: userTypes
             });
         }
     }, {
@@ -63026,6 +63012,31 @@ var Hypenotizer = function (_Component) {
                 userTypes: this.state.userTypes
 
             });
+        }
+    }, {
+        key: 'compareValues',
+        value: function compareValues(key) {
+            var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            console.log('/// sorting');
+            return function (a, b) {
+                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    return 0;
+                }
+
+                var varA = typeof a[key] === "string" /// letter case insensitive
+                ? a[key].toUpperCase() : a[key];
+                var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+
+                var comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return ascending == false ? comparison * -1 : comparison;
+            };
         }
     }, {
         key: 'render',
@@ -63191,39 +63202,57 @@ var Hypecheck = function (_Component) {
     _createClass(Hypecheck, [{
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             var style = {
                 color: "white",
                 overflow: "scroll",
                 height: '400px'
+            };
+            var style2 = {
+                display: 'flex',
+                border: '1px solid white',
+                marginBottom: '2px'
             };
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { style: style },
-                    this.props.userTypes.map(function (userType) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { key: userType.id },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "h2",
-                                null,
-                                userType.type
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "h2",
-                                null,
-                                userType.totalHype
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "h2",
-                                null,
-                                userType.average
-                            )
-                        );
-                    })
+                    "button",
+                    { onClick: function onClick() {
+                            return _this2.props.refreshData();
+                        }, className: "hype-button" },
+                    "Hype Fresh"
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "table",
+                    { style: { width: '100%' } },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "tbody",
+                        { style: style },
+                        this.props.userTypes.map(function (userType) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "tr",
+                                { style: style2, key: userType.id },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "td",
+                                    null,
+                                    userType.type
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "td",
+                                    { style: { marginLeft: 'auto' } },
+                                    userType.totalHype
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "td",
+                                    { style: { marginLeft: '20px' } },
+                                    userType.average
+                                )
+                            );
+                        })
+                    )
                 )
             );
         }

@@ -13,20 +13,29 @@ class Hypecheck extends Component {
             overflow: "scroll",
             height: '400px',
         };
+        const style2 ={
+            display: 'flex',
+            border: '1px solid white',
+            marginBottom: '2px'
+        }
 
         return (
             <React.Fragment>
-                <div style={style} >
-                    {this.props.userTypes.map(userType => {
-                        return (
-                            <div key={userType.id}>
-                                <h2>{userType.type}</h2>
-                                <h2>{userType.totalHype}</h2>
-                                <h2>{userType.average}</h2>
-                            </div>
-                        );
-                    })}
-                </div>
+                <button onClick={() => this.props.refreshData()} className='hype-button'>Hype Fresh</button>
+                <table style={{width: '100%'}}>
+                    <tbody style={style} >
+                        {this.props.userTypes.map(userType => {
+                            return (
+                                <tr style={style2} key={userType.id}>
+                                    <td>{userType.type}</td>
+                                    <td style={{marginLeft: 'auto'}}>{userType.totalHype}</td>
+                                    <td style={{marginLeft: '20px'}}>{userType.average}</td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            
             </React.Fragment>
         );
     }

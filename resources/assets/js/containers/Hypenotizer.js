@@ -24,6 +24,7 @@ class Hypenotizer extends Component {
             userType.totalHype = totalHype;
             userType.average = (totalHype / userType.users.length).toFixed(1);
         });
+       this.props.userTypes.sort(this.compareValues('totalHype'));
                  this.setState({
                 userTypes:  [...this.props.userTypes],
                
@@ -31,27 +32,12 @@ class Hypenotizer extends Component {
     }
   
     hypeLevelHandler(e, userType) {
-        console.log('totalHype')
         let userTypes = [...this.state.userTypes]
         userTypes.forEach(stateUserType => {
             if (stateUserType === userType) {
                 stateUserType.hype = +e.target.value
             }
             
-        })
-        userTypes.forEach(userType => {
-            
-            let totalHype = 0;
-            userType.users.forEach(user => {
-                totalHype += user.pivot.hype;
-                console.log(totalHype)
-            });
-            userType.totalHype = totalHype;
-            userType.average = (totalHype / userType.users.length).toFixed(1);
-        });
-           
-        this.setState({
-            userTypes: userTypes
         })
         
     }
@@ -61,6 +47,30 @@ class Hypenotizer extends Component {
            
         });
      
+    }
+    compareValues(key, ascending = false) {
+        console.log('/// sorting');
+        return function(a, b) {
+            if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                // property doesn't exist on either object
+                return 0;
+            }
+
+            const varA =
+                typeof a[key] === "string" /// letter case insensitive
+                    ? a[key].toUpperCase()
+                    : a[key];
+            const varB =
+                typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+
+            let comparison = 0;
+            if (varA > varB) {
+                comparison = 1;
+            } else if (varA < varB) {
+                comparison = -1;
+            }
+            return ascending == false ? comparison * -1 : comparison;
+        };
     }
 
     render() {
