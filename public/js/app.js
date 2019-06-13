@@ -63207,7 +63207,8 @@ var Hypecheck = function (_Component) {
             var style = {
                 color: "white",
                 overflow: "scroll",
-                height: '400px'
+                height: '400px',
+                width: '100%'
             };
             var style2 = {
                 display: 'flex',
@@ -63227,10 +63228,10 @@ var Hypecheck = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "table",
-                    { style: { width: '100%' } },
+                    { style: style },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "tbody",
-                        { style: style },
+                        null,
                         this.props.userTypes.map(function (userType) {
                             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "tr",

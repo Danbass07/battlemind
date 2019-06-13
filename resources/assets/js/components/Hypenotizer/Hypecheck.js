@@ -12,6 +12,7 @@ class Hypecheck extends Component {
             color: "white",
             overflow: "scroll",
             height: '400px',
+            width: '100%'
         };
         const style2 ={
             display: 'flex',
@@ -22,8 +23,8 @@ class Hypecheck extends Component {
         return (
             <React.Fragment>
                 <button onClick={() => this.props.refreshData()} className='hype-button'>Hype Fresh</button>
-                <table style={{width: '100%'}}>
-                    <tbody style={style} >
+                <table style={style}>
+                    <tbody >
                         {this.props.userTypes.map(userType => {
                             return (
                                 <tr style={style2} key={userType.id}>
