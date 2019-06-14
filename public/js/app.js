@@ -63119,9 +63119,6 @@ var Hypenotizer = function (_Component) {
                 userTypes: this.state.userTypes
 
             });
-            this.setState({
-                userTypes: this.state.userTypes
-            });
         }
     }, {
         key: 'compareValues',
