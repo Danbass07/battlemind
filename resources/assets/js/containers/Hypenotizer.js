@@ -45,7 +45,8 @@ class Hypenotizer extends Component {
         axios.post(`/types/hypenotizer`, {
             userTypes: this.state.userTypes,
            
-        });
+        })
+  ;
      
     }
     compareValues(key, ascending = false) {

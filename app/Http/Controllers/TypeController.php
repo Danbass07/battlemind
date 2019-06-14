@@ -110,7 +110,7 @@ class TypeController extends Controller
        foreach ($request->userTypes as $userType) {
         $type = Type::find($userType['id']);
         $user->types()->save($type);
-        $type->users()->updateExistingPivot($user->id,['hype' => $userType['hype']]);
+        $type->users()->updateExistingPivot($user->id, ['hype' => $userType['hype'] ? $userType['hype']: 5 ]);
  
       }
     $allTypes = Type::all()->unique();
