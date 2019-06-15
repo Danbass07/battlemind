@@ -108,6 +108,7 @@ class TypeController extends Controller
         $user =  Auth::user();
         $user->types()->detach();
        foreach ($request->userTypes as $userType) {
+           Log::info($userType);
         $type = Type::find($userType['id']);
         $user->types()->save($type);
         if( $userType['hype'] ){

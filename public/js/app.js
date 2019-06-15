@@ -63089,6 +63089,9 @@ var Hypenotizer = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.props.userTypes.forEach(function (userType) {
+                if (!userType.hype) {
+                    userType.hype = 5;
+                }
                 var totalHype = 0;
                 userType.users.forEach(function (user) {
                     totalHype += user.pivot.hype;
@@ -63115,6 +63118,7 @@ var Hypenotizer = function (_Component) {
     }, {
         key: 'hypenotizer',
         value: function hypenotizer() {
+            console.log(this.state.userTypes);
             axios.post('/types/hypenotizer', {
                 userTypes: this.state.userTypes
 

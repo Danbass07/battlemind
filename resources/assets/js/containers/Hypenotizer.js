@@ -17,6 +17,7 @@ class Hypenotizer extends Component {
    
     componentDidMount() {
         this.props.userTypes.forEach(userType => {
+            if(!userType.hype) { userType.hype = 5}
             let totalHype = 0;
             userType.users.forEach(user => {
                 totalHype += user.pivot.hype;
@@ -42,6 +43,7 @@ class Hypenotizer extends Component {
         
     }
     hypenotizer() {
+        console.log(this.state.userTypes);
         axios.post(`/types/hypenotizer`, {
             userTypes: this.state.userTypes,
            
