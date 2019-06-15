@@ -105,21 +105,15 @@ class TypeController extends Controller
     }
 
     public function hypenotizer(Request $request) {
-        $user =  Auth::user();
-        $user->types()->detach();
-       foreach ($request->userTypes as $userType) {
-           Log::info($userType);
-        $type = Type::find($userType['id']);
-        $user->types()->save($type);
-        if( $userType['hype'] ){
+
+        $user =  Auth::user();              //find user
+        $user->types()->detach();           //delete past results
+
+        foreach ($request->userTypes as $userType) { // loop and set values
+            $type = Type::find($userType['id']);
+            $user->types()->save($type);
             $type->users()->updateExistingPivot($user->id, ['hype' => $userType['hype']]);
         }
-        
- 
-      }
-    $allTypes = Type::all()->unique();
-     
-    
         return response('success');
     }
 
