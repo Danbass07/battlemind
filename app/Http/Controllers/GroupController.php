@@ -128,7 +128,7 @@ class GroupController extends Controller
     public function removeUser($id)
     {
         $group = \App\Group::findOrfail($id);
-        $user =  Auth::user()->with;
+        $user =  Auth::user()->with('groups')->get();
        
       
         $user->types()->detach();

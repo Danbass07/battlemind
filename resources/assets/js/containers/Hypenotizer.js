@@ -43,7 +43,6 @@ class Hypenotizer extends Component {
         
     }
     hypenotizer() {
-        console.log(this.state.userTypes);
         axios.post(`/types/hypenotizer`, {
             userTypes: this.state.userTypes,
            

@@ -121,11 +121,8 @@ class TypeController extends Controller
 
         $user =  Auth::user();
         $group = \App\Group::whereId($groupId)->with(['types.users','users.types'])->first();
-        return response()->json([ 
-           
-            
-            'group' => $group,
-            ]);
+        
+        return response()->json([ 'group' => $group]);
 
     }
     

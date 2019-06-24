@@ -63118,7 +63118,6 @@ var Hypenotizer = function (_Component) {
     }, {
         key: 'hypenotizer',
         value: function hypenotizer() {
-            console.log(this.state.userTypes);
             axios.post('/types/hypenotizer', {
                 userTypes: this.state.userTypes
 
