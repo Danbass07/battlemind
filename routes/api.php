@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/hypenotizer/{id}', "HypeController@index");
+Route::get('/hypenotizer/{id}/typedetail/{tid}', "HypeController@typedetail");
