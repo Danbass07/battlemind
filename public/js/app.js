@@ -60641,7 +60641,7 @@ var Player = function (_Component) {
         _this.state = {
             name: '',
             type: 'planeswalker',
-            types: [],
+            allTypes: [],
             url: ''
 
         };
@@ -60651,8 +60651,9 @@ var Player = function (_Component) {
 
     _createClass(Player, [{
         key: 'changeHandler',
-        value: function changeHandler(e) {
-            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
+        value: function changeHandler(e, placeholder) {
+
+            this.setState(_defineProperty({}, placeholder, e.target.value));
         }
     }, {
         key: 'submitHandler',
@@ -60686,7 +60687,7 @@ var Player = function (_Component) {
 
             axios.get('/types').then(function (response) {
                 return _this3.setState({
-                    types: [].concat(_toConsumableArray(response.data.types))
+                    allTypes: [].concat(_toConsumableArray(response.data.allTypes))
                 });
             });
         }
@@ -60737,10 +60738,9 @@ var Player = function (_Component) {
                                             className: 'form-group' },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
                                             className: 'form-control',
-                                            placeholder: 'name',
                                             value: this.state.name,
                                             onChange: function onChange(e) {
-                                                return _this4.changeHandler(e);
+                                                return _this4.changeHandler(e, "name");
                                             },
                                             required: true
 
@@ -60748,13 +60748,12 @@ var Player = function (_Component) {
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'select',
                                             { className: 'myform-control',
-                                                placeholder: 'type',
                                                 required: true,
                                                 value: this.state.type,
                                                 onChange: function onChange(e) {
-                                                    return _this4.changeHandler(e);
+                                                    return _this4.changeHandler(e, "type");
                                                 } },
-                                            this.state.types.map(function (type) {
+                                            this.state.allTypes.map(function (type) {
                                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                     'option',
                                                     { value: type.type, key: type.id },
@@ -60764,11 +60763,10 @@ var Player = function (_Component) {
                                         ),
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
                                             className: 'form-control',
-                                            placeholder: 'url',
                                             required: true,
                                             value: this.state.url,
                                             onChange: function onChange(e) {
-                                                return _this4.changeHandler(e);
+                                                return _this4.changeHandler(e, "url");
                                             }
                                         })
                                     ),
@@ -61651,56 +61649,59 @@ var List = function (_Component) {
     }
 
     _createClass(List, [{
-        key: 'deleteHandler',
+        key: "deleteHandler",
         value: function deleteHandler(id) {
-
             var isNotId = function isNotId(contentToDisplay) {
                 return contentToDisplay.id !== id;
             };
             var updatedContent = this.state.contentToDisplay.filter(isNotId);
             this.setState({ contentToDisplay: updatedContent });
-            axios.delete('/' + this.props.object + 's/' + id);
+            axios.delete("/" + this.props.object + "s/" + id);
         }
     }, {
-        key: 'renderContent',
+        key: "renderContent",
         value: function renderContent(type) {
             var _this2 = this;
 
             return this.state.contentToDisplay.map(function (contentToDisplay) {
-                if (contentToDisplay.type === type) {
-
+                if (contentToDisplay.type === type || _this2.props.object === 'league') {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { key: contentToDisplay.id, className: 'list-item' },
+                        "div",
+                        { key: contentToDisplay.id, className: "list-item" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'list-item-name' },
+                            "div",
+                            { className: "list-item-name" },
                             contentToDisplay.name
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { to: '/' + _this2.props.object + 's/' + contentToDisplay.id + '/edit', className: 'button update' },
-                            'Update'
+                            {
+                                to: "/" + _this2.props.object + "s/" + contentToDisplay.id + "/edit",
+                                className: "button update"
+                            },
+                            "Update"
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { onClick: function onClick() {
+                            "button",
+                            {
+                                onClick: function onClick() {
                                     return _this2.deleteHandler(contentToDisplay.id);
                                 },
-                                className: 'button' },
-                            'Delete'
+                                className: "button"
+                            },
+                            "Delete"
                         )
                     );
                 }
             });
         }
     }, {
-        key: 'getContent',
+        key: "getContent",
         value: function getContent() {
             var _this3 = this;
 
-            if (this.props.object !== 'none') {
-                axios.get('/' + this.props.object + 's').then(function (response) {
+            if (this.props.object !== "none") {
+                axios.get("/" + this.props.object + "s").then(function (response) {
                     return _this3.setState({
                         myContent: [].concat(_toConsumableArray(response.data.content[0])),
                         friendsContent: [].concat(_toConsumableArray(response.data.content[1])),
@@ -61710,33 +61711,33 @@ var List = function (_Component) {
             }
         }
     }, {
-        key: 'componentWillMount',
+        key: "componentWillMount",
         value: function componentWillMount() {
             this.getContent();
         }
     }, {
-        key: 'componentDidUpdate',
+        key: "componentDidUpdate",
         value: function componentDidUpdate(prevProps) {
             if (prevProps.object !== this.props.object) {
                 this.getContent();
             }
         }
     }, {
-        key: 'myOnlyButtonHandler',
+        key: "myOnlyButtonHandler",
         value: function myOnlyButtonHandler() {
             this.setState({
                 contentToDisplay: [].concat(_toConsumableArray(this.state.myContent))
             });
         }
     }, {
-        key: 'myFriendsOnlyButtonHandler',
+        key: "myFriendsOnlyButtonHandler",
         value: function myFriendsOnlyButtonHandler() {
             this.setState({
                 contentToDisplay: [].concat(_toConsumableArray(this.state.friendsContent))
             });
         }
     }, {
-        key: 'allButtonHandler',
+        key: "allButtonHandler",
         value: function allButtonHandler() {
             var all = this.state.myContent.concat(this.state.friendsContent);
             this.setState({
@@ -61744,7 +61745,7 @@ var List = function (_Component) {
             });
         }
     }, {
-        key: 'typeChangeHandler',
+        key: "typeChangeHandler",
         value: function typeChangeHandler(e) {
             e.preventDefault();
             this.setState({
@@ -61752,64 +61753,62 @@ var List = function (_Component) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this4 = this;
 
-            console.log(this.state);
-
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'Workarea' },
+                "div",
+                { className: "Workarea" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
+                    "button",
                     { onClick: function onClick() {
                             return _this4.myOnlyButtonHandler();
                         } },
-                    ' My only toggler'
+                    " ",
+                    "My only toggler"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
+                    "button",
                     { onClick: function onClick() {
                             return _this4.myFriendsOnlyButtonHandler();
                         } },
-                    ' My Friends only toggler'
+                    " ",
+                    "My Friends only toggler"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
+                    "button",
                     { onClick: function onClick() {
                             return _this4.allButtonHandler();
                         } },
-                    ' All toggler'
+                    " ",
+                    "All toggler"
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'select',
+                this.props.object !== 'league' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "select",
                     {
-                        name: 'Choose a type',
-                        className: 'myform-control',
+                        name: "Choose a type",
+                        className: "myform-control",
                         onChange: function onChange(e) {
                             return _this4.typeChangeHandler(e);
                         }
                     },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'option',
+                        "option",
                         null,
-                        'Choose a Type'
+                        "Choose a Type"
                     ),
                     this.props.types.map(function (type) {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'option',
-                            {
-                                value: type.name,
-                                key: type.id
-                            },
+                            "option",
+                            { value: type.name, key: type.id },
                             type.type
                         );
                     })
-                ),
+                ) : null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'list-grid' },
+                    "div",
+                    { className: "list-grid" },
                     this.renderContent(this.state.type)
                 )
             );

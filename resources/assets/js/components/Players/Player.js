@@ -8,7 +8,7 @@ class Player extends Component {
         this.state = {
             name: '',
             type: 'planeswalker',
-            types: [],
+            allTypes: [],
             url: '',
   
         };
@@ -19,10 +19,12 @@ class Player extends Component {
         
     
 
-    changeHandler(e) {
+    changeHandler(e, placeholder) {
+    
         this.setState({
-            [e.target.placeholder]: e.target.value
+            [placeholder]: e.target.value
         });
+ 
     }
 
 
@@ -52,18 +54,18 @@ class Player extends Component {
     getTypes() {
         axios.get('/types').then(response =>
          this.setState({
-            types: [...response.data.types]
-             })
+            allTypes: [...response.data.allTypes]
+             },)
         );
     }
     componentWillMount() {
       this.getPlayers(); 
       this.getTypes();
+      
     }
 
 
     render() {
-        
         return (
         <div > 
             
@@ -79,30 +81,27 @@ class Player extends Component {
                                className="form-group">
                                 <input 
                                 className="form-control"
-                                placeholder="name"
                                 value={this.state.name}
-                                onChange={(e) => this.changeHandler(e)}
+                                onChange={(e) => this.changeHandler(e, "name")}
                                 required
                                 
                                 />
                         <select className="myform-control" 
-                                placeholder="type"
                                 required
                                 value={this.state.type}
-                                onChange={(e) => this.changeHandler(e)}>
-                
-                        {this.state.types.map(type => (
+                                onChange={(e) => this.changeHandler(e, "type")}>
+               
+                        {this.state.allTypes.map(type => (
                             
-                        <option value={type.type} key={type.id}>{type.type}</option> ))}
+                        <option  value={type.type} key={type.id}>{type.type}</option> ))}
                         </select>
                                 
                                 
                                 <input 
                                 className="form-control" 
-                                placeholder="url"
                                 required
                                 value={this.state.url}
-                                onChange={(e) => this.changeHandler(e)}
+                                onChange={(e) => this.changeHandler(e, "url")}
                                 />
                                 
                                 

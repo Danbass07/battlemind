@@ -149,7 +149,7 @@ class Battlemind extends Component {
                <Switch>
 
 
-<Route exact path="/players/:id/edit" component={Player}></Route>
+<Route exact path="/players/:id/edit" component={ Player} ></Route>
 <Route exact path="/leagues/:id/edit" component={League}></Route>
 <Route exact path="/scoreboards/:id/edit" component={Scoreboard}></Route>
 
