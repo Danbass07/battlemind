@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Group;
 use App\Type;
+use App\Player;
 
 class HypeController extends Controller
 {
@@ -27,44 +28,44 @@ class HypeController extends Controller
 
     public function typedetail($id, $tid)
   {
-    $thisType2= Type::find($tid)->load('users');
-        $thisType= Type::find($tid);
+
+        $type= Type::find($tid)->load('users');
         $group=Group::where('id', $id)->with(['users','users.types', 'users.players'])->get();
 
-        $totalHype = $thisType2->users->map(function ($user) use ($tid) {
-            $hype = 0;
-            return    $user->types->map(function ($type) use ($tid , $hype){    
+        $totalHype = $type->users->map(function ($user) use ($tid) {
+           
+            return    $user->types->map(function ($type) use ($tid){    
              
                             if($type->id === intval($tid)) {
-                            return $hype +=  $type->pivot->hype;
+                            return $type->pivot->hype;
                             }
                             return ;
                         });
         })->collapse()->toArray();
 
-
-
-
-        $numberOfPlayers = $group->pluck('users')->collapse()->map(function ($user) use ($tid ,$thisType) {
-            return    $user->players->map(function ($player) use ($tid ,$thisType){    
+        $numberOfPlayers = $group->pluck('users')->collapse()->map(function ($user) use ($tid ,$type) {
+            return    $user->players->map(function ($player) use ($tid ,$type){    
                
-                            if($player->type == $thisType->type) {
+                            if($player->type == $type->type) {
                             return 1;  
                             }
                             return 0;
                         });
         })->collapse()->toArray();
 
-        $type=Type::where('id', $tid)->with('users')->get();
-        $types=Type::all()->load('groups');
+       $numberOfGames = Player::where('type', $type->type)->get()->load('scoreboards')->pluck('scoreboards')
+                        ->map( function ($scoreboards) {
+           return $scoreboards->map(function ($scoreboard) {
+               return $scoreboard->pivot->win;
+           });
+       })->collapse();
 
          return response()->json([
-             'thisType' => $thisType2,
+             'type' => $type,
              'group' =>$group[0],
-             'type' => $type[0],
-             'types' => $types,
              'totalHype' => array_sum($totalHype),
              'numberOfPlayers' => array_sum($numberOfPlayers),
+             'numberOfGames' => array_sum($numberOfGames->toArray()),
              ]);
 }
 
