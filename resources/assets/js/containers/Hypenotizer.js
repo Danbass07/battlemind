@@ -1,33 +1,49 @@
-import React, { Component } from 'react';
-import Hypeset from '../components/Hypenotizer/Hypeset';
-import Hypecheck from '../components/Hypenotizer/Hypecheck';
-import Hypevote from '../components/Hypenotizer/Hypevote';
-
+import React, { Component } from "react";
+import Hypeset from "../components/Hypenotizer/Hypeset";
+import Hypecheck from "../components/Hypenotizer/Hypecheck";
+import Hypevote from "../components/Hypenotizer/Hypevote";
 
 class Hypenotizer extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            hypeLevels: [ 1,2,3,4,5,6,7,8,9,10],
+            hypeLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             userTypes: [],
-
+            votingList: []
         };
     }
     voteOptions(e) {
-        console.log(this.state.userTypes);
-      const ones =  this.state.userTypes.map(type => {
-         return   type.users.map( user => {
-                console.log(type)
-              return  user.pivot.hype !== 1 ? type : null
-            })
-        })
-        console.log(ones);
+        if (this.state.userTypes.length === this.state.votingList.length) {
+
+            let votingList = [...this.state.userTypes];
+            let ignoreList =[]
+            this.state.userTypes.map(type => {
+                return type.users.map(user => {
+                   
+                    return user.pivot.hype == 1
+                        ? ignoreList.push(type)
+                        :  null;
+                });
+            });
+            ignoreList = [...new Set(ignoreList)];
+            votingList = votingList.filter(function(n){ return ignoreList.indexOf(n)>-1?false:n;});
+            this.setState({
+                votingList: votingList
+            });
+
+        } else {
+            this.setState({
+                votingList: [...this.props.userTypes],
+            });
+        }
+    
     }
-   
+
     componentDidMount() {
         this.props.userTypes.forEach(userType => {
-            if(!userType.hype) { userType.hype = 5}
+            if (!userType.hype) {
+                userType.hype = 5;
+            }
             let totalHype = 0;
             userType.users.forEach(user => {
                 totalHype += user.pivot.hype;
@@ -35,33 +51,27 @@ class Hypenotizer extends Component {
             userType.totalHype = totalHype;
             userType.average = (totalHype / userType.users.length).toFixed(1);
         });
-       this.props.userTypes.sort(this.compareValues('totalHype'));
-                 this.setState({
-                userTypes:  [...this.props.userTypes],
-               
-           })
+        this.props.userTypes.sort(this.compareValues("totalHype"));
+        this.setState({
+            userTypes: [...this.props.userTypes],
+            votingList: [...this.props.userTypes]
+        });
     }
-  
+
     hypeLevelHandler(e, userType) {
-        let userTypes = [...this.state.userTypes]
+        let userTypes = [...this.state.userTypes];
         userTypes.forEach(stateUserType => {
             if (stateUserType === userType) {
-                stateUserType.hype = +e.target.value
+                stateUserType.hype = +e.target.value;
             }
-            
-        })
-        
+        });
     }
     hypenotizer() {
         axios.post(`/types/hypenotizer`, {
-            userTypes: this.state.userTypes,
-           
-        })
-  ;
-     
+            userTypes: this.state.userTypes
+        });
     }
     compareValues(key, ascending = false) {
-        console.log('/// sorting');
         return function(a, b) {
             if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
                 // property doesn't exist on either object
@@ -86,32 +96,32 @@ class Hypenotizer extends Component {
     }
 
     render() {
-        
-        return(
-       <React.Fragment>
-           {this.props.navigation ===  'Hypeset' ?  <Hypeset
-           userTypes={this.state.userTypes}
-           hypeLevels={this.state.hypeLevels}
-           hypeLevelHandler={(e, userType) => this.hypeLevelHandler(e, userType)}
-           hypenotizer={() =>this.hypenotizer()}
-            />:null}
+        return (
+            <React.Fragment>
+                {this.props.navigation === "Hypeset" ? (
+                    <Hypeset
+                        userTypes={this.state.userTypes}
+                        hypeLevels={this.state.hypeLevels}
+                        hypeLevelHandler={(e, userType) =>
+                            this.hypeLevelHandler(e, userType)
+                        }
+                        hypenotizer={() => this.hypenotizer()}
+                    />
+                ) : null}
 
-            {this.props.navigation ===  'Hypecheck' ?  <Hypecheck
-           userTypes={this.state.userTypes}
-            />:null}
-           
-           {this.props.navigation ===  'Hypevote' ?  <Hypevote
-           userTypes={this.state.userTypes}
-           hypeLevels={this.state.hypeLevels}
-           voteOptions={(e) => this.voteOptions(e)}
-            />:null}
+                {this.props.navigation === "Hypecheck" ? (
+                    <Hypecheck userTypes={this.state.userTypes} />
+                ) : null}
 
-       </React.Fragment>
-           
-    
-
-                
-        )
+                {this.props.navigation === "Hypevote" ? (
+                    <Hypevote
+                        userTypes={this.state.votingList}
+                        hypeLevels={this.state.hypeLevels}
+                        voteOptions={e => this.voteOptions(e)}
+                    />
+                ) : null}
+            </React.Fragment>
+        );
     }
 }
-export default Hypenotizer
+export default Hypenotizer;

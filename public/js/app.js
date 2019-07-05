@@ -63078,26 +63078,40 @@ var Hypenotizer = function (_Component) {
 
         _this.state = {
             hypeLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            userTypes: []
-
+            userTypes: [],
+            votingList: []
         };
         return _this;
     }
 
     _createClass(Hypenotizer, [{
-        key: 'voteOptions',
+        key: "voteOptions",
         value: function voteOptions(e) {
-            console.log(this.state.userTypes);
-            var ones = this.state.userTypes.map(function (type) {
-                return type.users.map(function (user) {
-                    console.log(type);
-                    return user.pivot.hype !== 1 ? type : null;
+            if (this.state.userTypes.length === this.state.votingList.length) {
+
+                var votingList = [].concat(_toConsumableArray(this.state.userTypes));
+                var ignoreList = [];
+                this.state.userTypes.map(function (type) {
+                    return type.users.map(function (user) {
+
+                        return user.pivot.hype == 1 ? ignoreList.push(type) : null;
+                    });
                 });
-            });
-            console.log(ones);
+                ignoreList = [].concat(_toConsumableArray(new Set(ignoreList)));
+                votingList = votingList.filter(function (n) {
+                    return ignoreList.indexOf(n) > -1 ? false : n;
+                });
+                this.setState({
+                    votingList: votingList
+                });
+            } else {
+                this.setState({
+                    votingList: [].concat(_toConsumableArray(this.props.userTypes))
+                });
+            }
         }
     }, {
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             this.props.userTypes.forEach(function (userType) {
                 if (!userType.hype) {
@@ -63110,14 +63124,14 @@ var Hypenotizer = function (_Component) {
                 userType.totalHype = totalHype;
                 userType.average = (totalHype / userType.users.length).toFixed(1);
             });
-            this.props.userTypes.sort(this.compareValues('totalHype'));
+            this.props.userTypes.sort(this.compareValues("totalHype"));
             this.setState({
-                userTypes: [].concat(_toConsumableArray(this.props.userTypes))
-
+                userTypes: [].concat(_toConsumableArray(this.props.userTypes)),
+                votingList: [].concat(_toConsumableArray(this.props.userTypes))
             });
         }
     }, {
-        key: 'hypeLevelHandler',
+        key: "hypeLevelHandler",
         value: function hypeLevelHandler(e, userType) {
             var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
             userTypes.forEach(function (stateUserType) {
@@ -63127,19 +63141,17 @@ var Hypenotizer = function (_Component) {
             });
         }
     }, {
-        key: 'hypenotizer',
+        key: "hypenotizer",
         value: function hypenotizer() {
-            axios.post('/types/hypenotizer', {
+            axios.post("/types/hypenotizer", {
                 userTypes: this.state.userTypes
-
             });
         }
     }, {
-        key: 'compareValues',
+        key: "compareValues",
         value: function compareValues(key) {
             var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-            console.log('/// sorting');
             return function (a, b) {
                 if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
                     // property doesn't exist on either object
@@ -63160,14 +63172,14 @@ var Hypenotizer = function (_Component) {
             };
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this2 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
-                this.props.navigation === 'Hypeset' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], {
+                this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], {
                     userTypes: this.state.userTypes,
                     hypeLevels: this.state.hypeLevels,
                     hypeLevelHandler: function hypeLevelHandler(e, userType) {
@@ -63177,11 +63189,9 @@ var Hypenotizer = function (_Component) {
                         return _this2.hypenotizer();
                     }
                 }) : null,
-                this.props.navigation === 'Hypecheck' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
-                    userTypes: this.state.userTypes
-                }) : null,
-                this.props.navigation === 'Hypevote' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
-                    userTypes: this.state.userTypes,
+                this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], { userTypes: this.state.userTypes }) : null,
+                this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
+                    userTypes: this.state.votingList,
                     hypeLevels: this.state.hypeLevels,
                     voteOptions: function voteOptions(e) {
                         return _this2.voteOptions(e);
