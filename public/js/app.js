@@ -63469,7 +63469,7 @@ var Hypevote = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "div",
                                 null,
-                                "remove ones",
+                                "remove games hype 1 by someone",
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
                                     type: "checkbox",
                                     name: "ones",

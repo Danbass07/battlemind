@@ -32,7 +32,7 @@ class Hypevote extends Component {
                             <h1>Prepare to vote</h1>
                             <div className={"options"}>
                                 <div>
-                                    remove ones
+                                    remove games hype 1 by someone
                                     <input
                                         type="checkbox"
                                         name="ones"
