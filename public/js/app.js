@@ -63085,6 +63085,18 @@ var Hypenotizer = function (_Component) {
     }
 
     _createClass(Hypenotizer, [{
+        key: 'voteOptions',
+        value: function voteOptions(e) {
+            console.log(this.state.userTypes);
+            var ones = this.state.userTypes.map(function (type) {
+                return type.users.map(function (user) {
+                    console.log(type);
+                    return user.pivot.hype !== 1 ? type : null;
+                });
+            });
+            console.log(ones);
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.props.userTypes.forEach(function (userType) {
@@ -63170,7 +63182,10 @@ var Hypenotizer = function (_Component) {
                 }) : null,
                 this.props.navigation === 'Hypevote' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
                     userTypes: this.state.userTypes,
-                    hypeLevels: this.state.hypeLevels
+                    hypeLevels: this.state.hypeLevels,
+                    voteOptions: function voteOptions(e) {
+                        return _this2.voteOptions(e);
+                    }
                 }) : null
             );
         }
@@ -63391,27 +63406,135 @@ var Hypevote = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Hypevote.__proto__ || Object.getPrototypeOf(Hypevote)).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+            votingOptions: [1, 2, 3, 4],
+            voteStage: 0
+        };
         return _this;
     }
 
     _createClass(Hypevote, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {}
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            // axios.get(`/vote/stage)
+        }
     }, {
-        key: 'render',
+        key: "voteStageController",
+        value: function voteStageController(voteStage) {
+            this.setState({
+                voteStage: voteStage
+            });
+        }
+    }, {
+        key: "render",
         value: function render() {
+            var _this2 = this;
 
+            // voting will be cast by first who click he need to finish or cancel to let anyone else do anything but voting
             var style = {
-                color: 'white'
+                color: "white"
             };
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                null,
+                "div",
+                { className: "hype-vote-wrapper" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
+                    "h1",
                     { style: style },
-                    'HYPEVOTE '
+                    "HYPEVOTE "
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "main-area" },
+                    this.state.voteStage === 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "none" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h1",
+                            null,
+                            "Prepare to vote"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "options" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                null,
+                                "remove ones",
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                    type: "checkbox",
+                                    name: "ones",
+                                    value: "false",
+                                    onClick: function onClick(e) {
+                                        return _this2.props.voteOptions(e);
+                                    }
+                                })
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                null,
+                                "remove winner from last vote",
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                    type: "checkbox",
+                                    name: "winner",
+                                    value: "false",
+                                    onClick: function onClick(e) {
+                                        return _this2.props.voteOptions(e);
+                                    }
+                                })
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            null,
+                            this.props.userTypes.map(function (type, index) {
+                                return index < 5 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    { key: index },
+                                    type.type
+                                ) : null;
+                            })
+                        )
+                    ) : null,
+                    this.state.voteStage === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "none" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h1",
+                            null,
+                            "Vote"
+                        )
+                    ) : null,
+                    this.state.voteStage === 2 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "none" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h1",
+                            null,
+                            "See Results"
+                        )
+                    ) : null
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "buttons-area" },
+                    this.state.voteStage !== 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        {
+                            onClick: function onClick() {
+                                return _this2.voteStageController(+_this2.state.voteStage + -1);
+                            }
+                        },
+                        "PREVIOUS"
+                    ) : null,
+                    this.state.voteStage !== 2 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        {
+                            onClick: function onClick() {
+                                return _this2.voteStageController(+_this2.state.voteStage + 1);
+                            }
+                        },
+                        "NEXT"
+                    ) : null
                 )
             );
         }

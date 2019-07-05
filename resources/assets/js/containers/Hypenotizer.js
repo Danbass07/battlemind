@@ -14,6 +14,16 @@ class Hypenotizer extends Component {
 
         };
     }
+    voteOptions(e) {
+        console.log(this.state.userTypes);
+      const ones =  this.state.userTypes.map(type => {
+         return   type.users.map( user => {
+                console.log(type)
+              return  user.pivot.hype !== 1 ? type : null
+            })
+        })
+        console.log(ones);
+    }
    
     componentDidMount() {
         this.props.userTypes.forEach(userType => {
@@ -93,6 +103,7 @@ class Hypenotizer extends Component {
            {this.props.navigation ===  'Hypevote' ?  <Hypevote
            userTypes={this.state.userTypes}
            hypeLevels={this.state.hypeLevels}
+           voteOptions={(e) => this.voteOptions(e)}
             />:null}
 
        </React.Fragment>
