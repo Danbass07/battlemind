@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Group;
 use App\Type;
 use App\Player;
+use Illuminate\Support\Facades\Auth;
 
 class HypeController extends Controller
 {
@@ -32,7 +33,7 @@ class HypeController extends Controller
         $type= Type::find($tid)->load('users');
         $group=Group::where('id', $id)->with(['users','users.types', 'users.players'])->get();
 
-        $totalHype = $type->users->map(function ($user) use ($tid) {
+        $totalHype = $type->users->map(function ($user) use ($tid) { /// collect all hype values 
            
             return    $user->types->map(function ($type) use ($tid){    
              
@@ -53,7 +54,7 @@ class HypeController extends Controller
                         });
         })->collapse()->toArray();
 
-       $numberOfGames = Player::where('type', $type->type)->get()->load('scoreboards')->pluck('scoreboards')
+       $numberOfGames = Player::where('type', $type->type)->get()->load('scoreboards')->pluck('scoreboards') /// collect all win games to estimate number of games need to include drawa
                         ->map( function ($scoreboards) {
            return $scoreboards->map(function ($scoreboard) {
                return $scoreboard->pivot->win;
@@ -67,7 +68,19 @@ class HypeController extends Controller
              'numberOfPlayers' => array_sum($numberOfPlayers),
              'numberOfGames' => array_sum($numberOfGames->toArray()),
              ]);
-}
+    }
+    public function hypenotizer(Request $request) {
+
+        $user =  Auth::user();              //find user
+        $user->types()->detach();           //delete past results
+
+        foreach ($request->userTypes as $userType) { // loop and set values
+            $type = Type::find($userType['id']);
+            $user->types()->save($type);
+            $type->users()->updateExistingPivot($user->id, ['hype' => $userType['hype']]);
+        }
+        return response('success');
+    }
 
 
 }

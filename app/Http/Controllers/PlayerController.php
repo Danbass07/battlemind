@@ -71,6 +71,7 @@ class PlayerController extends Controller
         return response()->json([
             'player' => $player,
         ]);
+        return response();
     }
 
    

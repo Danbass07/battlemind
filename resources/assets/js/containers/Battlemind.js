@@ -56,7 +56,7 @@ class Battlemind extends Component {
     }
 
     getAll() {
-        axios.get("/types/hypecheck/2");
+      
         axios.get("/types").then(response =>{
             const    userTypes = [...response.data.userTypes]
             userTypes.forEach( userType => {

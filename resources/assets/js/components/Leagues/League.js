@@ -16,6 +16,9 @@ class League extends Component {
             allPlayers: [],
             leaguePlayers: [],
             action: 'minus',
+            response: {
+                status: "You are editing...:"
+            }
 
         };
   
@@ -44,10 +47,8 @@ class League extends Component {
 
 
     changeHandler(e) {
-
-        const property = e.target.placeholder
         this.setState({
-            [property]: e.target.value
+            [e.target.placeholder]: e.target.value
         });
     
     }
@@ -67,7 +68,10 @@ class League extends Component {
            
            
         }).then(response => {
-           this.props.history.push('/home');
+            this.setState({
+                response: response
+            });
+            console.log(response);
         });
 
     }
@@ -296,30 +300,7 @@ class League extends Component {
                                 value={this.state.draw_point_value}
                                 onChange={this.changeHandler}
                                 />
-                                 {/* <input 
-                                className="form-control" 
-                                placeholder="number_of_games"
-                                required
-                                type="number"
-                                value={this.state.number_of_games}
-                                onChange={this.changeHandler}
-                                />
-                                 <input 
-                                className="form-control" 
-                                placeholder="number_of_players"
-                                required
-                                type="number"
-                                value={this.state.number_of_players}
-                                onChange={this.changeHandler}
-                                />
-                                  <input 
-                                className="form-control" 
-                                placeholder="number_of_points"
-                                required
-                                type="number"
-                                value={this.state.number_of_points}
-                                onChange={this.changeHandler}
-                                /> */}
+    
                                 
                                 </div>
                                 
@@ -331,12 +312,21 @@ class League extends Component {
                                 >
                                Edit League
                                 </button>
+                                <div className="response-display">
+                                        {this.state.response.status === 200 ? (
+                                            <h2 style={{ color: "green" }}>
+                                                'SUCCESS'{" "}
+                                            </h2>
+                                        ) : (
+                                            this.state.response.status !== "You are editing...:" ?
+                                            <h2 style={{ color: "red" }}>
+                                                'FAILED'
+                                            </h2> : null
+                                        )}
+                                    </div>
                 </form>
                             <hr />
-                            {/* <button onClick={() => this.actionController()} className="btn btn-sm btn-dark float-right">
-                            { this.state.action}
-                            </button> */}
-                            {/* {this.renderPlayers()} */}
+                        
                         </div>
                     </div>
                 </div>

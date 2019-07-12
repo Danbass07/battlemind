@@ -22,27 +22,9 @@ class GroupController extends Controller
 
         $groups =  Group::with('users')->get();
         $user =  Auth::user();
-        // $players = Player::all();
-      
-
-
-
         $result = $user->load('players','groups')->groups->map(function ($group , $key){
             return $group;
-        })
-        ;
-
-
-
-
-
-
-
-
-
-
-
-
+        });
        return response()->json([
         'groups' => $groups,
         'result' => $result,

@@ -104,26 +104,15 @@ class TypeController extends Controller
        return response()->json($type); 
     }
 
-    public function hypenotizer(Request $request) {
 
-        $user =  Auth::user();              //find user
-        $user->types()->detach();           //delete past results
 
-        foreach ($request->userTypes as $userType) { // loop and set values
-            $type = Type::find($userType['id']);
-            $user->types()->save($type);
-            $type->users()->updateExistingPivot($user->id, ['hype' => $userType['hype']]);
-        }
-        return response('success');
-    }
+    // public function hypecheck($groupId) {
 
-    public function hypecheck($groupId) {
-
-        $user =  Auth::user();
-        $group = \App\Group::whereId($groupId)->with(['types.users','users.types'])->first();
+    //     $user =  Auth::user();
+    //     $group = \App\Group::whereId($groupId)->with(['types.users','users.types'])->first();
         
-        return response()->json([ 'group' => $group]);
+    //     return response()->json([ 'group' => $group]);
 
-    }
+    // }
     
 }

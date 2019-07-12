@@ -12,8 +12,10 @@ class Hypenotizer extends Component {
             votingList: []
         };
     }
-    voteOptions(e) {
-        if (this.state.userTypes.length === this.state.votingList.length) {
+    voteOptions() {
+        console.log(this.state.userTypes.length);
+        console.log(this.state.votingList.length);
+        if (JSON.stringify(this.state.userTypes.slice(0, 5)) == JSON.stringify(this.state.votingList) ) {
 
             let votingList = [...this.state.userTypes];
             let ignoreList =[]
@@ -26,14 +28,16 @@ class Hypenotizer extends Component {
                 });
             });
             ignoreList = [...new Set(ignoreList)];
+            console.log(ignoreList);
             votingList = votingList.filter(function(n){ return ignoreList.indexOf(n)>-1?false:n;});
+            console.log(votingList);
             this.setState({
-                votingList: votingList
+                votingList: [...votingList.slice(0, 5)]
             });
 
         } else {
             this.setState({
-                votingList: [...this.props.userTypes],
+                votingList: [...this.props.userTypes.slice(0, 5)],
             });
         }
     
@@ -54,7 +58,7 @@ class Hypenotizer extends Component {
         this.props.userTypes.sort(this.compareValues("totalHype"));
         this.setState({
             userTypes: [...this.props.userTypes],
-            votingList: [...this.props.userTypes]
+            votingList: [...this.props.userTypes.slice(0, 5)]
         });
     }
 
@@ -67,7 +71,7 @@ class Hypenotizer extends Component {
         });
     }
     hypenotizer() {
-        axios.post(`/types/hypenotizer`, {
+        axios.post(`/hype/hypenotizer`, {
             userTypes: this.state.userTypes
         });
     }
@@ -117,7 +121,7 @@ class Hypenotizer extends Component {
                     <Hypevote
                         userTypes={this.state.votingList}
                         hypeLevels={this.state.hypeLevels}
-                        voteOptions={e => this.voteOptions(e)}
+                        voteOptions={() => this.voteOptions()}
                     />
                 ) : null}
             </React.Fragment>

@@ -52,7 +52,7 @@ class Hypevote extends Component {
                             </div>
                             <div>
                                 {this.props.userTypes.map((type,index) => {
-                                  return index < 5 ?  <div key={index}>{type.type}</div> : null
+                                  return  <div key={index}>{type.type}</div> 
                                 })}
                             </div>
                         </div>

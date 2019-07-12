@@ -37,7 +37,7 @@ Route::get('/scoreboards/{id}/removePlayer/{pid}', 'ScoreboardController@removeP
 
 Route::get('/leagues/{id}/getResults', 'LeagueController@getResults');
 
-Route::resource('fileupload', 'FileuploadController');
+Route::resource('/fileupload', 'FileuploadController');
 
 Route::resource('/users', 'UserController');
 
@@ -48,7 +48,9 @@ Route::get('/groups/{id}/addUser', 'GroupController@addUser');
 Route::get('/groups/{id}/removeUser', 'GroupController@removeUser');
 
 Route::resource('/types', 'TypeController');
- Route::get('/types/{typeid}/addToTheGroup/{groupid}','TypeController@addToTheGroup' );
- Route::post('/types/hypenotizer', 'TypeController@hypenotizer');
- Route::get('/types/hypecheck/{id}', 'TypeController@hypecheck');
+Route::get('/types/{typeid}/addToTheGroup/{groupid}','TypeController@addToTheGroup' );
+Route::get('/types/hypecheck/{id}', 'TypeController@hypecheck');
  
+
+
+ Route::post('/hype/hypenotizer', 'HypeController@hypenotizer');

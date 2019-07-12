@@ -15,12 +15,16 @@ class List extends Component {
         axios.delete(`/${this.props.object}s/${id}`);
     }
     renderContent(type) {
+        console.log(type);
         return this.state.contentToDisplay.map(contentToDisplay => {
-            if (contentToDisplay.type === type || this.props.object === 'league')  {
+            if (contentToDisplay.type === type || this.props.object === 'league' || type === undefined || type === 'Show All')  {
                 return (
                     <div key={contentToDisplay.id} className="list-item">
                         <div className="list-item-name">
                             {contentToDisplay.name}
+                        </div>
+                        <div className="list-item-name">
+                            {contentToDisplay.type}
                         </div>
                         <Link
                             to={`/${this.props.object}s/${
@@ -90,23 +94,20 @@ class List extends Component {
         return (
             <div className="Workarea">
                 <button onClick={() => this.myOnlyButtonHandler()}>
-                    {" "}
                     My only toggler
                 </button>
                 <button onClick={() => this.myFriendsOnlyButtonHandler()}>
-                    {" "}
                     My Friends only toggler
                 </button>
                 <button onClick={() => this.allButtonHandler()}>
-                    {" "}
                     All toggler
                 </button>
                 {this.props.object !== 'league' ? <select
-                    name="Choose a type"
+                    name="Choose a Type"
                     className="myform-control"
                     onChange={e => this.typeChangeHandler(e)}
                 >
-                    <option>Choose a Type</option>
+                    <option>Show All</option>
                     {this.props.types.map(type => (
                         <option value={type.name} key={type.id}>
                             {type.type}
