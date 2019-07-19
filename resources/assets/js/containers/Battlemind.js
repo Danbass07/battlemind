@@ -164,7 +164,6 @@ class Battlemind extends Component {
                         user={this.state.user}
                         groups={this.state.groups}
                         types={this.state.types}
-                        
                         userGroups={this.state.user.groups}
                         addUser={group => this.addUser(group)}
                         contains={(userGroups, groups) =>
@@ -177,6 +176,7 @@ class Battlemind extends Component {
                     <Event
                         scoreboards={this.state.scoreboards}
                         userPlayers={this.state.userPlayers}
+                        friendsPlayers={this.state.friendsPlayers}
                         leagues={this.state.leagues}
                         type={this.state.type}
                     />

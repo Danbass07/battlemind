@@ -269,6 +269,10 @@ class Event extends Component {
                                 "noexist",
                                 this.props.userPlayers
                             )}
+                             {this.renderPlayers(
+                                "noexist",
+                                this.props.friendsPlayers
+                            )}
                         </div>
                     </div>
                 ) : null}

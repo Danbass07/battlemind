@@ -60026,7 +60026,6 @@ var Battlemind = function (_Component) {
                         user: this.state.user,
                         groups: this.state.groups,
                         types: this.state.types,
-
                         userGroups: this.state.user.groups,
                         addUser: function addUser(group) {
                             return _this4.addUser(group);
@@ -60038,6 +60037,7 @@ var Battlemind = function (_Component) {
                     this.state.action === "event" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], {
                         scoreboards: this.state.scoreboards,
                         userPlayers: this.state.userPlayers,
+                        friendsPlayers: this.state.friendsPlayers,
                         leagues: this.state.leagues,
                         type: this.state.type
                     }) : null,
@@ -61743,7 +61743,6 @@ var List = function (_Component) {
         value: function renderContent(type) {
             var _this2 = this;
 
-            console.log(type);
             return this.state.contentToDisplay.map(function (contentToDisplay) {
                 if (contentToDisplay.type === type || _this2.props.object === 'league' || type === undefined || type === 'Show All') {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -61753,6 +61752,11 @@ var List = function (_Component) {
                             "div",
                             { className: "list-item-name" },
                             contentToDisplay.name
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "list-item-name" },
+                            contentToDisplay.user_id
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
@@ -62248,7 +62252,8 @@ var Event = function (_Component) {
                             },
                             "X"
                         ),
-                        this.renderPlayers("noexist", this.props.userPlayers)
+                        this.renderPlayers("noexist", this.props.userPlayers),
+                        this.renderPlayers("noexist", this.props.friendsPlayers)
                     )
                 ) : null,
                 this.state.focusOn === "viewPlayers" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
