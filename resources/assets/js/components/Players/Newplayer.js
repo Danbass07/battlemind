@@ -11,6 +11,7 @@ class Newplayer extends Component {
             wins: 0,
             lost: 0,
             draws: 0,
+            response: {status: "You are creating...:" },
 
         };
         
@@ -28,9 +29,9 @@ class Newplayer extends Component {
         });
     }
 
-    submitHandler() {
+    submitHandler(e) {
      
-       //  e.preventDefault();
+        e.preventDefault();
        
         axios.post('/players', {
             name: this.state.name,
@@ -48,10 +49,9 @@ class Newplayer extends Component {
             wins: 0,
             lost: 0,
             draws: 0,
+            response: response,
            });
-           if (response.status == 200){
-               alert("SUCCESS")
-           }
+        
 
         });
 
@@ -89,7 +89,18 @@ class Newplayer extends Component {
                     >
                     Add new player
                     </button>
-                          
+                    <div className="response-display">
+                    {this.state.response.status === 200 ? (
+                        <h2 style={{ color: "green" }}>
+                            'SUCCESS'{" "}
+                        </h2>
+                    ) : (
+                        this.state.response.status !== "You are creating...:" ?
+                        <h2 style={{ color: "red" }}>
+                            'FAILED'
+                        </h2> : null
+                    )}
+                </div>     
                 </form>
             
             </div>

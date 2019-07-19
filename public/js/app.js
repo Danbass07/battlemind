@@ -60223,7 +60223,8 @@ var Newplayer = function (_Component) {
             url: 'url',
             wins: 0,
             lost: 0,
-            draws: 0
+            draws: 0,
+            response: { status: "You are creating...:" }
 
         };
 
@@ -60245,10 +60246,10 @@ var Newplayer = function (_Component) {
         }
     }, {
         key: 'submitHandler',
-        value: function submitHandler() {
+        value: function submitHandler(e) {
             var _this2 = this;
 
-            //  e.preventDefault();
+            e.preventDefault();
 
             axios.post('/players', {
                 name: this.state.name,
@@ -60265,11 +60266,9 @@ var Newplayer = function (_Component) {
                     url: 'url',
                     wins: 0,
                     lost: 0,
-                    draws: 0
+                    draws: 0,
+                    response: response
                 });
-                if (response.status == 200) {
-                    alert("SUCCESS");
-                }
             });
         }
     }, {
@@ -60317,6 +60316,20 @@ var Newplayer = function (_Component) {
                             className: 'submit-button'
                         },
                         'Add new player'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'response-display' },
+                        this.state.response.status === 200 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h2',
+                            { style: { color: "green" } },
+                            '\'SUCCESS\'',
+                            " "
+                        ) : this.state.response.status !== "You are creating...:" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h2',
+                            { style: { color: "red" } },
+                            '\'FAILED\''
+                        ) : null
                     )
                 )
             );
