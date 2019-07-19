@@ -63159,7 +63159,11 @@ var Hypenotizer = function (_Component) {
         value: function voteOptions() {
             console.log(this.state.userTypes.length);
             console.log(this.state.votingList.length);
-            if (JSON.stringify(this.state.userTypes.slice(0, 5)) == JSON.stringify(this.state.votingList)) {
+            if (JSON.stringify(this.state.userTypes.slice(0, 5).map(function (type) {
+                return type.type;
+            })) == JSON.stringify(this.state.votingList.map(function (type) {
+                return type.type;
+            }))) {
 
                 var votingList = [].concat(_toConsumableArray(this.state.userTypes));
                 var ignoreList = [];
@@ -63173,10 +63177,17 @@ var Hypenotizer = function (_Component) {
                 console.log(ignoreList);
                 votingList = votingList.filter(function (n) {
                     return ignoreList.indexOf(n) > -1 ? false : n;
+                }).slice(0, 5).map(function (candidate) {
+                    return {
+                        type: candidate.type,
+                        votes: 0,
+                        usersVoted: []
+                    };
                 });
                 console.log(votingList);
+
                 this.setState({
-                    votingList: [].concat(_toConsumableArray(votingList.slice(0, 5)))
+                    votingList: [].concat(_toConsumableArray(votingList))
                 });
             } else {
                 this.setState({
@@ -63199,9 +63210,17 @@ var Hypenotizer = function (_Component) {
                 userType.average = (totalHype / userType.users.length).toFixed(1);
             });
             this.props.userTypes.sort(this.compareValues("totalHype"));
+
+            var votingList = this.props.userTypes.slice(0, 5).map(function (candidate) {
+                return {
+                    type: candidate.type,
+                    votes: 0,
+                    usersVoted: []
+                };
+            });
             this.setState({
                 userTypes: [].concat(_toConsumableArray(this.props.userTypes)),
-                votingList: [].concat(_toConsumableArray(this.props.userTypes.slice(0, 5)))
+                votingList: votingList
             });
         }
     }, {
@@ -63265,7 +63284,7 @@ var Hypenotizer = function (_Component) {
                 }) : null,
                 this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], { userTypes: this.state.userTypes }) : null,
                 this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
-                    userTypes: this.state.votingList,
+                    votingList: this.state.votingList,
                     hypeLevels: this.state.hypeLevels,
                     voteOptions: function voteOptions() {
                         return _this2.voteOptions();
@@ -63492,7 +63511,8 @@ var Hypevote = function (_Component) {
 
         _this.state = {
             votingOptions: [1, 2, 3, 4],
-            voteStage: 0
+            voteStage: 0,
+            results: {}
         };
         return _this;
     }
@@ -63500,7 +63520,9 @@ var Hypevote = function (_Component) {
     _createClass(Hypevote, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            // axios.get(`/vote/stage)
+            this.setState({
+                results: this.props.votingList
+            });
         }
     }, {
         key: "voteStageController",
@@ -63510,10 +63532,29 @@ var Hypevote = function (_Component) {
             });
         }
     }, {
-        key: "render",
-        value: function render() {
+        key: "castVote",
+        value: function castVote(options) {
             var _this2 = this;
 
+            var results = JSON.stringify(options);
+            axios.post('/vote/setUpVote', {
+                active: true,
+                stage: 1,
+                results: results
+
+            }).then(function (response) {
+                _this2.setState({
+                    results: JSON.parse(response.data)
+                });
+                console.log(JSON.parse(response.data));
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this3 = this;
+
+            console.log(this.state.results);
             // voting will be cast by first who click he need to finish or cancel to let anyone else do anything but voting
             var style = {
                 color: "white"
@@ -63549,7 +63590,7 @@ var Hypevote = function (_Component) {
                                     name: "ones",
                                     value: "false",
                                     onClick: function onClick(e) {
-                                        return _this2.props.voteOptions(e);
+                                        return _this3.props.voteOptions(e);
                                     }
                                 })
                             ),
@@ -63562,7 +63603,7 @@ var Hypevote = function (_Component) {
                                     name: "winner",
                                     value: "false",
                                     onClick: function onClick(e) {
-                                        return _this2.props.voteOptions(e);
+                                        return _this3.props.voteOptions(e);
                                     }
                                 })
                             )
@@ -63570,13 +63611,20 @@ var Hypevote = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
                             null,
-                            this.props.userTypes.map(function (type, index) {
+                            this.props.votingList.map(function (type, index) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "div",
                                     { key: index },
                                     type.type
                                 );
                             })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            { onClick: function onClick() {
+                                    return _this3.castVote(_this3.props.votingList);
+                                } },
+                            "Cast Vote"
                         )
                     ) : null,
                     this.state.voteStage === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63605,7 +63653,7 @@ var Hypevote = function (_Component) {
                         "button",
                         {
                             onClick: function onClick() {
-                                return _this2.voteStageController(+_this2.state.voteStage + -1);
+                                return _this3.voteStageController(+_this3.state.voteStage + -1);
                             }
                         },
                         "PREVIOUS"
@@ -63614,7 +63662,7 @@ var Hypevote = function (_Component) {
                         "button",
                         {
                             onClick: function onClick() {
-                                return _this2.voteStageController(+_this2.state.voteStage + 1);
+                                return _this3.voteStageController(+_this3.state.voteStage + 1);
                             }
                         },
                         "NEXT"

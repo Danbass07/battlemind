@@ -15,7 +15,8 @@ class Hypenotizer extends Component {
     voteOptions() {
         console.log(this.state.userTypes.length);
         console.log(this.state.votingList.length);
-        if (JSON.stringify(this.state.userTypes.slice(0, 5)) == JSON.stringify(this.state.votingList) ) {
+        if (JSON.stringify(this.state.userTypes.slice(0, 5).map(type => type.type)) 
+        == JSON.stringify(this.state.votingList.map(type => type.type)) ) {
 
             let votingList = [...this.state.userTypes];
             let ignoreList =[]
@@ -29,10 +30,18 @@ class Hypenotizer extends Component {
             });
             ignoreList = [...new Set(ignoreList)];
             console.log(ignoreList);
-            votingList = votingList.filter(function(n){ return ignoreList.indexOf(n)>-1?false:n;});
+            votingList = votingList.filter(function(n){ return ignoreList.indexOf(n)>-1?false:n;})
+            .slice(0, 5).map(candidate => {
+                return {
+                    type: candidate.type,
+                    votes: 0,
+                    usersVoted: [],
+                }
+            });
             console.log(votingList);
+            
             this.setState({
-                votingList: [...votingList.slice(0, 5)]
+                votingList: [...votingList]
             });
 
         } else {
@@ -56,9 +65,17 @@ class Hypenotizer extends Component {
             userType.average = (totalHype / userType.users.length).toFixed(1);
         });
         this.props.userTypes.sort(this.compareValues("totalHype"));
+
+        const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
+            return {
+                type: candidate.type,
+                votes: 0,
+                usersVoted: [],
+            }
+        })
         this.setState({
             userTypes: [...this.props.userTypes],
-            votingList: [...this.props.userTypes.slice(0, 5)]
+            votingList: votingList,
         });
     }
 
@@ -119,7 +136,7 @@ class Hypenotizer extends Component {
 
                 {this.props.navigation === "Hypevote" ? (
                     <Hypevote
-                        userTypes={this.state.votingList}
+                        votingList={this.state.votingList}
                         hypeLevels={this.state.hypeLevels}
                         voteOptions={() => this.voteOptions()}
                     />

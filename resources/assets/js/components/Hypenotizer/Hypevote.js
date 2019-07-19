@@ -5,11 +5,14 @@ class Hypevote extends Component {
         super(props);
         this.state = {
             votingOptions: [1, 2, 3, 4],
-            voteStage: 0
+            voteStage: 0,
+            results:{},
         };
     }
     componentDidMount() {
-        // axios.get(`/vote/stage)
+        this.setState({
+            results: this.props.votingList,
+        });
     }
 
     voteStageController(voteStage) {
@@ -17,7 +20,24 @@ class Hypevote extends Component {
             voteStage: voteStage
         });
     }
+    castVote(options){
+        const results = JSON.stringify(options)
+        axios.post('/vote/setUpVote', {
+            active: true,
+            stage: 1,
+            results: results,
+    
+        }).then(response => {
+            this.setState({
+                results: JSON.parse(response.data)
+            });
+          console.log(JSON.parse(response.data));
+          
+
+        });
+    }
     render() {
+        console.log(this.state.results);
         // voting will be cast by first who click he need to finish or cancel to let anyone else do anything but voting
         const style = {
             color: "white"
@@ -51,10 +71,11 @@ class Hypevote extends Component {
                                 </div>
                             </div>
                             <div>
-                                {this.props.userTypes.map((type,index) => {
+                                {this.props.votingList.map((type,index) => {
                                   return  <div key={index}>{type.type}</div> 
                                 })}
                             </div>
+                            <button onClick={() => this.castVote(this.props.votingList)}>Cast Vote</button>
                         </div>
                     ) : null}
 

@@ -54,3 +54,5 @@ Route::get('/types/hypecheck/{id}', 'TypeController@hypecheck');
 
 
  Route::post('/hype/hypenotizer', 'HypeController@hypenotizer');
+ Route::post('/vote/setUpVote', 'VoteController@setUpVote');
+ 
