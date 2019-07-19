@@ -10525,6 +10525,11 @@ a.text-dark:focus {
 
 /* Madia */
 
+.submit-button {
+  background-color: black;
+  color: white;
+}
+
 .myform {
   display: -webkit-box;
   display: -ms-flexbox;
