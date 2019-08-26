@@ -63242,6 +63242,40 @@ var Hypenotizer = function (_Component) {
             });
         }
     }, {
+        key: "setUsersToHype",
+        value: function setUsersToHype($users_exluded) {
+
+            this.props.userTypes.forEach(function (userType) {
+
+                if (!userType.hype) {
+                    userType.hype = 5;
+                }
+                var totalHype = 0;
+                userType.users.forEach(function (user) {
+                    $users_exluded.forEach(function (user_exluded) {
+                        if (user_exluded !== user.id) {
+                            totalHype += user.pivot.hype;
+                        }
+                    });
+                });
+                userType.totalHype = totalHype;
+                userType.average = (totalHype / userType.users.length).toFixed(1);
+            });
+            this.props.userTypes.sort(this.compareValues("totalHype"));
+
+            var votingList = this.props.userTypes.slice(0, 5).map(function (candidate) {
+                return {
+                    type: candidate.type,
+                    votes: 0,
+                    usersVoted: []
+                };
+            });
+            this.setState({
+                userTypes: [].concat(_toConsumableArray(this.props.userTypes)),
+                votingList: votingList
+            }, console.log(this.state));
+        }
+    }, {
         key: "hypeLevelHandler",
         value: function hypeLevelHandler(e, userType) {
             var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
@@ -63300,7 +63334,11 @@ var Hypenotizer = function (_Component) {
                         return _this2.hypenotizer();
                     }
                 }) : null,
-                this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], { userTypes: this.state.userTypes }) : null,
+                this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], { userTypes: this.state.userTypes,
+                    setUsersToHype: function setUsersToHype(data) {
+                        return _this2.setUsersToHype(data);
+                    }
+                }) : null,
                 this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
                     votingList: this.state.votingList,
                     hypeLevels: this.state.hypeLevels,
@@ -63449,6 +63487,13 @@ var Hypecheck = function (_Component) {
                 border: '1px solid white',
                 marginBottom: '2px'
             };
+            var style3 = {
+                backgroundColor: "black",
+                fontSize: "24px",
+                color: "white",
+                height: '40px'
+
+            };
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
@@ -63456,9 +63501,37 @@ var Hypecheck = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "button",
                     { onClick: function onClick() {
-                            return _this2.props.refreshData();
+                            return _this2.props.setUsersToHype(['all']);
                         }, className: "hype-button" },
                     "Hype Fresh"
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { style: style3, onClick: function onClick() {
+                            return _this2.props.setUsersToHype([9]);
+                        } },
+                    "No Ramunas"
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { style: style3, onClick: function onClick() {
+                            return _this2.props.setUsersToHype([1]);
+                        } },
+                    "No Daniel"
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { style: style3, onClick: function onClick() {
+                            return _this2.props.setUsersToHype([4]);
+                        } },
+                    "No Virginijus"
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { style: style3, onClick: function onClick() {
+                            return _this2.props.setUsersToHype([5]);
+                        } },
+                    "No Bart"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",

@@ -19,10 +19,21 @@ class Hypecheck extends Component {
             border: '1px solid white',
             marginBottom: '2px'
         }
+        const style3 = {
+            backgroundColor: "black",
+            fontSize: "24px",
+            color: "white",
+            height: '40px',
+        
+        };
 
         return (
             <React.Fragment>
-                <button onClick={() => this.props.refreshData()} className='hype-button'>Hype Fresh</button>
+                <button onClick={() => this.props.setUsersToHype(['all'])} className='hype-button'>Hype Fresh</button>
+                <div style={style3} onClick={() => this.props.setUsersToHype([9])}>No Ramunas</div>
+                <div style={style3} onClick={() => this.props.setUsersToHype([1])}>No Daniel</div>
+                <div style={style3} onClick={() => this.props.setUsersToHype([4])}>No Virginijus</div>
+                <div style={style3} onClick={() => this.props.setUsersToHype([5])}>No Bart</div>
                 <div style={style}>
                 <table >
                     <tbody >
@@ -33,11 +44,12 @@ class Hypecheck extends Component {
                                     <td style={{marginLeft: 'auto'}}>{userType.totalHype}</td>
                                     <td style={{marginLeft: '20px'}}>{userType.average}</td>
                                 </tr>
-                            );
+                                );
                         })}
                     </tbody>
                 </table>
                 </div>
+             
            
             
             </React.Fragment>

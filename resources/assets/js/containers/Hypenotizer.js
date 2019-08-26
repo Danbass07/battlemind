@@ -78,6 +78,39 @@ class Hypenotizer extends Component {
             votingList: votingList,
         });
     }
+    setUsersToHype($users_exluded) {
+    
+        this.props.userTypes.forEach(userType => {
+            
+            if (!userType.hype) {
+                userType.hype = 5;
+            }
+            let totalHype = 0;
+            userType.users.forEach(user => {
+                $users_exluded.forEach( user_exluded => {
+                    if (user_exluded !== user.id) {
+                        totalHype += user.pivot.hype;
+                    }
+                })
+                
+            });
+            userType.totalHype = totalHype;
+            userType.average = (totalHype / userType.users.length).toFixed(1);
+        });
+        this.props.userTypes.sort(this.compareValues("totalHype"));
+
+        const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
+            return {
+                type: candidate.type,
+                votes: 0,
+                usersVoted: [],
+            }
+        })
+        this.setState({
+            userTypes: [...this.props.userTypes],
+            votingList: votingList,
+        },   console.log(this.state))
+    }
 
     hypeLevelHandler(e, userType) {
         let userTypes = [...this.state.userTypes];
@@ -131,7 +164,9 @@ class Hypenotizer extends Component {
                 ) : null}
 
                 {this.props.navigation === "Hypecheck" ? (
-                    <Hypecheck userTypes={this.state.userTypes} />
+                    <Hypecheck userTypes={this.state.userTypes}
+                    setUsersToHype={(data) => this.setUsersToHype(data)}
+                     />
                 ) : null}
 
                 {this.props.navigation === "Hypevote" ? (
