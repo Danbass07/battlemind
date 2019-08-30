@@ -62760,7 +62760,7 @@ var Profile = function (_Component) {
                     'div',
                     { className: 'group-list' },
                     this.props.groups.length ? this.props.groups.map(function (group) {
-                        if (_this2.props.contains(_this2.props.userGroups, group) && group.id === 1) return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        if (!_this2.props.contains(_this2.props.userGroups, group) && group.id === 1) return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { key: group.name },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {

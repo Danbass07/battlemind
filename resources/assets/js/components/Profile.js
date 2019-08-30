@@ -25,7 +25,7 @@ class Profile extends Component {
                 types={this.props.types}/> */}
                 <div className="group-list">
                     {this.props.groups.length ? this.props.groups.map((group) => {
-                       if(this.props.contains(this.props.userGroups, group) && group.id === 1) return (
+                       if(!this.props.contains(this.props.userGroups, group) && group.id === 1) return (
                             
                             <div key={group.name} >
                                 <input 
