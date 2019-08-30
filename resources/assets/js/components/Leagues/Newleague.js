@@ -57,7 +57,10 @@ class Newleague extends Component {
     }
     render() {
         return (
-            <div className="Workarea">
+            <div className="workarea">
+                  <div className="info-bar">Don't worry about this part for now. Its scoring rules and we have them ready for you
+                  In future you can set your own too.
+                </div>
                 <form className="myform" onSubmit={(e) => this.submitHandler(e)}>
 
                                 <input 

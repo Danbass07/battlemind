@@ -8,6 +8,9 @@
     
     margin:0 1%;
 }
+.Event-list-grid{
+    margin-bottom: 90px;
+}
 .Event-grid-item {
     height: 98%;
     width: 100%;
@@ -21,7 +24,7 @@
 .Event-list-item {
     background-color: $secondarycolor;
     border:1px solid white;
-    color: $white;
+    color: $maincolor;
     height: 40px;
     width: 100%;
     padding-left: 5px;
@@ -41,19 +44,21 @@
 }
 .Result-mini-item {
     margin-right: 9px;
-    background-color: black;
+    background-color: white;
     width: 39px;
     border-radius: 45%;
     font-size: 0.7em;
     padding-top: 7px;
 }
 .Scoreboard-dropdown{
+    width: 100%;
     display: inline-flex;
 }
 .Scoreboard-addPlayer-button{
-    background-color: darkred;
-    color: white;
-    margin-left: 18px;
+    background-color: $secondarycolor;
+    color: $maincolor;
+    margin: 5px auto;
+    width:40%;
 }
 
 .Remove-button{

@@ -18,7 +18,7 @@ class Battlemind extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            action: "event",
+            action: "profile",
             object: "none",
             types: [{ id: 0, type: "test" }],
             userTypes: [],
@@ -136,7 +136,7 @@ class Battlemind extends Component {
     render() {
        
         return (
-            <div className="Battlemind">
+            <div className="battlemind">
                 {/* {this.state.user.hints ? <FlashMessage 
              message = {this.state.message[this.state.messageNumber]}
              /> : null } */}

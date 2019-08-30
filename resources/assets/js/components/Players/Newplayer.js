@@ -32,6 +32,7 @@ class Newplayer extends Component {
     submitHandler(e) {
      
         e.preventDefault();
+        this.setState({ response: {status: "You are creating...:" }});
        
         axios.post('/players', {
             name: this.state.name,
@@ -60,13 +61,18 @@ class Newplayer extends Component {
     render() {
         return (
             
-            <div className="Workarea">
+            <div className="workarea">
+                <div className="info-bar">Welcome, you can add any amount of players. They represent your activity in a club.
+                We added all types of games played now, we can add any other if required. Once added, same player can be used in a different scoreboards.
+
+                </div>
                 <form className="myform"  onSubmit={(e) => this.submitHandler(e)} >
 
                     <input 
                     className="myform-control"
                     placeholder="name"
                     onChange={(e) => this.changeHandler(e)}
+                    value={this.state.name}
                     required                    
                     />
 

@@ -93,7 +93,10 @@ class Result extends Component {
 
     render() {
         return (
-            <div className="Workarea">
+            <div className="workarea">
+                <div className="info-bar">
+                    And here it is RESULTS. Choose a Scorebard compare results in different Leagues. Enjoy!!
+                 </div>
                 <select name="Choose a scoreboard" className="myform-control" onChange={(e) => this.scoreboardChangeHandler(e)}>
                 <option value='0'>Choose a Scoreboard</option>
                 {this.props.scoreboards.map(scoreboard => (
@@ -120,7 +123,7 @@ class Result extends Component {
    
                     </select>
                 <div>
-                    <table className="Results-table">
+                    <table className="results-table">
                         <thead>
                         <tr>
                             <th>NAME</th>

@@ -10477,22 +10477,35 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.Battlemind {
+.battlemind {
   width: 100%;
+  max-width: 600px;
+  min-width: 320px;
   height: 100vh;
   position: fixed;
-  top: 115px;
-  background-color: #053155;
+  top: 130px;
+  background-color: #000000;
   overflow: hidden;
+  margin-bottom: 55px;
 }
 
-.Workarea {
+.workarea {
   position: relative;
   top: 7px;
   width: 100%;
   height: 68vh;
-  background-color: #053155, 5%;
+  background-color: #000000;
   overflow: scroll;
+}
+
+.info-bar {
+  margin: 0px 2px;
+  background-color: #000000;
+  color: #ff7f00;
+  padding: 10px;
+  border: ridge 2px #ff7f00;
+  font-weight: bold;
+  font-size: larger;
 }
 
 .navbar {
@@ -10527,7 +10540,10 @@ a.text-dark:focus {
 
 .submit-button {
   background-color: black;
-  color: white;
+  color: #ff7f00;
+  border: solid 8px #ff7f00;
+  border-radius: 40%;
+  margin-top: 10%;
 }
 
 .myform {
@@ -10548,7 +10564,10 @@ a.text-dark:focus {
 .myform-control {
   height: 30px;
   width: 240px;
-  margin: 5px auto;
+  margin: 15px auto;
+  color: #ff7f00;
+  border: solid 1px #ff7f00;
+  background-color: #000000;
 }
 
 .Submit-button {
@@ -10617,6 +10636,7 @@ a:hover {
   color: cornsilk;
   overflow: scroll;
   overflow-x: hidden;
+  margin-bottom: 55px;
 }
 
 .list-item {
@@ -10636,8 +10656,10 @@ a:hover {
 .response-display {
   width: 70%;
   height: 45px;
-  background-color: white;
-  color: green;
+  background-color: #000000;
+  color: #ff7f00;
+  margin: 5% auto;
+  margin-bottom: 50px;
 }
 
 .Event-grid {
@@ -10652,6 +10674,10 @@ a:hover {
   margin: 0 1%;
 }
 
+.Event-list-grid {
+  margin-bottom: 90px;
+}
+
 .Event-grid-item {
   height: 98%;
   width: 100%;
@@ -10662,9 +10688,9 @@ a:hover {
 }
 
 .Event-list-item {
-  background-color: #992604;
+  background-color: #ff7f00;
   border: 1px solid white;
-  color: #fff;
+  color: #000000;
   height: 40px;
   width: 100%;
   padding-left: 5px;
@@ -10696,7 +10722,7 @@ a:hover {
 
 .Result-mini-item {
   margin-right: 9px;
-  background-color: black;
+  background-color: white;
   width: 39px;
   border-radius: 45%;
   font-size: 0.7em;
@@ -10704,15 +10730,17 @@ a:hover {
 }
 
 .Scoreboard-dropdown {
+  width: 100%;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
 }
 
 .Scoreboard-addPlayer-button {
-  background-color: darkred;
-  color: white;
-  margin-left: 18px;
+  background-color: #ff7f00;
+  color: #000000;
+  margin: 5px auto;
+  width: 40%;
 }
 
 .Remove-button {
@@ -10827,16 +10855,23 @@ a:hover {
   }
 }
 
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: -12px;
+}
+
 .navigation {
   position: fixed;
   left: 0;
-  overflow: hidden;
   width: 100%;
-  height: 45px;
+  height: 55px;
   list-style-type: none;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  background-color: #992604;
+  background-color: #000000;
+  max-width: 600px;
+  min-width: 320px;
 }
 
 .navigation-top-toprow {
@@ -10845,6 +10880,7 @@ a:hover {
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  height: 50px;
 }
 
 .navigation-top-bottomrow {
@@ -10853,6 +10889,7 @@ a:hover {
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  height: 50px;
 }
 
 .navigation-top-bottomrow-disable {
@@ -10863,7 +10900,7 @@ a:hover {
   position: fixed;
   top: 25px;
   margin: 0;
-  height: 90px;
+  height: 105px;
 }
 
 .bottom {
@@ -10878,19 +10915,22 @@ a:hover {
 
 .navButton {
   height: 40px;
-  width: 160px;
-  background-color: #053155;
-  color: white;
+  width: 30%;
+  background-color: #000000;
+  color: #ff7f00;
   font-family: "Courier New", Courier, monospace;
-  font-size: 1.4em;
+  font-size: 1em;
   margin-top: 4px;
-  border-radius: 25%;
+  border: 1px solid #ff7f00;
+  border-radius: 50%;
+  -webkit-box-shadow: 3px 3px #ff7f00;
+          box-shadow: 3px 3px #ff7f00;
 }
 
 .active {
-  background-color: #992604;
-  border-color: #053155;
-  color: #053155;
+  background-color: #ff7f00;
+  border-color: #000000;
+  color: #000000;
 }
 
 @-webkit-keyframes mymove {
@@ -10937,10 +10977,11 @@ a:hover {
   }
 }
 
-.Results-table {
-  color: white;
-  border: 1px solid red;
-  margin: 5% 20%;
+.results-table {
+  width: 70%;
+  color: #ff7f00;
+  border: 1px solid #ff7f00;
+  margin: 5% auto;
 }
 
 .profile-wrapper {
@@ -10955,6 +10996,15 @@ a:hover {
 
 .group-list {
   background-color: darkgoldenrod;
+}
+
+.logo {
+  width: 170px;
+  height: 170px;
+  background-image: url("/images/wyvrenLogo.png");
+  background-size: contain;
+  margin: 50px auto;
+  background-repeat: no-repeat;
 }
 
 .hype-wrapper {
@@ -11006,12 +11056,6 @@ a:hover {
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-}
-
-.navbar {
-  position: fixed;
-  width: 100%;
-  top: -12px;
 }
 
 /* Madia */

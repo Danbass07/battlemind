@@ -59879,7 +59879,7 @@ var Battlemind = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Battlemind.__proto__ || Object.getPrototypeOf(Battlemind)).call(this, props));
 
         _this.state = {
-            action: "event",
+            action: "profile",
             object: "none",
             types: [{ id: 0, type: "test" }],
             userTypes: [],
@@ -60005,7 +60005,7 @@ var Battlemind = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                 "div",
-                { className: "Battlemind" },
+                { className: "battlemind" },
                 __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], {
                     button: function button(e) {
                         return _this4.buttonHandler(e);
@@ -60250,6 +60250,7 @@ var Newplayer = function (_Component) {
             var _this2 = this;
 
             e.preventDefault();
+            this.setState({ response: { status: "You are creating...:" } });
 
             axios.post('/players', {
                 name: this.state.name,
@@ -60278,7 +60279,12 @@ var Newplayer = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'Workarea' },
+                { className: 'workarea' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'info-bar' },
+                    'Welcome, you can add any amount of players. They represent your activity in a club. We added all types of games played now, we can add any other if required. Once added, same player can be used in a different scoreboards.'
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
                     { className: 'myform', onSubmit: function onSubmit(e) {
@@ -60290,6 +60296,7 @@ var Newplayer = function (_Component) {
                         onChange: function onChange(e) {
                             return _this3.changeHandler(e);
                         },
+                        value: this.state.name,
                         required: true
                     }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60429,7 +60436,12 @@ var Newleague = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'Workarea' },
+                { className: 'workarea' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'info-bar' },
+                    'Don\'t worry about this part for now. Its scoring rules and we have them ready for you In future you can set your own too.'
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
                     { className: 'myform', onSubmit: function onSubmit(e) {
@@ -60568,6 +60580,11 @@ var Newscoreboard = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'Workarea' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'info-bar' },
+                    'Don\'t worry about this part for now. Scorboard keep track of results and we have them ready for you In future you can set your own too.'
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
                     { className: 'myform', onSubmit: function onSubmit(e) {
@@ -61862,7 +61879,7 @@ var List = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "Workarea" },
+                { className: "workarea" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "button",
                     { onClick: function onClick() {
@@ -62220,7 +62237,12 @@ var Event = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "Workarea" },
+                { className: "workarea" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "info-bar" },
+                    "There it is. A main part of the app. Here we store the result. Choose a Scorboard, add some players and keep track of games. That part of the app will tell our WebSite what to display. What we did every week. NO CHEATING!!!"
+                ),
                 this.state.focusOn === "player" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "Pop-up" },
@@ -62579,7 +62601,12 @@ var Result = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'Workarea' },
+                { className: 'workarea' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'info-bar' },
+                    'And here it is RESULTS. Choose a Scorebard compare results in different Leagues. Enjoy!!'
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'select',
                     { name: 'Choose a scoreboard', className: 'myform-control', onChange: function onChange(e) {
@@ -62625,7 +62652,7 @@ var Result = function (_Component) {
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'table',
-                        { className: 'Results-table' },
+                        { className: 'results-table' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'thead',
                             null,
@@ -62710,21 +62737,30 @@ var Profile = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'profile-wrapper' },
+                { className: 'workarea' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    null,
+                    { className: 'info-bar' },
+                    'Hello ',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h1',
                         null,
                         this.props.user.name
-                    )
+                    ),
+                    'Welcome to Battlemind. App to connect players, groups and local shops. Click ',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h3',
+                        null,
+                        'NEW'
+                    ),
+                    ' in top left corner. Add new player and gather scores so our Website can show the world what we are made of.'
                 ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'group-list' },
                     this.props.groups.length ? this.props.groups.map(function (group) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        if (_this2.props.contains(_this2.props.userGroups, group) && group.id === 1) return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { key: group.name },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
@@ -62737,10 +62773,12 @@ var Profile = function (_Component) {
                                 type: 'checkbox', name: 'group', value: group.id
 
                             }),
-                            group.name
+                            group.name,
+                            ' --- Please confirm that you are member of Retford Wyverns Gaming Club'
                         );
                     }) : null
-                )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'logo' })
             );
         }
     }]);
@@ -63481,10 +63519,22 @@ var Hypecheck = function (_Component) {
     function Hypecheck(props) {
         _classCallCheck(this, Hypecheck);
 
-        return _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
+
+        _this.state({
+            style: style3
+        });
+
+        return _this;
     }
 
     _createClass(Hypecheck, [{
+        key: "clickController",
+        value: function clickController(id) {
+            this.props.setUsersToHype([id]);
+            style3;
+        }
+    }, {
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -63502,7 +63552,7 @@ var Hypecheck = function (_Component) {
             };
             var style3 = {
                 backgroundColor: "black",
-                fontSize: "24px",
+                fontSize: "11px",
                 color: "white",
                 height: '40px'
 
@@ -63521,7 +63571,7 @@ var Hypecheck = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { style: style3, onClick: function onClick() {
-                            return _this2.props.setUsersToHype([9]);
+                            return _this2.clickController(9);
                         } },
                     "No Ramunas"
                 ),

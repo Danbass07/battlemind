@@ -94,7 +94,7 @@ class List extends Component {
     render() {
 
         return (
-            <div className="Workarea">
+            <div className="workarea">
                 <button onClick={() => this.myOnlyButtonHandler()}>
                     My only toggler
                 </button>

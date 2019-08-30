@@ -232,7 +232,10 @@ class Event extends Component {
     }
     render() {
         return (
-            <div className="Workarea">
+            <div className="workarea">
+                <div className="info-bar">There it is. A main part of the app. Here we store the result. Choose a Scorboard, add some players
+                and keep track of games. That part of the app will tell our WebSite what to display. What we did every week. NO CHEATING!!! 
+                </div>
                 {this.state.focusOn === "player" ? (
                     <div className="Pop-up">
                         <div className="Card-wrapper">

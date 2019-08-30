@@ -17,6 +17,7 @@
     color: cornsilk;
     overflow: scroll;
     overflow-x: hidden;
+    margin-bottom: 55px;
   }
   .list-item {
     display: flex;
@@ -31,6 +32,8 @@
   .response-display{
     width: 70%;
     height: 45px;
-    background-color: white;
-    color: green;
+    background-color: $maincolor;
+    color: $secondarycolor;
+    margin: 5% auto;
+    margin-bottom: 50px;
   }

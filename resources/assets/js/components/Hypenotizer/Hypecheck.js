@@ -3,10 +3,17 @@ import React, { Component } from "react";
 class Hypecheck extends Component {
     constructor(props) {
         super(props);
+        this.state({
+            style: style3
+        })
        
     }
-  
-
+  clickController(id) {
+    this.props.setUsersToHype([id]);
+    style3
+    
+  }
+    
     render() {
         const style = {
             color: "white",
@@ -21,7 +28,7 @@ class Hypecheck extends Component {
         }
         const style3 = {
             backgroundColor: "black",
-            fontSize: "24px",
+            fontSize: "11px",
             color: "white",
             height: '40px',
         
@@ -30,7 +37,7 @@ class Hypecheck extends Component {
         return (
             <React.Fragment>
                 <button onClick={() => this.props.setUsersToHype(['all'])} className='hype-button'>Hype Fresh</button>
-                <div style={style3} onClick={() => this.props.setUsersToHype([9])}>No Ramunas</div>
+                <div style={style3} onClick={() => this.clickController(9)}>No Ramunas</div>
                 <div style={style3} onClick={() => this.props.setUsersToHype([1])}>No Daniel</div>
                 <div style={style3} onClick={() => this.props.setUsersToHype([4])}>No Virginijus</div>
                 <div style={style3} onClick={() => this.props.setUsersToHype([5])}>No Bart</div>
