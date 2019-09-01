@@ -3,14 +3,13 @@ import React, { Component } from "react";
 class Hypecheck extends Component {
     constructor(props) {
         super(props);
-        this.state({
-            style: style3
+        this.state = ({
         })
        
     }
   clickController(id) {
     this.props.setUsersToHype([id]);
-    style3
+    
     
   }
     

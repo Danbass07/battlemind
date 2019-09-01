@@ -63521,9 +63521,7 @@ var Hypecheck = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
 
-        _this.state({
-            style: style3
-        });
+        _this.state = {};
 
         return _this;
     }
@@ -63532,7 +63530,6 @@ var Hypecheck = function (_Component) {
         key: "clickController",
         value: function clickController(id) {
             this.props.setUsersToHype([id]);
-            style3;
         }
     }, {
         key: "render",

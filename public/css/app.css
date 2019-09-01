@@ -10471,6 +10471,10 @@ a.text-dark:focus {
   }
 }
 
+body {
+  background-color: #000000;
+}
+
 .navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -10479,13 +10483,13 @@ a.text-dark:focus {
 
 .battlemind {
   width: 100%;
-  max-width: 600px;
   min-width: 320px;
   height: 100vh;
   position: fixed;
   top: 130px;
   background-color: #000000;
   overflow: hidden;
+  margin: 0 auto;
   margin-bottom: 55px;
 }
 
@@ -10511,6 +10515,12 @@ a.text-dark:focus {
 .navbar {
   position: fixed;
   width: 100%;
+  background-color: #000000;
+  color: #ff7f00;
+}
+
+.navbar-light .navbar-brand {
+  color: #ff7f00;
 }
 
 .dropdown-menu-right2 {
@@ -10870,7 +10880,6 @@ a:hover {
   -ms-flex-pack: distribute;
       justify-content: space-around;
   background-color: #000000;
-  max-width: 600px;
   min-width: 320px;
 }
 
@@ -10916,6 +10925,7 @@ a:hover {
 .navButton {
   height: 40px;
   width: 30%;
+  max-width: 180px;
   background-color: #000000;
   color: #ff7f00;
   font-family: "Courier New", Courier, monospace;

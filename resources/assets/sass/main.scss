@@ -1,17 +1,21 @@
+body{
+  background-color: $maincolor;
+}
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   }
   .battlemind {
     width: 100%;
-    max-width: 600px;
     min-width: 320px;
     height: 100vh;
     position: fixed;
     top: 130px;
     background-color: $maincolor;
     overflow: hidden;
+    margin: 0 auto;
     margin-bottom: 55px;
+    
     
   }
   .workarea {
@@ -35,7 +39,12 @@
   .navbar {
     position: fixed;
     width: 100%;
+    background-color: $maincolor;
+    color: $secondarycolor;
   }
+  .navbar-light .navbar-brand {
+    color: $secondarycolor;
+}
   .dropdown-menu-right2 {
     top: -10px;
     right: 130px;
