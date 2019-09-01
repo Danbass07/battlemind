@@ -11068,6 +11068,29 @@ a:hover {
       justify-content: space-around;
 }
 
+.hypecheck-exlude-list {
+  background-color: #000000;
+  font-size: 11px;
+  color: #ff7f00;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.hypecheck-exlude-list-item {
+  border: 1px solid #ff7f00;
+  padding: 7px;
+  border-radius: 25% 0 0 25%;
+}
+
+.clicked {
+  border: 1px solid #ff7f00;
+  color: #000000;
+  background-color: #ff7f00;
+}
+
 /* Madia */
 
 @media only screen and (min-width: 700px) {

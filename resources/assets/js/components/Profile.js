@@ -13,7 +13,7 @@ class Profile extends Component {
             <div className='workarea'>
                 <div className="info-bar">
                     Hello <h1>{this.props.user.name}</h1>Welcome to Battlemind. App to connect players, groups and local shops.
-                    Click <h3>NEW</h3> in top left corner. Add new player and gather scores so our Website can show the world what we are made of.
+                    Click <h3>NEW</h3> in top left corner. Add new player and gather scores so our Website can show to the world what we are made of.
                 </div>
                 <div>
                 

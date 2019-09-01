@@ -1,0 +1,20 @@
+
+.hypecheck-exlude-list{
+    background-color: $maincolor;
+    font-size: 11px;
+    color: $secondarycolor;
+    display: flex;
+    justify-content:  space-around;
+}
+
+.hypecheck-exlude-list-item{
+      border: 1px solid $secondarycolor;
+      padding: 7px;
+      border-radius: 25% 0 0 25%;
+}
+
+.clicked{
+    border: 1px solid $secondarycolor;
+    color: $maincolor;
+    background-color: $secondarycolor;
+}

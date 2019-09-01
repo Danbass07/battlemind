@@ -3,61 +3,82 @@ import React, { Component } from "react";
 class Hypecheck extends Component {
     constructor(props) {
         super(props);
-        this.state = ({
-        })
-       
+        this.state = {
+            exludedUsers: []
+        };
     }
-  clickController(id) {
-    this.props.setUsersToHype([id]);
-    
-    
-  }
-    
+    clickController(id) {
+        let exludedUsers = [...this.state.exludedUsers];
+        if (this.state.exludedUsers.includes(id)) {
+            exludedUsers = exludedUsers.filter(item => item !== id);
+
+        } else {  exludedUsers.push(id);}
+        this.props.setUsersToHype(exludedUsers);
+        this.setState({
+            exludedUsers: exludedUsers
+        });
+    }
+
     render() {
         const style = {
             color: "white",
             overflow: "scroll",
-            height: '400px',
-            width: '100%'
+            height: "400px",
+            width: "100%"
         };
-        const style2 ={
-            display: 'flex',
-            border: '1px solid white',
-            marginBottom: '2px'
-        }
-        const style3 = {
-            backgroundColor: "black",
-            fontSize: "11px",
-            color: "white",
-            height: '40px',
-        
+        const style2 = {
+            display: "flex",
+            border: "1px solid white",
+            marginBottom: "2px"
         };
 
         return (
             <React.Fragment>
-                <button onClick={() => this.props.setUsersToHype(['all'])} className='hype-button'>Hype Fresh</button>
-                <div style={style3} onClick={() => this.clickController(9)}>No Ramunas</div>
-                <div style={style3} onClick={() => this.props.setUsersToHype([1])}>No Daniel</div>
-                <div style={style3} onClick={() => this.props.setUsersToHype([4])}>No Virginijus</div>
-                <div style={style3} onClick={() => this.props.setUsersToHype([5])}>No Bart</div>
-                <div style={style}>
-                <table >
-                    <tbody >
-                        {this.props.userTypes.map(userType => {
-                            return (
-                                <tr style={style2} key={userType.id}>
-                                    <td>{userType.type}</td>
-                                    <td style={{marginLeft: 'auto'}}>{userType.totalHype}</td>
-                                    <td style={{marginLeft: '20px'}}>{userType.average}</td>
-                                </tr>
+                <button
+                    onClick={() => this.props.setUsersToHype(["all"])}
+                    className="hype-button"
+                >
+                    Hype Fresh
+                </button>
+                <div className="hypecheck-exlude-list">
+                    {this.props.groups.map(group => {
+                        if (group.id === 2) {
+                            return group.users.map(user => {
+                                return (
+                                    <div
+                                        key={user.id}
+                                        className={!this.state.exludedUsers.includes(user.id) ? "hypecheck-exlude-list-item" : "hypecheck-exlude-list-item active"}
+                                        onClick={() =>
+                                            this.clickController(user.id)
+                                        }
+                                    >
+                                        {user.name}
+                                    </div>
                                 );
-                        })}
-                    </tbody>
-                </table>
+                            });
+                        }
+                    })}
                 </div>
-             
-           
-            
+
+                <div style={style}>
+                    <table>
+                        <tbody>
+                            {this.props.userTypes.map(userType => {
+                                return (
+                                    <tr style={style2} key={userType.id}>
+                                        <td>{userType.type}</td>
+                                        <td style={{ marginLeft: "auto" }}>
+                                            {userType.totalHype}
+                                        </td>
+                                        <td style={{ marginLeft: "20px" }}>
+                                            {userType.average}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </React.Fragment>
         );
     }

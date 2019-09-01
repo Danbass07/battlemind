@@ -75,41 +75,44 @@ class Hypenotizer extends Component {
         })
         this.setState({
             userTypes: [...this.props.userTypes],
+            listSelected: [...this.props.userTypes],
             votingList: votingList,
         });
     }
-    setUsersToHype($users_exluded) {
-    
-        this.props.userTypes.forEach(userType => {
-            
-            if (!userType.hype) {
-                userType.hype = 5;
-            }
+    setUsersToHype($users_exluded) {  ///////////////////////////Working on it
+       // console.log('odpalam setUsersHype');
+        let listSelected =[...this.state.userTypes] 
+        listSelected.forEach(userType => {
+            // console.log('odpalam list selected');
+            // console.log(this.state.userTypes);
+        
             let totalHype = 0;
             userType.users.forEach(user => {
+                console.log(user);
                 $users_exluded.forEach( user_exluded => {
-                    if (user_exluded !== user.id) {
+                    if (user_exluded === user.id) {
                         totalHype += user.pivot.hype;
                     }
+                   
                 })
                 
             });
             userType.totalHype = totalHype;
             userType.average = (totalHype / userType.users.length).toFixed(1);
         });
-        this.props.userTypes.sort(this.compareValues("totalHype"));
+        listSelected.sort(this.compareValues("totalHype"));
 
-        const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
-            return {
-                type: candidate.type,
-                votes: 0,
-                usersVoted: [],
-            }
-        })
+        // const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
+        //     return {
+        //         type: candidate.type,
+        //         votes: 0,
+        //         usersVoted: [],
+        //     }
+        // })
         this.setState({
-            userTypes: [...this.props.userTypes],
-            votingList: votingList,
-        },   console.log(this.state))
+            listSelected: listSelected,
+            // votingList: votingList,
+        })
     }
 
     hypeLevelHandler(e, userType) {
@@ -164,8 +167,9 @@ class Hypenotizer extends Component {
                 ) : null}
 
                 {this.props.navigation === "Hypecheck" ? (
-                    <Hypecheck userTypes={this.state.userTypes}
+                    <Hypecheck userTypes={this.state.listSelected}
                     setUsersToHype={(data) => this.setUsersToHype(data)}
+                    groups={this.props.groups}
                      />
                 ) : null}
 

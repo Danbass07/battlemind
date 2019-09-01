@@ -156,7 +156,9 @@ class Battlemind extends Component {
                 {this.state.action === "hype"  ? (
                     <Hypenotizer
                     userTypes={this.state.userTypes}
-                    navigation={this.state.object}/>
+                    navigation={this.state.object}
+                    groups={this.state.groups}
+                    />
                 ) : null}
       
                 {this.state.action === "profile" ? (
