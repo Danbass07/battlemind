@@ -8,15 +8,23 @@ class Hypecheck extends Component {
         };
     }
     clickController(id) {
-        let exludedUsers = [...this.state.exludedUsers];
-        if (this.state.exludedUsers.includes(id)) {
-            exludedUsers = exludedUsers.filter(item => item !== id);
-
-        } else {  exludedUsers.push(id);}
-        this.props.setUsersToHype(exludedUsers);
-        this.setState({
-            exludedUsers: exludedUsers
-        });
+        if ((id === 'nope')) {
+            this.props.setUsersToHype([1,4,5,9,]);
+            this.setState({
+                exludedUsers: []
+            });
+        } else {
+            let exludedUsers = [...this.state.exludedUsers];
+            if (this.state.exludedUsers.includes(id)) {
+                exludedUsers = exludedUsers.filter(item => item !== id);
+            } else {
+                exludedUsers.push(id);
+            }
+            this.props.setUsersToHype(exludedUsers);
+            this.setState({
+                exludedUsers: exludedUsers
+            });
+        }
     }
 
     render() {
@@ -35,7 +43,7 @@ class Hypecheck extends Component {
         return (
             <React.Fragment>
                 <button
-                    onClick={() => this.props.setUsersToHype(["all"])}
+                    onClick={() => this.clickController('nope')}
                     className="hype-button"
                 >
                     Hype Fresh
@@ -47,7 +55,13 @@ class Hypecheck extends Component {
                                 return (
                                     <div
                                         key={user.id}
-                                        className={!this.state.exludedUsers.includes(user.id) ? "hypecheck-exlude-list-item" : "hypecheck-exlude-list-item active"}
+                                        className={
+                                            !this.state.exludedUsers.includes(
+                                                user.id
+                                            )
+                                                ? "hypecheck-exlude-list-item"
+                                                : "hypecheck-exlude-list-item active"
+                                        }
                                         onClick={() =>
                                             this.clickController(user.id)
                                         }

@@ -63538,18 +63538,25 @@ var Hypecheck = function (_Component) {
     _createClass(Hypecheck, [{
         key: "clickController",
         value: function clickController(id) {
-            var exludedUsers = [].concat(_toConsumableArray(this.state.exludedUsers));
-            if (this.state.exludedUsers.includes(id)) {
-                exludedUsers = exludedUsers.filter(function (item) {
-                    return item !== id;
+            if (id === 'nope') {
+                this.props.setUsersToHype([1, 4, 5, 9]);
+                this.setState({
+                    exludedUsers: []
                 });
             } else {
-                exludedUsers.push(id);
+                var exludedUsers = [].concat(_toConsumableArray(this.state.exludedUsers));
+                if (this.state.exludedUsers.includes(id)) {
+                    exludedUsers = exludedUsers.filter(function (item) {
+                        return item !== id;
+                    });
+                } else {
+                    exludedUsers.push(id);
+                }
+                this.props.setUsersToHype(exludedUsers);
+                this.setState({
+                    exludedUsers: exludedUsers
+                });
             }
-            this.props.setUsersToHype(exludedUsers);
-            this.setState({
-                exludedUsers: exludedUsers
-            });
         }
     }, {
         key: "render",
@@ -63575,7 +63582,7 @@ var Hypecheck = function (_Component) {
                     "button",
                     {
                         onClick: function onClick() {
-                            return _this2.props.setUsersToHype(["all"]);
+                            return _this2.clickController('nope');
                         },
                         className: "hype-button"
                     },
