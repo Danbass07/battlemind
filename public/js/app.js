@@ -62794,7 +62794,7 @@ var Profile = function (_Component) {
                         );
                     }) : null
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { backgroundImage: "url(/images/" + "2" + "logo.png)" }, className: 'logo' })
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { backgroundImage: "url(/images/" + "1" + "logo.png)" }, className: 'logo' })
             );
         }
     }]);

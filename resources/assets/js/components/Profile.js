@@ -44,7 +44,7 @@ class Profile extends Component {
                         )
                     }): null}
                      </div>
-                     <div style={{backgroundImage: "url(/images/"+"2"+"logo.png)"}} className="logo"></div>
+                     <div style={{backgroundImage: "url(/images/"+"1"+"logo.png)"}} className="logo"></div>
            </div>
         )
     }
