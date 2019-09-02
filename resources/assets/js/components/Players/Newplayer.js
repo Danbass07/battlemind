@@ -1,20 +1,17 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
 
 class Newplayer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            type: 'planeswalker',
-            url: 'url',
+            name: "",
+            type: "planeswalker",
+            url: "url",
             wins: 0,
             lost: 0,
             draws: 0,
-            response: {status: "You are creating...:" },
-
+            response: { status: "You are creating...:" }
         };
-        
     }
 
     changeHandler(e) {
@@ -23,94 +20,82 @@ class Newplayer extends Component {
         });
     }
     optionChangeHandler(e) {
-        
         this.setState({
-            type: e.target.value,
+            type: e.target.value
         });
     }
 
     submitHandler(e) {
-     
         e.preventDefault();
-        this.setState({ response: {status: "You are creating...:" }});
-       
-        axios.post('/players', {
-            name: this.state.name,
-            type: this.state.type,
-            url: this.state.url,
-            wins: this.state.wins,
-            lost: this.state.lost,
-            draws: this.state.draws,
-        }).then(response => {
-            
-           this.setState({
-            name: '',
-            type: 'blank',
-            url: 'url',
-            wins: 0,
-            lost: 0,
-            draws: 0,
-            response: response,
-           });
-        
+        this.setState({ response: { status: "You are creating...:" } });
 
-        });
-
+        axios
+            .post("/players", {
+                name: this.state.name,
+                type: this.state.type,
+                url: this.state.url,
+                wins: this.state.wins,
+                lost: this.state.lost,
+                draws: this.state.draws
+            })
+            .then(response => {
+                this.setState({
+                    name: "",
+                    type: "blank",
+                    url: "url",
+                    wins: 0,
+                    lost: 0,
+                    draws: 0,
+                    response: response
+                });
+            });
     }
 
     render() {
         return (
-            
             <div className="workarea">
-                <div className="info-bar">Welcome, you can add any amount of players. They represent your activity in a club.
-                We added all types of games played now, we can add any other if required. Once added, same player can be used in a different scoreboards.
-
+                <div className="info-bar">
+                    Welcome, you can add any amount of players. They represent
+                    your activity in a club. We added all types of games played
+                    now, we can add any other if required. Once added, same
+                    player can be used in a different scoreboards.
                 </div>
-                <form className="myform"  onSubmit={(e) => this.submitHandler(e)} >
+                <form className="myform" onSubmit={e => this.submitHandler(e)}>
+                    <div>
+                        <input
+                            className="myform-control"
+                            placeholder="name"
+                            onChange={e => this.changeHandler(e)}
+                            value={this.state.name}
+                            required
+                        />
 
-                    <input 
-                    className="myform-control"
-                    placeholder="name"
-                    onChange={(e) => this.changeHandler(e)}
-                    value={this.state.name}
-                    required                    
-                    />
+                        <select
+                            className="myform-control"
+                            onChange={e => this.optionChangeHandler(e)}
+                        >
+                            {this.props.types.map(type => (
+                                <option key={type.id}>{type.type}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                    <select 
-                    className="myform-control"
-                    
-                    
-                    onChange={(e) => this.optionChangeHandler(e)}
-                    >
-                    {this.props.types.map(type => (
-
-                        <option  key={type.id}>{type.type}</option>
-
-                    ))}
-                    </select>
-                    
-                    <button 
-                    type="submit" 
-                    className="submit-button"
-                    >
-                    Add new player
-                    </button>
-                    <div className="response-display">
-                    {this.state.response.status === 200 ? (
-                        <h2 style={{ color: "green" }}>
-                            'SUCCESS'{" "}
-                        </h2>
-                    ) : (
-                        this.state.response.status !== "You are creating...:" ?
-                        <h2 style={{ color: "red" }}>
-                            'FAILED'
-                        </h2> : null
-                    )}
-                </div>     
+                    <div className="myform-control-sidebar">
+                        <div className="response-display">
+                            {this.state.response.status === 200 ? (
+                                <h2 style={{ color: "green" }}>'SUCCESS' </h2>
+                            ) : this.state.response.status !==
+                              "You are creating...:" ? (
+                                <h2 style={{ color: "red" }}>'FAILED'</h2>
+                            ) : null}
+                        </div>
+                        <button type="submit" className="submit-button">
+                            Add new player
+                        </button>
+                    </div>
                 </form>
-            
             </div>
         );
     }
 }
-export default Newplayer
+export default Newplayer;

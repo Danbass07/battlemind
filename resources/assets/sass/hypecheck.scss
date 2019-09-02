@@ -18,3 +18,9 @@
     color: $maincolor;
     background-color: $secondarycolor;
 }
+.hypecheck-results-list{
+    background-color: $secondarycolor;
+    color:$maincolor;
+    border-radius: 5% 5% 5% 5%;
+    overflow: scroll;
+}

@@ -28,17 +28,7 @@ class Hypecheck extends Component {
     }
 
     render() {
-        const style = {
-            color: "white",
-            overflow: "scroll",
-            height: "400px",
-            width: "100%"
-        };
-        const style2 = {
-            display: "flex",
-            border: "1px solid white",
-            marginBottom: "2px"
-        };
+   
 
         return (
             <React.Fragment>
@@ -74,12 +64,12 @@ class Hypecheck extends Component {
                     })}
                 </div>
 
-                <div style={style}>
-                    <table>
-                        <tbody>
+              
+                    <table className="hypecheck-results-list">
+                        <tbody className="hypecheck-results-list-body">
                             {this.props.userTypes.map(userType => {
                                 return (
-                                    <tr style={style2} key={userType.id}>
+                                    <tr key={userType.id}>
                                         <td>{userType.type}</td>
                                         <td style={{ marginLeft: "auto" }}>
                                             {userType.totalHype}
@@ -92,7 +82,7 @@ class Hypecheck extends Component {
                             })}
                         </tbody>
                     </table>
-                </div>
+
             </React.Fragment>
         );
     }

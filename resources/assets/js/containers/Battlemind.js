@@ -31,6 +31,7 @@ class Battlemind extends Component {
             },
             groups: [{}],
             userGroups: [{}],
+            activeGroup: 2,
             message: [
                 [
                     "Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself."+
@@ -158,6 +159,7 @@ class Battlemind extends Component {
                     userTypes={this.state.userTypes}
                     navigation={this.state.object}
                     groups={this.state.groups}
+                    activeGroup={this.state.activeGroup}
                     />
                 ) : null}
       
@@ -165,6 +167,7 @@ class Battlemind extends Component {
                     <Profile
                         user={this.state.user}
                         groups={this.state.groups}
+                        activeGroup={this.state.activeGroup}
                         types={this.state.types}
                         userGroups={this.state.user.groups}
                         addUser={group => this.addUser(group)}
