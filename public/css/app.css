@@ -11017,6 +11017,28 @@ a:hover {
   background-repeat: no-repeat;
 }
 
+.active-group-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  font-size: 29px;
+  text-align: center;
+}
+
+.active-group-selected {
+  background-color: #ff7f00;
+  color: #000000;
+  width: 40%;
+  border-radius: 35% 25% 5% 5%;
+}
+
+.active-group-notselected {
+  width: 40%;
+  color: #ff7f00;
+}
+
 .hype-wrapper {
   height: 60%;
   border: solid 2px red;

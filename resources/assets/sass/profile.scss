@@ -15,3 +15,20 @@
     margin: 50px auto;
     background-repeat: no-repeat;
 }
+.active-group-list{
+ display: flex;
+ justify-content: space-around;
+ font-size: 29px;
+ text-align: center;
+
+}
+.active-group-selected{
+    background-color: $secondarycolor;
+    color: $maincolor;
+    width:40%;
+    border-radius: 35% 25% 5% 5% ;
+}
+.active-group-notselected {
+    width:40%;
+    color:$secondarycolor;
+}

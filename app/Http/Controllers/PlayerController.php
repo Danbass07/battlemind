@@ -25,6 +25,14 @@ class PlayerController extends Controller
             })->collapse();
         $friendPlayers =  $friendsUsers->pluck('players')->collapse()->unique('id');
 
+        foreach ($friendPlayers as $friendPlayer) {
+            foreach ($friendsUsers as $friendUser){
+                if($friendUser->id === $friendPlayer->user_id) {
+                     $friendPlayer->user_id = $friendUser->name;
+                }
+            }
+        }
+
          return response()->json(['content' => [$userPlayers, $friendPlayers]]);
     }
     

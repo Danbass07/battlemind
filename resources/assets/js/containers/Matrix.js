@@ -26,7 +26,6 @@ class Matrix extends Component {
 
     render() {
         const style = {
-            height: '300px',
             width: '400px',
             backgroundColor: 'black',
             marginTop: '10px',
@@ -44,7 +43,7 @@ class Matrix extends Component {
                                 </select>
                                 <select onChange={(e) => this.setState({groupId: e.target.value})}>
                                 {this.props.groups.map((group) => (
-                                    <option  key={group.id}  name="group" value={group.id} > {group.name} </option>
+                                    <option  key={group.id+"groupId"}  name="group" value={group.id} > {group.name} </option>
                                 ))}
                                 </select>
                                 <button onClick={() => this.addTypeToGroup()}>ADD GAME</button>

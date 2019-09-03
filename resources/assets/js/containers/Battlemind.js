@@ -31,7 +31,7 @@ class Battlemind extends Component {
             },
             groups: [{}],
             userGroups: [{}],
-            activeGroup: 2,
+            activeGroup: 1,
             message: [
                 [
                     "Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself."+
@@ -82,7 +82,8 @@ class Battlemind extends Component {
 
         axios.get(`/users`).then(response =>
             this.setState({
-                user: { ...response.data }
+                user: { ...response.data },
+                activeGroup: response.data.groups[0].id 
             })
         );
         axios.get(`/scoreboards`).then(response =>
@@ -129,6 +130,12 @@ class Battlemind extends Component {
                 .then(() => this.getAll());
         }
     }
+    activeGroupChange(id) {
+        console.log(id);
+        this.setState({
+            activeGroup: id
+        })
+    }
 
     componentDidMount() {
         this.getAll();
@@ -168,6 +175,7 @@ class Battlemind extends Component {
                         user={this.state.user}
                         groups={this.state.groups}
                         activeGroup={this.state.activeGroup}
+                        activeGroupChange={(id) => this.activeGroupChange(id)}
                         types={this.state.types}
                         userGroups={this.state.user.groups}
                         addUser={group => this.addUser(group)}

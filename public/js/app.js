@@ -59892,7 +59892,7 @@ var Battlemind = function (_Component) {
             },
             groups: [{}],
             userGroups: [{}],
-            activeGroup: 2,
+            activeGroup: 1,
             message: [["Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself." + " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."], ["Second Message"], ["Third Message"]],
             messageNumber: 0,
             result: []
@@ -59939,7 +59939,8 @@ var Battlemind = function (_Component) {
 
             axios.get("/users").then(function (response) {
                 return _this2.setState({
-                    user: _extends({}, response.data)
+                    user: _extends({}, response.data),
+                    activeGroup: response.data.groups[0].id
                 });
             });
             axios.get("/scoreboards").then(function (response) {
@@ -59995,6 +59996,14 @@ var Battlemind = function (_Component) {
             }
         }
     }, {
+        key: "activeGroupChange",
+        value: function activeGroupChange(id) {
+            console.log(id);
+            this.setState({
+                activeGroup: id
+            });
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getAll();
@@ -60030,6 +60039,9 @@ var Battlemind = function (_Component) {
                         user: this.state.user,
                         groups: this.state.groups,
                         activeGroup: this.state.activeGroup,
+                        activeGroupChange: function activeGroupChange(id) {
+                            return _this4.activeGroupChange(id);
+                        },
                         types: this.state.types,
                         userGroups: this.state.user.groups,
                         addUser: function addUser(group) {
@@ -61890,6 +61902,7 @@ var List = function (_Component) {
         value: function render() {
             var _this4 = this;
 
+            console.log(this.state);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "workarea" },
@@ -62744,57 +62757,106 @@ var Profile = function (_Component) {
     }
 
     _createClass(Profile, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this2 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'workarea' },
+                "div",
+                { className: "workarea" },
                 this.props.user.id === 1 ? null : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'info-bar' },
-                    'Hello ',
+                    "div",
+                    { className: "info-bar" },
+                    "Hello ",
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'h1',
+                        "h1",
                         null,
                         this.props.user.name
                     ),
-                    'Welcome to Battlemind. App to connect players, groups and local shops. Click ',
+                    "Welcome to Battlemind. App to connect players, groups and local shops. Click ",
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'h3',
+                        "h3",
                         null,
-                        'NEW'
+                        "NEW"
                     ),
-                    ' in top left corner. Add new player and gather scores so our Website can show to the world what we are made of.'
+                    " in top left corner. Add new player and gather scores so our Website can show to the world what we are made of."
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null),
-                this.props.user.id === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__containers_Matrix__["a" /* default */], {
-                    groups: this.props.groups,
-                    types: this.props.types }) : null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null),
+                this.props.user.id === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "active-group-list" },
+                    this.props.groups.length ? this.props.groups.map(function (group) {
+                        if (_this2.props.contains(_this2.props.userGroups, group)) return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { key: group.name + "active",
+                                onClick: function onClick() {
+                                    return _this2.props.activeGroupChange(group.id);
+                                },
+                                className: _this2.props.activeGroup === group.id ? "active-group-selected" : "active-group-notselected"
+
+                            },
+                            group.name
+                        );
+                    }) : null
+                ) : null,
+                this.props.user.id === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__containers_Matrix__["a" /* default */], {
+                        groups: this.props.groups,
+                        types: this.props.types
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "group-list" },
+                        this.props.groups.length ? this.props.groups.map(function (group) {
+
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { key: group.name + "groupList2" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                    key: group.id + group.name,
+                                    onChange: function onChange() {
+                                        return _this2.props.addUser(group);
+                                    },
+                                    defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
+                                    type: "checkbox",
+                                    name: "group",
+                                    value: group.id
+                                }),
+                                group.name
+                            );
+                        }) : null
+                    )
+                ) : null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'group-list' },
+                    "div",
+                    { className: "group-list" },
                     this.props.groups.length ? this.props.groups.map(function (group) {
                         if (!_this2.props.contains(_this2.props.userGroups, group) && group.id === 1) return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { key: group.name },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                key: group.id + group.name,
-
+                            "div",
+                            { key: group.name + "groupList1" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                key: group.id + group.name + "groupList",
                                 onChange: function onChange() {
                                     return _this2.props.addUser(group);
                                 },
                                 defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
-                                type: 'checkbox', name: 'group', value: group.id
-
+                                type: "checkbox",
+                                name: "group",
+                                value: group.id
                             }),
                             group.name,
-                            ' --- Please confirm that you are member of Retford Wyverns Gaming Club'
+                            " --- Please confirm that you are member of Retford Wyverns Gaming Club"
                         );
                     }) : null
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { backgroundImage: "url(/images/" + "1" + "logo.png)" }, className: 'logo' })
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
+                    style: {
+                        backgroundImage: "url(/images/" + this.props.activeGroup + "logo.png)"
+                    },
+                    className: "logo"
+                })
             );
         }
     }]);
@@ -62851,7 +62913,6 @@ var Matrix = function (_Component) {
             var _this2 = this;
 
             var style = {
-                height: '300px',
                 width: '400px',
                 backgroundColor: 'black',
                 marginTop: '10px',
@@ -62889,7 +62950,7 @@ var Matrix = function (_Component) {
                     this.props.groups.map(function (group) {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'option',
-                            { key: group.id, name: 'group', value: group.id },
+                            { key: group.id + "groupId", name: 'group', value: group.id },
                             ' ',
                             group.name,
                             ' '

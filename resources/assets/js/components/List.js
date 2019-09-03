@@ -15,6 +15,7 @@ class List extends Component {
         axios.delete(`/${this.props.object}s/${id}`);
     }
     renderContent(type) {
+      
         return this.state.contentToDisplay.map(contentToDisplay => {
             if (contentToDisplay.type === type || this.props.object === 'league' || type === undefined || type === 'Show All')  {
                 return (
@@ -52,6 +53,7 @@ class List extends Component {
     getContent() {
         if (this.props.object !== "none") {
             axios.get(`/${this.props.object}s`).then(response =>
+         
                 this.setState({
                     myContent: [...response.data.content[0]],
                     friendsContent: [...response.data.content[1]],
@@ -92,7 +94,7 @@ class List extends Component {
     }
 
     render() {
-
+        console.log(this.state)
         return (
             <div className="workarea">
                 <button onClick={() => this.myOnlyButtonHandler()}>
