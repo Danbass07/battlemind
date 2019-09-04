@@ -119,6 +119,14 @@ class Result extends Component {
                     {league.name}
                     </option> 
                 ))}
+                   {this.props.friendsLeagues.map(league => (
+                                
+                                <option 
+                                value={league.win_point_value+'break'+league.lost_point_value+'break'+league.draw_point_value+'break'+league.id}  
+                                key={league.name + league.id + "friends"}>
+                                {league.name}
+                                </option> 
+                            ))}
 
    
                     </select>
@@ -131,8 +139,8 @@ class Result extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.pointsCountedSorted.map(player => (
-                               <tr key={player.id}>
+                        {this.state.pointsCountedSorted.map((player, index) => (
+                               <tr key={player.id+"player"+index}>
                                <th>{player.name}</th>
                                <th>{player.points}</th>
                            </tr>

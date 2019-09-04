@@ -100,7 +100,8 @@ class Battlemind extends Component {
         );
         axios.get("/leagues").then(response =>
             this.setState({
-                leagues: [...response.data.content[1]]
+                leagues: [...response.data.content[0]],
+                friendsLeagues: [...response.data.content[1]]
             })
         );
         axios.get(`/groups`).then(response =>
@@ -142,7 +143,6 @@ class Battlemind extends Component {
     }
 
     render() {
-       
         return (
             <div className="battlemind">
                 {/* {this.state.user.hints ? <FlashMessage 
@@ -199,6 +199,7 @@ class Battlemind extends Component {
                     <Result
                         scoreboards={this.state.scoreboards}
                         leagues={this.state.leagues}
+                        friendsLeagues={this.state.friendsLeagues}
                     />
                 ) : null}
                 {this.state.action === "list" ? (

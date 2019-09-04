@@ -41,7 +41,6 @@ class Newplayer extends Component {
             .then(response => {
                 this.setState({
                     name: "",
-                    type: "blank",
                     url: "url",
                     wins: 0,
                     lost: 0,

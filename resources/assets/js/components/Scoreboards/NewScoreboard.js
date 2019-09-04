@@ -36,7 +36,6 @@ class Newscoreboard extends Component {
             .then(response => {
                 this.setState({
                     name: "",
-                    type: "",
                     response: response
                 });
             });

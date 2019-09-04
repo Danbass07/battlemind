@@ -59957,7 +59957,8 @@ var Battlemind = function (_Component) {
             });
             axios.get("/leagues").then(function (response) {
                 return _this2.setState({
-                    leagues: [].concat(_toConsumableArray(response.data.content[1]))
+                    leagues: [].concat(_toConsumableArray(response.data.content[0])),
+                    friendsLeagues: [].concat(_toConsumableArray(response.data.content[1]))
                 });
             });
             axios.get("/groups").then(function (response) {
@@ -60060,7 +60061,8 @@ var Battlemind = function (_Component) {
                     }) : null,
                     this.state.action === "results" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_Result__["a" /* default */], {
                         scoreboards: this.state.scoreboards,
-                        leagues: this.state.leagues
+                        leagues: this.state.leagues,
+                        friendsLeagues: this.state.friendsLeagues
                     }) : null,
                     this.state.action === "list" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["a" /* default */], {
                         object: this.state.object,
@@ -60276,7 +60278,6 @@ var Newplayer = function (_Component) {
             }).then(function (response) {
                 _this2.setState({
                     name: "",
-                    type: "blank",
                     url: "url",
                     wins: 0,
                     lost: 0,
@@ -60591,7 +60592,6 @@ var Newscoreboard = function (_Component) {
             }).then(function (response) {
                 _this2.setState({
                     name: "",
-                    type: "",
                     response: response
                 });
             });
@@ -62676,6 +62676,15 @@ var Result = function (_Component) {
                                 key: league.name + league.id },
                             league.name
                         );
+                    }),
+                    this.props.friendsLeagues.map(function (league) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'option',
+                            {
+                                value: league.win_point_value + 'break' + league.lost_point_value + 'break' + league.draw_point_value + 'break' + league.id,
+                                key: league.name + league.id + "friends" },
+                            league.name
+                        );
                     })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -62705,10 +62714,10 @@ var Result = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'tbody',
                             null,
-                            this.state.pointsCountedSorted.map(function (player) {
+                            this.state.pointsCountedSorted.map(function (player, index) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'tr',
-                                    { key: player.id },
+                                    { key: player.id + "player" + index },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'th',
                                         null,

@@ -15,9 +15,9 @@ class List extends Component {
         axios.delete(`/${this.props.object}s/${id}`);
     }
     renderContent(type) {
-      
+  
         return this.state.contentToDisplay.map(contentToDisplay => {
-            if (contentToDisplay.type === type || this.props.object === 'league' || type === undefined || type === 'Show All')  {
+            if (contentToDisplay.type === type || this.props.object === 'league'  || type === undefined || type === 'Show All')  {
                 return (
                     <div key={contentToDisplay.id} className="list-item">
                         <div className="list-item-name">
