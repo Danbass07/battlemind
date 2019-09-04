@@ -28,7 +28,7 @@ class PlayerController extends Controller
         foreach ($friendPlayers as $friendPlayer) {
             foreach ($friendsUsers as $friendUser){
                 if($friendUser->id === $friendPlayer->user_id) {
-                     $friendPlayer->user_id = $friendUser->name;
+                     $friendPlayer->user_name = $friendUser->name;
                 }
             }
         }

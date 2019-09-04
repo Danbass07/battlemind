@@ -24,7 +24,7 @@ class List extends Component {
                             {contentToDisplay.name}
                         </div>
                         <div className="list-item-name">
-                            {contentToDisplay.user_id}
+                            {contentToDisplay.user_name}
                         </div>
                         <div className="list-item-name">
                             {contentToDisplay.type}

@@ -18,40 +18,58 @@ class ScoreboardController extends Controller
 
     public function index(Request $request, Scoreboard $scoreboard) {
       
-        $user = $request->user();
+
+        $user = User::with(['groups.types', 'groups.users.players', 'players', 'groups'])->where('id', '=' ,$request->user()->id)->first();
         $userGroups = $user->groups;
-        $friendsScoreboards = [];
-  
-        foreach ($userGroups as $group) {
+        $userScoreboards = $user->scoreboards;
+        $friendsUsers = $userGroups->pluck('users')->map->filter(function ($groupUser) use ($user) {
+            return $groupUser->isNot($user);
+            })->collapse();
+        $friendScoreboards =  $friendsUsers->pluck('scoreboards')->collapse()->unique('id');
 
-            $groupUsers = $group->users;
-        
-            foreach ($groupUsers as $groupUser) {
-
-                if ($groupUser->id !== $user->id ) {
-
-                    $userScoreboards = $groupUser->scoreboards;
-
-                    foreach ($userScoreboards as $scoreboard) {
-                   
-                        if(!in_array($scoreboard, $friendsScoreboards)){
-
-                            $friendsScoreboards[]=$scoreboard;
-
-                        }
-
-                    }
-            
+        foreach ($friendScoreboards as $friendScoreboard) {
+            foreach ($friendsUsers as $friendUser){
+                if($friendUser->id === $friendScoreboard->user_id) {
+                      $friendScoreboard->user_id = $friendUser->name;
                 }
-            
             }
+        }
+
+        // $user = $request->user();friendScoreboaard
+        // $userGroups = $user->groups;
+        // $friendsScoreboards = [];
+  
+        // foreach ($userGroups as $group) {
+
+        //     $groupUsers = $group->users;
+        
+        //     foreach ($groupUsers as $groupUser) {
+
+        //         if ($groupUser->id !== $user->id ) {
+
+        //             $userScoreboards = $groupUser->scoreboards;
+
+        //             foreach ($userScoreboards as $scoreboard) {
+                   
+        //                 if(!in_array($scoreboard, $friendsScoreboards)){
+
+        //                     $friendsScoreboards[]=$scoreboard;
+
+        //                 }
+
+        //             }
+            
+        //         }
+            
+        //     }
            
             
-        }
+        // }
         
-         $allScoreboards = League::all();
-         $userScoreboards = $user->scoreboards;
-         return response()->json(['content' => [$userScoreboards, $friendsScoreboards]]);
+        
+        //  $allScoreboards = League::all();
+        //  $userScoreboards = $user->scoreboards;
+         return response()->json(['content' => [$userScoreboards, $friendScoreboards]]);
       
       
        
@@ -79,6 +97,14 @@ class ScoreboardController extends Controller
       {
           $scoreboard = Scoreboard::findOrFail($id);
           $scoreboardPlayers = $scoreboard->players()->get();
+          $users = User::all();
+          foreach ($scoreboardPlayers as $player) {
+            foreach ($users as $user){
+                if($user->id === $player->user_id) {
+                     $player->user_name = $user->name;
+                }
+            }
+        }
           return response()->json([
               'scoreboard' => $scoreboard,
               'scoreboardPlayers' => $scoreboardPlayers,

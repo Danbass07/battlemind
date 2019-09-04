@@ -60448,7 +60448,7 @@ var Newleague = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "info-bar" },
-                    "Don't worry about this part for now. Its scoring rules and we have them ready for you In future you can set your own too."
+                    "Don't worry about this part for now. Its scoring rules and we have them ready for you. In future you can set your own too."
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "form",
@@ -60607,7 +60607,7 @@ var Newscoreboard = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "info-bar" },
-                    "Don't worry about this part for now. Scorboard keep track of results and we have them ready for you In future you can set your own too."
+                    "Don't worry about this part for now. Scorboard keep track of results and we have them ready for you. In future you can set your own too."
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "form",
@@ -61811,7 +61811,7 @@ var List = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
                             { className: "list-item-name" },
-                            contentToDisplay.user_id
+                            contentToDisplay.user_name
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
@@ -62160,7 +62160,7 @@ var Event = function (_Component) {
             if (option == "noexist") {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "Event-list-grid" },
+                    { className: "Event-list-grid-addplayers" },
                     players.map(function (player) {
                         return !_this6.contains(_this6.state.scoreboardplayers, player) && _this6.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
@@ -62171,7 +62171,9 @@ var Event = function (_Component) {
                                 },
                                 key: player.type + player.id + player.name
                             },
-                            player.name
+                            player.name,
+                            "  ",
+                            player.user_name
                         ) : null;
                     })
                 );
@@ -62190,6 +62192,8 @@ var Event = function (_Component) {
                                 key: player.type + player.id + player.name
                             },
                             player.name,
+                            " ",
+                            player.user_name,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "div",
                                 { className: "Result-mini-strip" },
@@ -62355,7 +62359,8 @@ var Event = function (_Component) {
                 this.state.scoreboard !== 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                     null,
-                    this.renderPlayers("", this.props.userPlayers)
+                    console.log(this.props.userPlayers),
+                    this.renderPlayers("", [])
                 ) : null
             );
         }

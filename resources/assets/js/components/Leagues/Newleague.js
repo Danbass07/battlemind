@@ -51,7 +51,7 @@ class Newleague extends Component {
             <div className="workarea">
                 <div className="info-bar">
                     Don't worry about this part for now. Its scoring rules and
-                    we have them ready for you In future you can set your own
+                    we have them ready for you. In future you can set your own
                     too.
                 </div>
 

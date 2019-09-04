@@ -46,7 +46,7 @@ class Newscoreboard extends Component {
             <div className="Workarea">
                 <div className="info-bar">
                     Don't worry about this part for now. Scorboard keep track of
-                    results and we have them ready for you In future you can set
+                    results and we have them ready for you. In future you can set
                     your own too.
                 </div>
                 <form className="myform" onSubmit={e => this.submitHandler(e)}>

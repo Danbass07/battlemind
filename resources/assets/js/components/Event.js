@@ -138,7 +138,7 @@ class Event extends Component {
     renderPlayers(option, players) {
         if (option == "noexist") {
             return (
-                <div className="Event-list-grid">
+                <div className="Event-list-grid-addplayers">
                     {players.map(player =>
                         !this.contains(this.state.scoreboardplayers, player) &&
                         this.state.type == player.type ? (
@@ -152,7 +152,7 @@ class Event extends Component {
                                 }
                                 key={player.type + player.id + player.name}
                             >
-                                {player.name}
+                                {player.name}{"  "}{player.user_name}
                             </div>
                         ) : null
                     )}
@@ -168,7 +168,7 @@ class Event extends Component {
                                 onClick={() => this.selectPlayer(player, index)}
                                 key={player.type + player.id + player.name}
                             >
-                                {player.name}
+                                {player.name}{" "}{player.user_name}
                                 <div className="Result-mini-strip">
                                     <div className="Result-mini-item">
                                         {"W : " + player.pivot.win}
@@ -309,7 +309,8 @@ class Event extends Component {
                 </form>
                 {this.state.scoreboard !== 0 ? (
                     <React.Fragment>
-                        {this.renderPlayers("", this.props.userPlayers)}
+                        {console.log( this.props.userPlayers)}
+                        {this.renderPlayers("", [])}
                     </React.Fragment>
                 ) : null}
             </div>

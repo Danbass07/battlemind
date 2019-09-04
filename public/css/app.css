@@ -10652,7 +10652,6 @@ a:hover {
 
 .list-grid {
   height: 100%;
-  opacity: 1;
   color: cornsilk;
   overflow: scroll;
   overflow-x: hidden;
@@ -10687,6 +10686,10 @@ a:hover {
 
 .Event-list-grid {
   margin-bottom: 90px;
+}
+
+.Event-list-grid-addplayers {
+  margin-bottom: 0px;
 }
 
 .Event-grid-item {
