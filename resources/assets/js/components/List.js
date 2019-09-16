@@ -5,7 +5,8 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            contentToDisplay: []
+            contentToDisplay: [],
+            content:'my',
         };
     }
     deleteHandler(id) {
@@ -15,9 +16,9 @@ class List extends Component {
         axios.delete(`/${this.props.object}s/${id}`);
     }
     renderContent(type) {
-  
+
         return this.state.contentToDisplay.map(contentToDisplay => {
-            if (contentToDisplay.type === type || this.props.object === 'league'  || type === undefined || type === 'Show All')  {
+            if (contentToDisplay.type === type || this.props.object === 'league' || type === undefined || type === 'Show All') {
                 return (
                     <div key={contentToDisplay.id} className="list-item">
                         <div className="list-item-name">
@@ -32,16 +33,16 @@ class List extends Component {
                         <Link
                             to={`/${this.props.object}s/${
                                 contentToDisplay.id
-                            }/edit`}
-                            className="button update"
+                                }/edit`}
+                            className="button-update"
                         >
-                            Update
+                            Edit
                         </Link>
                         <button
                             onClick={() =>
                                 this.deleteHandler(contentToDisplay.id)
                             }
-                            className="button"
+                            className="button-delete"
                         >
                             Delete
                         </button>
@@ -53,7 +54,7 @@ class List extends Component {
     getContent() {
         if (this.props.object !== "none") {
             axios.get(`/${this.props.object}s`).then(response =>
-         
+
                 this.setState({
                     myContent: [...response.data.content[0]],
                     contentToDisplay: [...response.data.content[0]]
@@ -62,7 +63,11 @@ class List extends Component {
         }
         if (this.props.object !== "none") {
             axios.get(`/${this.props.object}s/${this.props.activeGroup}/friendsContent`).then(response =>
+<<<<<<< HEAD
          
+=======
+
+>>>>>>> 94ceddc562151a643218dcdf1634a449907ec204
                 this.setState({
                     friendsContent: [...response.data],
                 })
@@ -80,18 +85,21 @@ class List extends Component {
     }
     myOnlyButtonHandler() {
         this.setState({
-            contentToDisplay: [...this.state.myContent]
+            contentToDisplay: [...this.state.myContent],
+            content:'my',
         });
     }
     myFriendsOnlyButtonHandler() {
         this.setState({
-            contentToDisplay: [...this.state.friendsContent]
+            contentToDisplay: [...this.state.friendsContent],
+            content:'friends',
         });
     }
     allButtonHandler() {
         const all = this.state.myContent.concat(this.state.friendsContent);
         this.setState({
-            contentToDisplay: [...all]
+            contentToDisplay: [...all],
+            content:'all',
         });
     }
     typeChangeHandler(e) {
@@ -104,15 +112,21 @@ class List extends Component {
     render() {
         return (
             <div className="workarea">
-                <button onClick={() => this.myOnlyButtonHandler()}>
-                    My only toggler
+                <div className="list-button-area">
+                    <button className={this.state.content === "my" ?"list-option-button-active": "list-option-button"}
+                        onClick={() => this.myOnlyButtonHandler()}>
+                        My Stuff
                 </button>
-                <button onClick={() => this.myFriendsOnlyButtonHandler()}>
-                    My Friends only toggler
+                    <button className={this.state.content === "friends" ?"list-option-button-active": "list-option-button"}
+                        onClick={() => this.myFriendsOnlyButtonHandler()}>
+                        My Friends Stuff
                 </button>
-                <button onClick={() => this.allButtonHandler()}>
-                    All toggler
+                    <button className={this.state.content === "all" ?"list-option-button-active": "list-option-button"}
+                        onClick={() => this.allButtonHandler()}>
+                        All Stuff
                 </button>
+                </div>
+
                 {this.props.object !== 'league' ? <select
                     name="Choose a Type"
                     className="myform-control"

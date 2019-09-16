@@ -10637,22 +10637,28 @@ a:hover {
           justify-content: space-between;
 }
 
-.button {
-  background-color: red;
+.button-delete {
+  background-color: #ff7f00;
   width: 65px;
   padding: 8px;
-  border: 1px solid coral;
+  border: 1px solid #000000;
   text-align: center;
 }
 
-.update {
-  background-color: #14087a;
+.button-update {
+  background-color: #ff7f00;
   margin-left: auto;
+  width: 65px;
+  text-align: center;
+  border: 1px solid #000000;
+  margin-top: 10%;
+  color: #000000;
+  font-size: 17px;
 }
 
 .list-grid {
   height: 100%;
-  color: cornsilk;
+  color: #ff7f00;
   overflow: scroll;
   overflow-x: hidden;
   margin-bottom: 55px;
@@ -10663,13 +10669,38 @@ a:hover {
   display: -ms-flexbox;
   display: flex;
   justify-items: flex-end;
-  border: 1px solid cornsilk;
+  border: 1px solid #ff7f00;
 }
 
 .list-item-name {
   width: 85px;
   padding: 8px;
   text-align: center;
+}
+
+.list-button-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.list-option-button {
+  background-color: #ff7f00;
+  color: #000000;
+  -webkit-box-shadow: 4px 5px 5px #ff7f00;
+          box-shadow: 4px 5px 5px #ff7f00;
+  border: 1px solid #000000;
+  font-size: 24px;
+  border-radius: 12%;
+}
+
+.list-option-button-active {
+  background-color: #000000;
+  color: #ff7f00;
+  border: 1px solid #ff7f00;
+  font-size: 24px;
 }
 
 .Event-grid {

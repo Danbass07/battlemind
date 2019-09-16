@@ -51,7 +51,7 @@ class Battlemind extends Component {
             message: [
                 [
                     "Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself." +
-                        " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."
+                    " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."
                 ],
                 ["Second Message"],
                 ["Third Message"]
@@ -182,9 +182,6 @@ class Battlemind extends Component {
     render() {
         return (
             <div className="battlemind">
-                {/* {this.state.user.hints ? <FlashMessage 
-             message = {this.state.message[this.state.messageNumber]}
-             /> : null } */}
 
                 <Navigation
                     button={e => this.buttonHandler(e)}
@@ -207,7 +204,7 @@ class Battlemind extends Component {
                         path="/scoreboards/:id/edit"
                         component={Scoreboard}
                     ></Route>
-{console.log(this.state.userTypes)}
+
                     {this.state.action === "hype" ? (
                         <Hypenotizer
                             userTypes={this.state.userTypes}
@@ -260,17 +257,17 @@ class Battlemind extends Component {
                         />
                     ) : null}
                     {this.state.action === "new" &&
-                    this.state.object === "player" ? (
-                        <Newplayer types={this.state.types} />
-                    ) : null}
+                        this.state.object === "player" ? (
+                            <Newplayer types={this.state.types} />
+                        ) : null}
                     {this.state.action === "new" &&
-                    this.state.object === "league" ? (
-                        <Newleague />
-                    ) : null}
+                        this.state.object === "league" ? (
+                            <Newleague />
+                        ) : null}
                     {this.state.action === "new" &&
-                    this.state.object === "scoreboard" ? (
-                        <Newscoreboard types={this.state.types} />
-                    ) : null}
+                        this.state.object === "scoreboard" ? (
+                            <Newscoreboard types={this.state.types} />
+                        ) : null}
                 </Switch>
             </div>
         );
