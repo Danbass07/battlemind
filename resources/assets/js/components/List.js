@@ -63,11 +63,6 @@ class List extends Component {
         }
         if (this.props.object !== "none") {
             axios.get(`/${this.props.object}s/${this.props.activeGroup}/friendsContent`).then(response =>
-<<<<<<< HEAD
-         
-=======
-
->>>>>>> 94ceddc562151a643218dcdf1634a449907ec204
                 this.setState({
                     friendsContent: [...response.data],
                 })

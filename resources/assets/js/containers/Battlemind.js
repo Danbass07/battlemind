@@ -180,6 +180,7 @@ class Battlemind extends Component {
     }
 
     render() {
+        
         return (
             <div className="battlemind">
 

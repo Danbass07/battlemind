@@ -128,16 +128,15 @@ class Event extends Component {
                             value={scoreboard.id + "break" + scoreboard.type}
                             key={scoreboard.id + scoreboard.name}
                         >
-                            {scoreboard.name+scoreboard.id}
+                            {scoreboard.name}{" "}{scoreboard.type}
                         </option>
                     ))}
-                    {console.log(friendsScoreboards)}
                       {friendsScoreboards.map(scoreboard => (
                         <option
                             value={scoreboard.id + "break" + scoreboard.type}
                             key={scoreboard.id + scoreboard.name}
                         >
-                            {scoreboard.name+"friend"+scoreboard.id}
+                            {scoreboard.name}{" "}{scoreboard.type}{" "}{scoreboard.user_name}
                         </option>
                     ))}
                 </select>
@@ -146,12 +145,12 @@ class Event extends Component {
     }
 
     renderPlayers(option, players) {
-        if (option == "noexist") {
+        if (option === "noexist") {
             return (
                 <div className="Event-list-grid-addplayers">
                     {players.map(player =>
                         !this.contains(this.state.scoreboardplayers, player) &&
-                        this.state.type == player.type ? (
+                        this.state.type === player.type ? (
                             <div
                                 className="Event-list-item"
                                 onClick={() =>
@@ -211,25 +210,7 @@ class Event extends Component {
             );
         }
     }
-    // renderResults() {
-    //     return (
-    //         <div>
-    //             {this.state.scoreboardplayers.length > 0
-    //                 ? this.state.scoreboardplayers.map(player => (
-    //                       <div key={this.state.scoreboard + player.id}>
-    //                           {player.name +
-    //                               "  W-" +
-    //                               player.pivot.win +
-    //                               " L-" +
-    //                               player.pivot.lost +
-    //                               " D-" +
-    //                               player.pivot.draw}
-    //                       </div>
-    //                   ))
-    //                 : null}
-    //         </div>
-    //     );
-    // }
+
     submitHandler() {
         this.setState({ focusOn: "" });
         axios

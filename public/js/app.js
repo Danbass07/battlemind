@@ -59833,7 +59833,6 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_List__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_List___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_List__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Event__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Result__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Profile__ = __webpack_require__(114);
@@ -60110,7 +60109,7 @@ var Battlemind = function (_Component) {
                         leagues: this.state.leagues,
                         friendsLeagues: this.state.friendsLeagues
                     }) : null,
-                    this.state.action === "list" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["default"], {
+                    this.state.action === "list" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["a" /* default */], {
                         activeGroup: this.state.activeGroup,
                         object: this.state.object,
                         types: this.state.types
@@ -61798,9 +61797,235 @@ function contains(a, obj) {
 
 /***/ }),
 /* 110 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: C:/Users/Danbass666/websites/battlemind/resources/assets/js/components/List.js: Unexpected token (66:1)\n\n\u001b[0m \u001b[90m 64 | \u001b[39m        \u001b[36mif\u001b[39m (\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mprops\u001b[33m.\u001b[39mobject \u001b[33m!==\u001b[39m \u001b[32m\"none\"\u001b[39m) {\n \u001b[90m 65 | \u001b[39m            axios\u001b[33m.\u001b[39mget(\u001b[32m`/${this.props.object}s/${this.props.activeGroup}/friendsContent`\u001b[39m)\u001b[33m.\u001b[39mthen(response \u001b[33m=>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 66 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 67 | \u001b[39m         \n \u001b[90m 68 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 69 | \u001b[39m\u001b[0m\n");
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var List = function (_Component) {
+    _inherits(List, _Component);
+
+    function List(props) {
+        _classCallCheck(this, List);
+
+        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
+
+        _this.state = {
+            contentToDisplay: [],
+            content: 'my'
+        };
+        return _this;
+    }
+
+    _createClass(List, [{
+        key: "deleteHandler",
+        value: function deleteHandler(id) {
+            var isNotId = function isNotId(contentToDisplay) {
+                return contentToDisplay.id !== id;
+            };
+            var updatedContent = this.state.contentToDisplay.filter(isNotId);
+            this.setState({ contentToDisplay: updatedContent });
+            axios.delete("/" + this.props.object + "s/" + id);
+        }
+    }, {
+        key: "renderContent",
+        value: function renderContent(type) {
+            var _this2 = this;
+
+            return this.state.contentToDisplay.map(function (contentToDisplay) {
+                if (contentToDisplay.type === type || _this2.props.object === 'league' || type === undefined || type === 'Show All') {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { key: contentToDisplay.id, className: "list-item" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "list-item-name" },
+                            contentToDisplay.name
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "list-item-name" },
+                            contentToDisplay.user_name
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "list-item-name" },
+                            contentToDisplay.type
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                            {
+                                to: "/" + _this2.props.object + "s/" + contentToDisplay.id + "/edit",
+                                className: "button-update"
+                            },
+                            "Edit"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "button",
+                            {
+                                onClick: function onClick() {
+                                    return _this2.deleteHandler(contentToDisplay.id);
+                                },
+                                className: "button-delete"
+                            },
+                            "Delete"
+                        )
+                    );
+                }
+            });
+        }
+    }, {
+        key: "getContent",
+        value: function getContent() {
+            var _this3 = this;
+
+            if (this.props.object !== "none") {
+                axios.get("/" + this.props.object + "s").then(function (response) {
+                    return _this3.setState({
+                        myContent: [].concat(_toConsumableArray(response.data.content[0])),
+                        contentToDisplay: [].concat(_toConsumableArray(response.data.content[0]))
+                    });
+                });
+            }
+            if (this.props.object !== "none") {
+                axios.get("/" + this.props.object + "s/" + this.props.activeGroup + "/friendsContent").then(function (response) {
+                    return _this3.setState({
+                        friendsContent: [].concat(_toConsumableArray(response.data))
+                    });
+                });
+            }
+            // activeGroup={this.state.activeGroup}
+        }
+    }, {
+        key: "componentWillMount",
+        value: function componentWillMount() {
+            this.getContent();
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps) {
+            if (prevProps.object !== this.props.object) {
+                this.getContent();
+            }
+        }
+    }, {
+        key: "myOnlyButtonHandler",
+        value: function myOnlyButtonHandler() {
+            this.setState({
+                contentToDisplay: [].concat(_toConsumableArray(this.state.myContent)),
+                content: 'my'
+            });
+        }
+    }, {
+        key: "myFriendsOnlyButtonHandler",
+        value: function myFriendsOnlyButtonHandler() {
+            this.setState({
+                contentToDisplay: [].concat(_toConsumableArray(this.state.friendsContent)),
+                content: 'friends'
+            });
+        }
+    }, {
+        key: "allButtonHandler",
+        value: function allButtonHandler() {
+            var all = this.state.myContent.concat(this.state.friendsContent);
+            this.setState({
+                contentToDisplay: [].concat(_toConsumableArray(all)),
+                content: 'all'
+            });
+        }
+    }, {
+        key: "typeChangeHandler",
+        value: function typeChangeHandler(e) {
+            e.preventDefault();
+            this.setState({
+                type: e.target.value
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this4 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "workarea" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "list-button-area" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        { className: this.state.content === "my" ? "list-option-button-active" : "list-option-button",
+                            onClick: function onClick() {
+                                return _this4.myOnlyButtonHandler();
+                            } },
+                        "My Stuff"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        { className: this.state.content === "friends" ? "list-option-button-active" : "list-option-button",
+                            onClick: function onClick() {
+                                return _this4.myFriendsOnlyButtonHandler();
+                            } },
+                        "My Friends Stuff"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        { className: this.state.content === "all" ? "list-option-button-active" : "list-option-button",
+                            onClick: function onClick() {
+                                return _this4.allButtonHandler();
+                            } },
+                        "All Stuff"
+                    )
+                ),
+                this.props.object !== 'league' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "select",
+                    {
+                        name: "Choose a Type",
+                        className: "myform-control",
+                        onChange: function onChange(e) {
+                            return _this4.typeChangeHandler(e);
+                        }
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "option",
+                        null,
+                        "Show All"
+                    ),
+                    this.props.types.map(function (type) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "option",
+                            { value: type.name, key: type.id },
+                            type.type
+                        );
+                    })
+                ) : null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "list-grid" },
+                    this.renderContent(this.state.type)
+                )
+            );
+        }
+    }]);
+
+    return List;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (List);
 
 /***/ }),
 /* 111 */
@@ -61986,10 +62211,11 @@ var Event = function (_Component) {
                             value: scoreboard.id + "break" + scoreboard.type,
                             key: scoreboard.id + scoreboard.name
                         },
-                        scoreboard.name + scoreboard.id
+                        scoreboard.name,
+                        " ",
+                        scoreboard.type
                     );
                 }),
-                console.log(friendsScoreboards),
                 friendsScoreboards.map(function (scoreboard) {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "option",
@@ -61997,7 +62223,11 @@ var Event = function (_Component) {
                             value: scoreboard.id + "break" + scoreboard.type,
                             key: scoreboard.id + scoreboard.name
                         },
-                        scoreboard.name + "friend" + scoreboard.id
+                        scoreboard.name,
+                        " ",
+                        scoreboard.type,
+                        " ",
+                        scoreboard.user_name
                     );
                 })
             );
@@ -62007,12 +62237,12 @@ var Event = function (_Component) {
         value: function renderPlayers(option, players) {
             var _this6 = this;
 
-            if (option == "noexist") {
+            if (option === "noexist") {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "Event-list-grid-addplayers" },
                     players.map(function (player) {
-                        return !_this6.contains(_this6.state.scoreboardplayers, player) && _this6.state.type == player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        return !_this6.contains(_this6.state.scoreboardplayers, player) && _this6.state.type === player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
                             {
                                 className: "Event-list-item",
@@ -62080,26 +62310,6 @@ var Event = function (_Component) {
                 );
             }
         }
-        // renderResults() {
-        //     return (
-        //         <div>
-        //             {this.state.scoreboardplayers.length > 0
-        //                 ? this.state.scoreboardplayers.map(player => (
-        //                       <div key={this.state.scoreboard + player.id}>
-        //                           {player.name +
-        //                               "  W-" +
-        //                               player.pivot.win +
-        //                               " L-" +
-        //                               player.pivot.lost +
-        //                               " D-" +
-        //                               player.pivot.draw}
-        //                       </div>
-        //                   ))
-        //                 : null}
-        //         </div>
-        //     );
-        // }
-
     }, {
         key: "submitHandler",
         value: function submitHandler() {
