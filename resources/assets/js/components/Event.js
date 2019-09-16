@@ -115,23 +115,33 @@ class Event extends Component {
         });
     }
 
-    renderOptions(scoreboards) {
+    renderOptions(scoreboards, friendsScoreboards) {
         return (
-            <select
-                name="Choose a scoreboard"
-                className="myform-control"
-                onChange={e => this.scoreboardChangeHandler(e)}
-            >
-                <option>Choose a scoreboard</option>
-                {scoreboards.map(scoreboard => (
-                    <option
-                        value={scoreboard.id + "break" + scoreboard.type}
-                        key={scoreboard.id + scoreboard.name}
-                    >
-                        {scoreboard.name}
-                    </option>
-                ))}
-            </select>
+                <select
+                    name="Choose a scoreboard"
+                    className="myform-control"
+                    onChange={e => this.scoreboardChangeHandler(e)}
+                >
+                    <option>Choose a scoreboard</option>
+                    {scoreboards.map(scoreboard => (
+                        <option
+                            value={scoreboard.id + "break" + scoreboard.type}
+                            key={scoreboard.id + scoreboard.name}
+                        >
+                            {scoreboard.name+scoreboard.id}
+                        </option>
+                    ))}
+                    {console.log(friendsScoreboards)}
+                      {friendsScoreboards.map(scoreboard => (
+                        <option
+                            value={scoreboard.id + "break" + scoreboard.type}
+                            key={scoreboard.id + scoreboard.name}
+                        >
+                            {scoreboard.name+"friend"+scoreboard.id}
+                        </option>
+                    ))}
+                </select>
+    
         );
     }
 
@@ -152,7 +162,9 @@ class Event extends Component {
                                 }
                                 key={player.type + player.id + player.name}
                             >
-                                {player.name}{"  "}{player.user_name}
+                                {player.name}
+                                {"  "}
+                                {player.user_name}
                             </div>
                         ) : null
                     )}
@@ -168,7 +180,7 @@ class Event extends Component {
                                 onClick={() => this.selectPlayer(player, index)}
                                 key={player.type + player.id + player.name}
                             >
-                                {player.name}{" "}{player.user_name}
+                                {player.name} {player.user_name}
                                 <div className="Result-mini-strip">
                                     <div className="Result-mini-item">
                                         {"W : " + player.pivot.win}
@@ -180,7 +192,6 @@ class Event extends Component {
                                         {"D : " + player.pivot.draw}
                                     </div>
                                 </div>
-
                                 <div
                                     className="Remove-button"
                                     onClick={() =>
@@ -233,8 +244,11 @@ class Event extends Component {
     render() {
         return (
             <div className="workarea">
-                <div className="info-bar">There it is. A main part of the app. Here we store the result. Choose a Scorboard, add some players
-                and keep track of games. That part of the app will tell our WebSite what to display. What we did every week. NO CHEATING!!! 
+                <div className="info-bar">
+                    There it is. A main part of the app. Here we store the
+                    result. Choose a Scorboard, add some players and keep track
+                    of games. That part of the app will tell our WebSite what to
+                    display. What we did every week. NO CHEATING!!!
                 </div>
                 {this.state.focusOn === "player" ? (
                     <div className="Pop-up">
@@ -272,7 +286,7 @@ class Event extends Component {
                                 "noexist",
                                 this.props.userPlayers
                             )}
-                             {this.renderPlayers(
+                            {this.renderPlayers(
                                 "noexist",
                                 this.props.friendsPlayers
                             )}
@@ -291,12 +305,16 @@ class Event extends Component {
                             </div>
 
                             {this.renderPlayers("", this.props.userPlayers)}
+                            {this.renderPlayers("", this.props.friendsPlayers)}
                         </div>
                     </div>
                 ) : null}
 
                 <form className="Scoreboard-dropdown">
-                    {this.renderOptions(this.props.scoreboards)}
+                    {this.renderOptions(
+                        this.props.scoreboards,
+                        this.props.friendsScoreboards
+                    )}
                     <button
                         className="Scoreboard-addPlayer-button"
                         onClick={e => {
@@ -309,7 +327,6 @@ class Event extends Component {
                 </form>
                 {this.state.scoreboard !== 0 ? (
                     <React.Fragment>
-                        {console.log( this.props.userPlayers)}
                         {this.renderPlayers("", [])}
                     </React.Fragment>
                 ) : null}

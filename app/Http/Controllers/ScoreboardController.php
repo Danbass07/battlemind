@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Player;
 use App\League;
 use App\User;
+use App\Group;
 use App\Scoreboard;
 
 class ScoreboardController extends Controller
@@ -25,9 +26,9 @@ class ScoreboardController extends Controller
         $friendsUsers = $userGroups->pluck('users')->map->filter(function ($groupUser) use ($user) {
             return $groupUser->isNot($user);
             })->collapse();
-        $friendScoreboards =  $friendsUsers->pluck('scoreboards')->collapse()->unique('id');
+        $friendsScoreboards =  $friendsUsers->pluck('scoreboards')->collapse()->unique('id');
 
-        foreach ($friendScoreboards as $friendScoreboard) {
+        foreach ($friendsScoreboards as $friendScoreboard) {
             foreach ($friendsUsers as $friendUser){
                 if($friendUser->id === $friendScoreboard->user_id) {
                       $friendScoreboard->user_id = $friendUser->name;
@@ -35,41 +36,7 @@ class ScoreboardController extends Controller
             }
         }
 
-        // $user = $request->user();friendScoreboaard
-        // $userGroups = $user->groups;
-        // $friendsScoreboards = [];
-  
-        // foreach ($userGroups as $group) {
-
-        //     $groupUsers = $group->users;
-        
-        //     foreach ($groupUsers as $groupUser) {
-
-        //         if ($groupUser->id !== $user->id ) {
-
-        //             $userScoreboards = $groupUser->scoreboards;
-
-        //             foreach ($userScoreboards as $scoreboard) {
-                   
-        //                 if(!in_array($scoreboard, $friendsScoreboards)){
-
-        //                     $friendsScoreboards[]=$scoreboard;
-
-        //                 }
-
-        //             }
-            
-        //         }
-            
-        //     }
-           
-            
-        // }
-        
-        
-        //  $allScoreboards = League::all();
-        //  $userScoreboards = $user->scoreboards;
-         return response()->json(['content' => [$userScoreboards, $friendScoreboards]]);
+         return response()->json(['content' => [$userScoreboards, $friendsScoreboards]]);
       
       
        
@@ -185,12 +152,23 @@ class ScoreboardController extends Controller
            
             }
 
-        }
-                
-           
-            
- 
-        
+        } 
         return response($scoreboardplayers);
+    }
+    
+    public function friendsContent($id) 
+    {
+       
+        $group = Group::findOrFail($id)->load('users.leagues');
+        $scoreboards = $group->users->map(function ($groupUser)  {
+            $user =  Auth::user();
+            if($groupUser->id !== $user->id) {
+                $groupUser->scoreboards->map(function ($scoreboard) use ($groupUser) {
+                    $scoreboard->user_name = $groupUser->name;
+                });
+                return $groupUser->scoreboards;
+            } 
+            })->collapse();;
+        return response()->json($scoreboards);
     }
 }

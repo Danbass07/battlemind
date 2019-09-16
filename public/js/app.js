@@ -59879,12 +59879,28 @@ var Battlemind = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Battlemind.__proto__ || Object.getPrototypeOf(Battlemind)).call(this, props));
 
         _this.state = {
+            userContent: {
+                players: [{}],
+                scoreboards: [{}],
+                leagues: [{}]
+            },
+
+            friendsContent: {
+                players: [{}],
+                scoreboards: [{}],
+                leagues: [{}],
+                friendsScoreboards: [{}],
+                friendsPlayers: [{}],
+                friendsLeagues: [{}]
+            },
+
             action: "profile",
             object: "none",
             types: [{ id: 0, type: "test" }],
             userTypes: [],
             allTypes: [],
-            scoreboards: [],
+            userScoreboards: [],
+            friendsScoreboards: [],
             userPlayers: [{}],
             leagues: [{}],
             user: {
@@ -59911,16 +59927,15 @@ var Battlemind = function (_Component) {
             this.setState(_defineProperty({}, e.target.value, e.target.name));
         }
     }, {
-        key: "getAll",
-        value: function getAll() {
+        key: "getUserContent",
+        value: function getUserContent() {
             var _this2 = this;
 
+            ////////////////////////////////////////////////////////////////////////////////////////////////
             axios.get("/types").then(function (response) {
                 var userTypes = [].concat(_toConsumableArray(response.data.userTypes));
                 userTypes.forEach(function (userType) {
-
                     if (userType.users.length !== 0) {
-
                         userType.users.map(function (user) {
                             if (response.data.user.id === user.id) {
                                 userType.hype = user.pivot.hype;
@@ -59932,7 +59947,6 @@ var Battlemind = function (_Component) {
                     _this2.setState({
                         userTypes: [].concat(_toConsumableArray(userTypes)),
                         types: [].concat(_toConsumableArray(response.data.allTypes))
-
                     });
                 });
             });
@@ -59945,20 +59959,17 @@ var Battlemind = function (_Component) {
             });
             axios.get("/scoreboards").then(function (response) {
                 return _this2.setState({
-                    scoreboards: response.data.content[0],
-                    FriendsScoreboards: response.data.content[1]
+                    userScoreboards: response.data.content[0]
                 });
             });
             axios.get("/players").then(function (response) {
                 return _this2.setState({
-                    userPlayers: [].concat(_toConsumableArray(response.data.content[0])),
-                    friendsPlayers: [].concat(_toConsumableArray(response.data.content[1]))
+                    userPlayers: [].concat(_toConsumableArray(response.data.content[0]))
                 });
             });
             axios.get("/leagues").then(function (response) {
                 return _this2.setState({
-                    leagues: [].concat(_toConsumableArray(response.data.content[0])),
-                    friendsLeagues: [].concat(_toConsumableArray(response.data.content[1]))
+                    leagues: [].concat(_toConsumableArray(response.data.content[0]))
                 });
             });
             axios.get("/groups").then(function (response) {
@@ -59968,9 +59979,30 @@ var Battlemind = function (_Component) {
             });
         }
     }, {
+        key: "getFriendsContent",
+        value: function getFriendsContent() {
+            var _this3 = this;
+
+            axios.get("/leagues/" + this.state.activeGroup + "/friendsContent").then(function (response) {
+                return _this3.setState({
+                    friendsLeagues: [].concat(_toConsumableArray(response.data))
+                });
+            });
+            axios.get("/players/" + this.state.activeGroup + "/friendsContent").then(function (response) {
+                return _this3.setState({
+                    friendsPlayers: [].concat(_toConsumableArray(response.data))
+                });
+            });
+            axios.get("/scoreboards/" + this.state.activeGroup + "/friendsContent").then(function (response) {
+                return _this3.setState({
+                    friendsScoreboards: [].concat(_toConsumableArray(response.data))
+                });
+            });
+        }
+    }, {
         key: "contains",
         value: function contains(a, obj) {
-            if ((typeof a === "undefined" ? "undefined" : _typeof(a)) === 'object') {
+            if ((typeof a === "undefined" ? "undefined" : _typeof(a)) === "object") {
                 for (var i = 0; i < a.length; i++) {
                     if (a[i].id === obj.id) {
                         return true;
@@ -59984,42 +60016,42 @@ var Battlemind = function (_Component) {
     }, {
         key: "addUser",
         value: function addUser(group) {
-            var _this3 = this;
+            var _this4 = this;
 
             if (!this.contains(this.state.user.groups, group)) {
                 axios.get("/groups/" + group.id + "/addUser").then(function () {
-                    return _this3.getAll();
+                    _this4.getUserContent();_this4.getFriendsContent();
                 });
             } else {
                 axios.get("/groups/" + group.id + "/removeUser").then(function () {
-                    return _this3.getAll();
+                    _this4.getUserContent();_this4.getFriendsContent();
                 });
             }
         }
     }, {
         key: "activeGroupChange",
         value: function activeGroupChange(id) {
-            console.log(id);
             this.setState({
                 activeGroup: id
-            });
+            }, this.getFriendsContent());
         }
     }, {
         key: "componentDidMount",
         value: function componentDidMount() {
-            this.getAll();
+            this.getUserContent();
+            this.getFriendsContent();
         }
     }, {
         key: "render",
         value: function render() {
-            var _this4 = this;
+            var _this5 = this;
 
             return __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                 "div",
                 { className: "battlemind" },
                 __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], {
                     button: function button(e) {
-                        return _this4.buttonHandler(e);
+                        return _this5.buttonHandler(e);
                     },
                     object: this.state.object,
                     action: this.state.action
@@ -60027,9 +60059,22 @@ var Battlemind = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["d" /* Switch */],
                     null,
-                    __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], { exact: true, path: "/players/:id/edit", component: __WEBPACK_IMPORTED_MODULE_5__components_Players_Player__["a" /* default */] }),
-                    __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], { exact: true, path: "/leagues/:id/edit", component: __WEBPACK_IMPORTED_MODULE_6__components_Leagues_League__["a" /* default */] }),
-                    __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], { exact: true, path: "/scoreboards/:id/edit", component: __WEBPACK_IMPORTED_MODULE_7__components_Scoreboards_Scoreboard__["a" /* default */] }),
+                    __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], {
+                        exact: true,
+                        path: "/players/:id/edit",
+                        component: __WEBPACK_IMPORTED_MODULE_5__components_Players_Player__["a" /* default */]
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], {
+                        exact: true,
+                        path: "/leagues/:id/edit",
+                        component: __WEBPACK_IMPORTED_MODULE_6__components_Leagues_League__["a" /* default */]
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Route */], {
+                        exact: true,
+                        path: "/scoreboards/:id/edit",
+                        component: __WEBPACK_IMPORTED_MODULE_7__components_Scoreboards_Scoreboard__["a" /* default */]
+                    }),
+                    console.log(this.state.userTypes),
                     this.state.action === "hype" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_14__containers_Hypenotizer__["a" /* default */], {
                         userTypes: this.state.userTypes,
                         navigation: this.state.object,
@@ -60041,32 +60086,35 @@ var Battlemind = function (_Component) {
                         groups: this.state.groups,
                         activeGroup: this.state.activeGroup,
                         activeGroupChange: function activeGroupChange(id) {
-                            return _this4.activeGroupChange(id);
+                            return _this5.activeGroupChange(id);
                         },
                         types: this.state.types,
                         userGroups: this.state.user.groups,
                         addUser: function addUser(group) {
-                            return _this4.addUser(group);
+                            return _this5.addUser(group);
                         },
                         contains: function contains(userGroups, groups) {
-                            return _this4.contains(userGroups, groups);
+                            return _this5.contains(userGroups, groups);
                         }
                     }) : null,
                     this.state.action === "event" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], {
-                        scoreboards: this.state.scoreboards,
+                        scoreboards: this.state.userScoreboards,
+                        friendsScoreboards: this.state.friendsScoreboards,
                         userPlayers: this.state.userPlayers,
                         friendsPlayers: this.state.friendsPlayers,
                         leagues: this.state.leagues,
                         type: this.state.type
                     }) : null,
                     this.state.action === "results" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_Result__["a" /* default */], {
-                        scoreboards: this.state.scoreboards,
+                        scoreboards: this.state.userScoreboards,
                         leagues: this.state.leagues,
                         friendsLeagues: this.state.friendsLeagues
                     }) : null,
                     this.state.action === "list" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["a" /* default */], {
+                        activeGroup: this.state.activeGroup,
                         object: this.state.object,
-                        types: this.state.types }) : null,
+                        types: this.state.types
+                    }) : null,
                     this.state.action === "new" && this.state.object === "player" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], { types: this.state.types }) : null,
                     this.state.action === "new" && this.state.object === "league" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], null) : null,
                     this.state.action === "new" && this.state.object === "scoreboard" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], { types: this.state.types }) : null
@@ -61849,11 +61897,18 @@ var List = function (_Component) {
                 axios.get("/" + this.props.object + "s").then(function (response) {
                     return _this3.setState({
                         myContent: [].concat(_toConsumableArray(response.data.content[0])),
-                        friendsContent: [].concat(_toConsumableArray(response.data.content[1])),
                         contentToDisplay: [].concat(_toConsumableArray(response.data.content[0]))
                     });
                 });
             }
+            if (this.props.object !== "none") {
+                axios.get("/" + this.props.object + "s/" + this.props.activeGroup + "/friendsContent").then(function (response) {
+                    return _this3.setState({
+                        friendsContent: [].concat(_toConsumableArray(response.data))
+                    });
+                });
+            }
+            // activeGroup={this.state.activeGroup}
         }
     }, {
         key: "componentWillMount",
@@ -61902,7 +61957,6 @@ var List = function (_Component) {
         value: function render() {
             var _this4 = this;
 
-            console.log(this.state);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "workarea" },
@@ -62123,7 +62177,7 @@ var Event = function (_Component) {
         }
     }, {
         key: "renderOptions",
-        value: function renderOptions(scoreboards) {
+        value: function renderOptions(scoreboards, friendsScoreboards) {
             var _this5 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -62147,7 +62201,18 @@ var Event = function (_Component) {
                             value: scoreboard.id + "break" + scoreboard.type,
                             key: scoreboard.id + scoreboard.name
                         },
-                        scoreboard.name
+                        scoreboard.name + scoreboard.id
+                    );
+                }),
+                console.log(friendsScoreboards),
+                friendsScoreboards.map(function (scoreboard) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "option",
+                        {
+                            value: scoreboard.id + "break" + scoreboard.type,
+                            key: scoreboard.id + scoreboard.name
+                        },
+                        scoreboard.name + "friend" + scoreboard.id
                     );
                 })
             );
@@ -62337,13 +62402,14 @@ var Event = function (_Component) {
                             },
                             "X"
                         ),
-                        this.renderPlayers("", this.props.userPlayers)
+                        this.renderPlayers("", this.props.userPlayers),
+                        this.renderPlayers("", this.props.friendsPlayers)
                     )
                 ) : null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "form",
                     { className: "Scoreboard-dropdown" },
-                    this.renderOptions(this.props.scoreboards),
+                    this.renderOptions(this.props.scoreboards, this.props.friendsScoreboards),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "button",
                         {
@@ -62359,7 +62425,6 @@ var Event = function (_Component) {
                 this.state.scoreboard !== 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                     null,
-                    console.log(this.props.userPlayers),
                     this.renderPlayers("", [])
                 ) : null
             );
@@ -62796,7 +62861,7 @@ var Profile = function (_Component) {
                     " in top left corner. Add new player and gather scores so our Website can show to the world what we are made of."
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null),
-                this.props.user.id === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "active-group-list" },
                     this.props.groups.length ? this.props.groups.map(function (group) {
@@ -62812,8 +62877,8 @@ var Profile = function (_Component) {
                             group.name
                         );
                     }) : null
-                ) : null,
-                this.props.user.id === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__containers_Matrix__["a" /* default */], {
@@ -62842,7 +62907,7 @@ var Profile = function (_Component) {
                             );
                         }) : null
                     )
-                ) : null,
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "group-list" },

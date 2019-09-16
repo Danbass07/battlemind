@@ -16,7 +16,7 @@ class Profile extends Component {
                 )}
                 <div></div>
               
-                {this.props.user.id === 1 ? (
+                {/* {this.props.user.id === 1 ? ( */}
                     <div className="active-group-list">
                         {this.props.groups.length
                             ? this.props.groups.map(group => {
@@ -44,8 +44,8 @@ class Profile extends Component {
                               })
                             : null}
                     </div>
-                ) : null}
-                {this.props.user.id === 1 ? (
+                {/* ) : null} */}
+                {/* {this.props.user.id === 1 ? ( */}
                     <React.Fragment>
               <Matrix
                         groups={this.props.groups}
@@ -82,7 +82,7 @@ class Profile extends Component {
                     </div>
                     </React.Fragment>
       
-                ) : null}
+                {/* ) : null} */}
                
 
                 <div className="group-list">

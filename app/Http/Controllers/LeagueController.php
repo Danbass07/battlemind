@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\League;
 use App\Player;
 use App\User;
+use App\Group;
 class LeagueController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
     }
 
-    public function index(Request $request, League $league) {
+    public function index(Request $request) {
 
 
         $user = User::with(['groups.types', 'groups.users.leagues', 'leagues', 'groups'])->where('id', '=' ,$request->user()->id)->first();
@@ -106,5 +108,20 @@ class LeagueController extends Controller
         $league = \App\League::find($league_id);
         $leaguePlayers = $league->players;
         return response()->json([$leaguePlayers]);
+    }
+    public function friendsContent($id) 
+    {
+       
+        $group = Group::findOrFail($id)->load('users.leagues');
+        $leagues = $group->users->map(function ($groupUser)  {
+            $user =  Auth::user();
+            if($groupUser->id !== $user->id) {
+                $groupUser->leagues->map(function ($league) use ($groupUser) {
+                    $league->user_name = $groupUser->name;
+                });
+                return $groupUser->leagues;
+            } 
+            })->collapse();
+        return response()->json($leagues);
     }
 }

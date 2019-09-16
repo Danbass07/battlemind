@@ -56,11 +56,19 @@ class List extends Component {
          
                 this.setState({
                     myContent: [...response.data.content[0]],
-                    friendsContent: [...response.data.content[1]],
                     contentToDisplay: [...response.data.content[0]]
                 })
             );
         }
+        if (this.props.object !== "none") {
+            axios.get(`/${this.props.object}s/${this.props.activeGroup}/friendsContent`).then(response =>
+         
+                this.setState({
+                    friendsContent: [...response.data],
+                })
+            );
+        }
+        // activeGroup={this.state.activeGroup}
     }
     componentWillMount() {
         this.getContent();
@@ -94,7 +102,6 @@ class List extends Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div className="workarea">
                 <button onClick={() => this.myOnlyButtonHandler()}>
