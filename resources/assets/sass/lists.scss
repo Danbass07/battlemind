@@ -1,19 +1,25 @@
 
-.button {
-    background-color: red;
+.button-delete {
+    background-color:$secondarycolor;
     width: 65px;
     padding: 8px;
-    border: 1px solid coral;
+    border: 1px solid $maincolor;
     text-align: center;
   }
-  .update {
-    background-color: rgb(20, 8, 122);
+  .button-update {
+    background-color: $secondarycolor;
     margin-left: auto;
+    width: 65px;
+    text-align: center;
+    border: 1px solid $maincolor;
+    margin-top: 10%;
+    color:$maincolor;
+    font-size:$medium;
   }
   
   .list-grid {
     height:100%;
-    color: cornsilk;
+    color: $secondarycolor;
     overflow: scroll;
     overflow-x: hidden;
     margin-bottom: 55px;
@@ -21,11 +27,29 @@
   .list-item {
     display: flex;
     justify-items: flex-end;
-    border: 1px solid cornsilk;
+    border: 1px solid $secondarycolor;
   }
   .list-item-name {
     width:85px;
     padding: 8px;
     text-align: center;
+  }
+  .list-button-area {
+    display: flex;
+    justify-content: space-around;
+  }
+  .list-option-button {
+    background-color: $secondarycolor;
+    color: $maincolor;
+    box-shadow: 4px 5px 5px $secondarycolor;
+    border: 1px solid $maincolor;
+    font-size: $big;
+    border-radius: 12%;
+  }
+  .list-option-button-active {
+    background-color:$maincolor;
+    color: $secondarycolor;
+    border: 1px solid $secondarycolor;
+    font-size: $big;
   }
  

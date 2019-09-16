@@ -25,17 +25,20 @@ Route::resource('/scoreboards', 'ScoreboardController');
 
 
 Route::get('/players/{id}/addResult/{pid}/{category}/{action}', 'PlayerController@addResult');
-Route::get('/scoreboards/{id}/addResult/{pid}/{category}/{action}', 'ScoreboardController@addResult');
-Route::post('/scoreboards/{id}/updateResults', 'ScoreboardController@updateResults');
+Route::get('/players/{id}/friendsContent', 'PlayerController@friendsContent');
 
 
 Route::get('/leagues/{id}/addPlayer/{pid}', 'LeagueController@addPlayer');
 Route::get('/leagues/{id}/removePlayer/{pid}', 'LeagueController@removePlayer');
+Route::get('/leagues/{id}/getResults', 'LeagueController@getResults');
+Route::get('/leagues/{id}/friendsContent', 'LeagueController@friendsContent');
 
+Route::get('/scoreboards/{id}/addResult/{pid}/{category}/{action}', 'ScoreboardController@addResult');
+Route::post('/scoreboards/{id}/updateResults', 'ScoreboardController@updateResults');
 Route::get('/scoreboards/{id}/addPlayer/{pid}', 'ScoreboardController@addPlayer');
 Route::get('/scoreboards/{id}/removePlayer/{pid}', 'ScoreboardController@removePlayer');
+Route::get('/scoreboards/{id}/friendsContent', 'ScoreboardController@friendsContent');
 
-Route::get('/leagues/{id}/getResults', 'LeagueController@getResults');
 
 Route::resource('/fileupload', 'FileuploadController');
 

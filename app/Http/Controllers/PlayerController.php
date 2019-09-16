@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Player;
 use App\League;
 use App\User;
@@ -116,6 +117,22 @@ class PlayerController extends Controller
             }            
     
         }
+    }
+
+    public function friendsContent($id) 
+    {
+       
+        $group = Group::findOrFail($id)->load('users.leagues');
+        $players = $group->users->map(function ($groupUser)  {
+            $user =  Auth::user();
+            if($groupUser->id !== $user->id) {
+                $groupUser->players->map(function ($player) use ($groupUser) {
+                    $player->user_name = $groupUser->name;
+                });
+                return $groupUser->players;
+            }
+            })->collapse();;
+        return response()->json($players);
     }
 
 }
