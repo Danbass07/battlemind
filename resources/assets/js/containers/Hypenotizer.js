@@ -12,122 +12,6 @@ class Hypenotizer extends Component {
             votingList: []
         };
     }
-    voteOptions() {
-        console.log(this.state.userTypes.length);
-        console.log(this.state.votingList.length);
-        if (JSON.stringify(this.state.userTypes.slice(0, 5).map(type => type.type)) 
-        == JSON.stringify(this.state.votingList.map(type => type.type)) ) {
-
-            let votingList = [...this.state.userTypes];
-            let ignoreList =[]
-            this.state.userTypes.map(type => {
-                return type.users.map(user => {
-                   
-                    return user.pivot.hype == 1
-                        ? ignoreList.push(type)
-                        :  null;
-                });
-            });
-            ignoreList = [...new Set(ignoreList)];
-            console.log(ignoreList);
-            votingList = votingList.filter(function(n){ return ignoreList.indexOf(n)>-1?false:n;})
-            .slice(0, 5).map(candidate => {
-                return {
-                    type: candidate.type,
-                    votes: 0,
-                    usersVoted: [],
-                }
-            });
-            console.log(votingList);
-            
-            this.setState({
-                votingList: [...votingList]
-            });
-
-        } else {
-            this.setState({
-                votingList: [...this.props.userTypes.slice(0, 5)],
-            });
-        }
-    
-    }
-
-    componentDidMount() {
-        this.props.userTypes.forEach(userType => {
-            if (!userType.hype) {
-                userType.hype = 5;
-            }
-            let totalHype = 0;
-            userType.users.forEach(user => {
-                totalHype += user.pivot.hype;
-            });
-            userType.totalHype = totalHype;
-            userType.average = (totalHype / userType.users.length).toFixed(1);
-        });
-        this.props.userTypes.sort(this.compareValues("totalHype"));
-
-        const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
-            return {
-                type: candidate.type,
-                votes: 0,
-                usersVoted: [],
-            }
-        })
-        this.setState({
-            userTypes: [...this.props.userTypes],
-            listSelected: [...this.props.userTypes],
-            votingList: votingList,
-        });
-    }
-    setUsersToHype($users_exluded) {  ///////////////////////////Working on it
-       // console.log('odpalam setUsersHype');
-        let listSelected =[...this.state.userTypes] 
-        listSelected.forEach(userType => {
-            // console.log('odpalam list selected');
-            // console.log(this.state.userTypes);
-        
-            let totalHype = 0;
-            userType.users.forEach(user => {
-                console.log(user);
-                $users_exluded.forEach( user_exluded => {
-                    if (user_exluded === user.id) {
-                        totalHype += user.pivot.hype;
-                    }
-                   
-                })
-                
-            });
-            userType.totalHype = totalHype;
-            userType.average = (totalHype / userType.users.length).toFixed(1);
-        });
-        listSelected.sort(this.compareValues("totalHype"));
-
-        // const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
-        //     return {
-        //         type: candidate.type,
-        //         votes: 0,
-        //         usersVoted: [],
-        //     }
-        // })
-        this.setState({
-            listSelected: listSelected,
-            // votingList: votingList,
-        })
-    }
-
-    hypeLevelHandler(e, userType) {
-        let userTypes = [...this.state.userTypes];
-        userTypes.forEach(stateUserType => {
-            if (stateUserType === userType) {
-                stateUserType.hype = +e.target.value;
-            }
-        });
-    }
-    hypenotizer() {
-        axios.post(`/hype/hypenotizer`, {
-            userTypes: this.state.userTypes
-        });
-    }
     compareValues(key, ascending = false) {
         return function(a, b) {
             if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
@@ -151,10 +35,175 @@ class Hypenotizer extends Component {
             return ascending == false ? comparison * -1 : comparison;
         };
     }
+    contains(a, obj) {
+        if (typeof a === "object") {
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].id === obj.id) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            console.log(a);
+        }
+    }
+    // voteOptions() {
+    //     if (
+    //         JSON.stringify(
+    //             this.state.userTypes.slice(0, 5).map(type => type.type)
+    //         ) == JSON.stringify(this.state.votingList.map(type => type.type))
+    //     ) {
+    //         let votingList = [...this.state.userTypes];
+    //         let ignoreList = [];
+    //         this.state.userTypes.map(type => {
+    //             return type.users.map(user => {
+    //                 return user.pivot.hype == 1 ? ignoreList.push(type) : null;
+    //             });
+    //         });
+    //         ignoreList = [...new Set(ignoreList)];
+    //         console.log(ignoreList);
+    //         votingList = votingList
+    //             .filter(function(n) {
+    //                 return ignoreList.indexOf(n) > -1 ? false : n;
+    //             })
+    //             .slice(0, 5)
+    //             .map(candidate => {
+    //                 return {
+    //                     type: candidate.type,
+    //                     votes: 0,
+    //                     usersVoted: []
+    //                 };
+    //             });
+    //         console.log(votingList);
+
+    //         this.setState({
+    //             votingList: [...votingList]
+    //         });
+    //     } else {
+    //         this.setState({
+    //             votingList: [...this.props.userTypes.slice(0, 5)]
+    //         });
+    //     }
+    // }
+    hypeLevelHandler(e, userType) {
+        let userTypes = [...this.state.userTypes];
+        userTypes.forEach(stateUserType => {
+            if (stateUserType === userType) {
+                stateUserType.hype = +e.target.value;
+            }
+        });
+    }
+    hypenotizer() {
+        axios.post(`/hype/hypenotizer`, {
+            userTypes: this.state.userTypes
+        }).then(response => console.log(response));
+    }
+
+    componentDidMount() {
+       
+
+        let userTypes = [...this.props.userTypes];
+        userTypes.map(userType => {
+            userType.users.map(typeUser => {
+                if (typeUser.id === this.props.user.id) {
+                    userType.hype = typeUser.pivot.hype;
+                    // console.log(typeUser.pivot.hype);
+                }
+       
+            });
+        });
+
+
+        console.log(userTypes);
+        userTypes.forEach(userType => {
+            if (!userType.hype) {
+                userType.hype = 5;
+           }
+        //    console.log(this.props.user)
+        //    console.log(userType.users)
+                if (!userType.users.includes(this.props.user)) {
+                    // userType.hype = 5;
+                    console.log('do not contain')
+                }
+            
+            let totalHype = 0;
+            userType.users.forEach(user => {
+                totalHype += user.pivot.hype;
+            });
+            userType.totalHype = totalHype;
+            userType.average = (totalHype / userType.users.length).toFixed(1);
+        });
+        this.props.userTypes.sort(this.compareValues("totalHype"));
+
+
+        this.setState({
+            userTypes: [...userTypes],
+            //listSelected: [...userTypes],
+            // votingList: votingList
+        });
+
+
+
+
+        // userTypes.forEach(userType => {
+        //     if (!userType.hype) {
+        //         userType.hype = 5;
+         //   }
+        //    console.log(this.props.user)
+        //    console.log(userType.users)
+                // if (!userType.users.includes(this.props.user)) {
+                //     // userType.hype = 5;
+                //     console.log('do not contain')
+                // }
+            
+        //     let totalHype = 0;
+        //     userType.users.forEach(user => {
+        //         totalHype += user.pivot.hype;
+        //     });
+        //     userType.totalHype = totalHype;
+        //     userType.average = (totalHype / userType.users.length).toFixed(1);
+        // });
+        // this.props.userTypes.sort(this.compareValues("totalHype"));
+
+        // const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
+        //     return {
+        //         type: candidate.type,
+        //         votes: 0,
+        //         usersVoted: []
+        //     };
+        // });
+  
+    }
+     setUsersToHype($users_exluded) {
+    //     let listSelected = [...this.state.userTypes];
+    //     listSelected.forEach(userType => {
+    //         let totalHype = 0;
+    //         userType.users.forEach(user => {
+    //             $users_exluded.forEach(user_exluded => {
+    //                 if (user_exluded === user.id) {
+    //                     totalHype += user.pivot.hype;
+    //                 }
+    //             });
+    //         });
+    //         userType.totalHype = totalHype;
+    //         userType.average = (totalHype / userType.users.length).toFixed(1);
+    //     });
+    //     listSelected.sort(this.compareValues("totalHype"));
+
+    //     this.setState({
+    //         listSelected: listSelected
+    //     });
+     }
+
+
+
 
     render() {
+        // console.log(this.state.userTypes);
         return (
             <React.Fragment>
+
+
                 {this.props.navigation === "Hypeset" ? (
                     <Hypeset
                         userTypes={this.state.userTypes}
@@ -166,20 +215,37 @@ class Hypenotizer extends Component {
                     />
                 ) : null}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 {this.props.navigation === "Hypecheck" ? (
-                    <Hypecheck userTypes={this.state.listSelected}
-                    setUsersToHype={(data) => this.setUsersToHype(data)}
-                    groups={this.props.groups}
-                     />
+                    <Hypecheck
+                        userTypes={this.state.userTypes}
+                        setUsersToHype={data => this.setUsersToHype(data)}
+                        groups={this.props.groups}
+                    />
                 ) : null}
 
-                {this.props.navigation === "Hypevote" ? (
+                {/* {this.props.navigation === "Hypevote" ? (
                     <Hypevote
                         votingList={this.state.votingList}
                         hypeLevels={this.state.hypeLevels}
                         voteOptions={() => this.voteOptions()}
                     />
-                ) : null}
+                ) : null} */}
             </React.Fragment>
         );
     }

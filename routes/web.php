@@ -53,7 +53,7 @@ Route::get('/groups/{id}/removeUser', 'GroupController@removeUser');
 Route::resource('/types', 'TypeController');
 Route::get('/types/{typeid}/addToTheGroup/{groupid}','TypeController@addToTheGroup' );
 Route::get('/types/hypecheck/{id}', 'TypeController@hypecheck');
- 
+Route::get('/types/{id}/userTypes','TypeController@userTypes' );
 
 
  Route::post('/hype/hypenotizer', 'HypeController@hypenotizer');

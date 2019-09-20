@@ -59908,7 +59908,7 @@ var Battlemind = function (_Component) {
             },
             groups: [{}],
             userGroups: [{}],
-            activeGroup: 1,
+            activeGroup: 0,
             message: [["Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself." + " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."], ["Second Message"], ["Third Message"]],
             messageNumber: 0,
             result: []
@@ -59933,21 +59933,8 @@ var Battlemind = function (_Component) {
 
             ////////////////////////////////////////////////////////////////////////////////////////////////
             axios.get("/types").then(function (response) {
-                var userTypes = [].concat(_toConsumableArray(response.data.userTypes));
-                userTypes.forEach(function (userType) {
-                    if (userType.users.length !== 0) {
-                        userType.users.map(function (user) {
-                            if (response.data.user.id === user.id) {
-                                userType.hype = user.pivot.hype;
-                            }
-                        });
-                    } else {
-                        userType.hype = 5;
-                    }
-                    _this2.setState({
-                        userTypes: [].concat(_toConsumableArray(userTypes)),
-                        types: [].concat(_toConsumableArray(response.data.allTypes))
-                    });
+                _this2.setState({
+                    types: [].concat(_toConsumableArray(response.data.allTypes))
                 });
             });
 
@@ -59955,6 +59942,8 @@ var Battlemind = function (_Component) {
                 return _this2.setState({
                     user: _extends({}, response.data),
                     activeGroup: response.data.groups[0].id
+                }, function () {
+                    _this2.getFriendsContent();
                 });
             });
             axios.get("/scoreboards").then(function (response) {
@@ -59983,6 +59972,21 @@ var Battlemind = function (_Component) {
         value: function getFriendsContent() {
             var _this3 = this;
 
+            axios.get("/types/" + this.state.activeGroup + "/userTypes").then(function (response) {
+                var userTypes = [].concat(_toConsumableArray(response.data));
+                userTypes.forEach(function (userType) {
+                    if (userType.users.length !== 0) {
+                        userType.users.map(function (user) {
+                            userType.hype = user.pivot.hype;
+                        });
+                    } else {
+                        userType.hype = 5;
+                    }
+                    _this3.setState({
+                        userTypes: [].concat(_toConsumableArray(userTypes))
+                    });
+                });
+            });
             axios.get("/leagues/" + this.state.activeGroup + "/friendsContent").then(function (response) {
                 return _this3.setState({
                     friendsLeagues: [].concat(_toConsumableArray(response.data))
@@ -60020,38 +60024,43 @@ var Battlemind = function (_Component) {
 
             if (!this.contains(this.state.user.groups, group)) {
                 axios.get("/groups/" + group.id + "/addUser").then(function () {
-                    _this4.getUserContent();_this4.getFriendsContent();
+                    _this4.getUserContent();
+                    _this4.getFriendsContent();
                 });
             } else {
                 axios.get("/groups/" + group.id + "/removeUser").then(function () {
-                    _this4.getUserContent();_this4.getFriendsContent();
+                    _this4.getUserContent();
+                    _this4.getFriendsContent();
                 });
             }
         }
     }, {
         key: "activeGroupChange",
         value: function activeGroupChange(id) {
+            var _this5 = this;
+
             this.setState({
                 activeGroup: id
-            }, this.getFriendsContent());
+            }, function () {
+                _this5.getFriendsContent();
+            });
         }
     }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getUserContent();
-            this.getFriendsContent();
         }
     }, {
         key: "render",
         value: function render() {
-            var _this5 = this;
+            var _this6 = this;
 
             return __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                 "div",
                 { className: "battlemind" },
                 __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], {
                     button: function button(e) {
-                        return _this5.buttonHandler(e);
+                        return _this6.buttonHandler(e);
                     },
                     object: this.state.object,
                     action: this.state.action
@@ -60075,6 +60084,7 @@ var Battlemind = function (_Component) {
                         component: __WEBPACK_IMPORTED_MODULE_7__components_Scoreboards_Scoreboard__["a" /* default */]
                     }),
                     this.state.action === "hype" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_14__containers_Hypenotizer__["a" /* default */], {
+                        user: this.state.user,
                         userTypes: this.state.userTypes,
                         navigation: this.state.object,
                         groups: this.state.groups,
@@ -60085,15 +60095,15 @@ var Battlemind = function (_Component) {
                         groups: this.state.groups,
                         activeGroup: this.state.activeGroup,
                         activeGroupChange: function activeGroupChange(id) {
-                            return _this5.activeGroupChange(id);
+                            return _this6.activeGroupChange(id);
                         },
                         types: this.state.types,
                         userGroups: this.state.user.groups,
                         addUser: function addUser(group) {
-                            return _this5.addUser(group);
+                            return _this6.addUser(group);
                         },
                         contains: function contains(userGroups, groups) {
-                            return _this5.contains(userGroups, groups);
+                            return _this6.contains(userGroups, groups);
                         }
                     }) : null,
                     this.state.action === "event" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], {
@@ -63343,6 +63353,8 @@ var substr = 'ab'.substr(-1) === 'b'
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__ = __webpack_require__(121);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -63375,129 +63387,6 @@ var Hypenotizer = function (_Component) {
     }
 
     _createClass(Hypenotizer, [{
-        key: "voteOptions",
-        value: function voteOptions() {
-            console.log(this.state.userTypes.length);
-            console.log(this.state.votingList.length);
-            if (JSON.stringify(this.state.userTypes.slice(0, 5).map(function (type) {
-                return type.type;
-            })) == JSON.stringify(this.state.votingList.map(function (type) {
-                return type.type;
-            }))) {
-
-                var votingList = [].concat(_toConsumableArray(this.state.userTypes));
-                var ignoreList = [];
-                this.state.userTypes.map(function (type) {
-                    return type.users.map(function (user) {
-
-                        return user.pivot.hype == 1 ? ignoreList.push(type) : null;
-                    });
-                });
-                ignoreList = [].concat(_toConsumableArray(new Set(ignoreList)));
-                console.log(ignoreList);
-                votingList = votingList.filter(function (n) {
-                    return ignoreList.indexOf(n) > -1 ? false : n;
-                }).slice(0, 5).map(function (candidate) {
-                    return {
-                        type: candidate.type,
-                        votes: 0,
-                        usersVoted: []
-                    };
-                });
-                console.log(votingList);
-
-                this.setState({
-                    votingList: [].concat(_toConsumableArray(votingList))
-                });
-            } else {
-                this.setState({
-                    votingList: [].concat(_toConsumableArray(this.props.userTypes.slice(0, 5)))
-                });
-            }
-        }
-    }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.props.userTypes.forEach(function (userType) {
-                if (!userType.hype) {
-                    userType.hype = 5;
-                }
-                var totalHype = 0;
-                userType.users.forEach(function (user) {
-                    totalHype += user.pivot.hype;
-                });
-                userType.totalHype = totalHype;
-                userType.average = (totalHype / userType.users.length).toFixed(1);
-            });
-            this.props.userTypes.sort(this.compareValues("totalHype"));
-
-            var votingList = this.props.userTypes.slice(0, 5).map(function (candidate) {
-                return {
-                    type: candidate.type,
-                    votes: 0,
-                    usersVoted: []
-                };
-            });
-            this.setState({
-                userTypes: [].concat(_toConsumableArray(this.props.userTypes)),
-                listSelected: [].concat(_toConsumableArray(this.props.userTypes)),
-                votingList: votingList
-            });
-        }
-    }, {
-        key: "setUsersToHype",
-        value: function setUsersToHype($users_exluded) {
-            ///////////////////////////Working on it
-            // console.log('odpalam setUsersHype');
-            var listSelected = [].concat(_toConsumableArray(this.state.userTypes));
-            listSelected.forEach(function (userType) {
-                // console.log('odpalam list selected');
-                // console.log(this.state.userTypes);
-
-                var totalHype = 0;
-                userType.users.forEach(function (user) {
-                    console.log(user);
-                    $users_exluded.forEach(function (user_exluded) {
-                        if (user_exluded === user.id) {
-                            totalHype += user.pivot.hype;
-                        }
-                    });
-                });
-                userType.totalHype = totalHype;
-                userType.average = (totalHype / userType.users.length).toFixed(1);
-            });
-            listSelected.sort(this.compareValues("totalHype"));
-
-            // const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
-            //     return {
-            //         type: candidate.type,
-            //         votes: 0,
-            //         usersVoted: [],
-            //     }
-            // })
-            this.setState({
-                listSelected: listSelected
-                // votingList: votingList,
-            });
-        }
-    }, {
-        key: "hypeLevelHandler",
-        value: function hypeLevelHandler(e, userType) {
-            var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
-            userTypes.forEach(function (stateUserType) {
-                if (stateUserType === userType) {
-                    stateUserType.hype = +e.target.value;
-                }
-            });
-        }
-    }, {
-        key: "hypenotizer",
-        value: function hypenotizer() {
-            axios.post("/hype/hypenotizer", {
-                userTypes: this.state.userTypes
-            });
-        }
-    }, {
         key: "compareValues",
         value: function compareValues(key) {
             var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -63522,10 +63411,175 @@ var Hypenotizer = function (_Component) {
             };
         }
     }, {
-        key: "render",
-        value: function render() {
+        key: "contains",
+        value: function contains(a, obj) {
+            if ((typeof a === "undefined" ? "undefined" : _typeof(a)) === "object") {
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].id === obj.id) {
+                        return true;
+                    }
+                }
+                return false;
+            } else {
+                console.log(a);
+            }
+        }
+        // voteOptions() {
+        //     if (
+        //         JSON.stringify(
+        //             this.state.userTypes.slice(0, 5).map(type => type.type)
+        //         ) == JSON.stringify(this.state.votingList.map(type => type.type))
+        //     ) {
+        //         let votingList = [...this.state.userTypes];
+        //         let ignoreList = [];
+        //         this.state.userTypes.map(type => {
+        //             return type.users.map(user => {
+        //                 return user.pivot.hype == 1 ? ignoreList.push(type) : null;
+        //             });
+        //         });
+        //         ignoreList = [...new Set(ignoreList)];
+        //         console.log(ignoreList);
+        //         votingList = votingList
+        //             .filter(function(n) {
+        //                 return ignoreList.indexOf(n) > -1 ? false : n;
+        //             })
+        //             .slice(0, 5)
+        //             .map(candidate => {
+        //                 return {
+        //                     type: candidate.type,
+        //                     votes: 0,
+        //                     usersVoted: []
+        //                 };
+        //             });
+        //         console.log(votingList);
+
+        //         this.setState({
+        //             votingList: [...votingList]
+        //         });
+        //     } else {
+        //         this.setState({
+        //             votingList: [...this.props.userTypes.slice(0, 5)]
+        //         });
+        //     }
+        // }
+
+    }, {
+        key: "hypeLevelHandler",
+        value: function hypeLevelHandler(e, userType) {
+            var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
+            userTypes.forEach(function (stateUserType) {
+                if (stateUserType === userType) {
+                    stateUserType.hype = +e.target.value;
+                }
+            });
+        }
+    }, {
+        key: "hypenotizer",
+        value: function hypenotizer() {
+            axios.post("/hype/hypenotizer", {
+                userTypes: this.state.userTypes
+            }).then(function (response) {
+                return console.log(response);
+            });
+        }
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
             var _this2 = this;
 
+            var userTypes = [].concat(_toConsumableArray(this.props.userTypes));
+            userTypes.map(function (userType) {
+                userType.users.map(function (typeUser) {
+                    if (typeUser.id === _this2.props.user.id) {
+                        userType.hype = typeUser.pivot.hype;
+                        // console.log(typeUser.pivot.hype);
+                    }
+                });
+            });
+
+            console.log(userTypes);
+            userTypes.forEach(function (userType) {
+                if (!userType.hype) {
+                    userType.hype = 5;
+                }
+                //    console.log(this.props.user)
+                //    console.log(userType.users)
+                if (!userType.users.includes(_this2.props.user)) {
+                    // userType.hype = 5;
+                    console.log('do not contain');
+                }
+
+                var totalHype = 0;
+                userType.users.forEach(function (user) {
+                    totalHype += user.pivot.hype;
+                });
+                userType.totalHype = totalHype;
+                userType.average = (totalHype / userType.users.length).toFixed(1);
+            });
+            this.props.userTypes.sort(this.compareValues("totalHype"));
+
+            this.setState({
+                userTypes: [].concat(_toConsumableArray(userTypes))
+                //listSelected: [...userTypes],
+                // votingList: votingList
+            });
+
+            // userTypes.forEach(userType => {
+            //     if (!userType.hype) {
+            //         userType.hype = 5;
+            //   }
+            //    console.log(this.props.user)
+            //    console.log(userType.users)
+            // if (!userType.users.includes(this.props.user)) {
+            //     // userType.hype = 5;
+            //     console.log('do not contain')
+            // }
+
+            //     let totalHype = 0;
+            //     userType.users.forEach(user => {
+            //         totalHype += user.pivot.hype;
+            //     });
+            //     userType.totalHype = totalHype;
+            //     userType.average = (totalHype / userType.users.length).toFixed(1);
+            // });
+            // this.props.userTypes.sort(this.compareValues("totalHype"));
+
+            // const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
+            //     return {
+            //         type: candidate.type,
+            //         votes: 0,
+            //         usersVoted: []
+            //     };
+            // });
+        }
+    }, {
+        key: "setUsersToHype",
+        value: function setUsersToHype($users_exluded) {
+            //     let listSelected = [...this.state.userTypes];
+            //     listSelected.forEach(userType => {
+            //         let totalHype = 0;
+            //         userType.users.forEach(user => {
+            //             $users_exluded.forEach(user_exluded => {
+            //                 if (user_exluded === user.id) {
+            //                     totalHype += user.pivot.hype;
+            //                 }
+            //             });
+            //         });
+            //         userType.totalHype = totalHype;
+            //         userType.average = (totalHype / userType.users.length).toFixed(1);
+            //     });
+            //     listSelected.sort(this.compareValues("totalHype"));
+
+            //     this.setState({
+            //         listSelected: listSelected
+            //     });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this3 = this;
+
+            // console.log(this.state.userTypes);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
@@ -63533,24 +63587,18 @@ var Hypenotizer = function (_Component) {
                     userTypes: this.state.userTypes,
                     hypeLevels: this.state.hypeLevels,
                     hypeLevelHandler: function hypeLevelHandler(e, userType) {
-                        return _this2.hypeLevelHandler(e, userType);
+                        return _this3.hypeLevelHandler(e, userType);
                     },
                     hypenotizer: function hypenotizer() {
-                        return _this2.hypenotizer();
+                        return _this3.hypenotizer();
                     }
                 }) : null,
-                this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], { userTypes: this.state.listSelected,
+                this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
+                    userTypes: this.state.userTypes,
                     setUsersToHype: function setUsersToHype(data) {
-                        return _this2.setUsersToHype(data);
+                        return _this3.setUsersToHype(data);
                     },
                     groups: this.props.groups
-                }) : null,
-                this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
-                    votingList: this.state.votingList,
-                    hypeLevels: this.state.hypeLevels,
-                    voteOptions: function voteOptions() {
-                        return _this2.voteOptions();
-                    }
                 }) : null
             );
         }
@@ -63588,52 +63636,60 @@ var Hypeset = function (_Component) {
     }
 
     _createClass(Hypeset, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this2 = this;
-
-            console.log();
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    { className: 'hype-button', onClick: function onClick() {
+                    "button",
+                    {
+                        className: "hype-button",
+                        onClick: function onClick() {
                             return _this2.props.hypenotizer();
-                        } },
-                    'CLICK HERE TO SAVE'
+                        }
+                    },
+                    "CLICK HERE TO SAVE"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'hype-wrapper' },
+                    "div",
+                    { className: "hype-wrapper" },
                     Array.isArray(this.props.userTypes) ? this.props.userTypes.map(function (userType) {
-
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'hype-row', key: userType.type },
+                            "div",
+                            { className: "hype-row", key: userType.type },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'hype-row-element' },
+                                "div",
+                                { className: "hype-row-element" },
                                 userType.type
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'hype-row-element' },
+                                "div",
+                                { className: "hype-row-element" },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'select',
-                                    { onChange: function onChange(e) {
+                                    "select",
+                                    {
+                                        onChange: function onChange(e) {
                                             return _this2.props.hypeLevelHandler(e, userType);
-                                        } },
+                                        }
+                                    },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'option',
-                                        { key: 'default' + userType.type, defaultValue: userType.hype ? userType.hype : 5 },
+                                        "option",
+                                        {
+                                            key: "default" + userType.type,
+                                            defaultValue: userType.hype ? userType.hype : 5
+                                        },
                                         userType.hype ? userType.hype : 5
                                     ),
                                     _this2.props.hypeLevels.map(function (level, index) {
                                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            'option',
-                                            { key: userType.type + index, value: level },
+                                            "option",
+                                            {
+                                                key: userType.type + index,
+                                                value: level
+                                            },
                                             level
                                         );
                                     })
@@ -63975,7 +64031,7 @@ var Hypevote = function (_Component) {
     return Hypevote;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Hypevote);
+/* unused harmony default export */ var _unused_webpack_default_export = (Hypevote);
 
 /***/ }),
 /* 122 */

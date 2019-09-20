@@ -47,11 +47,11 @@ class Battlemind extends Component {
             },
             groups: [{}],
             userGroups: [{}],
-            activeGroup: 1,
+            activeGroup: 0,
             message: [
                 [
                     "Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself." +
-                    " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."
+                        " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."
                 ],
                 ["Second Message"],
                 ["Third Message"]
@@ -72,31 +72,24 @@ class Battlemind extends Component {
         });
     }
 
-    getUserContent() {////////////////////////////////////////////////////////////////////////////////////////////////
+    getUserContent() {
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         axios.get("/types").then(response => {
-            const userTypes = [...response.data.userTypes];
-            userTypes.forEach(userType => {
-                if (userType.users.length !== 0) {
-                    userType.users.map(user => {
-                        if (response.data.user.id === user.id) {
-                            userType.hype = user.pivot.hype;
-                        }
-                    });
-                } else {
-                    userType.hype = 5;
-                }
-                this.setState({
-                    userTypes: [...userTypes],
-                    types: [...response.data.allTypes]
-                });
+            this.setState({
+                types: [...response.data.allTypes]
             });
         });
 
         axios.get(`/users`).then(response =>
-            this.setState({
-                user: { ...response.data },
-                activeGroup: response.data.groups[0].id
-            })
+            this.setState(
+                {
+                    user: { ...response.data },
+                    activeGroup: response.data.groups[0].id
+                },
+                () => {
+                    this.getFriendsContent();
+                }
+            )
         );
         axios.get(`/scoreboards`).then(response =>
             this.setState({
@@ -110,7 +103,7 @@ class Battlemind extends Component {
         );
         axios.get("/leagues").then(response =>
             this.setState({
-                leagues: [...response.data.content[0]],
+                leagues: [...response.data.content[0]]
             })
         );
         axios.get(`/groups`).then(response =>
@@ -120,6 +113,23 @@ class Battlemind extends Component {
         );
     }
     getFriendsContent() {
+        axios
+            .get(`/types/${this.state.activeGroup}/userTypes`)
+            .then(response => {
+                const userTypes = [...response.data];
+                userTypes.forEach(userType => {
+                    if (userType.users.length !== 0) {
+                        userType.users.map(user => {
+                            userType.hype = user.pivot.hype;
+                        });
+                    } else {
+                        userType.hype = 5;
+                    }
+                    this.setState({
+                        userTypes: [...userTypes]
+                    });
+                });
+            });
         axios
             .get(`/leagues/${this.state.activeGroup}/friendsContent`)
             .then(response =>
@@ -158,11 +168,15 @@ class Battlemind extends Component {
 
     addUser(group) {
         if (!this.contains(this.state.user.groups, group)) {
-            axios.get(`/groups/${group.id}/addUser`).then(() => {this.getUserContent() ; this.getFriendsContent()});
+            axios.get(`/groups/${group.id}/addUser`).then(() => {
+                this.getUserContent();
+                this.getFriendsContent();
+            });
         } else {
-            axios
-                .get(`/groups/${group.id}/removeUser`)
-                .then(() => {this.getUserContent() ; this.getFriendsContent()});
+            axios.get(`/groups/${group.id}/removeUser`).then(() => {
+                this.getUserContent();
+                this.getFriendsContent();
+            });
         }
     }
     activeGroupChange(id) {
@@ -170,20 +184,19 @@ class Battlemind extends Component {
             {
                 activeGroup: id
             },
-            this.getFriendsContent()
+            () => {
+                this.getFriendsContent();
+            }
         );
     }
 
     componentDidMount() {
         this.getUserContent();
-        this.getFriendsContent();
     }
 
     render() {
-        
         return (
             <div className="battlemind">
-
                 <Navigation
                     button={e => this.buttonHandler(e)}
                     object={this.state.object}
@@ -208,6 +221,7 @@ class Battlemind extends Component {
 
                     {this.state.action === "hype" ? (
                         <Hypenotizer
+                            user={this.state.user}
                             userTypes={this.state.userTypes}
                             navigation={this.state.object}
                             groups={this.state.groups}
@@ -233,9 +247,7 @@ class Battlemind extends Component {
                     {this.state.action === "event" ? (
                         <Event
                             scoreboards={this.state.userScoreboards}
-                            friendsScoreboards={
-                                this.state.friendsScoreboards
-                            }
+                            friendsScoreboards={this.state.friendsScoreboards}
                             userPlayers={this.state.userPlayers}
                             friendsPlayers={this.state.friendsPlayers}
                             leagues={this.state.leagues}
@@ -258,17 +270,17 @@ class Battlemind extends Component {
                         />
                     ) : null}
                     {this.state.action === "new" &&
-                        this.state.object === "player" ? (
-                            <Newplayer types={this.state.types} />
-                        ) : null}
+                    this.state.object === "player" ? (
+                        <Newplayer types={this.state.types} />
+                    ) : null}
                     {this.state.action === "new" &&
-                        this.state.object === "league" ? (
-                            <Newleague />
-                        ) : null}
+                    this.state.object === "league" ? (
+                        <Newleague />
+                    ) : null}
                     {this.state.action === "new" &&
-                        this.state.object === "scoreboard" ? (
-                            <Newscoreboard types={this.state.types} />
-                        ) : null}
+                    this.state.object === "scoreboard" ? (
+                        <Newscoreboard types={this.state.types} />
+                    ) : null}
                 </Switch>
             </div>
         );

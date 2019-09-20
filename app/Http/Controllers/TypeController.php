@@ -15,7 +15,7 @@ class TypeController extends Controller
     public function index(Request $request )
     {   
         $user = User::with(['groups.types.users', 'groups',])->where('id', '=' ,$request->user()->id)->first();
-        $userGroups = $user->groups;
+        $userGroups = $user->groups->load('types');
         $userTypes =  $userGroups->pluck('types')->collapse()->unique('id')->flatten();
         $allTypes = Type::all()->unique();
 
@@ -104,8 +104,22 @@ class TypeController extends Controller
        return response()->json($type); 
     }
 
+    public function userTypes($id)
+    {   $group = \App\Group::find($id);
+        $types = $group->types->load('users');
+        foreach ($types as $type) {
 
+            $type->users->filter(function ($user) {
+                if ($user->active !== 0 ){
+                    return $user;
+                }
+            });
 
+        }
+  
+        
+       return response()->json($types); 
+    }
     // public function hypecheck($groupId) {
 
     //     $user =  Auth::user();
