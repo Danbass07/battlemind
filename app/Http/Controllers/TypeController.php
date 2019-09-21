@@ -109,8 +109,9 @@ class TypeController extends Controller
         $types = $group->types->load('users');
         foreach ($types as $type) {
 
-            $type->users->filter(function ($user) {
+            $type->users->filter(function ($user) use ($type) {
                 if ($user->active !== 0 ){
+                    $type->hype = $user->pivot->hype;
                     return $user;
                 }
             });

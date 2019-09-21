@@ -117,18 +117,18 @@ class Battlemind extends Component {
             .get(`/types/${this.state.activeGroup}/userTypes`)
             .then(response => {
                 const userTypes = [...response.data];
-                userTypes.forEach(userType => {
-                    if (userType.users.length !== 0) {
-                        userType.users.map(user => {
-                            userType.hype = user.pivot.hype;
-                        });
-                    } else {
-                        userType.hype = 5;
-                    }
+                // userTypes.forEach(userType => {
+                //     if (userType.users.length !== 0) {
+                //         userType.users.map(user => {
+                //             userType.hype = user.pivot.hype;
+                //         });
+                //     } else {
+                //         userType.hype = 5;
+                //     }
                     this.setState({
                         userTypes: [...userTypes]
                     });
-                });
+                //});
             });
         axios
             .get(`/leagues/${this.state.activeGroup}/friendsContent`)

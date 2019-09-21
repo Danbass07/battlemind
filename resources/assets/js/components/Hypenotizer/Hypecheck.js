@@ -3,82 +3,62 @@ import React, { Component } from "react";
 class Hypecheck extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            exludedUsers: []
+        
+    }
+ 
+    compareValues(key, ascending = false) {
+        return function(a, b) {
+            if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                // property doesn't exist on either object
+                return 0;
+            }
+
+            const varA =
+                typeof a[key] === "string" /// letter case insensitive
+                    ? a[key].toUpperCase()
+                    : a[key];
+            const varB =
+                typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+
+            let comparison = 0;
+            if (varA > varB) {
+                comparison = 1;
+            } else if (varA < varB) {
+                comparison = -1;
+            }
+            return ascending == false ? comparison * -1 : comparison;
         };
     }
-    clickController(id) {
-        if ((id === 'nope')) {
-            this.props.setUsersToHype([1,4,5,9,]);
-            this.setState({
-                exludedUsers: []
-            });
-        } else {
-            let exludedUsers = [...this.state.exludedUsers];
-            if (this.state.exludedUsers.includes(id)) {
-                exludedUsers = exludedUsers.filter(item => item !== id);
-            } else {
-                exludedUsers.push(id);
-            }
-            this.props.setUsersToHype(exludedUsers);
-            this.setState({
-                exludedUsers: exludedUsers
-            });
-        }
-    }
-
     render() {
    
 
         return (
             <React.Fragment>
                 <button
-                    onClick={() => this.clickController('nope')}
                     className="hype-button"
                 >
                     Hype Fresh
                 </button>
-                <div className="hypecheck-exlude-list">
-                    {this.props.groups.map(group => {
-                        if (group.id === 2) {
-                            return group.users.map(user => {
-                                return (
-                                    <div
-                                        key={user.id}
-                                        className={
-                                            !this.state.exludedUsers.includes(
-                                                user.id
-                                            )
-                                                ? "hypecheck-exlude-list-item"
-                                                : "hypecheck-exlude-list-item active"
-                                        }
-                                        onClick={() =>
-                                            this.clickController(user.id)
-                                        }
-                                    >
-                                        {user.name}
-                                    </div>
-                                );
-                            });
-                        }
-                    })}
-                </div>
+
 
               
                     <table className="hypecheck-results-list">
                         <tbody className="hypecheck-results-list-body">
-                            {this.props.userTypes.map(userType => {
-                                return (
-                                    <tr key={userType.id}>
-                                        <td>{userType.type}</td>
-                                        <td style={{ marginLeft: "auto" }}>
-                                            {userType.totalHype}
-                                        </td>
-                                        <td style={{ marginLeft: "20px" }}>
-                                            {userType.average}
-                                        </td>
-                                    </tr>
-                                );
+                            {this.props.userTypes.sort(this.compareValues("totalHype")).map((userType,index) => {
+                                if (index < 3) {
+                                    return (
+                                        <tr key={userType.id}>
+                                            <td>{userType.type}</td>
+                                            {/* <td style={{ marginLeft: "auto" }}>
+                                                {userType.totalHype}
+                                            </td>
+                                            <td style={{ marginLeft: "20px" }}>
+                                                {userType.average}
+                                            </td> */}
+                                        </tr>
+                                    );
+                                }
+                           
                             })}
                         </tbody>
                     </table>

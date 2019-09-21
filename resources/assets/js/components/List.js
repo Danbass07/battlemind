@@ -57,7 +57,8 @@ class List extends Component {
 
                 this.setState({
                     myContent: [...response.data.content[0]],
-                    contentToDisplay: [...response.data.content[0]]
+                    contentToDisplay: [...response.data.content[0]],
+                    content:'my',
                 })
             );
         }

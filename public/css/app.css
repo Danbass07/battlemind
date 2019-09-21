@@ -10651,7 +10651,6 @@ a:hover {
   width: 65px;
   text-align: center;
   border: 1px solid #000000;
-  margin-top: 10%;
   color: #000000;
   font-size: 17px;
 }
@@ -10670,10 +10669,11 @@ a:hover {
   display: flex;
   justify-items: flex-end;
   border: 1px solid #ff7f00;
+  height: 75px;
 }
 
 .list-item-name {
-  width: 85px;
+  width: 100px;
   padding: 8px;
   text-align: center;
 }
@@ -11148,8 +11148,11 @@ a:hover {
 }
 
 .hypecheck-results-list {
-  background-color: #ff7f00;
-  color: #000000;
+  margin: 15px auto;
+  text-align: center;
+  font-size: 48px;
+  background-color: #000000;
+  color: #ff7f00;
   border-radius: 5% 5% 5% 5%;
   overflow: scroll;
 }

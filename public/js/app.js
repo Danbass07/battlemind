@@ -59974,18 +59974,18 @@ var Battlemind = function (_Component) {
 
             axios.get("/types/" + this.state.activeGroup + "/userTypes").then(function (response) {
                 var userTypes = [].concat(_toConsumableArray(response.data));
-                userTypes.forEach(function (userType) {
-                    if (userType.users.length !== 0) {
-                        userType.users.map(function (user) {
-                            userType.hype = user.pivot.hype;
-                        });
-                    } else {
-                        userType.hype = 5;
-                    }
-                    _this3.setState({
-                        userTypes: [].concat(_toConsumableArray(userTypes))
-                    });
+                // userTypes.forEach(userType => {
+                //     if (userType.users.length !== 0) {
+                //         userType.users.map(user => {
+                //             userType.hype = user.pivot.hype;
+                //         });
+                //     } else {
+                //         userType.hype = 5;
+                //     }
+                _this3.setState({
+                    userTypes: [].concat(_toConsumableArray(userTypes))
                 });
+                //});
             });
             axios.get("/leagues/" + this.state.activeGroup + "/friendsContent").then(function (response) {
                 return _this3.setState({
@@ -61907,7 +61907,8 @@ var List = function (_Component) {
                 axios.get("/" + this.props.object + "s").then(function (response) {
                     return _this3.setState({
                         myContent: [].concat(_toConsumableArray(response.data.content[0])),
-                        contentToDisplay: [].concat(_toConsumableArray(response.data.content[0]))
+                        contentToDisplay: [].concat(_toConsumableArray(response.data.content[0])),
+                        content: 'my'
                     });
                 });
             }
@@ -63424,45 +63425,6 @@ var Hypenotizer = function (_Component) {
                 console.log(a);
             }
         }
-        // voteOptions() {
-        //     if (
-        //         JSON.stringify(
-        //             this.state.userTypes.slice(0, 5).map(type => type.type)
-        //         ) == JSON.stringify(this.state.votingList.map(type => type.type))
-        //     ) {
-        //         let votingList = [...this.state.userTypes];
-        //         let ignoreList = [];
-        //         this.state.userTypes.map(type => {
-        //             return type.users.map(user => {
-        //                 return user.pivot.hype == 1 ? ignoreList.push(type) : null;
-        //             });
-        //         });
-        //         ignoreList = [...new Set(ignoreList)];
-        //         console.log(ignoreList);
-        //         votingList = votingList
-        //             .filter(function(n) {
-        //                 return ignoreList.indexOf(n) > -1 ? false : n;
-        //             })
-        //             .slice(0, 5)
-        //             .map(candidate => {
-        //                 return {
-        //                     type: candidate.type,
-        //                     votes: 0,
-        //                     usersVoted: []
-        //                 };
-        //             });
-        //         console.log(votingList);
-
-        //         this.setState({
-        //             votingList: [...votingList]
-        //         });
-        //     } else {
-        //         this.setState({
-        //             votingList: [...this.props.userTypes.slice(0, 5)]
-        //         });
-        //     }
-        // }
-
     }, {
         key: "hypeLevelHandler",
         value: function hypeLevelHandler(e, userType) {
@@ -63485,30 +63447,19 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "componentDidMount",
         value: function componentDidMount() {
-            var _this2 = this;
-
             var userTypes = [].concat(_toConsumableArray(this.props.userTypes));
-            userTypes.map(function (userType) {
-                userType.users.map(function (typeUser) {
-                    if (typeUser.id === _this2.props.user.id) {
-                        userType.hype = typeUser.pivot.hype;
-                        // console.log(typeUser.pivot.hype);
-                    }
-                });
-            });
+            // userTypes.map(userType => {
+            //     userType.users.map(typeUser => {
+            //         if (typeUser.id === this.props.user.id) {
+            //             userType.hype = typeUser.pivot.hype;
+            //         }
+            //     });
+            // });
 
-            console.log(userTypes);
             userTypes.forEach(function (userType) {
                 if (!userType.hype) {
                     userType.hype = 5;
                 }
-                //    console.log(this.props.user)
-                //    console.log(userType.users)
-                if (!userType.users.includes(_this2.props.user)) {
-                    // userType.hype = 5;
-                    console.log('do not contain');
-                }
-
                 var totalHype = 0;
                 userType.users.forEach(function (user) {
                     totalHype += user.pivot.hype;
@@ -63516,88 +63467,31 @@ var Hypenotizer = function (_Component) {
                 userType.totalHype = totalHype;
                 userType.average = (totalHype / userType.users.length).toFixed(1);
             });
-            this.props.userTypes.sort(this.compareValues("totalHype"));
 
             this.setState({
                 userTypes: [].concat(_toConsumableArray(userTypes))
-                //listSelected: [...userTypes],
-                // votingList: votingList
             });
-
-            // userTypes.forEach(userType => {
-            //     if (!userType.hype) {
-            //         userType.hype = 5;
-            //   }
-            //    console.log(this.props.user)
-            //    console.log(userType.users)
-            // if (!userType.users.includes(this.props.user)) {
-            //     // userType.hype = 5;
-            //     console.log('do not contain')
-            // }
-
-            //     let totalHype = 0;
-            //     userType.users.forEach(user => {
-            //         totalHype += user.pivot.hype;
-            //     });
-            //     userType.totalHype = totalHype;
-            //     userType.average = (totalHype / userType.users.length).toFixed(1);
-            // });
-            // this.props.userTypes.sort(this.compareValues("totalHype"));
-
-            // const votingList = this.props.userTypes.slice(0, 5).map(candidate => {
-            //     return {
-            //         type: candidate.type,
-            //         votes: 0,
-            //         usersVoted: []
-            //     };
-            // });
-        }
-    }, {
-        key: "setUsersToHype",
-        value: function setUsersToHype($users_exluded) {
-            //     let listSelected = [...this.state.userTypes];
-            //     listSelected.forEach(userType => {
-            //         let totalHype = 0;
-            //         userType.users.forEach(user => {
-            //             $users_exluded.forEach(user_exluded => {
-            //                 if (user_exluded === user.id) {
-            //                     totalHype += user.pivot.hype;
-            //                 }
-            //             });
-            //         });
-            //         userType.totalHype = totalHype;
-            //         userType.average = (totalHype / userType.users.length).toFixed(1);
-            //     });
-            //     listSelected.sort(this.compareValues("totalHype"));
-
-            //     this.setState({
-            //         listSelected: listSelected
-            //     });
         }
     }, {
         key: "render",
         value: function render() {
-            var _this3 = this;
+            var _this2 = this;
 
-            // console.log(this.state.userTypes);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
                 this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], {
-                    userTypes: this.state.userTypes,
+                    userTypes: this.state.userTypes.sort(this.compareValues("type")),
                     hypeLevels: this.state.hypeLevels,
                     hypeLevelHandler: function hypeLevelHandler(e, userType) {
-                        return _this3.hypeLevelHandler(e, userType);
+                        return _this2.hypeLevelHandler(e, userType);
                     },
                     hypenotizer: function hypenotizer() {
-                        return _this3.hypenotizer();
+                        return _this2.hypenotizer();
                     }
                 }) : null,
                 this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
                     userTypes: this.state.userTypes,
-                    setUsersToHype: function setUsersToHype(data) {
-                        return _this3.setUsersToHype(data);
-                    },
                     groups: this.props.groups
                 }) : null
             );
@@ -63716,8 +63610,6 @@ var Hypeset = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -63732,102 +63624,65 @@ var Hypecheck = function (_Component) {
     function Hypecheck(props) {
         _classCallCheck(this, Hypecheck);
 
-        var _this = _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
-
-        _this.state = {
-            exludedUsers: []
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
     }
 
     _createClass(Hypecheck, [{
-        key: 'clickController',
-        value: function clickController(id) {
-            if (id === 'nope') {
-                this.props.setUsersToHype([1, 4, 5, 9]);
-                this.setState({
-                    exludedUsers: []
-                });
-            } else {
-                var exludedUsers = [].concat(_toConsumableArray(this.state.exludedUsers));
-                if (this.state.exludedUsers.includes(id)) {
-                    exludedUsers = exludedUsers.filter(function (item) {
-                        return item !== id;
-                    });
-                } else {
-                    exludedUsers.push(id);
+        key: "compareValues",
+        value: function compareValues(key) {
+            var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return function (a, b) {
+                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    return 0;
                 }
-                this.props.setUsersToHype(exludedUsers);
-                this.setState({
-                    exludedUsers: exludedUsers
-                });
-            }
+
+                var varA = typeof a[key] === "string" /// letter case insensitive
+                ? a[key].toUpperCase() : a[key];
+                var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+
+                var comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return ascending == false ? comparison * -1 : comparison;
+            };
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
-            var _this2 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
+                    "button",
                     {
-                        onClick: function onClick() {
-                            return _this2.clickController('nope');
-                        },
-                        className: 'hype-button'
+                        className: "hype-button"
                     },
-                    'Hype Fresh'
+                    "Hype Fresh"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'hypecheck-exlude-list' },
-                    this.props.groups.map(function (group) {
-                        if (group.id === 2) {
-                            return group.users.map(function (user) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    {
-                                        key: user.id,
-                                        className: !_this2.state.exludedUsers.includes(user.id) ? "hypecheck-exlude-list-item" : "hypecheck-exlude-list-item active",
-                                        onClick: function onClick() {
-                                            return _this2.clickController(user.id);
-                                        }
-                                    },
-                                    user.name
-                                );
-                            });
-                        }
-                    })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'table',
-                    { className: 'hypecheck-results-list' },
+                    "table",
+                    { className: "hypecheck-results-list" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'tbody',
-                        { className: 'hypecheck-results-list-body' },
-                        this.props.userTypes.map(function (userType) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'tr',
-                                { key: userType.id },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'td',
-                                    null,
-                                    userType.type
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'td',
-                                    { style: { marginLeft: "auto" } },
-                                    userType.totalHype
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'td',
-                                    { style: { marginLeft: "20px" } },
-                                    userType.average
-                                )
-                            );
+                        "tbody",
+                        { className: "hypecheck-results-list-body" },
+                        this.props.userTypes.sort(this.compareValues("totalHype")).map(function (userType, index) {
+                            if (index < 3) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "tr",
+                                    { key: userType.id },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "td",
+                                        null,
+                                        userType.type
+                                    )
+                                );
+                            }
                         })
                     )
                 )
