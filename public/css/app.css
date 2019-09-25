@@ -10488,7 +10488,7 @@ body {
   position: fixed;
   top: 130px;
   background-color: #000000;
-  overflow: hidden;
+  overflow: scroll;
   margin: 0 auto;
   margin-bottom: 55px;
 }
@@ -10542,7 +10542,7 @@ body {
   width: 30px;
   height: 30px;
   text-align: center;
-  overflow: scroll;
+  overflow: hidden;
   padding: 0;
 }
 
