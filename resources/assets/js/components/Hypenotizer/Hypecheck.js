@@ -44,11 +44,12 @@ class Hypecheck extends Component {
               
                     <table className="hypecheck-results-list">
                         <tbody className="hypecheck-results-list-body">
-                            {this.props.userTypes.sort(this.compareValues("totalHype")).map((userType,index) => {
+                            {this.props.user.permissions === 'basic' ?this.props.userTypes.sort(this.compareValues("totalHype")).map((userType,index) => {
                                 if (index < 3) {
                                     return (
                                         <tr key={userType.id}>
                                             <td>{userType.type}</td>
+
                                             {/* <td style={{ marginLeft: "auto" }}>
                                                 {userType.totalHype}
                                             </td>
@@ -58,6 +59,24 @@ class Hypecheck extends Component {
                                         </tr>
                                     );
                                 }
+                           
+                            }):
+
+                             this.props.userTypes.sort(this.compareValues("totalHype")).map((userType,index) => {
+                              
+                                    return (
+                                        <tr key={userType.id}>
+                                            <td>{userType.type}</td>
+                                            
+                                            <td style={{ marginLeft: "auto" }}>
+                                                {userType.totalHype}
+                                            </td>
+                                            <td style={{ marginLeft: "20px" }}>
+                                                {userType.average}
+                                            </td>
+                                        </tr>
+                                    );
+                                
                            
                             })}
                         </tbody>

@@ -63501,6 +63501,7 @@ var Hypenotizer = function (_Component) {
                     }
                 }) : null,
                 this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
+                    user: this.props.user,
                     userTypes: this.state.userTypes,
                     groups: this.props.groups
                 }) : null
@@ -63682,7 +63683,7 @@ var Hypecheck = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "tbody",
                         { className: "hypecheck-results-list-body" },
-                        this.props.userTypes.sort(this.compareValues("totalHype")).map(function (userType, index) {
+                        this.props.user.permissions === 'basic' ? this.props.userTypes.sort(this.compareValues("totalHype")).map(function (userType, index) {
                             if (index < 3) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "tr",
@@ -63694,6 +63695,27 @@ var Hypecheck = function (_Component) {
                                     )
                                 );
                             }
+                        }) : this.props.userTypes.sort(this.compareValues("totalHype")).map(function (userType, index) {
+
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "tr",
+                                { key: userType.id },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "td",
+                                    null,
+                                    userType.type
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "td",
+                                    { style: { marginLeft: "auto" } },
+                                    userType.totalHype
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "td",
+                                    { style: { marginLeft: "20px" } },
+                                    userType.average
+                                )
+                            );
                         })
                     )
                 )

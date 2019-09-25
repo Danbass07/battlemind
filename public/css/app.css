@@ -10542,7 +10542,7 @@ body {
   width: 30px;
   height: 30px;
   text-align: center;
-  overflow: hidden;
+  overflow: scroll;
   padding: 0;
 }
 

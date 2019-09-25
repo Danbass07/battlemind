@@ -122,6 +122,7 @@ class Hypenotizer extends Component {
 
                 {this.props.navigation === "Hypecheck" ? (
                     <Hypecheck
+                    user={this.props.user}
                         userTypes={this.state.userTypes}
                         groups={this.props.groups}
                     />
