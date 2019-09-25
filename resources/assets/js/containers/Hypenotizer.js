@@ -49,23 +49,35 @@ class Hypenotizer extends Component {
     }
 
     hypeLevelHandler(e, userType) {
+        console.log(e.target.value);
         let userTypes = [...this.state.userTypes];
-        userTypes.forEach(stateUserType => {
-            if (stateUserType === userType) {
-                stateUserType.hype = +e.target.value;
-            }
+        userTypes.forEach(type => {
+
+
+                if (type === userType) {
+                    type.hype = +e.target.value;
+                }
+                                    
+
+           
+        });
+               
+        this.setState({
+            userTypes: [...userTypes]
         });
     }
     hypenotizer() {
         axios
             .post(`/hype/hypenotizer`, {
-                userTypes: this.state.userTypes
+                userTypes: [...this.state.userTypes]
             })
             .then(response => console.log(response));
     }
 
     componentDidMount() {
         let userTypes = [...this.props.userTypes];
+
+        
         // userTypes.map(userType => {
         //     userType.users.map(typeUser => {
         //         if (typeUser.id === this.props.user.id) {
@@ -76,7 +88,7 @@ class Hypenotizer extends Component {
 
         userTypes.forEach(userType => {
             if (!userType.hype) {
-                userType.hype = 5;
+                userType.hype = 3;
             }
             let totalHype = 0;
             userType.users.forEach(user => {
@@ -93,10 +105,12 @@ class Hypenotizer extends Component {
     }
 
     render() {
+        console.log(this.state.userTypes.sort(this.compareValues("type")));
         return (
             <React.Fragment>
                 {this.props.navigation === "Hypeset" ? (
                     <Hypeset
+                        user={this.props.user}
                         userTypes={this.state.userTypes.sort(this.compareValues("type"))}
                         hypeLevels={this.state.hypeLevels}
                         hypeLevelHandler={(e, userType) =>

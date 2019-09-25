@@ -15,8 +15,20 @@ class TypeController extends Controller
     public function index(Request $request )
     {   
         $user = User::with(['groups.types.users', 'groups',])->where('id', '=' ,$request->user()->id)->first();
-        $userGroups = $user->groups->load('types');
+        $userGroups = $user->groups->load('types.users');
         $userTypes =  $userGroups->pluck('types')->collapse()->unique('id')->flatten();
+
+        $userTypes->map(function ($type) use ($user) {
+           
+            return $type->users->map(function ($typeuser) use ($user,  $type) {
+
+                
+                 if ($typeuser->id === $user->id) {
+                  return   $type->type = $typeuser->pivot->hype;
+                 }
+             
+         });
+        });
         $allTypes = Type::all()->unique();
 
          return response()->json([ 
@@ -105,15 +117,23 @@ class TypeController extends Controller
     }
 
     public function userTypes($id)
-    {   $group = \App\Group::find($id);
+    
+    {  
+        $user =  Auth::user();
+        $group = \App\Group::where('id', '=' ,$id)->with('types.users')->first();
         $types = $group->types->load('users');
+        Log::info($group);
         foreach ($types as $type) {
-
-            $type->users->filter(function ($user) use ($type) {
-                if ($user->active !== 0 ){
-                    $type->hype = $user->pivot->hype;
-                    return $user;
+            
+            $type->users->filter(function ($typeuser) use ($type, $user) {
+              
+                    Log::info($typeuser->id);
+                    if ($typeuser->id === $user->id) {
+                        return  $type->hype = $typeuser->pivot->hype;
+                   
+                    return $type;
                 }
+                
             });
 
         }

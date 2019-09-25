@@ -14,10 +14,19 @@ class HypeController extends Controller
 {
   
     public function index($id)
-    {
+    {   
+        $user =  Auth::user();
         $group=Group::where('id', $id)->with('types')->get()->flatten();
        $types=$group->pluck('types')->collapse();
-
+        $types->map(function ($type)  {
+           return $type->users->map(function ($typeuser) use ($user) {
+                if ($typeuser->id === $user->id) {
+                    $type->hype = $typeuser->hype;
+                }
+            
+        });
+    
+    });
         return response()->json([
             'group' =>$group[0],
             'types' => $types
@@ -75,6 +84,7 @@ class HypeController extends Controller
         $user->types()->detach();           //delete past results
 
         foreach ($request->userTypes as $userType) { // loop and set values
+            Log::info($userType['users']);
             $type = Type::find($userType['id']);
             $user->types()->save($type);
             $type->users()->updateExistingPivot($user->id, ['hype' => $userType['hype']]);

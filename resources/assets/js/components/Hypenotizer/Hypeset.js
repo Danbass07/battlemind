@@ -29,20 +29,28 @@ class Hypeset extends Component {
                                                   )
                                               }
                                           >
-                                              <option
-                                                  key={
-                                                      "default" + userType.type
-                                                  }
-                                                  defaultValue={
-                                                      userType.hype
-                                                          ? userType.hype
-                                                          : 5
-                                                  }
-                                              >
-                                                  {userType.hype
-                                                      ? userType.hype
-                                                      : 5}
-                                              </option>
+                                       
+                                                <option
+                                                key={
+                                                    "default" + userType.type
+                                                }
+                                                defaultValue={
+                                                    userType.hype
+                                                        ? userType.hype
+                                                        : 5
+                                                }
+                                            >
+                                                {userType.hype
+                                                    ? userType.hype
+                                                    : 5}
+                                            </option>
+
+                                            )      
+                                  
+                                       
+
+
+
                                               {this.props.hypeLevels.map(
                                                   (level, index) => {
                                                       return (

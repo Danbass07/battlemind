@@ -117,6 +117,7 @@ class Battlemind extends Component {
             .get(`/types/${this.state.activeGroup}/userTypes`)
             .then(response => {
                 const userTypes = [...response.data];
+                console.log(response.data);
                 // userTypes.forEach(userType => {
                 //     if (userType.users.length !== 0) {
                 //         userType.users.map(user => {

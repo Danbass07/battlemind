@@ -59974,6 +59974,7 @@ var Battlemind = function (_Component) {
 
             axios.get("/types/" + this.state.activeGroup + "/userTypes").then(function (response) {
                 var userTypes = [].concat(_toConsumableArray(response.data));
+                console.log(response.data);
                 // userTypes.forEach(userType => {
                 //     if (userType.users.length !== 0) {
                 //         userType.users.map(user => {
@@ -63428,18 +63429,24 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "hypeLevelHandler",
         value: function hypeLevelHandler(e, userType) {
+            console.log(e.target.value);
             var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
-            userTypes.forEach(function (stateUserType) {
-                if (stateUserType === userType) {
-                    stateUserType.hype = +e.target.value;
+            userTypes.forEach(function (type) {
+
+                if (type === userType) {
+                    type.hype = +e.target.value;
                 }
+            });
+
+            this.setState({
+                userTypes: [].concat(_toConsumableArray(userTypes))
             });
         }
     }, {
         key: "hypenotizer",
         value: function hypenotizer() {
             axios.post("/hype/hypenotizer", {
-                userTypes: this.state.userTypes
+                userTypes: [].concat(_toConsumableArray(this.state.userTypes))
             }).then(function (response) {
                 return console.log(response);
             });
@@ -63448,6 +63455,7 @@ var Hypenotizer = function (_Component) {
         key: "componentDidMount",
         value: function componentDidMount() {
             var userTypes = [].concat(_toConsumableArray(this.props.userTypes));
+
             // userTypes.map(userType => {
             //     userType.users.map(typeUser => {
             //         if (typeUser.id === this.props.user.id) {
@@ -63458,7 +63466,7 @@ var Hypenotizer = function (_Component) {
 
             userTypes.forEach(function (userType) {
                 if (!userType.hype) {
-                    userType.hype = 5;
+                    userType.hype = 3;
                 }
                 var totalHype = 0;
                 userType.users.forEach(function (user) {
@@ -63477,10 +63485,12 @@ var Hypenotizer = function (_Component) {
         value: function render() {
             var _this2 = this;
 
+            console.log(this.state.userTypes.sort(this.compareValues("type")));
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
                 this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], {
+                    user: this.props.user,
                     userTypes: this.state.userTypes.sort(this.compareValues("type")),
                     hypeLevels: this.state.hypeLevels,
                     hypeLevelHandler: function hypeLevelHandler(e, userType) {
@@ -63577,6 +63587,7 @@ var Hypeset = function (_Component) {
                                         },
                                         userType.hype ? userType.hype : 5
                                     ),
+                                    ")",
                                     _this2.props.hypeLevels.map(function (level, index) {
                                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             "option",
