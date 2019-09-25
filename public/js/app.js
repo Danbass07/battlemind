@@ -63381,7 +63381,7 @@ var Hypenotizer = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Hypenotizer.__proto__ || Object.getPrototypeOf(Hypenotizer)).call(this, props));
 
         _this.state = {
-            hypeLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            hypeLevels: [1, 2, 3, 4],
             userTypes: [],
             votingList: []
         };

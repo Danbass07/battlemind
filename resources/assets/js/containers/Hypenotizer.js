@@ -7,7 +7,7 @@ class Hypenotizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hypeLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            hypeLevels: [1, 2, 3, 4],
             userTypes: [],
             votingList: []
         };
@@ -77,7 +77,7 @@ class Hypenotizer extends Component {
     componentDidMount() {
         let userTypes = [...this.props.userTypes];
 
-        
+
         // userTypes.map(userType => {
         //     userType.users.map(typeUser => {
         //         if (typeUser.id === this.props.user.id) {
