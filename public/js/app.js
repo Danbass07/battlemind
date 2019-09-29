@@ -59911,7 +59911,8 @@ var Battlemind = function (_Component) {
             activeGroup: 0,
             message: [["Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself." + " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."], ["Second Message"], ["Third Message"]],
             messageNumber: 0,
-            result: []
+            result: [],
+            hints: true
         };
         return _this;
     }
@@ -59974,19 +59975,18 @@ var Battlemind = function (_Component) {
 
             axios.get("/types/" + this.state.activeGroup + "/userTypes").then(function (response) {
                 var userTypes = [].concat(_toConsumableArray(response.data));
-                console.log(response.data);
-                // userTypes.forEach(userType => {
-                //     if (userType.users.length !== 0) {
-                //         userType.users.map(user => {
-                //             userType.hype = user.pivot.hype;
-                //         });
-                //     } else {
-                //         userType.hype = 5;
-                //     }
+                userTypes.forEach(function (userType) {
+
+                    var totalHype = 0;
+                    userType.users.forEach(function (user) {
+                        totalHype += user.pivot.hype;
+                    });
+                    userType.totalHype = totalHype;
+                    userType.average = (totalHype / userType.users.length).toFixed(1);
+                });
                 _this3.setState({
                     userTypes: [].concat(_toConsumableArray(userTypes))
                 });
-                //});
             });
             axios.get("/leagues/" + this.state.activeGroup + "/friendsContent").then(function (response) {
                 return _this3.setState({
@@ -60044,6 +60044,13 @@ var Battlemind = function (_Component) {
                 activeGroup: id
             }, function () {
                 _this5.getFriendsContent();
+            });
+        }
+    }, {
+        key: "hintsToggle",
+        value: function hintsToggle() {
+            this.setState({
+                hints: !this.state.hints
             });
         }
     }, {
@@ -60125,9 +60132,28 @@ var Battlemind = function (_Component) {
                         object: this.state.object,
                         types: this.state.types
                     }) : null,
-                    this.state.action === "new" && this.state.object === "player" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], { types: this.state.types }) : null,
-                    this.state.action === "new" && this.state.object === "league" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], null) : null,
-                    this.state.action === "new" && this.state.object === "scoreboard" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], { types: this.state.types }) : null
+                    this.state.action === "new" && this.state.object === "player" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], {
+                        types: this.state.types,
+                        hints: this.state.hints
+                    }) : null,
+                    this.state.action === "new" && this.state.object === "league" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], {
+                        hints: this.state.hints
+                    }) : null,
+                    this.state.action === "new" && this.state.object === "scoreboard" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], {
+                        types: this.state.types,
+                        hints: this.state.hints
+                    }) : null
+                ),
+                __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
+                    "div",
+                    { className: "hints-toggle", onClick: function onClick() {
+                            return _this6.hintsToggle();
+                        } },
+                    this.state.hints === true ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
+                        "p",
+                        null,
+                        "Hints On"
+                    ) : "Hints Off"
                 )
             );
         }
@@ -60354,7 +60380,7 @@ var Newplayer = function (_Component) {
                 { className: "workarea" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "info-bar" },
+                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
                     "Welcome, you can add any amount of players. They represent your activity in a club. We added all types of games played now, we can add any other if required. Once added, same player can be used in a different scoreboards."
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60506,7 +60532,7 @@ var Newleague = function (_Component) {
                 { className: "workarea" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "info-bar" },
+                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
                     "Don't worry about this part for now. Its scoring rules and we have them ready for you. In future you can set your own too."
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60664,7 +60690,7 @@ var Newscoreboard = function (_Component) {
                 { className: "Workarea" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "info-bar" },
+                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
                     "Don't worry about this part for now. Scorboard keep track of results and we have them ready for you. In future you can set your own too."
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -61877,24 +61903,28 @@ var List = function (_Component) {
                             { className: "list-item-name" },
                             contentToDisplay.type
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            {
-                                to: "/" + _this2.props.object + "s/" + contentToDisplay.id + "/edit",
-                                className: "button-update"
-                            },
-                            "Edit"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "button",
-                            {
-                                onClick: function onClick() {
-                                    return _this2.deleteHandler(contentToDisplay.id);
+                        _this2.state.content === "my" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                                {
+                                    to: "/" + _this2.props.object + "s/" + contentToDisplay.id + "/edit",
+                                    className: "button-update"
                                 },
-                                className: "button-delete"
-                            },
-                            "Delete"
-                        )
+                                "Edit"
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "button",
+                                {
+                                    onClick: function onClick() {
+                                        return _this2.deleteHandler(contentToDisplay.id);
+                                    },
+                                    className: "button-delete"
+                                },
+                                "Delete"
+                            )
+                        ) : null
                     );
                 }
             });
@@ -61920,7 +61950,6 @@ var List = function (_Component) {
                     });
                 });
             }
-            // activeGroup={this.state.activeGroup}
         }
     }, {
         key: "componentWillMount",
@@ -63398,11 +63427,9 @@ var Hypenotizer = function (_Component) {
                     // property doesn't exist on either object
                     return 0;
                 }
-
                 var varA = typeof a[key] === "string" /// letter case insensitive
                 ? a[key].toUpperCase() : a[key];
                 var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
-
                 var comparison = 0;
                 if (varA > varB) {
                     comparison = 1;
@@ -63429,15 +63456,12 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "hypeLevelHandler",
         value: function hypeLevelHandler(e, userType) {
-            console.log(e.target.value);
             var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
             userTypes.forEach(function (type) {
-
                 if (type === userType) {
                     type.hype = +e.target.value;
                 }
             });
-
             this.setState({
                 userTypes: [].concat(_toConsumableArray(userTypes))
             });
@@ -63447,37 +63471,13 @@ var Hypenotizer = function (_Component) {
         value: function hypenotizer() {
             axios.post("/hype/hypenotizer", {
                 userTypes: [].concat(_toConsumableArray(this.state.userTypes))
-            }).then(function (response) {
-                return console.log(response);
             });
         }
     }, {
         key: "componentDidMount",
         value: function componentDidMount() {
-            var userTypes = [].concat(_toConsumableArray(this.props.userTypes));
-
-            // userTypes.map(userType => {
-            //     userType.users.map(typeUser => {
-            //         if (typeUser.id === this.props.user.id) {
-            //             userType.hype = typeUser.pivot.hype;
-            //         }
-            //     });
-            // });
-
-            userTypes.forEach(function (userType) {
-                if (!userType.hype) {
-                    userType.hype = 3;
-                }
-                var totalHype = 0;
-                userType.users.forEach(function (user) {
-                    totalHype += user.pivot.hype;
-                });
-                userType.totalHype = totalHype;
-                userType.average = (totalHype / userType.users.length).toFixed(1);
-            });
-
             this.setState({
-                userTypes: [].concat(_toConsumableArray(userTypes))
+                userTypes: [].concat(_toConsumableArray(this.props.userTypes))
             });
         }
     }, {
@@ -63485,7 +63485,6 @@ var Hypenotizer = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log(this.state.userTypes.sort(this.compareValues("type")));
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
@@ -63502,7 +63501,7 @@ var Hypenotizer = function (_Component) {
                 }) : null,
                 this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
                     user: this.props.user,
-                    userTypes: this.state.userTypes,
+                    userTypes: this.state.userTypes.sort(this.compareValues("totalHype")),
                     groups: this.props.groups
                 }) : null
             );
@@ -63640,41 +63639,14 @@ var Hypecheck = function (_Component) {
     }
 
     _createClass(Hypecheck, [{
-        key: "compareValues",
-        value: function compareValues(key) {
-            var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            return function (a, b) {
-                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-                    // property doesn't exist on either object
-                    return 0;
-                }
-
-                var varA = typeof a[key] === "string" /// letter case insensitive
-                ? a[key].toUpperCase() : a[key];
-                var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
-
-                var comparison = 0;
-                if (varA > varB) {
-                    comparison = 1;
-                } else if (varA < varB) {
-                    comparison = -1;
-                }
-                return ascending == false ? comparison * -1 : comparison;
-            };
-        }
-    }, {
         key: "render",
         value: function render() {
-
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "button",
-                    {
-                        className: "hype-button"
-                    },
+                    { className: "hype-button" },
                     "Hype Fresh"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63683,7 +63655,7 @@ var Hypecheck = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "tbody",
                         { className: "hypecheck-results-list-body" },
-                        this.props.user.permissions === 'basic' ? this.props.userTypes.sort(this.compareValues("totalHype")).map(function (userType, index) {
+                        this.props.user.permissions === "basic" ? this.props.userTypes.map(function (userType, index) {
                             if (index < 3) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "tr",
@@ -63695,8 +63667,7 @@ var Hypecheck = function (_Component) {
                                     )
                                 );
                             }
-                        }) : this.props.userTypes.sort(this.compareValues("totalHype")).map(function (userType, index) {
-
+                        }) : this.props.userTypes.map(function (userType, index) {
                             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "tr",
                                 { key: userType.id },

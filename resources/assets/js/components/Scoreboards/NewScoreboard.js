@@ -43,7 +43,7 @@ class Newscoreboard extends Component {
     render() {
         return (
             <div className="Workarea">
-                <div className="info-bar">
+                <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
                     Don't worry about this part for now. Scorboard keep track of
                     results and we have them ready for you. In future you can set
                     your own too.

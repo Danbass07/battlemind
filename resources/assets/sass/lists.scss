@@ -43,13 +43,13 @@
     color: $maincolor;
     box-shadow: 4px 5px 5px $secondarycolor;
     border: 1px solid $maincolor;
-    font-size: $big;
+    font-size: $small;
     border-radius: 12%;
   }
   .list-option-button-active {
     background-color:$maincolor;
     color: $secondarycolor;
     border: 1px solid $secondarycolor;
-    font-size: $big;
+    font-size: $small;
   }
  

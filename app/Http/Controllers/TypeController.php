@@ -21,11 +21,14 @@ class TypeController extends Controller
         $userTypes->map(function ($type) use ($user) {
            
             return $type->users->map(function ($typeuser) use ($user,  $type) {
-
+                Log::info($type->users->contains($user));
                 
                  if ($typeuser->id === $user->id) {
                   return   $type->type = $typeuser->pivot->hype;
                  }
+                 if (!$type->users->contains($user)) {
+                    $type->hype = 8;
+                }
              
          });
         });
@@ -122,19 +125,22 @@ class TypeController extends Controller
         $user =  Auth::user();
         $group = \App\Group::where('id', '=' ,$id)->with('types.users')->first();
         $types = $group->types->load('users');
-        Log::info($group);
         foreach ($types as $type) {
-            
+         
             $type->users->filter(function ($typeuser) use ($type, $user) {
-              
-                    Log::info($typeuser->id);
+                Log::info($type->users->contains($user));
                     if ($typeuser->id === $user->id) {
-                        return  $type->hype = $typeuser->pivot->hype;
-                   
-                    return $type;
-                }
+                        $type->hype = $typeuser->pivot->hype;
+                        } 
+                       
+                    if ($type->users->contains($user)) {
+                        $type->hype = 8;
+                    }
+                      return $type;
+                });
                 
-            });
+            
+           
 
         }
   

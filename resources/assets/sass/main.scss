@@ -35,7 +35,9 @@ body{
     font-weight: bold;
     font-size: larger;
   }
-
+  .info-bar-off {
+    display: none;
+  }
   .navbar {
     position: fixed;
     width: 100%;
@@ -66,7 +68,17 @@ body{
     overflow: hidden;
     padding: 0;
 }
-  
+.hints-toggle {
+  background-color: $secondarycolor;
+  color: $maincolor;
+  min-height: 60px;
+  width: 50px;
+  position: absolute;
+  top: 55vh;
+  left:0;
+  z-index:1;
+  text-align: center;
+}
   /* Madia */
 
  

@@ -57,7 +57,8 @@ class Battlemind extends Component {
                 ["Third Message"]
             ],
             messageNumber: 0,
-            result: []
+            result: [],
+            hints: true,
         };
     }
 
@@ -117,19 +118,18 @@ class Battlemind extends Component {
             .get(`/types/${this.state.activeGroup}/userTypes`)
             .then(response => {
                 const userTypes = [...response.data];
-                console.log(response.data);
-                // userTypes.forEach(userType => {
-                //     if (userType.users.length !== 0) {
-                //         userType.users.map(user => {
-                //             userType.hype = user.pivot.hype;
-                //         });
-                //     } else {
-                //         userType.hype = 5;
-                //     }
+                userTypes.forEach(userType => {
+                   
+                    let totalHype = 0;
+                    userType.users.forEach(user => {
+                        totalHype += user.pivot.hype;
+                    });
+                    userType.totalHype = totalHype;
+                    userType.average = (totalHype / userType.users.length).toFixed(1);
+                });
                     this.setState({
                         userTypes: [...userTypes]
                     });
-                //});
             });
         axios
             .get(`/leagues/${this.state.activeGroup}/friendsContent`)
@@ -190,7 +190,11 @@ class Battlemind extends Component {
             }
         );
     }
-
+    hintsToggle() {
+        this.setState({
+            hints: !this.state.hints,
+        })
+    }
     componentDidMount() {
         this.getUserContent();
     }
@@ -198,11 +202,13 @@ class Battlemind extends Component {
     render() {
         return (
             <div className="battlemind">
+           
                 <Navigation
                     button={e => this.buttonHandler(e)}
                     object={this.state.object}
                     action={this.state.action}
                 />
+                
                 <Switch>
                     <Route
                         exact
@@ -272,17 +278,28 @@ class Battlemind extends Component {
                     ) : null}
                     {this.state.action === "new" &&
                     this.state.object === "player" ? (
-                        <Newplayer types={this.state.types} />
+                        <Newplayer 
+                            types={this.state.types} 
+                            hints={this.state.hints}
+                        />
                     ) : null}
                     {this.state.action === "new" &&
                     this.state.object === "league" ? (
-                        <Newleague />
+                        <Newleague 
+                            hints={this.state.hints}
+                        />
                     ) : null}
                     {this.state.action === "new" &&
                     this.state.object === "scoreboard" ? (
-                        <Newscoreboard types={this.state.types} />
+                        <Newscoreboard 
+                            types={this.state.types}
+                            hints={this.state.hints}
+                        />
                     ) : null}
                 </Switch>
+                <div className={"hints-toggle"} onClick={() => this.hintsToggle()}>
+                    {this.state.hints === true ? <p>Hints On</p> : "Hints Off"}
+                </div>
             </div>
         );
     }

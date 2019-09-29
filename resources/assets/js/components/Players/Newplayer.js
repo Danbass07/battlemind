@@ -53,7 +53,7 @@ class Newplayer extends Component {
     render() {
         return (
             <div className="workarea">
-                <div className="info-bar">
+                <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
                     Welcome, you can add any amount of players. They represent
                     your activity in a club. We added all types of games played
                     now, we can add any other if required. Once added, same

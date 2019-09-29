@@ -49,7 +49,7 @@ class Newleague extends Component {
     render() {
         return (
             <div className="workarea">
-                <div className="info-bar">
+                <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
                     Don't worry about this part for now. Its scoring rules and
                     we have them ready for you. In future you can set your own
                     too.

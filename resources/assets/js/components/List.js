@@ -30,22 +30,27 @@ class List extends Component {
                         <div className="list-item-name">
                             {contentToDisplay.type}
                         </div>
-                        <Link
-                            to={`/${this.props.object}s/${
-                                contentToDisplay.id
-                                }/edit`}
-                            className="button-update"
-                        >
-                            Edit
-                        </Link>
-                        <button
-                            onClick={() =>
-                                this.deleteHandler(contentToDisplay.id)
-                            }
-                            className="button-delete"
-                        >
-                            Delete
-                        </button>
+                        {this.state.content === "my" ?
+                        <React.Fragment>
+                            <Link
+                                to={`/${this.props.object}s/${
+                                    contentToDisplay.id
+                                    }/edit`}
+                                className="button-update"
+                            >
+                                Edit
+                            </Link>
+                            <button
+                                onClick={() =>
+                                    this.deleteHandler(contentToDisplay.id)
+                                }
+                                className="button-delete"
+                            >
+                                Delete
+                            </button>
+                        </React.Fragment>
+
+                        : null }
                     </div>
                 );
             }
@@ -69,7 +74,7 @@ class List extends Component {
                 })
             );
         }
-        // activeGroup={this.state.activeGroup}
+  
     }
     componentWillMount() {
         this.getContent();

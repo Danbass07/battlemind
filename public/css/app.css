@@ -10512,6 +10512,10 @@ body {
   font-size: larger;
 }
 
+.info-bar-off {
+  display: none;
+}
+
 .navbar {
   position: fixed;
   width: 100%;
@@ -10544,6 +10548,18 @@ body {
   text-align: center;
   overflow: hidden;
   padding: 0;
+}
+
+.hints-toggle {
+  background-color: #ff7f00;
+  color: #000000;
+  min-height: 60px;
+  width: 50px;
+  position: absolute;
+  top: 55vh;
+  left: 0;
+  z-index: 1;
+  text-align: center;
 }
 
 /* Madia */
@@ -10692,7 +10708,7 @@ a:hover {
   -webkit-box-shadow: 4px 5px 5px #ff7f00;
           box-shadow: 4px 5px 5px #ff7f00;
   border: 1px solid #000000;
-  font-size: 24px;
+  font-size: 12px;
   border-radius: 12%;
 }
 
@@ -10700,7 +10716,7 @@ a:hover {
   background-color: #000000;
   color: #ff7f00;
   border: 1px solid #ff7f00;
-  font-size: 24px;
+  font-size: 12px;
 }
 
 .Event-grid {
@@ -11155,6 +11171,12 @@ a:hover {
   color: #ff7f00;
   border-radius: 5% 5% 5% 5%;
   overflow: scroll;
+}
+
+.hypecheck-results-list td {
+  border: solid 1px #ff7f00;
+  border-radius: 25px;
+  padding: 15px;
 }
 
 /* Madia */
