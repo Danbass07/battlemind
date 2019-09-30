@@ -119,10 +119,7 @@ class Battlemind extends Component {
             .then(response => {
                 const userTypes = [...response.data];
                 userTypes.forEach(userType => {
-                   
-                    let totalHype = 0;
-                    userType.users.forEach(user => {
-                        totalHype += user.pivot.hype;
+                        userType.users.map(user => {
                     });
                     userType.totalHype = totalHype;
                     userType.average = (totalHype / userType.users.length).toFixed(1);
