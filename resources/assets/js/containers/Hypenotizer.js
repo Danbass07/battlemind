@@ -73,7 +73,6 @@ class Hypenotizer extends Component {
     }
 
     render() {
-       
         return (
             <React.Fragment>
                 {this.props.navigation === "Hypeset" ? (

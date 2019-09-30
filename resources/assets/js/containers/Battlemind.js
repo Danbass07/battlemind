@@ -61,22 +61,54 @@ class Battlemind extends Component {
             hints: true,
         };
     }
+    calculateTypeStatistics(data) {
+        const userTypes = [...data];
+        userTypes.forEach(userType => {
+             let totalHype =0;
+                userType.users.map(user => {
+                    totalHype += +user.pivot.hype; ///////////
+            });
+            userType.totalHype = totalHype;
+            userType.average = (totalHype / userType.users.length).toFixed(1);
+        });
+        userTypes.forEach(userType => { 
+            if (!userType.hype) {
+                userType.hype = 3;
+            }
+        })
+        return userTypes;
+          
+
+    }
+  
     hypeLevelHandler(e, userType) {
         let userTypes = [...this.state.userTypes];
         userTypes.forEach(type => {
             if (type === userType) {
                 type.hype = +e.target.value;
+                userType.users.map(user => {
+                    if (user.id === this.state.user.id){
+                        user.pivot.hype = +e.target.value;
+                    }
+                })
             }
         });
+        let data =[...this.calculateTypeStatistics(userTypes)];
         this.setState({
-            userTypes: [...userTypes]
+            userTypes: [...data]
         });
     }
 
     hypenotizer() {
-        axios.post(`/hype/hypenotizer`, {
-            userTypes: [...this.state.userTypes]
+        let userTypes = [...this.calculateTypeStatistics(this.state.userTypes)];
+        this.setState({
+            userTypes: [...userTypes]
         });
+            axios.post(`/hype/hypenotizer`, {
+                userTypes: [...userTypes]
+            })
+     
+  
     }
 
     buttonHandler(e) {
@@ -130,27 +162,15 @@ class Battlemind extends Component {
             })
         );
     }
+ 
     getFriendsContent() {
         axios
             .get(`/types/${this.state.activeGroup}/userTypes`)
             .then(response => {
-                const userTypes = [...response.data];
-                userTypes.forEach(userType => {
-                     let totalHype =0;
-                        userType.users.map(user => {
-                            totalHype += +user.pivot.hype;
-                    });
-                    userType.totalHype = totalHype;
-                    userType.average = (totalHype / userType.users.length).toFixed(1);
+                let userTypes = this.calculateTypeStatistics(response.data);
+                this.setState({
+                    userTypes: [...userTypes]
                 });
-                userTypes.forEach(userType => { 
-                    if (!userType.hype) {
-                        userType.hype = 3;
-                    }
-                })
-                    this.setState({
-                        userTypes: [...userTypes]
-                    });
             });
         axios
             .get(`/leagues/${this.state.activeGroup}/friendsContent`)

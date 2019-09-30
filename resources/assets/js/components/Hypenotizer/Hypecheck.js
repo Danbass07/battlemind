@@ -7,9 +7,16 @@ class Hypecheck extends Component {
             click: true,
         }
     }
-
+    
+   
     render() {
-        console.log(this.props.userTypes);
+        this.props.userTypes.map((userType, index) => {
+            userType.users.map((user) => {
+                if (user.pivot.hype === 1) {
+                   this.props.userTypes.splice(index,1);
+                }
+            })
+        })
         return (
             <React.Fragment>
                 <button onClick={() => this.setState({click: !this.state.click})} className="hype-button">Hype Fresh</button>
@@ -19,7 +26,7 @@ class Hypecheck extends Component {
                             ? this.props.userTypes.map((userType, index) => {
                                   if (index < 3) {
                                       return (
-                                          <tr key={userType.id}>
+                                          <tr key={userType.id+' ' +userType.hype}>
                                               <td>{userType.type}</td>
                                           </tr>
                                       );
