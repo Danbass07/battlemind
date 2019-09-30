@@ -118,11 +118,11 @@ class Event extends Component {
     renderOptions(scoreboards, friendsScoreboards) {
         return (
                 <select
-                    name="Choose a scoreboard"
+                    name="Choose an event"
                     className="myform-control"
                     onChange={e => this.scoreboardChangeHandler(e)}
                 >
-                    <option>Choose a scoreboard</option>
+                    <option>Choose an Event</option>
                     {scoreboards.map(scoreboard => (
                         <option
                             value={scoreboard.id + "break" + scoreboard.type}
@@ -225,7 +225,7 @@ class Event extends Component {
     render() {
         return (
             <div className="workarea">
-                <div className="info-bar">
+                <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
                     There it is. A main part of the app. Here we store the
                     result. Choose a Scorboard, add some players and keep track
                     of games. That part of the app will tell our WebSite what to

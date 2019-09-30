@@ -44,7 +44,7 @@ class Newscoreboard extends Component {
         return (
             <div className="Workarea">
                 <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
-                    Don't worry about this part for now. Scorboard keep track of
+                    Don't worry about this part for now. Event keep track of
                     results and we have them ready for you. In future you can set
                     your own too.
                 </div>
@@ -77,7 +77,7 @@ class Newscoreboard extends Component {
                             ) : null}
                         </div>
                         <button type="submit" className="submit-button">
-                            Add new Scoreboard
+                            Add new Event
                         </button>
                     </div>
                 </form>

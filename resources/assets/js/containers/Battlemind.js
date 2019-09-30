@@ -276,6 +276,7 @@ class Battlemind extends Component {
                             activeGroup={this.state.activeGroup}
                             hypeLevelHandler={(e, userType) => this.hypeLevelHandler(e, userType)}
                             hypenotizer={() => this.hypenotizer()}
+                            hints={this.state.hints}
                         />
                     ) : null}
 
@@ -291,6 +292,7 @@ class Battlemind extends Component {
                             contains={(userGroups, groups) =>
                                 this.contains(userGroups, groups)
                             }
+                            hints={this.state.hints}
                         />
                     ) : null}
 
@@ -302,6 +304,7 @@ class Battlemind extends Component {
                             friendsPlayers={this.state.friendsPlayers}
                             leagues={this.state.leagues}
                             type={this.state.type}
+                            hints={this.state.hints}
                         />
                     ) : null}
 
@@ -317,6 +320,7 @@ class Battlemind extends Component {
                             activeGroup={this.state.activeGroup}
                             object={this.state.object}
                             types={this.state.types}
+                            hints={this.state.hints}
                         />
                     ) : null}
                     {this.state.action === "new" &&

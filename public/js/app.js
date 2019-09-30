@@ -60144,7 +60144,8 @@ var Battlemind = function (_Component) {
                         },
                         hypenotizer: function hypenotizer() {
                             return _this7.hypenotizer();
-                        }
+                        },
+                        hints: this.state.hints
                     }) : null,
                     this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__components_Profile__["a" /* default */], {
                         user: this.state.user,
@@ -60160,7 +60161,8 @@ var Battlemind = function (_Component) {
                         },
                         contains: function contains(userGroups, groups) {
                             return _this7.contains(userGroups, groups);
-                        }
+                        },
+                        hints: this.state.hints
                     }) : null,
                     this.state.action === "event" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], {
                         scoreboards: this.state.userScoreboards,
@@ -60168,7 +60170,8 @@ var Battlemind = function (_Component) {
                         userPlayers: this.state.userPlayers,
                         friendsPlayers: this.state.friendsPlayers,
                         leagues: this.state.leagues,
-                        type: this.state.type
+                        type: this.state.type,
+                        hints: this.state.hints
                     }) : null,
                     this.state.action === "results" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_Result__["a" /* default */], {
                         scoreboards: this.state.userScoreboards,
@@ -60178,7 +60181,8 @@ var Battlemind = function (_Component) {
                     this.state.action === "list" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["a" /* default */], {
                         activeGroup: this.state.activeGroup,
                         object: this.state.object,
-                        types: this.state.types
+                        types: this.state.types,
+                        hints: this.state.hints
                     }) : null,
                     this.state.action === "new" && this.state.object === "player" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], {
                         types: this.state.types,
@@ -60288,7 +60292,7 @@ var Navigation = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "button",
                             { className: this.props.object == 'scoreboard' ? "navButton active" : "navButton", onClick: this.props.button, name: "scoreboard", value: "object" },
-                            "Scoreboard"
+                            "Events"
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60739,7 +60743,7 @@ var Newscoreboard = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
-                    "Don't worry about this part for now. Scorboard keep track of results and we have them ready for you. In future you can set your own too."
+                    "Don't worry about this part for now. Event keep track of results and we have them ready for you. In future you can set your own too."
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "form",
@@ -60793,7 +60797,7 @@ var Newscoreboard = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "button",
                             { type: "submit", className: "submit-button" },
-                            "Add new Scoreboard"
+                            "Add new Event"
                         )
                     )
                 )
@@ -61911,7 +61915,7 @@ var List = function (_Component) {
 
         _this.state = {
             contentToDisplay: [],
-            content: 'my'
+            content: "my"
         };
         return _this;
     }
@@ -61932,7 +61936,7 @@ var List = function (_Component) {
             var _this2 = this;
 
             return this.state.contentToDisplay.map(function (contentToDisplay) {
-                if (contentToDisplay.type === type || _this2.props.object === 'league' || type === undefined || type === 'Show All') {
+                if (contentToDisplay.type === type || _this2.props.object === "league" || type === undefined || type === "Show All") {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
                         { key: contentToDisplay.id, className: "list-item" },
@@ -61987,7 +61991,7 @@ var List = function (_Component) {
                     return _this3.setState({
                         myContent: [].concat(_toConsumableArray(response.data.content[0])),
                         contentToDisplay: [].concat(_toConsumableArray(response.data.content[0])),
-                        content: 'my'
+                        content: "my"
                     });
                 });
             }
@@ -62016,7 +62020,7 @@ var List = function (_Component) {
         value: function myOnlyButtonHandler() {
             this.setState({
                 contentToDisplay: [].concat(_toConsumableArray(this.state.myContent)),
-                content: 'my'
+                content: "my"
             });
         }
     }, {
@@ -62024,7 +62028,7 @@ var List = function (_Component) {
         value: function myFriendsOnlyButtonHandler() {
             this.setState({
                 contentToDisplay: [].concat(_toConsumableArray(this.state.friendsContent)),
-                content: 'friends'
+                content: "friends"
             });
         }
     }, {
@@ -62033,7 +62037,7 @@ var List = function (_Component) {
             var all = this.state.myContent.concat(this.state.friendsContent);
             this.setState({
                 contentToDisplay: [].concat(_toConsumableArray(all)),
-                content: 'all'
+                content: "all"
             });
         }
     }, {
@@ -62054,33 +62058,46 @@ var List = function (_Component) {
                 { className: "workarea" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
+                    {
+                        className: this.props.hints === true ? "info-bar" : "info-bar-off"
+                    },
+                    "Here you have all list of all of your goodies. All the teams you play, all type of games and meeteings."
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
                     { className: "list-button-area" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "button",
-                        { className: this.state.content === "my" ? "list-option-button-active" : "list-option-button",
+                        {
+                            className: this.state.content === "my" ? "list-option-button-active" : "list-option-button",
                             onClick: function onClick() {
                                 return _this4.myOnlyButtonHandler();
-                            } },
+                            }
+                        },
                         "My Stuff"
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "button",
-                        { className: this.state.content === "friends" ? "list-option-button-active" : "list-option-button",
+                        {
+                            className: this.state.content === "friends" ? "list-option-button-active" : "list-option-button",
                             onClick: function onClick() {
                                 return _this4.myFriendsOnlyButtonHandler();
-                            } },
+                            }
+                        },
                         "My Friends Stuff"
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "button",
-                        { className: this.state.content === "all" ? "list-option-button-active" : "list-option-button",
+                        {
+                            className: this.state.content === "all" ? "list-option-button-active" : "list-option-button",
                             onClick: function onClick() {
                                 return _this4.allButtonHandler();
-                            } },
+                            }
+                        },
                         "All Stuff"
                     )
                 ),
-                this.props.object !== 'league' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                this.props.object !== "league" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "select",
                     {
                         name: "Choose a Type",
@@ -62282,7 +62299,7 @@ var Event = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "select",
                 {
-                    name: "Choose a scoreboard",
+                    name: "Choose an event",
                     className: "myform-control",
                     onChange: function onChange(e) {
                         return _this5.scoreboardChangeHandler(e);
@@ -62291,7 +62308,7 @@ var Event = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "option",
                     null,
-                    "Choose a scoreboard"
+                    "Choose an Event"
                 ),
                 scoreboards.map(function (scoreboard) {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -62419,7 +62436,7 @@ var Event = function (_Component) {
                 { className: "workarea" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "info-bar" },
+                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
                     "There it is. A main part of the app. Here we store the result. Choose a Scorboard, add some players and keep track of games. That part of the app will tell our WebSite what to display. What we did every week. NO CHEATING!!!"
                 ),
                 this.state.focusOn === "player" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -62927,9 +62944,9 @@ var Profile = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "workarea" },
-                this.props.user.id === 1 ? null : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "info-bar" },
+                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
                     "Hello ",
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "h1",
@@ -63538,6 +63555,17 @@ var Hypenotizer = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
+                    "Hello ",
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "h1",
+                        null,
+                        this.props.user.name
+                    ),
+                    "Here we can show what and how much we like. 1 - don't like ; 2 - I can play if my friends really want ; 3 - I like the game; 4 - I like it so much my friend's must like it too :-)"
+                ),
                 this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], _defineProperty({
                     user: this.props.user,
                     userTypes: this.state.userTypes.sort(this.compareValues("type")),

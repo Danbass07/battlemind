@@ -6,7 +6,7 @@ class List extends Component {
         super(props);
         this.state = {
             contentToDisplay: [],
-            content:'my',
+            content: "my"
         };
     }
     deleteHandler(id) {
@@ -16,9 +16,13 @@ class List extends Component {
         axios.delete(`/${this.props.object}s/${id}`);
     }
     renderContent(type) {
-
         return this.state.contentToDisplay.map(contentToDisplay => {
-            if (contentToDisplay.type === type || this.props.object === 'league' || type === undefined || type === 'Show All') {
+            if (
+                contentToDisplay.type === type ||
+                this.props.object === "league" ||
+                type === undefined ||
+                type === "Show All"
+            ) {
                 return (
                     <div key={contentToDisplay.id} className="list-item">
                         <div className="list-item-name">
@@ -30,27 +34,24 @@ class List extends Component {
                         <div className="list-item-name">
                             {contentToDisplay.type}
                         </div>
-                        {this.state.content === "my" ?
-                        <React.Fragment>
-                            <Link
-                                to={`/${this.props.object}s/${
-                                    contentToDisplay.id
-                                    }/edit`}
-                                className="button-update"
-                            >
-                                Edit
-                            </Link>
-                            <button
-                                onClick={() =>
-                                    this.deleteHandler(contentToDisplay.id)
-                                }
-                                className="button-delete"
-                            >
-                                Delete
-                            </button>
-                        </React.Fragment>
-
-                        : null }
+                        {this.state.content === "my" ? (
+                            <React.Fragment>
+                                <Link
+                                    to={`/${this.props.object}s/${contentToDisplay.id}/edit`}
+                                    className="button-update"
+                                >
+                                    Edit
+                                </Link>
+                                <button
+                                    onClick={() =>
+                                        this.deleteHandler(contentToDisplay.id)
+                                    }
+                                    className="button-delete"
+                                >
+                                    Delete
+                                </button>
+                            </React.Fragment>
+                        ) : null}
                     </div>
                 );
             }
@@ -59,22 +60,24 @@ class List extends Component {
     getContent() {
         if (this.props.object !== "none") {
             axios.get(`/${this.props.object}s`).then(response =>
-
                 this.setState({
                     myContent: [...response.data.content[0]],
                     contentToDisplay: [...response.data.content[0]],
-                    content:'my',
+                    content: "my"
                 })
             );
         }
         if (this.props.object !== "none") {
-            axios.get(`/${this.props.object}s/${this.props.activeGroup}/friendsContent`).then(response =>
-                this.setState({
-                    friendsContent: [...response.data],
-                })
-            );
+            axios
+                .get(
+                    `/${this.props.object}s/${this.props.activeGroup}/friendsContent`
+                )
+                .then(response =>
+                    this.setState({
+                        friendsContent: [...response.data]
+                    })
+                );
         }
-  
     }
     componentWillMount() {
         this.getContent();
@@ -87,20 +90,20 @@ class List extends Component {
     myOnlyButtonHandler() {
         this.setState({
             contentToDisplay: [...this.state.myContent],
-            content:'my',
+            content: "my"
         });
     }
     myFriendsOnlyButtonHandler() {
         this.setState({
             contentToDisplay: [...this.state.friendsContent],
-            content:'friends',
+            content: "friends"
         });
     }
     allButtonHandler() {
         const all = this.state.myContent.concat(this.state.friendsContent);
         this.setState({
             contentToDisplay: [...all],
-            content:'all',
+            content: "all"
         });
     }
     typeChangeHandler(e) {
@@ -113,33 +116,61 @@ class List extends Component {
     render() {
         return (
             <div className="workarea">
+                <div
+                    className={
+                        this.props.hints === true ? "info-bar" : "info-bar-off"
+                    }
+                >
+                   Here you have all list of all of your 
+                    goodies. All the teams you play, all type of games and meeteings.
+                </div>
                 <div className="list-button-area">
-                    <button className={this.state.content === "my" ?"list-option-button-active": "list-option-button"}
-                        onClick={() => this.myOnlyButtonHandler()}>
+                    <button
+                        className={
+                            this.state.content === "my"
+                                ? "list-option-button-active"
+                                : "list-option-button"
+                        }
+                        onClick={() => this.myOnlyButtonHandler()}
+                    >
                         My Stuff
-                </button>
-                    <button className={this.state.content === "friends" ?"list-option-button-active": "list-option-button"}
-                        onClick={() => this.myFriendsOnlyButtonHandler()}>
+                    </button>
+                    <button
+                        className={
+                            this.state.content === "friends"
+                                ? "list-option-button-active"
+                                : "list-option-button"
+                        }
+                        onClick={() => this.myFriendsOnlyButtonHandler()}
+                    >
                         My Friends Stuff
-                </button>
-                    <button className={this.state.content === "all" ?"list-option-button-active": "list-option-button"}
-                        onClick={() => this.allButtonHandler()}>
+                    </button>
+                    <button
+                        className={
+                            this.state.content === "all"
+                                ? "list-option-button-active"
+                                : "list-option-button"
+                        }
+                        onClick={() => this.allButtonHandler()}
+                    >
                         All Stuff
-                </button>
+                    </button>
                 </div>
 
-                {this.props.object !== 'league' ? <select
-                    name="Choose a Type"
-                    className="myform-control"
-                    onChange={e => this.typeChangeHandler(e)}
-                >
-                    <option>Show All</option>
-                    {this.props.types.map(type => (
-                        <option value={type.name} key={type.id}>
-                            {type.type}
-                        </option>
-                    ))}
-                </select> : null}
+                {this.props.object !== "league" ? (
+                    <select
+                        name="Choose a Type"
+                        className="myform-control"
+                        onChange={e => this.typeChangeHandler(e)}
+                    >
+                        <option>Show All</option>
+                        {this.props.types.map(type => (
+                            <option value={type.name} key={type.id}>
+                                {type.type}
+                            </option>
+                        ))}
+                    </select>
+                ) : null}
                 <div className="list-grid">
                     {this.renderContent(this.state.type)}
                 </div>

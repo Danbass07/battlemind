@@ -5,15 +5,14 @@ class Profile extends Component {
     render() {
         return (
             <div className="workarea">
-                {this.props.user.id === 1 ? null : (
-                    <div className="info-bar">
+          
+                   <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
                         Hello <h1>{this.props.user.name}</h1>Welcome to
                         Battlemind. App to connect players, groups and local
                         shops. Click <h3>NEW</h3> in top left corner. Add new
                         player and gather scores so our Website can show to the
                         world what we are made of.
                     </div>
-                )}
                 <div></div>
               
                 {/* {this.props.user.id === 1 ? ( */}
