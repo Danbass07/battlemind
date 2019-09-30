@@ -73,6 +73,7 @@ class Hypenotizer extends Component {
     }
 
     render() {
+       
         return (
             <React.Fragment>
                 {this.props.navigation === "Hypeset" ? (
@@ -85,14 +86,15 @@ class Hypenotizer extends Component {
                         hypeLevelHandler={(e, userType) =>
                             this.hypeLevelHandler(e, userType)
                         }
-                        hypenotizer={() => this.hypenotizer()}
+                        hypenotizer={() => this.props.hypenotizer()}
+                        hypeLevelHandler={(e, userType) => this.props.hypeLevelHandler(e, userType)}
                     />
                 ) : null}
 
                 {this.props.navigation === "Hypecheck" ? (
                     <Hypecheck
                         user={this.props.user}
-                        userTypes={this.state.userTypes.sort(this.compareValues("totalHype"))}
+                        userTypes={this.props.userTypes.sort(this.compareValues("totalHype"))}
                         groups={this.props.groups}
                     />
                 ) : null}

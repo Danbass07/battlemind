@@ -59844,9 +59844,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -59918,6 +59918,26 @@ var Battlemind = function (_Component) {
     }
 
     _createClass(Battlemind, [{
+        key: "hypeLevelHandler",
+        value: function hypeLevelHandler(e, userType) {
+            var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
+            userTypes.forEach(function (type) {
+                if (type === userType) {
+                    type.hype = +e.target.value;
+                }
+            });
+            this.setState({
+                userTypes: [].concat(_toConsumableArray(userTypes))
+            });
+        }
+    }, {
+        key: "hypenotizer",
+        value: function hypenotizer() {
+            axios.post("/hype/hypenotizer", {
+                userTypes: [].concat(_toConsumableArray(this.state.userTypes))
+            });
+        }
+    }, {
         key: "buttonHandler",
         value: function buttonHandler(e) {
             if (e.target.name === "event") {
@@ -59976,13 +59996,17 @@ var Battlemind = function (_Component) {
             axios.get("/types/" + this.state.activeGroup + "/userTypes").then(function (response) {
                 var userTypes = [].concat(_toConsumableArray(response.data));
                 userTypes.forEach(function (userType) {
-
                     var totalHype = 0;
-                    userType.users.forEach(function (user) {
-                        totalHype += user.pivot.hype;
+                    userType.users.map(function (user) {
+                        totalHype += +user.pivot.hype;
                     });
                     userType.totalHype = totalHype;
                     userType.average = (totalHype / userType.users.length).toFixed(1);
+                });
+                userTypes.forEach(function (userType) {
+                    if (!userType.hype) {
+                        userType.hype = 3;
+                    }
                 });
                 _this3.setState({
                     userTypes: [].concat(_toConsumableArray(userTypes))
@@ -60096,7 +60120,13 @@ var Battlemind = function (_Component) {
                         userTypes: this.state.userTypes,
                         navigation: this.state.object,
                         groups: this.state.groups,
-                        activeGroup: this.state.activeGroup
+                        activeGroup: this.state.activeGroup,
+                        hypeLevelHandler: function hypeLevelHandler(e, userType) {
+                            return _this6.hypeLevelHandler(e, userType);
+                        },
+                        hypenotizer: function hypenotizer() {
+                            return _this6.hypenotizer();
+                        }
                     }) : null,
                     this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__components_Profile__["a" /* default */], {
                         user: this.state.user,
@@ -63388,6 +63418,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63488,7 +63520,7 @@ var Hypenotizer = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
-                this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], {
+                this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], _defineProperty({
                     user: this.props.user,
                     userTypes: this.state.userTypes.sort(this.compareValues("type")),
                     hypeLevels: this.state.hypeLevels,
@@ -63496,12 +63528,14 @@ var Hypenotizer = function (_Component) {
                         return _this2.hypeLevelHandler(e, userType);
                     },
                     hypenotizer: function hypenotizer() {
-                        return _this2.hypenotizer();
+                        return _this2.props.hypenotizer();
                     }
-                }) : null,
+                }, "hypeLevelHandler", function hypeLevelHandler(e, userType) {
+                    return _this2.props.hypeLevelHandler(e, userType);
+                })) : null,
                 this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
                     user: this.props.user,
-                    userTypes: this.state.userTypes.sort(this.compareValues("totalHype")),
+                    userTypes: this.props.userTypes.sort(this.compareValues("totalHype")),
                     groups: this.props.groups
                 }) : null
             );
@@ -63635,18 +63669,28 @@ var Hypecheck = function (_Component) {
     function Hypecheck(props) {
         _classCallCheck(this, Hypecheck);
 
-        return _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
+
+        _this.state = {
+            click: true
+        };
+        return _this;
     }
 
     _createClass(Hypecheck, [{
         key: "render",
         value: function render() {
+            var _this2 = this;
+
+            console.log(this.props.userTypes);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "button",
-                    { className: "hype-button" },
+                    { onClick: function onClick() {
+                            return _this2.setState({ click: !_this2.state.click });
+                        }, className: "hype-button" },
                     "Hype Fresh"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63670,7 +63714,7 @@ var Hypecheck = function (_Component) {
                         }) : this.props.userTypes.map(function (userType, index) {
                             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "tr",
-                                { key: userType.id },
+                                { key: userType.id + ' ' + userType.hype },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "td",
                                     null,

@@ -26,9 +26,7 @@ class TypeController extends Controller
                  if ($typeuser->id === $user->id) {
                   return   $type->type = $typeuser->pivot->hype;
                  }
-                 if (!$type->users->contains($user)) {
-                    $type->hype = 8;
-                }
+               
              
          });
         });
@@ -128,14 +126,12 @@ class TypeController extends Controller
         foreach ($types as $type) {
          
             $type->users->filter(function ($typeuser) use ($type, $user) {
-                Log::info($type->users->contains($user));
+     
                     if ($typeuser->id === $user->id) {
                         $type->hype = $typeuser->pivot->hype;
                         } 
                        
-                    if ($type->users->contains($user)) {
-                        $type->hype = 8;
-                    }
+                    
                       return $type;
                 });
                 

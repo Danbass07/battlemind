@@ -3,12 +3,16 @@ import React, { Component } from "react";
 class Hypecheck extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            click: true,
+        }
     }
 
     render() {
+        console.log(this.props.userTypes);
         return (
             <React.Fragment>
-                <button className="hype-button">Hype Fresh</button>
+                <button onClick={() => this.setState({click: !this.state.click})} className="hype-button">Hype Fresh</button>
                 <table className="hypecheck-results-list">
                     <tbody className="hypecheck-results-list-body">
                         {this.props.user.permissions === "basic"
@@ -23,7 +27,7 @@ class Hypecheck extends Component {
                               })
                             : this.props.userTypes.map((userType, index) => {
                                   return (
-                                      <tr key={userType.id}>
+                                      <tr key={userType.id+' ' +userType.hype}>
                                           <td>{userType.type}</td>
 
                                           <td style={{ marginLeft: "auto" }}>

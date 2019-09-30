@@ -61,6 +61,23 @@ class Battlemind extends Component {
             hints: true,
         };
     }
+    hypeLevelHandler(e, userType) {
+        let userTypes = [...this.state.userTypes];
+        userTypes.forEach(type => {
+            if (type === userType) {
+                type.hype = +e.target.value;
+            }
+        });
+        this.setState({
+            userTypes: [...userTypes]
+        });
+    }
+
+    hypenotizer() {
+        axios.post(`/hype/hypenotizer`, {
+            userTypes: [...this.state.userTypes]
+        });
+    }
 
     buttonHandler(e) {
         if (e.target.name === "event") {
@@ -119,11 +136,18 @@ class Battlemind extends Component {
             .then(response => {
                 const userTypes = [...response.data];
                 userTypes.forEach(userType => {
+                     let totalHype =0;
                         userType.users.map(user => {
+                            totalHype += +user.pivot.hype;
                     });
                     userType.totalHype = totalHype;
                     userType.average = (totalHype / userType.users.length).toFixed(1);
                 });
+                userTypes.forEach(userType => { 
+                    if (!userType.hype) {
+                        userType.hype = 3;
+                    }
+                })
                     this.setState({
                         userTypes: [...userTypes]
                     });
@@ -230,6 +254,8 @@ class Battlemind extends Component {
                             navigation={this.state.object}
                             groups={this.state.groups}
                             activeGroup={this.state.activeGroup}
+                            hypeLevelHandler={(e, userType) => this.hypeLevelHandler(e, userType)}
+                            hypenotizer={() => this.hypenotizer()}
                         />
                     ) : null}
 
