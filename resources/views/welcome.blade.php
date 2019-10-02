@@ -13,12 +13,13 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background-color: black;
+                color: #ff7f00;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
+                min-width: 500px;
             }
 
             .full-height {
@@ -36,7 +37,6 @@
             }
 
             .top-right {
-                position: absolute;
                 right: 10px;
                 top: 18px;
             }
@@ -46,49 +46,56 @@
             }
 
             .title {
+                margin-top:20%;
                 font-size: 84px;
             }
 
             .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
+                background-color: #ff7f00;
+                padding: 20px;
+                font-size: 22px;
+                font-weight: 800;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
+                margin: 60px 50px;
+                border-radius: 35%;
             }
 
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .info-banner {
+                margin: 100px 100px;
+                font-size: 24px;
+            }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
+        <div class="main-wrapper">
+  
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Welcome to the Battlemind
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                      @if (Route::has('login'))
+                        <div class="top-right links">
+                            @auth
+                                <a href="{{ url('/home') }}">Home</a>
+                            @else
+                                <a href="{{ route('login') }}">Login</a>
+                                <a href="{{ route('register') }}">Register</a>
+                            @endauth
+                        </div>
+                    @endif
+                <div class="info-banner">
+                    Web Application for table top players and Clubs/ Groups
+                    they belong to. App will join all of you with local/online shops.
+                    Your activity will help them to supply you will all you need. We 
+                    will help them to survive on market. And of course we will choose shop 
+                    willing to support us. We all love discounts reward's and shop tournaments.
                 </div>
             </div>
         </div>

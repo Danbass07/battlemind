@@ -1,4 +1,7 @@
-body{
+.main-wrapper{
+  background-color: $maincolor;
+}
+.content{
   background-color: $maincolor;
 }
 .navbar-laravel {
