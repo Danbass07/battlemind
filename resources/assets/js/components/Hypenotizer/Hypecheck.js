@@ -21,7 +21,7 @@ class Hypecheck extends Component {
             <React.Fragment>
                 <button onClick={() => this.setState({click: !this.state.click})} className="hype-button">Hype Fresh</button>
                 <table className="hypecheck-results-list">
-                    <tbody className="hypecheck-results-list-body">
+                    <tbody className="hypecheck-results-list">
                         {this.props.user.permissions === "basic"
                             ? this.props.userTypes.map((userType, index) => {
                                   if (index < 3) {

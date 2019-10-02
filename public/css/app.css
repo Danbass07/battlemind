@@ -11097,6 +11097,7 @@ a:hover {
   height: 60%;
   border: solid 2px red;
   overflow: scroll;
+  margin-bottom: 200px;
 }
 
 .hype-button {
@@ -11169,6 +11170,7 @@ a:hover {
 
 .hypecheck-results-list {
   margin: 15px auto;
+  margin-bottom: 250px;
   text-align: center;
   font-size: 48px;
   background-color: #000000;

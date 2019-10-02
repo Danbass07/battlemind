@@ -63750,7 +63750,7 @@ var Hypecheck = function (_Component) {
                     { className: "hypecheck-results-list" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "tbody",
-                        { className: "hypecheck-results-list-body" },
+                        { className: "hypecheck-results-list" },
                         this.props.user.permissions === "basic" ? this.props.userTypes.map(function (userType, index) {
                             if (index < 3) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

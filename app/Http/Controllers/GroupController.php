@@ -104,6 +104,11 @@ class GroupController extends Controller
       
         if (! $group->users->contains($user->id)) {
         $group->users()->save($user);
+        foreach ($group->types as $type){
+
+            $user->types()->save($type);
+            $type->users()->updateExistingPivot($user->id, ['hype' => 2]);
+        }
         }
        return response()->json($group->users); 
     }
