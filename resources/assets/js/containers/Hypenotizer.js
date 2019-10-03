@@ -8,7 +8,6 @@ class Hypenotizer extends Component {
         super(props);
         this.state = {
             hypeLevels: [1, 2, 3, 4],
-            userTypes: [],
             votingList: []
         };
     }
@@ -35,42 +34,42 @@ class Hypenotizer extends Component {
         };
     }
 
-    contains(a, obj) {
-        if (typeof a === "object") {
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].id === obj.id) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            console.log(a);
-        }
-    }
+    // contains(a, obj) {
+    //     if (typeof a === "object") {
+    //         for (var i = 0; i < a.length; i++) {
+    //             if (a[i].id === obj.id) {
+    //                 return true;
+    //             }
+    //         }
+    //         return false;
+    //     } else {
+    //         console.log(a);
+    //     }
+    // }
 
-    hypeLevelHandler(e, userType) {
-        let userTypes = [...this.state.userTypes];
-        userTypes.forEach(type => {
-            if (type === userType) {
-                type.hype = +e.target.value;
-            }
-        });
-        this.setState({
-            userTypes: [...userTypes]
-        });
-    }
+    // hypeLevelHandler(e, userType) {
+    //     let userTypes = [...this.state.userTypes];
+    //     userTypes.forEach(type => {
+    //         if (type === userType) {
+    //             type.hype = +e.target.value;
+    //         }
+    //     });
+    //     this.setState({
+    //         userTypes: [...userTypes]
+    //     });
+    // }
 
-    hypenotizer() {
-        axios.post(`/hype/hypenotizer`, {
-            userTypes: [...this.state.userTypes]
-        });
-    }
+    // hypenotizer() {
+    //     axios.post(`/hype/hypenotizer`, {
+    //         userTypes: [...this.state.userTypes]
+    //     });
+    // }
 
-    componentDidMount() {
-        this.setState({
-            userTypes: [...this.props.userTypes]
-        });
-    }
+    // componentDidMount() {
+    //     this.setState({
+    //         userTypes: [...this.props.userTypes]
+    //     });
+    // }
 
     render() {
         return (
@@ -83,7 +82,7 @@ class Hypenotizer extends Component {
                 {this.props.navigation === "Hypeset" ? (
                     <Hypeset
                         user={this.props.user}
-                        userTypes={this.state.userTypes.sort(
+                        userTypes={this.props.userTypes.sort(
                             this.compareValues("type")
                         )}
                         hypeLevels={this.state.hypeLevels}

@@ -2,8 +2,6 @@ import React, { Component } from "react";
 
 class Hypeset extends Component {
     render() {
-      
-
         return (
             <React.Fragment>
                 <button
@@ -29,28 +27,15 @@ class Hypeset extends Component {
                                                   )
                                               }
                                           >
-                                       
-                                                <option
-                                                key={
-                                                    "default" + userType.type
-                                                }
-                                                defaultValue={
-                                                    userType.hype
-                                                        ? userType.hype
-                                                        : 5
-                                                }
-                                            >
-                                                {userType.hype
-                                                    ? userType.hype
-                                                    : 5}
-                                            </option>
-
-                                            )      
-                                  
-                                       
-
-
-
+                                              <option
+                                                  key={
+                                                      "default" + userType.type
+                                                  }
+                                                  defaultValue={userType.hype}
+                                              >
+                                                  {userType.hype}
+                                              </option>
+                                              )
                                               {this.props.hypeLevels.map(
                                                   (level, index) => {
                                                       return (

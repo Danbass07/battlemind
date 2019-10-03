@@ -63449,13 +63449,9 @@ var substr = 'ab'.substr(-1) === 'b'
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__ = __webpack_require__(121);
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -63478,7 +63474,6 @@ var Hypenotizer = function (_Component) {
 
         _this.state = {
             hypeLevels: [1, 2, 3, 4],
-            userTypes: [],
             votingList: []
         };
         return _this;
@@ -63506,47 +63501,44 @@ var Hypenotizer = function (_Component) {
                 return ascending == false ? comparison * -1 : comparison;
             };
         }
-    }, {
-        key: "contains",
-        value: function contains(a, obj) {
-            if ((typeof a === "undefined" ? "undefined" : _typeof(a)) === "object") {
-                for (var i = 0; i < a.length; i++) {
-                    if (a[i].id === obj.id) {
-                        return true;
-                    }
-                }
-                return false;
-            } else {
-                console.log(a);
-            }
-        }
-    }, {
-        key: "hypeLevelHandler",
-        value: function hypeLevelHandler(e, userType) {
-            var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
-            userTypes.forEach(function (type) {
-                if (type === userType) {
-                    type.hype = +e.target.value;
-                }
-            });
-            this.setState({
-                userTypes: [].concat(_toConsumableArray(userTypes))
-            });
-        }
-    }, {
-        key: "hypenotizer",
-        value: function hypenotizer() {
-            axios.post("/hype/hypenotizer", {
-                userTypes: [].concat(_toConsumableArray(this.state.userTypes))
-            });
-        }
-    }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.setState({
-                userTypes: [].concat(_toConsumableArray(this.props.userTypes))
-            });
-        }
+
+        // contains(a, obj) {
+        //     if (typeof a === "object") {
+        //         for (var i = 0; i < a.length; i++) {
+        //             if (a[i].id === obj.id) {
+        //                 return true;
+        //             }
+        //         }
+        //         return false;
+        //     } else {
+        //         console.log(a);
+        //     }
+        // }
+
+        // hypeLevelHandler(e, userType) {
+        //     let userTypes = [...this.state.userTypes];
+        //     userTypes.forEach(type => {
+        //         if (type === userType) {
+        //             type.hype = +e.target.value;
+        //         }
+        //     });
+        //     this.setState({
+        //         userTypes: [...userTypes]
+        //     });
+        // }
+
+        // hypenotizer() {
+        //     axios.post(`/hype/hypenotizer`, {
+        //         userTypes: [...this.state.userTypes]
+        //     });
+        // }
+
+        // componentDidMount() {
+        //     this.setState({
+        //         userTypes: [...this.props.userTypes]
+        //     });
+        // }
+
     }, {
         key: "render",
         value: function render() {
@@ -63568,7 +63560,7 @@ var Hypenotizer = function (_Component) {
                 ),
                 this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], _defineProperty({
                     user: this.props.user,
-                    userTypes: this.state.userTypes.sort(this.compareValues("type")),
+                    userTypes: this.props.userTypes.sort(this.compareValues("type")),
                     hypeLevels: this.state.hypeLevels,
                     hypeLevelHandler: function hypeLevelHandler(e, userType) {
                         return _this2.hypeLevelHandler(e, userType);
@@ -63663,9 +63655,9 @@ var Hypeset = function (_Component) {
                                         "option",
                                         {
                                             key: "default" + userType.type,
-                                            defaultValue: userType.hype ? userType.hype : 5
+                                            defaultValue: userType.hype
                                         },
-                                        userType.hype ? userType.hype : 5
+                                        userType.hype
                                     ),
                                     ")",
                                     _this2.props.hypeLevels.map(function (level, index) {
