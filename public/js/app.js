@@ -63720,13 +63720,13 @@ var Hypecheck = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            this.props.userTypes.map(function (userType, index) {
-                userType.users.map(function (user) {
-                    if (user.pivot.hype === 1) {
-                        _this2.props.userTypes.splice(index, 1);
-                    }
-                });
-            });
+            //    const userTypes = this.props.userTypes.map((userType, index) => {
+            //         userType.users.map((user) => {
+            //             if (user.pivot.hype === 1) {
+            //                this.props.userTypes.splice(index,1);
+            //             }
+            //         })
+            //     })
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,

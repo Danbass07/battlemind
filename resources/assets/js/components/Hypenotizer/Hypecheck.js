@@ -10,13 +10,13 @@ class Hypecheck extends Component {
     
    
     render() {
-        this.props.userTypes.map((userType, index) => {
-            userType.users.map((user) => {
-                if (user.pivot.hype === 1) {
-                   this.props.userTypes.splice(index,1);
-                }
-            })
-        })
+    //    const userTypes = this.props.userTypes.map((userType, index) => {
+    //         userType.users.map((user) => {
+    //             if (user.pivot.hype === 1) {
+    //                this.props.userTypes.splice(index,1);
+    //             }
+    //         })
+    //     })
         return (
             <React.Fragment>
                 <button onClick={() => this.setState({click: !this.state.click})} className="hype-button">Hype Fresh</button>
