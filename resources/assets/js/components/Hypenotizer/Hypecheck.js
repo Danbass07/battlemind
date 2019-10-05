@@ -10,13 +10,7 @@ class Hypecheck extends Component {
     
    
     render() {
-    //    const userTypes = this.props.userTypes.map((userType, index) => {
-    //      return   userType.users.map((user) => {
-    //             if (user.pivot.hype === 1) {
-    //             return   this.props.userTypes.splice(index,1);
-    //             }
-    //         })
-    //     })
+   
         
             let userTypes =[...this.props.userTypes]
             userTypes.map((userType, index) => {

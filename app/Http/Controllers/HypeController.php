@@ -17,7 +17,7 @@ class HypeController extends Controller
     {   
         $user =  Auth::user();
         $group=Group::where('id', $id)->with('types')->get()->flatten();
-       $types=$group->pluck('types')->collapse();
+        $types=$group->pluck('types')->collapse();
         $types->map(function ($type)  {
            return $type->users->map(function ($typeuser) use ($user) {
                 if ($typeuser->id === $user->id) {
@@ -45,7 +45,7 @@ class HypeController extends Controller
         $totalHype = $type->users->map(function ($user) use ($tid) { /// collect all hype values 
            
             return    $user->types->map(function ($type) use ($tid){    
-             
+ 
                             if($type->id === intval($tid)) {
                             return $type->pivot->hype;
                             }
@@ -92,4 +92,4 @@ class HypeController extends Controller
     }
 
 
-}
+}45 \
