@@ -63556,7 +63556,7 @@ var Hypenotizer = function (_Component) {
                         null,
                         this.props.user.name
                     ),
-                    "Here we can show what and how much we like. 1 - don't like ; 2 - I can play if my friends really want ; 3 - I like the game; 4 - I like it so much my friend's must like it too :-)"
+                    "Here we can show what and how much we like games in our Club. 1 - don't like ; 2 - I can play if my friends if they really want to ; 3 - I like the game; 4 - I like it so much my friend's must like it too :-)"
                 ),
                 this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], _defineProperty({
                     user: this.props.user,
@@ -63693,6 +63693,8 @@ var Hypeset = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -63718,32 +63720,36 @@ var Hypecheck = function (_Component) {
     _createClass(Hypecheck, [{
         key: "render",
         value: function render() {
-            var _this2 = this;
-
             //    const userTypes = this.props.userTypes.map((userType, index) => {
-            //         userType.users.map((user) => {
+            //      return   userType.users.map((user) => {
             //             if (user.pivot.hype === 1) {
-            //                this.props.userTypes.splice(index,1);
+            //             return   this.props.userTypes.splice(index,1);
             //             }
             //         })
             //     })
+
+            var userTypes = [].concat(_toConsumableArray(this.props.userTypes));
+            userTypes.map(function (userType, index) {
+
+                userType.users.map(function (user) {
+                    if (user.pivot.hype === 1) {
+                        userTypes.splice(index, 1);
+                    }
+                });
+            });
+
+            console.log(userTypes);
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "button",
-                    { onClick: function onClick() {
-                            return _this2.setState({ click: !_this2.state.click });
-                        }, className: "hype-button" },
-                    "Hype Fresh"
-                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "table",
                     { className: "hypecheck-results-list" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "tbody",
                         { className: "hypecheck-results-list" },
-                        this.props.user.permissions === "basic" ? this.props.userTypes.map(function (userType, index) {
+                        this.props.user.permissions === "basic" ? userTypes.map(function (userType, index) {
                             if (index < 3) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "tr",
@@ -63755,7 +63761,7 @@ var Hypecheck = function (_Component) {
                                     )
                                 );
                             }
-                        }) : this.props.userTypes.map(function (userType, index) {
+                        }) : userTypes.map(function (userType, index) {
                             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "tr",
                                 { key: userType.id + ' ' + userType.hype },

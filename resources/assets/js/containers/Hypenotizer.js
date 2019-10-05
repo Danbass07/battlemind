@@ -75,8 +75,8 @@ class Hypenotizer extends Component {
         return (
             <React.Fragment>
                     <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
-                        Hello <h1>{this.props.user.name}</h1>Here we can show what and how much we like.
-                        1 - don't like ; 2 - I can play if my friends really want ; 3 - I like the game; 
+                        Hello <h1>{this.props.user.name}</h1>Here we can show what and how much we like games in our Club.
+                        1 - don't like ; 2 - I can play if my friends if they really want to ; 3 - I like the game; 
                         4 - I like it so much my friend's must like it too :-)
                     </div>
                 {this.props.navigation === "Hypeset" ? (

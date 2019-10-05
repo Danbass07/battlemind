@@ -11,19 +11,35 @@ class Hypecheck extends Component {
    
     render() {
     //    const userTypes = this.props.userTypes.map((userType, index) => {
-    //         userType.users.map((user) => {
+    //      return   userType.users.map((user) => {
     //             if (user.pivot.hype === 1) {
-    //                this.props.userTypes.splice(index,1);
+    //             return   this.props.userTypes.splice(index,1);
     //             }
     //         })
     //     })
+        
+            let userTypes =[...this.props.userTypes]
+            userTypes.map((userType, index) => {
+
+                userType.users.map((user) => {
+                    if (user.pivot.hype === 1) {
+                         userTypes.splice(index,1);
+                    }
+                })
+            })
+             
+               console.log(userTypes);
+    
         return (
             <React.Fragment>
-                <button onClick={() => this.setState({click: !this.state.click})} className="hype-button">Hype Fresh</button>
+                {/* <button onClick={() => this.setState({click: !this.state.click})} className="hype-button">
+                    Hype Fresh
+                </button> */}
+                
                 <table className="hypecheck-results-list">
                     <tbody className="hypecheck-results-list">
                         {this.props.user.permissions === "basic"
-                            ? this.props.userTypes.map((userType, index) => {
+                            ? userTypes.map((userType, index) => {
                                   if (index < 3) {
                                       return (
                                           <tr key={userType.id+' ' +userType.hype}>
@@ -32,7 +48,7 @@ class Hypecheck extends Component {
                                       );
                                   }
                               })
-                            : this.props.userTypes.map((userType, index) => {
+                            : userTypes.map((userType, index) => {
                                   return (
                                       <tr key={userType.id+' ' +userType.hype}>
                                           <td>{userType.type}</td>

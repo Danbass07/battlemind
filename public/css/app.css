@@ -10508,6 +10508,7 @@ a.text-dark:focus {
 
 .info-bar {
   margin: 0px 2px;
+  margin-bottom: 20px;
   background-color: #000000;
   color: #ff7f00;
   padding: 10px;

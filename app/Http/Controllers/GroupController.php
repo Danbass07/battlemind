@@ -116,9 +116,12 @@ class GroupController extends Controller
     {
         $group = \App\Group::findOrfail($id);
         $user =  Auth::user()->load('groups');
-       
+        foreach ($group->types as $type){
+
+            $user->types()->detach($type);
+        }
       
-        $user->types()->detach();
+        
         $group->users()->detach($user);
         
        return response()->json($group->users); 
