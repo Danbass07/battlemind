@@ -59835,7 +59835,7 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_List__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Event__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Result__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Profile__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__containers_Profile__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_FlashMessage__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__containers_Hypenotizer__ = __webpack_require__(118);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -59912,7 +59912,7 @@ var Battlemind = function (_Component) {
             message: [["Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself." + " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."], ["Second Message"], ["Third Message"]],
             messageNumber: 0,
             result: [],
-            hints: true
+            hints: false
         };
         return _this;
     }
@@ -60147,7 +60147,7 @@ var Battlemind = function (_Component) {
                         },
                         hints: this.state.hints
                     }) : null,
-                    this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__components_Profile__["a" /* default */], {
+                    this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__containers_Profile__["a" /* default */], {
                         user: this.state.user,
                         groups: this.state.groups,
                         activeGroup: this.state.activeGroup,
@@ -62358,7 +62358,6 @@ var Event = function (_Component) {
                                 key: player.type + player.id + player.name
                             },
                             player.name,
-                            "  ",
                             player.user_name
                         ) : null;
                     })
@@ -62407,9 +62406,7 @@ var Event = function (_Component) {
                                         return _this6.removePlayer(_this6.state.scoreboard, player.id);
                                     }
                                 },
-                                " ",
-                                "X",
-                                " "
+                                "X"
                             )
                         ) : null;
                     })
@@ -62909,251 +62906,8 @@ var Result = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Result);
 
 /***/ }),
-/* 114 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__containers_Matrix__ = __webpack_require__(115);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var Profile = function (_Component) {
-    _inherits(Profile, _Component);
-
-    function Profile() {
-        _classCallCheck(this, Profile);
-
-        return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).apply(this, arguments));
-    }
-
-    _createClass(Profile, [{
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "workarea" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
-                    "Hello ",
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "h1",
-                        null,
-                        this.props.user.name
-                    ),
-                    "Welcome to Battlemind. App to connect players, groups and local shops. Click ",
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "h3",
-                        null,
-                        "NEW"
-                    ),
-                    " in top left corner. Add new player and gather scores so our Website can show to the world what we are made of."
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "active-group-list" },
-                    this.props.groups.length ? this.props.groups.map(function (group) {
-                        if (_this2.props.contains(_this2.props.userGroups, group)) return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { key: group.name + "active",
-                                onClick: function onClick() {
-                                    return _this2.props.activeGroupChange(group.id);
-                                },
-                                className: _this2.props.activeGroup === group.id ? "active-group-selected" : "active-group-notselected"
-
-                            },
-                            group.name
-                        );
-                    }) : null
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__containers_Matrix__["a" /* default */], {
-                        groups: this.props.groups,
-                        types: this.props.types
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "group-list" },
-                        this.props.groups.length ? this.props.groups.map(function (group) {
-
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { key: group.name + "groupList2" },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                    key: group.id + group.name,
-                                    onChange: function onChange() {
-                                        return _this2.props.addUser(group);
-                                    },
-                                    defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
-                                    type: "checkbox",
-                                    name: "group",
-                                    value: group.id
-                                }),
-                                group.name
-                            );
-                        }) : null
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "group-list" },
-                    this.props.groups.length ? this.props.groups.map(function (group) {
-                        if (!_this2.props.contains(_this2.props.userGroups, group) && group.id === 1) return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { key: group.name + "groupList1" },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                key: group.id + group.name + "groupList",
-                                onChange: function onChange() {
-                                    return _this2.props.addUser(group);
-                                },
-                                defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
-                                type: "checkbox",
-                                name: "group",
-                                value: group.id
-                            }),
-                            group.name,
-                            " --- Please confirm that you are member of Retford Wyverns Gaming Club"
-                        );
-                    }) : null
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-                    style: {
-                        backgroundImage: "url(/images/" + this.props.activeGroup + "logo.png)"
-                    },
-                    className: "logo"
-                })
-            );
-        }
-    }]);
-
-    return Profile;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Profile);
-
-/***/ }),
-/* 115 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var Matrix = function (_Component) {
-    _inherits(Matrix, _Component);
-
-    function Matrix(props) {
-        _classCallCheck(this, Matrix);
-
-        var _this = _possibleConstructorReturn(this, (Matrix.__proto__ || Object.getPrototypeOf(Matrix)).call(this, props));
-
-        _this.state = {
-            groupId: 0,
-            typeId: 0
-
-        };
-        return _this;
-    }
-
-    _createClass(Matrix, [{
-        key: 'addTypeToGroup',
-        value: function addTypeToGroup() {
-            axios.get('/types/' + this.state.typeId + '/addToTheGroup/' + this.state.groupId);
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {}
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var style = {
-                width: '400px',
-                backgroundColor: 'black',
-                marginTop: '10px',
-                padding: '2px',
-                color: 'wheat'
-            };
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { style: style },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    'Matrix'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'select',
-                    { onChange: function onChange(e) {
-                            return _this2.setState({ typeId: e.target.value });
-                        } },
-                    this.props.types.map(function (type) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'option',
-                            { key: type.type, name: 'type', value: type.id },
-                            ' ',
-                            type.type,
-                            ' '
-                        );
-                    })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'select',
-                    { onChange: function onChange(e) {
-                            return _this2.setState({ groupId: e.target.value });
-                        } },
-                    this.props.groups.map(function (group) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'option',
-                            { key: group.id + "groupId", name: 'group', value: group.id },
-                            ' ',
-                            group.name,
-                            ' '
-                        );
-                    })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    { onClick: function onClick() {
-                            return _this2.addTypeToGroup();
-                        } },
-                    'ADD GAME'
-                )
-            );
-        }
-    }]);
-
-    return Matrix;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Matrix);
-
-/***/ }),
+/* 114 */,
+/* 115 */,
 /* 116 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -63984,6 +63738,268 @@ var Hypevote = function (_Component) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__ = __webpack_require__(129);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+var Profile = function (_Component) {
+    _inherits(Profile, _Component);
+
+    function Profile() {
+        _classCallCheck(this, Profile);
+
+        return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).apply(this, arguments));
+    }
+
+    _createClass(Profile, [{
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "workarea" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "active-group-list" },
+                    this.props.groups.length ? this.props.groups.map(function (group) {
+                        if (_this2.props.contains(_this2.props.userGroups, group)) return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            {
+                                key: group.name + "active",
+                                onClick: function onClick() {
+                                    return _this2.props.activeGroupChange(group.id);
+                                },
+                                className: _this2.props.activeGroup === group.id ? "active-group-selected" : "active-group-notselected"
+                            },
+                            group.name
+                        );
+                    }) : null
+                ),
+                this.props.user.permissions === 'admin' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__["a" /* default */], {
+                    user: this.props.user,
+                    groups: this.props.groups,
+                    activeGroup: this.props.activeGroup,
+                    types: this.props.types,
+                    userGroups: this.props.user.groups,
+                    addUser: function addUser(group) {
+                        return _this2.props.addUser(group);
+                    },
+                    contains: function contains(userGroups, groups) {
+                        return _this2.props.contains(userGroups, groups);
+                    },
+                    hints: this.props.hints
+                }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__["a" /* default */], {
+                    user: this.props.user,
+                    groups: this.props.groups,
+                    userGroups: this.props.user.groups,
+                    addUser: function addUser(group) {
+                        return _this2.props.addUser(group);
+                    },
+                    contains: function contains(userGroups, groups) {
+                        return _this2.props.contains(userGroups, groups);
+                    },
+                    hints: this.props.hints
+                }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
+                    style: {
+                        backgroundImage: "url(/images/" + this.props.activeGroup + "logo.png)"
+                    },
+                    className: "logo"
+                })
+            );
+        }
+    }]);
+
+    return Profile;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Profile);
+
+/***/ }),
+/* 128 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var BasicUser = function (_Component) {
+    _inherits(BasicUser, _Component);
+
+    function BasicUser() {
+        _classCallCheck(this, BasicUser);
+
+        return _possibleConstructorReturn(this, (BasicUser.__proto__ || Object.getPrototypeOf(BasicUser)).apply(this, arguments));
+    }
+
+    _createClass(BasicUser, [{
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                        className: this.props.hints === true ? "info-bar" : "info-bar-off"
+                    },
+                    "Hello ",
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "h1",
+                        null,
+                        this.props.user.name
+                    ),
+                    "Welcome to Battlemind. App to connect players, groups and local shops. Click",
+                    " ",
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "h3",
+                        null,
+                        "NEW"
+                    ),
+                    " in top left corner. Add new player and gather scores so our Website can show to the world what we are made of."
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "group-list" },
+                    this.props.groups.length ? this.props.groups.map(function (group) {
+                        if (!_this2.props.contains(_this2.props.userGroups, group) && group.id === 1) return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { key: group.name + "groupList1" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                key: group.id + group.name + "groupList",
+                                onChange: function onChange() {
+                                    return _this2.props.addUser(group);
+                                },
+                                defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
+                                type: "checkbox",
+                                name: "group",
+                                value: group.id
+                            }),
+                            group.name,
+                            " --- Please confirm that you are member of Retford Wyverns Gaming Club"
+                        );
+                    }) : null
+                )
+            );
+        }
+    }]);
+
+    return BasicUser;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (BasicUser);
+
+/***/ }),
+/* 129 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var BasicUser = function (_Component) {
+    _inherits(BasicUser, _Component);
+
+    function BasicUser() {
+        _classCallCheck(this, BasicUser);
+
+        return _possibleConstructorReturn(this, (BasicUser.__proto__ || Object.getPrototypeOf(BasicUser)).apply(this, arguments));
+    }
+
+    _createClass(BasicUser, [{
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "admin-group-list" },
+                    this.props.groups.length ? this.props.groups.map(function (group) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { key: group.name + "groupList2" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                key: group.id + group.name,
+                                onChange: function onChange() {
+                                    return _this2.props.addUser(group);
+                                },
+                                defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
+                                type: "checkbox",
+                                name: "group",
+                                value: group.id
+                            }),
+                            group.name
+                        );
+                    }) : null
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "admin-group-list" },
+                    console.log(this.props.groups),
+                    this.props.groups.length > 1 ? this.props.groups.map(function (group) {
+                        return group.users.map(function (user) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { key: user.name },
+                                user.name
+                            );
+                        });
+                    }) : null
+                )
+            );
+        }
+    }]);
+
+    return BasicUser;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (BasicUser);
 
 /***/ })
 /******/ ]);

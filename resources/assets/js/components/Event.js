@@ -162,7 +162,6 @@ class Event extends Component {
                                 key={player.type + player.id + player.name}
                             >
                                 {player.name}
-                                {"  "}
                                 {player.user_name}
                             </div>
                         ) : null
@@ -200,8 +199,7 @@ class Event extends Component {
                                         )
                                     }
                                 >
-                                    {" "}
-                                    X{" "}
+                                    X
                                 </div>
                             </div>
                         ) : null

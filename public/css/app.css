@@ -11060,6 +11060,15 @@ a:hover {
   display: flex;
 }
 
+.admin-group-list {
+  background-color: #000000;
+  color: #ff7f00;
+  border: 1px solid #ff7f00;
+  padding: 15px;
+  width: 125px;
+  margin: 20px 20px;
+}
+
 .group-list {
   background-color: darkgoldenrod;
 }

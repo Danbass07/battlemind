@@ -5,8 +5,17 @@
     padding: 2px;
     display: flex;
 }
+.admin-group-list{
+    background-color: $maincolor;
+    color: $secondarycolor;
+    border: 1px solid $secondarycolor;
+    padding: 15px;
+    width: 125px;
+    margin: 20px 20px;
+}
 .group-list{
     background-color: darkgoldenrod;
+ 
 }
 .logo{
     width:170px;

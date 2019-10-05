@@ -10,7 +10,7 @@ import React, { Component } from "react";
 import List from "../components/List";
 import Event from "../components/Event";
 import Result from "../components/Result";
-import Profile from "../components/Profile";
+import Profile from "../containers//Profile";
 import FlashMessage from "../components/FlashMessage";
 import Hypenotizer from "../containers/Hypenotizer";
 
@@ -58,7 +58,7 @@ class Battlemind extends Component {
             ],
             messageNumber: 0,
             result: [],
-            hints: true,
+            hints: false,
         };
     }
     calculateTypeStatistics(data) {
