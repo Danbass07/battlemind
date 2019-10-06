@@ -13,11 +13,16 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-       $user =  Auth::user();
-       $userFullInfo = Auth::user()->with('groups')->where('id',$user->id)->get();
-       return response()->json($userFullInfo[0]);
+        $user = User::with(['groups.types', 'groups.users.players', 'players', 'groups'])->where('id', '=' ,$request->user()->id)->first();
+    //    $user1 = User::find($user->id)->withPivot(['user_id','role_id','acive'])->get();
+    //    $userFullInfo = Auth::user()->with('groups')->where('id',$user->id)->get();
+    //    foreach($user1->groups as $group)  {
+    //     Log::info($group->pivot);
+    //    }
+       
+       return response()->json($user);
 
     }
 
@@ -73,10 +78,17 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Log::info('editCTRL');
-        $user =  User::find($id);
-        $user->active = !$user->active;
-        $user->save();
+      
+        
+        $user = User::with(['groups.types', 'groups.users.players', 'players', 'groups'])->where('id', '=' ,$request->user()->id)->first();
+        foreach ($user->groups as $group) {
+          
+            if ($group->id == $id) {
+                Log::info($group->pivot->active);
+                $group->pivot->active = false;
+                $group->pivot->save();
+            }
+        }
         return response()->json($user);
     }
 

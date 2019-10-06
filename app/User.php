@@ -43,7 +43,7 @@ class User extends Authenticatable
         return $this->hasMany(Scoreboard::class);
     }
     public function groups() {
-        return $this->belongsToMany(Group::class);
+        return $this->belongsToMany(Group::class)->withPivot(['active', 'permissions']);
     }
     public function profile() {
         return $this->belongsTo(Profile::class);

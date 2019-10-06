@@ -34,43 +34,6 @@ class Hypenotizer extends Component {
         };
     }
 
-    // contains(a, obj) {
-    //     if (typeof a === "object") {
-    //         for (var i = 0; i < a.length; i++) {
-    //             if (a[i].id === obj.id) {
-    //                 return true;
-    //             }
-    //         }
-    //         return false;
-    //     } else {
-    //         console.log(a);
-    //     }
-    // }
-
-    // hypeLevelHandler(e, userType) {
-    //     let userTypes = [...this.state.userTypes];
-    //     userTypes.forEach(type => {
-    //         if (type === userType) {
-    //             type.hype = +e.target.value;
-    //         }
-    //     });
-    //     this.setState({
-    //         userTypes: [...userTypes]
-    //     });
-    // }
-
-    // hypenotizer() {
-    //     axios.post(`/hype/hypenotizer`, {
-    //         userTypes: [...this.state.userTypes]
-    //     });
-    // }
-
-    // componentDidMount() {
-    //     this.setState({
-    //         userTypes: [...this.props.userTypes]
-    //     });
-    // }
-
     render() {
         return (
             <React.Fragment>

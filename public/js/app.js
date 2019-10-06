@@ -63250,44 +63250,6 @@ var Hypenotizer = function (_Component) {
                 return ascending == false ? comparison * -1 : comparison;
             };
         }
-
-        // contains(a, obj) {
-        //     if (typeof a === "object") {
-        //         for (var i = 0; i < a.length; i++) {
-        //             if (a[i].id === obj.id) {
-        //                 return true;
-        //             }
-        //         }
-        //         return false;
-        //     } else {
-        //         console.log(a);
-        //     }
-        // }
-
-        // hypeLevelHandler(e, userType) {
-        //     let userTypes = [...this.state.userTypes];
-        //     userTypes.forEach(type => {
-        //         if (type === userType) {
-        //             type.hype = +e.target.value;
-        //         }
-        //     });
-        //     this.setState({
-        //         userTypes: [...userTypes]
-        //     });
-        // }
-
-        // hypenotizer() {
-        //     axios.post(`/hype/hypenotizer`, {
-        //         userTypes: [...this.state.userTypes]
-        //     });
-        // }
-
-        // componentDidMount() {
-        //     this.setState({
-        //         userTypes: [...this.props.userTypes]
-        //     });
-        // }
-
     }, {
         key: "render",
         value: function render() {
@@ -63771,6 +63733,7 @@ var Profile = function (_Component) {
         value: function render() {
             var _this2 = this;
 
+            console.log(this.props.user);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "workarea" },
@@ -63791,30 +63754,32 @@ var Profile = function (_Component) {
                         );
                     }) : null
                 ),
-                this.props.user.permissions === 'admin' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__["a" /* default */], {
-                    user: this.props.user,
-                    groups: this.props.groups,
-                    activeGroup: this.props.activeGroup,
-                    types: this.props.types,
-                    userGroups: this.props.user.groups,
-                    addUser: function addUser(group) {
-                        return _this2.props.addUser(group);
-                    },
-                    contains: function contains(userGroups, groups) {
-                        return _this2.props.contains(userGroups, groups);
-                    },
-                    hints: this.props.hints
-                }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__["a" /* default */], {
-                    user: this.props.user,
-                    groups: this.props.groups,
-                    userGroups: this.props.user.groups,
-                    addUser: function addUser(group) {
-                        return _this2.props.addUser(group);
-                    },
-                    contains: function contains(userGroups, groups) {
-                        return _this2.props.contains(userGroups, groups);
-                    },
-                    hints: this.props.hints
+                this.props.user.groups.map(function (group) {
+                    return group.id === _this2.props.activeGroup && group.pivot.permissions === 'admin' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__["a" /* default */], {
+                        user: _this2.props.user,
+                        groups: _this2.props.groups,
+                        activeGroup: _this2.props.activeGroup,
+                        types: _this2.props.types,
+                        userGroups: _this2.props.user.groups,
+                        addUser: function addUser(group) {
+                            return _this2.props.addUser(group);
+                        },
+                        contains: function contains(userGroups, groups) {
+                            return _this2.props.contains(userGroups, groups);
+                        },
+                        hints: _this2.props.hints
+                    }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__["a" /* default */], {
+                        user: _this2.props.user,
+                        groups: _this2.props.groups,
+                        userGroups: _this2.props.user.groups,
+                        addUser: function addUser(group) {
+                            return _this2.props.addUser(group);
+                        },
+                        contains: function contains(userGroups, groups) {
+                            return _this2.props.contains(userGroups, groups);
+                        },
+                        hints: _this2.props.hints
+                    });
                 }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
                     style: {
@@ -63959,9 +63924,8 @@ var BasicUser = function (_Component) {
 
     _createClass(BasicUser, [{
         key: "activeUser",
-        value: function activeUser(user) {
-            console.log('active');
-            axios.put("/users/" + user.id, {
+        value: function activeUser(groupId) {
+            axios.put("/users/" + groupId, {
                 active: !this.props.user.active
             }).then(function (response) {
                 console.log(response);
@@ -64013,7 +63977,7 @@ var BasicUser = function (_Component) {
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
                                         key: group.id + group.name,
                                         onChange: function onChange() {
-                                            return _this2.activeUser(user);
+                                            return _this2.activeUser(group.id);
                                         },
                                         defaultChecked: user.active ? true : false,
                                         type: "checkbox",

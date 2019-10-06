@@ -20,10 +20,9 @@ class BasicUser extends Component {
             }
         };
     }
-    activeUser(user) {
-        console.log('active');
+    activeUser(groupId) {
         axios
-        .put(`/users/${user.id}`, {
+        .put(`/users/${groupId}`, {
             active: !this.props.user.active,
         })
         .then(response => {console.log(response)});
@@ -74,7 +73,7 @@ class BasicUser extends Component {
                                             <input
                                                 key={group.id + group.name}
                                                 onChange={() =>
-                                                    this.activeUser(user)
+                                                    this.activeUser(group.id)
                                                 }
                                                 defaultChecked={
                                                     user.active
