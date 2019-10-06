@@ -22,7 +22,7 @@ class Hypecheck extends Component {
                 })
             })
              
-               console.log(userTypes);
+        
     
         return (
             <React.Fragment>

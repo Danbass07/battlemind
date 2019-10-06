@@ -92,4 +92,4 @@ class HypeController extends Controller
     }
 
 
-}45 \
+}

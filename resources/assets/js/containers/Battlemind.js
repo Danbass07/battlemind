@@ -66,16 +66,11 @@ class Battlemind extends Component {
         userTypes.forEach(userType => {
              let totalHype =0;
                 userType.users.map(user => {
-                    totalHype += +user.pivot.hype; ///////////
+                    totalHype += +user.pivot.hype ///////////
             });
             userType.totalHype = totalHype;
             userType.average = (totalHype / userType.users.length).toFixed(1);
         });
-        userTypes.forEach(userType => { 
-            if (!userType.hype) {
-                userType.hype = 3;
-            }
-        })
         return userTypes;
           
 

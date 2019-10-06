@@ -59929,11 +59929,6 @@ var Battlemind = function (_Component) {
                 userType.totalHype = totalHype;
                 userType.average = (totalHype / userType.users.length).toFixed(1);
             });
-            userTypes.forEach(function (userType) {
-                if (!userType.hype) {
-                    userType.hype = 3;
-                }
-            });
             return userTypes;
         }
     }, {
@@ -63485,8 +63480,6 @@ var Hypecheck = function (_Component) {
                 });
             });
 
-            console.log(userTypes);
-
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
@@ -63943,13 +63936,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var BasicUser = function (_Component) {
     _inherits(BasicUser, _Component);
 
-    function BasicUser() {
+    function BasicUser(props) {
         _classCallCheck(this, BasicUser);
 
-        return _possibleConstructorReturn(this, (BasicUser.__proto__ || Object.getPrototypeOf(BasicUser)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (BasicUser.__proto__ || Object.getPrototypeOf(BasicUser)).call(this, props));
+
+        _this.state = {
+            action: 1,
+            scoreboard: 0,
+            scoreboardplayers: [],
+            type: "",
+            url: "jace",
+            playerid: 0,
+            index: 1,
+            player: {
+                url: "url",
+                name: "empty"
+            }
+        };
+        return _this;
     }
 
     _createClass(BasicUser, [{
+        key: "activeUser",
+        value: function activeUser(user) {
+            console.log('active');
+            axios.put("/users/" + user.id, {
+                active: !this.props.user.active
+            }).then(function (response) {
+                console.log(response);
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -63981,15 +63999,30 @@ var BasicUser = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "admin-group-list" },
-                    console.log(this.props.groups),
                     this.props.groups.length > 1 ? this.props.groups.map(function (group) {
-                        return group.users.map(function (user) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { key: user.name },
-                                user.name
-                            );
-                        });
+                        if (group.id === _this2.props.activeGroup) {
+                            return group.users.map(function (user) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                    null,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "div",
+                                        { key: user.name },
+                                        user.name
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                        key: group.id + group.name,
+                                        onChange: function onChange() {
+                                            return _this2.activeUser(user);
+                                        },
+                                        defaultChecked: user.active ? true : false,
+                                        type: "checkbox",
+                                        name: "group",
+                                        value: user.id
+                                    })
+                                );
+                            });
+                        }
                     }) : null
                 )
             );

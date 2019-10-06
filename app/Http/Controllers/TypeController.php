@@ -21,8 +21,7 @@ class TypeController extends Controller
         $userTypes->map(function ($type) use ($user) {
            
             return $type->users->map(function ($typeuser) use ($user,  $type) {
-                Log::info($type->users->contains($user));
-                
+                          
                  if ($typeuser->id === $user->id) {
                   return   $type->type = $typeuser->pivot->hype;
                  }

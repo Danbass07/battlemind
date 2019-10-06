@@ -61,7 +61,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+  
     }
 
     /**
@@ -73,7 +73,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Log::info('editCTRL');
+        $user =  User::find($id);
+        $user->active = !$user->active;
+        $user->save();
+        return response()->json($user);
     }
 
     /**
