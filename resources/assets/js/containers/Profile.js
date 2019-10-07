@@ -4,7 +4,6 @@ import AdminUser from "../components/Profile/AdminUser";
 
 class Profile extends Component {
     render() {
-        console.log(this.props.user)
         return (
             <div className="workarea">
     
@@ -40,34 +39,44 @@ class Profile extends Component {
                         : null}
                 </div>
 
-               {this.props.user.groups.map( group => {
-              return (
-                group.id === this.props.activeGroup && 
-                group.pivot.permissions === 'admin' ? 
-             
-                <AdminUser
-                user={this.props.user}
-                groups={this.props.groups}
-                activeGroup={this.props.activeGroup}
-                types={this.props.types}
-                userGroups={this.props.user.groups}
-                addUser={group => this.props.addUser(group)}
-                contains={(userGroups, groups) =>
-                    this.props.contains(userGroups, groups)
+              
+       
+                {this.props.user.groups.map( (group) => {
+                if (group.id === this.props.activeGroup && 
+                group.pivot.permissions === 'admin') {
+                   return(
+                    <AdminUser
+                    key={group.id+'admin'}
+                    user={this.props.user}
+                    groups={this.props.groups}
+                    activeGroup={this.props.activeGroup}
+                    types={this.props.types}
+                    userGroups={this.props.user.groups}
+                    addUser={group => this.props.addUser(group)}
+                    contains={(userGroups, groups) =>
+                        this.props.contains(userGroups, groups)
+                    }
+                    hints={this.props.hints}
+                    />
+                   )
+                       
+                      
+               
+                } else {
+                    <BasicUser 
+                    key={group.id+'basic'}
+                    user={this.props.user}
+                    groups={this.props.groups}
+                    userGroups={this.props.user.groups}
+                    addUser={group => this.props.addUser(group)}
+                    contains={(userGroups, groups) =>
+                       this.props.contains(userGroups, groups)
+                   }
+                    hints={this.props.hints}
+                    />
                 }
-                hints={this.props.hints}
-                /> 
-                : <BasicUser 
-                user={this.props.user}
-                groups={this.props.groups}
-                userGroups={this.props.user.groups}
-                addUser={group => this.props.addUser(group)}
-                contains={(userGroups, groups) =>
-                   this.props.contains(userGroups, groups)
-               }
-                hints={this.props.hints}
-                />
-              )
+         
+              
                  
                 }) 
                }

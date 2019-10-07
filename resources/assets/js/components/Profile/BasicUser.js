@@ -16,7 +16,7 @@ class BasicUser extends Component {
                     of.
                 </div>
                 <div className="group-list">
-                    {this.props.groups.length
+                    {/* {this.props.groups.length
                         ? this.props.groups.map(group => {
                               if (
                                   !this.props.contains(
@@ -26,7 +26,7 @@ class BasicUser extends Component {
                                   group.id === 1
                               )
                                   return (
-                                      <div key={group.name + "groupList1"}>
+                                      <div key={group.name + "groupList1"+ group.id}>
                                           <input
                                               key={
                                                   group.id +
@@ -54,7 +54,7 @@ class BasicUser extends Component {
                                       </div>
                                   );
                           })
-                        : null}
+                        : null} */}
                 </div>
             </React.Fragment>
         );

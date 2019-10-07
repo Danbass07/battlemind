@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 
 
-class BasicUser extends Component {
+class AdminUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,11 +34,11 @@ class BasicUser extends Component {
             <React.Fragment>
                 <div className="admin-group-list">
                     {this.props.groups.length
-                        ? this.props.groups.map(group => {
+                        ? this.props.groups.map((group, index) => {
                             return (
-                                <div key={group.name + "groupList2"}>
+                                <div key={group.name + "groupListadmin"+index}>
                                     <input
-                                        key={group.id + group.name}
+                                      
                                         onChange={() =>
                                             this.props.addUser(group)
                                         }
@@ -62,16 +62,15 @@ class BasicUser extends Component {
                 </div>
                 <div className="admin-group-list">
                     {this.props.groups.length > 1
-                        ? this.props.groups.map(group => {
+                        ? this.props.groups.map((group) => {
                             if (group.id === this.props.activeGroup) {
-                                return group.users.map(user => {
+                                return group.users.map((user) => {
                                     return (
-                                        <React.Fragment>
-                                            <div key={user.name}>
+                                        <React.Fragment key={user.name+ group.id}>
+                                            <div>
                                                 {user.name}
                                             </div>
                                             <input
-                                                key={group.id + group.name}
                                                 onChange={() =>
                                                     this.activeUser(group.id)
                                                 }
@@ -102,4 +101,4 @@ class BasicUser extends Component {
         )
     }
 }
-export default BasicUser
+export default AdminUser
