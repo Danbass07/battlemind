@@ -58,53 +58,68 @@ class Battlemind extends Component {
             ],
             messageNumber: 0,
             result: [],
-            hints: false,
+            hints: false
         };
     }
-    calculateTypeStatistics(data) {
-        const userTypes = [...data];
-        userTypes.forEach(userType => {
-             let totalHype =0;
-                userType.users.map(user => {
-                    totalHype += +user.pivot.hype ///////////
-            });
-            userType.totalHype = totalHype;
-            userType.average = (totalHype / userType.users.length).toFixed(1);
-        });
-        return userTypes;
-          
+    // calculateTypeStatistics(data) {
+    //     // const groups = [...this.state.groups];
+    //     // groups.map( group => {
+    //     //     group.users.map( user => {
+    //     //         if(user.pivot.active) {
+    //     //             user.types.map( type => {
+    //     //                 if(group.id === this.state.activeGroup) {
+    //     //                     console.log('create state')
+    //     //                 }
+    //     //             })
+    //     //         }
+    //     //     })
+    //     // })
+    //     // groups.map( group => {
 
-    }
-  
-    hypeLevelHandler(e, userType) {
-        let userTypes = [...this.state.userTypes];
-        userTypes.forEach(type => {
-            if (type === userType) {
-                type.hype = +e.target.value;
-                userType.users.map(user => {
-                    if (user.id === this.state.user.id){
-                        user.pivot.hype = +e.target.value;
-                    }
-                })
-            }
-        });
-        let data =[...this.calculateTypeStatistics(userTypes)];
-        this.setState({
-            userTypes: [...data]
-        });
-    }
+    //     // })
 
-    hypenotizer() {
-        let userTypes = [...this.calculateTypeStatistics(this.state.userTypes)];
-        this.setState({
-            userTypes: [...userTypes]
-        });
-            axios.post(`/hype/hypenotizer`, {
-                userTypes: [...userTypes]
-            })
-     
-  
-    }
+    //     const userTypes = [...data];
+    //     userTypes.forEach(userType => {
+    //         let totalHype = 0;
+
+    //         userType.users.map(user => {
+    //             if (user.pivot.active === 1) {
+    //             }
+    //             totalHype += +user.pivot.hype; ///////////
+    //         });
+    //         userType.totalHype = totalHype;
+    //         userType.average = (totalHype / userType.users.length).toFixed(1);
+    //     });
+    //     return userTypes;
+    // }
+
+    // hypeLevelHandler(e, userType) {
+    //     let userTypes = [...this.state.userTypes];
+    //     userTypes.forEach(type => {
+    //         if (type === userType) {
+    //             type.hype = +e.target.value;
+    //             userType.users.map(user => {
+    //                 if (user.id === this.state.user.id) {
+    //                     user.pivot.hype = +e.target.value;
+    //                 }
+    //             });
+    //         }
+    //     });
+    //     let data = [...this.calculateTypeStatistics(userTypes)];
+    //     this.setState({
+    //         userTypes: [...data]
+    //     });
+    // }
+
+    // hypenotizer() {
+    //     let userTypes = [...this.calculateTypeStatistics(this.state.userTypes)];
+    //     this.setState({
+    //         userTypes: [...userTypes]
+    //     });
+    //     axios.post(`/hype/hypenotizer`, {
+    //         userTypes: [...userTypes]
+    //     });
+    // }
 
     buttonHandler(e) {
         if (e.target.name === "event") {
@@ -118,18 +133,11 @@ class Battlemind extends Component {
     }
 
     getUserContent() {
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        axios.get("/types").then(response => {
-            this.setState({
-                types: [...response.data.allTypes]
-            });
-        });
-
         axios.get(`/users`).then(response =>
             this.setState(
                 {
-                    user: { ...response.data },
-                    activeGroup: response.data.groups[0].id
+                    user: { ...response.data.user },
+                    activeGroup: response.data.user.groups[0].id
                 },
                 () => {
                     this.getFriendsContent();
@@ -151,22 +159,38 @@ class Battlemind extends Component {
                 leagues: [...response.data.content[0]]
             })
         );
-        axios.get(`/groups`).then(response =>
+        axios.get(`/groups`).then(response => {
+            var groups = [...response.data.groups];
+            let activeGroupMembersRatings = [];
+
+            groups.map(group => {
+                group.users.map(user => {
+                    if (group.id === this.state.activeGroup) {
+                        user.pivot.active
+                            ? activeGroupMembersRatings.push(user)
+                            : null;
+                    }
+                });
+            });
             this.setState({
-                groups: [...response.data.groups]
-            })
-        );
+                groups: [...groups],
+                userGroups: [...response.data.userGroups],
+                activeGroupMembersRatings: activeGroupMembersRatings
+            });
+        });
     }
- 
+
     getFriendsContent() {
         axios
             .get(`/types/${this.state.activeGroup}/userTypes`)
             .then(response => {
                 let userTypes = this.calculateTypeStatistics(response.data);
                 this.setState({
-                    userTypes: [...userTypes]
+                    userTypes: [...userTypes],
+                    types: [...userTypes]
                 });
             });
+
         axios
             .get(`/leagues/${this.state.activeGroup}/friendsContent`)
             .then(response =>
@@ -188,6 +212,34 @@ class Battlemind extends Component {
                     friendsScoreboards: [...response.data]
                 })
             );
+    }
+    activeUser(groupId, userId) {
+        var groups = [...this.state.groups];
+        groups.map(group => {
+            if (group.id === this.state.activeGroup) {
+                group.users.map(user => {
+                    if (user.id === userId) {
+                        user.pivot.active = !user.pivot.active;
+                    }
+                });
+            }
+        });
+        let activeGroupMembersRatings = [];
+
+        groups.map(group => {
+            group.users.map(user => {
+                if (group.id === this.state.activeGroup) {
+                    user.pivot.active
+                        ? activeGroupMembersRatings.push(user)
+                        : null;
+                }
+            });
+        });
+        this.setState({
+            groups: groups,
+            activeGroupMembersRatings: activeGroupMembersRatings
+        });
+        axios.put(`/groups/${groupId}/toggleActiveUser/${userId}`);
     }
 
     contains(a, obj) {
@@ -228,23 +280,23 @@ class Battlemind extends Component {
     }
     hintsToggle() {
         this.setState({
-            hints: !this.state.hints,
-        })
+            hints: !this.state.hints
+        });
     }
     componentDidMount() {
         this.getUserContent();
     }
 
     render() {
+        console.log(this.state.activeGroupMembersRatings);
         return (
             <div className="battlemind">
-           
                 <Navigation
                     button={e => this.buttonHandler(e)}
                     object={this.state.object}
                     action={this.state.action}
                 />
-                
+
                 <Switch>
                     <Route
                         exact
@@ -265,11 +317,16 @@ class Battlemind extends Component {
                     {this.state.action === "hype" ? (
                         <Hypenotizer
                             user={this.state.user}
+                            activeGroup={this.state.activeGroup}
+                            activeGroupMembersRatings={
+                                this.state.activeGroupMembersRatings
+                            }
+                            groups={this.state.groups}
                             userTypes={this.state.userTypes}
                             navigation={this.state.object}
-                            groups={this.state.groups}
-                            activeGroup={this.state.activeGroup}
-                            hypeLevelHandler={(e, userType) => this.hypeLevelHandler(e, userType)}
+                            hypeLevelHandler={(e, userType) =>
+                                this.hypeLevelHandler(e, userType)
+                            }
                             hypenotizer={() => this.hypenotizer()}
                             hints={this.state.hints}
                         />
@@ -281,6 +338,9 @@ class Battlemind extends Component {
                             groups={this.state.groups}
                             activeGroup={this.state.activeGroup}
                             activeGroupChange={id => this.activeGroupChange(id)}
+                            activeUser={(groupId, userId) =>
+                                this.activeUser(groupId, userId)
+                            }
                             types={this.state.types}
                             userGroups={this.state.user.groups}
                             addUser={group => this.addUser(group)}
@@ -320,26 +380,27 @@ class Battlemind extends Component {
                     ) : null}
                     {this.state.action === "new" &&
                     this.state.object === "player" ? (
-                        <Newplayer 
-                            types={this.state.types} 
+                        <Newplayer
+                            types={this.state.types}
                             hints={this.state.hints}
                         />
                     ) : null}
                     {this.state.action === "new" &&
                     this.state.object === "league" ? (
-                        <Newleague 
-                            hints={this.state.hints}
-                        />
+                        <Newleague hints={this.state.hints} />
                     ) : null}
                     {this.state.action === "new" &&
                     this.state.object === "scoreboard" ? (
-                        <Newscoreboard 
+                        <Newscoreboard
                             types={this.state.types}
                             hints={this.state.hints}
                         />
                     ) : null}
                 </Switch>
-                <div className={"hints-toggle"} onClick={() => this.hintsToggle()}>
+                <div
+                    className={"hints-toggle"}
+                    onClick={() => this.hintsToggle()}
+                >
                     {this.state.hints === true ? <p>Hints On</p> : "Hints Off"}
                 </div>
             </div>
