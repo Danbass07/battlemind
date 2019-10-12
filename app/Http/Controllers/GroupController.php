@@ -18,16 +18,15 @@ class GroupController extends Controller
 
     public function index(Request $request, Group $group)
     {
-
-
-        $groups =  Group::with('users')->get();
-        $user =  Auth::user();
-        $result = $user->load('players','groups')->groups->map(function ($group , $key){
-            return $group;
-        });
+        $user = User::with(['groups.types', 'groups.users.players', 'players', 'groups'])->where('id', '=' ,$request->user()->id)->first();
+     
+        
+        $userGroups = $user->groups->load('users.types');
+        $groups =  Group::with(['users', 'types', 'types.users'])->get();
+    
        return response()->json([
-        'groups' => $groups,
-        'result' => $result,
+        'groups' => $userGroups,
+        'userGroups' => $userGroups,
        ]);
     }
 
@@ -126,5 +125,21 @@ class GroupController extends Controller
         
        return response()->json($group->users); 
     }
+
+    public function toggleActiveUser($id, $cid) {
+
+          $user = User::findOrFail($cid);
+        foreach ($user->groups as $group) {
+          
+            if ($group->id == $id) {
+                Log::info($group->pivot->active);
+                $group->pivot->active = !$group->pivot->active;
+                $group->pivot->save();
+            }
+        }
+        return response()->json($user);
+
+    }
+  
 
 }

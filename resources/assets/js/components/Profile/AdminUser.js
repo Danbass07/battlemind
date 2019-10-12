@@ -20,14 +20,7 @@ class AdminUser extends Component {
             }
         };
     }
-    activeUser(groupId) {
-        axios
-        .put(`/users/${groupId}`, {
-            active: !this.props.user.active,
-        })
-        .then(response => {console.log(response)});
-
-           }
+  
     render() {
 
         return (
@@ -72,10 +65,10 @@ class AdminUser extends Component {
                                             </div>
                                             <input
                                                 onChange={() =>
-                                                    this.activeUser(group.id)
+                                                    this.props.activeUser(group.id, user.id)
                                                 }
                                                 defaultChecked={
-                                                    user.active
+                                                    user.pivot.active
                                                         ? true
                                                         : false
                                                 }

@@ -49,6 +49,7 @@ Route::resource('/users', 'UserController');
 Route::resource('/groups', 'GroupController');
 Route::get('/groups/{id}/addUser', 'GroupController@addUser');
 Route::get('/groups/{id}/removeUser', 'GroupController@removeUser');
+Route::put('/groups/{id}/toggleActiveUser/{cid}', 'GroupController@toggleActiveUser');
 
 Route::resource('/types', 'TypeController');
 Route::get('/types/{typeid}/addToTheGroup/{groupid}','TypeController@addToTheGroup' );

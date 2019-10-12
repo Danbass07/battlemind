@@ -14,7 +14,7 @@ class Group extends Model
     // ];
     protected $guarded = [];
     public function users() {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot(['active', 'permissions']);
     }
     public function types() {
         return $this->hasMany(Type::class);

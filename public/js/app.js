@@ -59920,10 +59920,28 @@ var Battlemind = function (_Component) {
     _createClass(Battlemind, [{
         key: "calculateTypeStatistics",
         value: function calculateTypeStatistics(data) {
+            // const groups = [...this.state.groups];
+            // groups.map( group => {
+            //     group.users.map( user => {
+            //         if(user.pivot.active) {
+            //             user.types.map( type => {
+            //                 if(group.id === this.state.activeGroup) {
+            //                     console.log('create state')
+            //                 }
+            //             })
+            //         }
+            //     })
+            // })
+            // groups.map( group => {
+
+            // })
+
             var userTypes = [].concat(_toConsumableArray(data));
             userTypes.forEach(function (userType) {
                 var totalHype = 0;
+
                 userType.users.map(function (user) {
+                    if (user.pivot.active === 1) {}
                     totalHype += +user.pivot.hype; ///////////
                 });
                 userType.totalHype = totalHype;
@@ -59979,16 +59997,16 @@ var Battlemind = function (_Component) {
             var _this3 = this;
 
             ////////////////////////////////////////////////////////////////////////////////////////////////
-            axios.get("/types").then(function (response) {
-                _this3.setState({
-                    types: [].concat(_toConsumableArray(response.data.allTypes))
-                });
-            });
+            // axios.get("/types").then(response => {//// delete
+            //     this.setState({
+            //         types: [...response.data.allTypes]
+            //     });
+            // });
 
             axios.get("/users").then(function (response) {
                 return _this3.setState({
-                    user: _extends({}, response.data),
-                    activeGroup: response.data.groups[0].id
+                    user: _extends({}, response.data.user),
+                    activeGroup: response.data.user.groups[0].id
                 }, function () {
                     _this3.getFriendsContent();
                 });
@@ -60010,7 +60028,8 @@ var Battlemind = function (_Component) {
             });
             axios.get("/groups").then(function (response) {
                 return _this3.setState({
-                    groups: [].concat(_toConsumableArray(response.data.groups))
+                    groups: [].concat(_toConsumableArray(response.data.groups)),
+                    userGroups: [].concat(_toConsumableArray(response.data.userGroups))
                 });
             });
         }
@@ -60022,9 +60041,11 @@ var Battlemind = function (_Component) {
             axios.get("/types/" + this.state.activeGroup + "/userTypes").then(function (response) {
                 var userTypes = _this4.calculateTypeStatistics(response.data);
                 _this4.setState({
-                    userTypes: [].concat(_toConsumableArray(userTypes))
+                    userTypes: [].concat(_toConsumableArray(userTypes)),
+                    types: [].concat(_toConsumableArray(userTypes))
                 });
             });
+
             axios.get("/leagues/" + this.state.activeGroup + "/friendsContent").then(function (response) {
                 return _this4.setState({
                     friendsLeagues: [].concat(_toConsumableArray(response.data))
@@ -60040,6 +60061,37 @@ var Battlemind = function (_Component) {
                     friendsScoreboards: [].concat(_toConsumableArray(response.data))
                 });
             });
+        }
+    }, {
+        key: "activeUser",
+        value: function activeUser(groupId, userId) {
+            var _this5 = this;
+
+            var groups = [].concat(_toConsumableArray(this.state.groups));
+            groups.map(function (group) {
+                if (group.id === _this5.state.activeGroup) {
+                    group.users.map(function (user) {
+                        if (user.id === userId) {
+                            user.pivot.active = !user.pivot.active;
+                        }
+                    });
+                }
+            });
+            var activeGroupMembersRatings = [];
+
+            groups.map(function (group) {
+
+                group.users.map(function (user) {
+                    if (group.id === _this5.state.activeGroup) {
+                        user.pivot.active ? activeGroupMembersRatings.push(user) : null;
+                    }
+                });
+            });
+            console.log(activeGroupMembersRatings);
+            this.setState({
+                groups: groups
+            });
+            axios.put("/groups/" + groupId + "/toggleActiveUser/" + userId);
         }
     }, {
         key: "contains",
@@ -60058,29 +60110,29 @@ var Battlemind = function (_Component) {
     }, {
         key: "addUser",
         value: function addUser(group) {
-            var _this5 = this;
+            var _this6 = this;
 
             if (!this.contains(this.state.user.groups, group)) {
                 axios.get("/groups/" + group.id + "/addUser").then(function () {
-                    _this5.getUserContent();
-                    _this5.getFriendsContent();
+                    _this6.getUserContent();
+                    _this6.getFriendsContent();
                 });
             } else {
                 axios.get("/groups/" + group.id + "/removeUser").then(function () {
-                    _this5.getUserContent();
-                    _this5.getFriendsContent();
+                    _this6.getUserContent();
+                    _this6.getFriendsContent();
                 });
             }
         }
     }, {
         key: "activeGroupChange",
         value: function activeGroupChange(id) {
-            var _this6 = this;
+            var _this7 = this;
 
             this.setState({
                 activeGroup: id
             }, function () {
-                _this6.getFriendsContent();
+                _this7.getFriendsContent();
             });
         }
     }, {
@@ -60098,14 +60150,14 @@ var Battlemind = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this7 = this;
+            var _this8 = this;
 
             return __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                 "div",
                 { className: "battlemind" },
                 __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], {
                     button: function button(e) {
-                        return _this7.buttonHandler(e);
+                        return _this8.buttonHandler(e);
                     },
                     object: this.state.object,
                     action: this.state.action
@@ -60130,15 +60182,15 @@ var Battlemind = function (_Component) {
                     }),
                     this.state.action === "hype" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_14__containers_Hypenotizer__["a" /* default */], {
                         user: this.state.user,
+                        activeGroup: this.state.activeGroup,
+                        groups: this.state.groups,
                         userTypes: this.state.userTypes,
                         navigation: this.state.object,
-                        groups: this.state.groups,
-                        activeGroup: this.state.activeGroup,
                         hypeLevelHandler: function hypeLevelHandler(e, userType) {
-                            return _this7.hypeLevelHandler(e, userType);
+                            return _this8.hypeLevelHandler(e, userType);
                         },
                         hypenotizer: function hypenotizer() {
-                            return _this7.hypenotizer();
+                            return _this8.hypenotizer();
                         },
                         hints: this.state.hints
                     }) : null,
@@ -60147,15 +60199,18 @@ var Battlemind = function (_Component) {
                         groups: this.state.groups,
                         activeGroup: this.state.activeGroup,
                         activeGroupChange: function activeGroupChange(id) {
-                            return _this7.activeGroupChange(id);
+                            return _this8.activeGroupChange(id);
+                        },
+                        activeUser: function activeUser(groupId, userId) {
+                            return _this8.activeUser(groupId, userId);
                         },
                         types: this.state.types,
                         userGroups: this.state.user.groups,
                         addUser: function addUser(group) {
-                            return _this7.addUser(group);
+                            return _this8.addUser(group);
                         },
                         contains: function contains(userGroups, groups) {
-                            return _this7.contains(userGroups, groups);
+                            return _this8.contains(userGroups, groups);
                         },
                         hints: this.state.hints
                     }) : null,
@@ -60183,9 +60238,7 @@ var Battlemind = function (_Component) {
                         types: this.state.types,
                         hints: this.state.hints
                     }) : null,
-                    this.state.action === "new" && this.state.object === "league" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], {
-                        hints: this.state.hints
-                    }) : null,
+                    this.state.action === "new" && this.state.object === "league" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], { hints: this.state.hints }) : null,
                     this.state.action === "new" && this.state.object === "scoreboard" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], {
                         types: this.state.types,
                         hints: this.state.hints
@@ -60193,9 +60246,12 @@ var Battlemind = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                     "div",
-                    { className: "hints-toggle", onClick: function onClick() {
-                            return _this7.hintsToggle();
-                        } },
+                    {
+                        className: "hints-toggle",
+                        onClick: function onClick() {
+                            return _this8.hintsToggle();
+                        }
+                    },
                     this.state.hints === true ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                         "p",
                         null,
@@ -62962,6 +63018,10 @@ var Profile = function (_Component) {
                             user: _this2.props.user,
                             groups: _this2.props.groups,
                             activeGroup: _this2.props.activeGroup,
+                            activeUser: function activeUser(groupId, userId) {
+                                return _this2.props.activeUser(groupId, userId);
+                            },
+
                             types: _this2.props.types,
                             userGroups: _this2.props.user.groups,
                             addUser: function addUser(group) {
@@ -63107,15 +63167,6 @@ var AdminUser = function (_Component) {
     }
 
     _createClass(AdminUser, [{
-        key: "activeUser",
-        value: function activeUser(groupId) {
-            axios.put("/users/" + groupId, {
-                active: !this.props.user.active
-            }).then(function (response) {
-                console.log(response);
-            });
-        }
-    }, {
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -63160,9 +63211,9 @@ var AdminUser = function (_Component) {
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
                                         onChange: function onChange() {
-                                            return _this2.activeUser(group.id);
+                                            return _this2.props.activeUser(group.id, user.id);
                                         },
-                                        defaultChecked: user.active ? true : false,
+                                        defaultChecked: user.pivot.active ? true : false,
                                         type: "checkbox",
                                         name: "group",
                                         value: user.id
@@ -63502,12 +63553,40 @@ var Hypenotizer = function (_Component) {
 
         _this.state = {
             hypeLevels: [1, 2, 3, 4],
-            votingList: []
+            user: {},
+            groups: [{}],
+            activeGroup: 0
+
         };
         return _this;
     }
 
     _createClass(Hypenotizer, [{
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps) {}
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this,
+                _setState;
+
+            var activeGroupMembersRatings = [];
+
+            this.props.groups.map(function (group) {
+
+                group.users.map(function (user) {
+                    if (group.id === _this2.state.activeGroup) {
+                        user.pivot.active ? activeGroupMembersRatings.push(user) : null;
+                    }
+                });
+            });
+
+            this.setState((_setState = {
+                user: this.props.user,
+                groups: this.props.groups
+            }, _defineProperty(_setState, "user", this.props.user), _defineProperty(_setState, "userTypes", this.props.user.types.sort(this.compareValues("type", true))), _defineProperty(_setState, "activeGroupMembersRatings", activeGroupMembersRatings), _defineProperty(_setState, "activeGroup", this.props.activeGroup), _setState));
+        }
+    }, {
         key: "compareValues",
         value: function compareValues(key) {
             var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -63532,8 +63611,9 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
+            console.log(this.state);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
@@ -63553,13 +63633,13 @@ var Hypenotizer = function (_Component) {
                     userTypes: this.props.userTypes.sort(this.compareValues("type")),
                     hypeLevels: this.state.hypeLevels,
                     hypeLevelHandler: function hypeLevelHandler(e, userType) {
-                        return _this2.hypeLevelHandler(e, userType);
+                        return _this3.hypeLevelHandler(e, userType);
                     },
                     hypenotizer: function hypenotizer() {
-                        return _this2.props.hypenotizer();
+                        return _this3.props.hypenotizer();
                     }
                 }, "hypeLevelHandler", function hypeLevelHandler(e, userType) {
-                    return _this2.props.hypeLevelHandler(e, userType);
+                    return _this3.props.hypeLevelHandler(e, userType);
                 })) : null,
                 this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
                     user: this.props.user,

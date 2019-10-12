@@ -8,8 +8,56 @@ class Hypenotizer extends Component {
         super(props);
         this.state = {
             hypeLevels: [1, 2, 3, 4],
-            votingList: []
+            user: {},
+            groups: [{}],
+            activeGroup: 0,
+            
         };
+    }
+  
+    componentDidUpdate(prevProps) {
+   
+    }
+    componentDidMount() {
+
+        let activeGroupMembersRatings= [];
+
+        this.props.groups.map( group => {
+
+           
+            group.users.map( user => {
+                if(group.id === this.state.activeGroup) {
+                    user.pivot.active ?
+                    activeGroupMembersRatings.push(user) 
+                    
+                    : null
+                }
+                
+            })
+
+        })
+
+        
+
+
+
+
+
+
+
+
+
+
+        this.setState({
+            user: this.props.user,
+            groups:this.props.groups,
+            user: this.props.user,
+            userTypes: this.props.user.types.sort(
+                this.compareValues("type", true)
+            ),
+            activeGroupMembersRatings: activeGroupMembersRatings,
+            activeGroup: this.props.activeGroup
+        })
     }
 
     compareValues(key, ascending = false) {
@@ -34,7 +82,9 @@ class Hypenotizer extends Component {
         };
     }
 
+
     render() {
+        console.log(this.state);
         return (
             <React.Fragment>
                     <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
