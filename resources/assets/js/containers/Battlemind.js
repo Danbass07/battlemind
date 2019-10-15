@@ -18,108 +18,110 @@ class Battlemind extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userContent: {
-                players: [{}],
-                scoreboards: [{}],
-                leagues: [{}]
-            },
-
-            friendsContent: {
-                players: [{}],
-                scoreboards: [{}],
-                leagues: [{}],
-                friendsScoreboards: [{}],
-                friendsPlayers: [{}],
-                friendsLeagues: [{}]
-            },
-
             action: "profile",
             object: "none",
-            types: [{ id: 0, type: "test" }],
             userTypes: [],
-            allTypes: [],
             userScoreboards: [],
             friendsScoreboards: [],
             userPlayers: [{}],
-            leagues: [{}],
+            friendsPlayers: [{}],
+            userLeagues: [{}],
+            friendsLeagues:[{}],
             user: {
                 groups: []
             },
             groups: [{}],
             userGroups: [{}],
             activeGroup: 0,
-            message: [
-                [
-                    "Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself." +
-                        " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."
-                ],
-                ["Second Message"],
-                ["Third Message"]
-            ],
-            messageNumber: 0,
-            result: [],
             hints: false
         };
     }
-    // calculateTypeStatistics(data) {
-    //     // const groups = [...this.state.groups];
-    //     // groups.map( group => {
-    //     //     group.users.map( user => {
-    //     //         if(user.pivot.active) {
-    //     //             user.types.map( type => {
-    //     //                 if(group.id === this.state.activeGroup) {
-    //     //                     console.log('create state')
-    //     //                 }
-    //     //             })
-    //     //         }
-    //     //     })
-    //     // })
-    //     // groups.map( group => {
+    calculateTypeStatistics(data) {
+        // const groups = [...this.state.groups];
+        // groups.map( group => {
+        //     group.users.map( user => {
+        //         if(user.pivot.active) {
+        //             user.types.map( type => {
+        //                 if(group.id === this.state.activeGroup) {
+        //                     console.log('create state')
+        //                 }
+        //             })
+        //         }
+        //     })
+        // })
+        // groups.map( group => {
 
-    //     // })
+        // })
 
-    //     const userTypes = [...data];
-    //     userTypes.forEach(userType => {
-    //         let totalHype = 0;
+        const userTypes = [...data];
+        userTypes.forEach(userType => {
+            let totalHype = 0;
 
-    //         userType.users.map(user => {
-    //             if (user.pivot.active === 1) {
-    //             }
-    //             totalHype += +user.pivot.hype; ///////////
-    //         });
-    //         userType.totalHype = totalHype;
-    //         userType.average = (totalHype / userType.users.length).toFixed(1);
-    //     });
-    //     return userTypes;
-    // }
+            userType.users.map(user => {
+                if (user.pivot.active === 1) {
+                }
+                totalHype += +user.pivot.hype; ///////////
+            });
+            userType.totalHype = totalHype;
+            userType.average = (totalHype / userType.users.length).toFixed(1);
+        });
+        return userTypes;
+    }
 
-    // hypeLevelHandler(e, userType) {
-    //     let userTypes = [...this.state.userTypes];
-    //     userTypes.forEach(type => {
-    //         if (type === userType) {
-    //             type.hype = +e.target.value;
-    //             userType.users.map(user => {
-    //                 if (user.id === this.state.user.id) {
-    //                     user.pivot.hype = +e.target.value;
-    //                 }
-    //             });
-    //         }
-    //     });
-    //     let data = [...this.calculateTypeStatistics(userTypes)];
-    //     this.setState({
-    //         userTypes: [...data]
-    //     });
-    // }
+    hypeLevelHandler(e, typeId) {
 
-    // hypenotizer() {
-    //     let userTypes = [...this.calculateTypeStatistics(this.state.userTypes)];
-    //     this.setState({
-    //         userTypes: [...userTypes]
-    //     });
-    //     axios.post(`/hype/hypenotizer`, {
-    //         userTypes: [...userTypes]
-    //     });
-    // }
+        let groups = [...this.state.groups];
+
+        groups.map(group => {
+            if(group.id === this.state.activeGroup) {
+             return   group.users.map( user => {
+                    if(user.id === this.state.user.id) {
+                   return     user.types.map(type => {
+                            if(type.id === typeId)
+                            type.pivot.hype = parseInt(e.target.value, 10);
+                            return type;
+                        })
+                    }
+                })
+            }
+        })
+        console.log(groups);
+        this.setState({
+            groups: [...groups]
+            }, console.log(this.state.groups));
+        
+
+
+
+
+
+
+        // let userTypes = [...this.state.userTypes];
+        // userTypes.forEach(type => {
+        //     if (type === userType) {
+        //         type.hype = +e.target.value;
+        //         userType.users.map(user => {
+        //             if (user.id === this.state.user.id) {
+        //                 user.pivot.hype = +e.target.value;
+        //             }
+        //         });
+        //     }
+        // });
+        // let data = [...this.calculateTypeStatistics(userTypes)];
+        // this.setState({
+        //     userTypes: [...data]
+        // });
+    }
+
+    hypenotizer() {
+        let userTypes = [...this.calculateTypeStatistics(this.state.userTypes)];
+        this.setState({
+            userTypes: [...userTypes]
+        });
+        axios.post(`/hype/hypenotizer`, {
+            userTypes: [...userTypes]
+        });
+    }
 
     buttonHandler(e) {
         if (e.target.name === "event") {
@@ -156,7 +158,7 @@ class Battlemind extends Component {
         );
         axios.get("/leagues").then(response =>
             this.setState({
-                leagues: [...response.data.content[0]]
+                userLeagues: [...response.data.content[0]]
             })
         );
         axios.get(`/groups`).then(response => {
@@ -186,8 +188,8 @@ class Battlemind extends Component {
             .then(response => {
                 let userTypes = this.calculateTypeStatistics(response.data);
                 this.setState({
-                    userTypes: [...userTypes],
-                    types: [...userTypes]
+                    userTypes: [...userTypes], /////////////////
+                    // types: [...userTypes]
                 });
             });
 
@@ -288,7 +290,9 @@ class Battlemind extends Component {
     }
 
     render() {
-        console.log(this.state.activeGroupMembersRatings);
+         
+         console.log(this.state.groups);
+         console.log(this.state.activeGroup);
         return (
             <div className="battlemind">
                 <Navigation
@@ -322,7 +326,7 @@ class Battlemind extends Component {
                                 this.state.activeGroupMembersRatings
                             }
                             groups={this.state.groups}
-                            userTypes={this.state.userTypes}
+                            userTypes={this.state.userTypes} ///////////////////
                             navigation={this.state.object}
                             hypeLevelHandler={(e, userType) =>
                                 this.hypeLevelHandler(e, userType)
@@ -341,7 +345,7 @@ class Battlemind extends Component {
                             activeUser={(groupId, userId) =>
                                 this.activeUser(groupId, userId)
                             }
-                            types={this.state.types}
+                            // types={this.state.types}
                             userGroups={this.state.user.groups}
                             addUser={group => this.addUser(group)}
                             contains={(userGroups, groups) =>
@@ -358,7 +362,7 @@ class Battlemind extends Component {
                             userPlayers={this.state.userPlayers}
                             friendsPlayers={this.state.friendsPlayers}
                             leagues={this.state.leagues}
-                            type={this.state.type}
+                            types={this.state.userTypes}
                             hints={this.state.hints}
                         />
                     ) : null}
@@ -366,7 +370,7 @@ class Battlemind extends Component {
                     {this.state.action === "results" ? (
                         <Result
                             scoreboards={this.state.userScoreboards}
-                            leagues={this.state.leagues}
+                            userLeagues={this.state.userLeagues}
                             friendsLeagues={this.state.friendsLeagues}
                         />
                     ) : null}
@@ -374,14 +378,14 @@ class Battlemind extends Component {
                         <List
                             activeGroup={this.state.activeGroup}
                             object={this.state.object}
-                            types={this.state.types}
+                            types={this.state.userTypes}
                             hints={this.state.hints}
                         />
                     ) : null}
                     {this.state.action === "new" &&
                     this.state.object === "player" ? (
                         <Newplayer
-                            types={this.state.types}
+                            types={this.state.userTypes}
                             hints={this.state.hints}
                         />
                     ) : null}
@@ -392,7 +396,7 @@ class Battlemind extends Component {
                     {this.state.action === "new" &&
                     this.state.object === "scoreboard" ? (
                         <Newscoreboard
-                            types={this.state.types}
+                            types={this.state.userTypes}
                             hints={this.state.hints}
                         />
                     ) : null}

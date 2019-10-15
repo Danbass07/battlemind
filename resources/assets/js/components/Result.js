@@ -111,7 +111,7 @@ class Result extends Component {
                 </select>
                          <select name="Choose a league" className="myform-control" onChange={(e) => this.leagueChangeHandler(e)}>
                 <option value='0break0break0break0'>Choose a league</option>
-                {this.props.leagues.map(league => (
+                {this.props.userLeagues.map(league => (
                                 
                     <option 
                     value={league.win_point_value+'break'+league.lost_point_value+'break'+league.draw_point_value+'break'+league.id}  

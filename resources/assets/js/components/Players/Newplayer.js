@@ -5,7 +5,7 @@ class Newplayer extends Component {
         super(props);
         this.state = {
             name: "",
-            type: "planeswalker",
+            type: 0,
             url: "url",
             wins: 0,
             lost: 0,
@@ -13,6 +13,7 @@ class Newplayer extends Component {
             response: { status: "You are creating...:" }
         };
     }
+
 
     changeHandler(e) {
         this.setState({
@@ -27,27 +28,32 @@ class Newplayer extends Component {
 
     submitHandler(e) {
         e.preventDefault();
-        this.setState({ response: { status: "You are creating...:" } });
+        if (this.state.type !== 0) {
 
-        axios
-            .post("/players", {
-                name: this.state.name,
-                type: this.state.type,
-                url: this.state.url,
-                wins: this.state.wins,
-                lost: this.state.lost,
-                draws: this.state.draws
-            })
-            .then(response => {
-                this.setState({
-                    name: "",
-                    url: "url",
-                    wins: 0,
-                    lost: 0,
-                    draws: 0,
-                    response: response
+            this.setState({ response: { status: "You are creating...:" } });
+
+            axios
+                .post("/players", {
+                    name: this.state.name,
+                    type: this.state.type,
+                    url: this.state.url,
+                    wins: this.state.wins,
+                    lost: this.state.lost,
+                    draws: this.state.draws
+                })
+                .then(response => {
+                    this.setState({
+                        name: "",
+                        url: "url",
+                        wins: 0,
+                        lost: 0,
+                        draws: 0,
+                        response: response
+                    });
                 });
-            });
+        }
+        
+     
     }
 
     render() {
@@ -72,7 +78,8 @@ class Newplayer extends Component {
                         <select
                             className="myform-control"
                             onChange={e => this.optionChangeHandler(e)}
-                        >
+                        >   
+                        <option value='0'>Choose a type</option>
                             {this.props.types.map(type => (
                                 <option key={type.id}>{type.type}</option>
                             ))}

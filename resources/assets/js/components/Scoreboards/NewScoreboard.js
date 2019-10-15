@@ -5,7 +5,7 @@ class Newscoreboard extends Component {
         super(props);
         this.state = {
             name: "",
-            type: "planeswalker",
+            type: 0,
             url: "",
             wins: 0,
             lost: 0,
@@ -27,18 +27,21 @@ class Newscoreboard extends Component {
 
     submitHandler(e) {
         e.preventDefault();
-
+        if (this.state.type !== 0) {
+            
         axios
-            .post("/scoreboards", {
-                name: this.state.name,
-                type: this.state.type
-            })
-            .then(response => {
-                this.setState({
-                    name: "",
-                    response: response
-                });
+        .post("/scoreboards", {
+            name: this.state.name,
+            type: this.state.type
+        })
+        .then(response => {
+            this.setState({
+                name: "",
             });
+        });
+
+        }
+
     }
     render() {
         return (
@@ -61,6 +64,7 @@ class Newscoreboard extends Component {
                             className="myform-control"
                             onChange={e => this.optionChangeHandler(e)}
                         >
+                            <option value='0'>Choose a type</option>
                             {this.props.types.map(type => (
                                 <option key={type.id}>{type.type}</option>
                             ))}

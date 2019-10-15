@@ -59879,39 +59879,21 @@ var Battlemind = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Battlemind.__proto__ || Object.getPrototypeOf(Battlemind)).call(this, props));
 
         _this.state = {
-            userContent: {
-                players: [{}],
-                scoreboards: [{}],
-                leagues: [{}]
-            },
-
-            friendsContent: {
-                players: [{}],
-                scoreboards: [{}],
-                leagues: [{}],
-                friendsScoreboards: [{}],
-                friendsPlayers: [{}],
-                friendsLeagues: [{}]
-            },
-
             action: "profile",
             object: "none",
-            types: [{ id: 0, type: "test" }],
             userTypes: [],
-            allTypes: [],
             userScoreboards: [],
             friendsScoreboards: [],
             userPlayers: [{}],
-            leagues: [{}],
+            friendsPlayers: [{}],
+            userLeagues: [{}],
+            friendsLeagues: [{}],
             user: {
                 groups: []
             },
             groups: [{}],
             userGroups: [{}],
             activeGroup: 0,
-            message: [["Welcome to the Battlemind. First you need players. They are your armies, teams or simply yourself." + " All depend what you play and what scores you want to store and compare with your friends. You can switch off hint in profile menu."], ["Second Message"], ["Third Message"]],
-            messageNumber: 0,
-            result: [],
             hints: false
         };
         return _this;
@@ -59951,24 +59933,43 @@ var Battlemind = function (_Component) {
         }
     }, {
         key: "hypeLevelHandler",
-        value: function hypeLevelHandler(e, userType) {
+        value: function hypeLevelHandler(e, typeId) {
             var _this2 = this;
 
-            var userTypes = [].concat(_toConsumableArray(this.state.userTypes));
-            userTypes.forEach(function (type) {
-                if (type === userType) {
-                    type.hype = +e.target.value;
-                    userType.users.map(function (user) {
+            var groups = [].concat(_toConsumableArray(this.state.groups));
+
+            groups.map(function (group) {
+                if (group.id === _this2.state.activeGroup) {
+                    return group.users.map(function (user) {
                         if (user.id === _this2.state.user.id) {
-                            user.pivot.hype = +e.target.value;
+                            return user.types.map(function (type) {
+                                if (type.id === typeId) type.pivot.hype = parseInt(e.target.value, 10);
+                                return type;
+                            });
                         }
                     });
                 }
             });
-            var data = [].concat(_toConsumableArray(this.calculateTypeStatistics(userTypes)));
+            console.log(groups);
             this.setState({
-                userTypes: [].concat(_toConsumableArray(data))
-            });
+                groups: [].concat(_toConsumableArray(groups))
+            }, console.log(this.state.groups));
+
+            // let userTypes = [...this.state.userTypes];
+            // userTypes.forEach(type => {
+            //     if (type === userType) {
+            //         type.hype = +e.target.value;
+            //         userType.users.map(user => {
+            //             if (user.id === this.state.user.id) {
+            //                 user.pivot.hype = +e.target.value;
+            //             }
+            //         });
+            //     }
+            // });
+            // let data = [...this.calculateTypeStatistics(userTypes)];
+            // this.setState({
+            //     userTypes: [...data]
+            // });
         }
     }, {
         key: "hypenotizer",
@@ -59996,13 +59997,6 @@ var Battlemind = function (_Component) {
         value: function getUserContent() {
             var _this3 = this;
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            // axios.get("/types").then(response => {//// delete
-            //     this.setState({
-            //         types: [...response.data.allTypes]
-            //     });
-            // });
-
             axios.get("/users").then(function (response) {
                 return _this3.setState({
                     user: _extends({}, response.data.user),
@@ -60023,13 +60017,24 @@ var Battlemind = function (_Component) {
             });
             axios.get("/leagues").then(function (response) {
                 return _this3.setState({
-                    leagues: [].concat(_toConsumableArray(response.data.content[0]))
+                    userLeagues: [].concat(_toConsumableArray(response.data.content[0]))
                 });
             });
             axios.get("/groups").then(function (response) {
-                return _this3.setState({
-                    groups: [].concat(_toConsumableArray(response.data.groups)),
-                    userGroups: [].concat(_toConsumableArray(response.data.userGroups))
+                var groups = [].concat(_toConsumableArray(response.data.groups));
+                var activeGroupMembersRatings = [];
+
+                groups.map(function (group) {
+                    group.users.map(function (user) {
+                        if (group.id === _this3.state.activeGroup) {
+                            user.pivot.active ? activeGroupMembersRatings.push(user) : null;
+                        }
+                    });
+                });
+                _this3.setState({
+                    groups: [].concat(_toConsumableArray(groups)),
+                    userGroups: [].concat(_toConsumableArray(response.data.userGroups)),
+                    activeGroupMembersRatings: activeGroupMembersRatings
                 });
             });
         }
@@ -60041,8 +60046,8 @@ var Battlemind = function (_Component) {
             axios.get("/types/" + this.state.activeGroup + "/userTypes").then(function (response) {
                 var userTypes = _this4.calculateTypeStatistics(response.data);
                 _this4.setState({
-                    userTypes: [].concat(_toConsumableArray(userTypes)),
-                    types: [].concat(_toConsumableArray(userTypes))
+                    userTypes: [].concat(_toConsumableArray(userTypes)) /////////////////
+                    // types: [...userTypes]
                 });
             });
 
@@ -60080,16 +60085,15 @@ var Battlemind = function (_Component) {
             var activeGroupMembersRatings = [];
 
             groups.map(function (group) {
-
                 group.users.map(function (user) {
                     if (group.id === _this5.state.activeGroup) {
                         user.pivot.active ? activeGroupMembersRatings.push(user) : null;
                     }
                 });
             });
-            console.log(activeGroupMembersRatings);
             this.setState({
-                groups: groups
+                groups: groups,
+                activeGroupMembersRatings: activeGroupMembersRatings
             });
             axios.put("/groups/" + groupId + "/toggleActiveUser/" + userId);
         }
@@ -60152,6 +60156,8 @@ var Battlemind = function (_Component) {
         value: function render() {
             var _this8 = this;
 
+            console.log(this.state.groups);
+            console.log(this.state.activeGroup);
             return __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                 "div",
                 { className: "battlemind" },
@@ -60183,9 +60189,10 @@ var Battlemind = function (_Component) {
                     this.state.action === "hype" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_14__containers_Hypenotizer__["a" /* default */], {
                         user: this.state.user,
                         activeGroup: this.state.activeGroup,
+                        activeGroupMembersRatings: this.state.activeGroupMembersRatings,
                         groups: this.state.groups,
-                        userTypes: this.state.userTypes,
-                        navigation: this.state.object,
+                        userTypes: this.state.userTypes ///////////////////
+                        , navigation: this.state.object,
                         hypeLevelHandler: function hypeLevelHandler(e, userType) {
                             return _this8.hypeLevelHandler(e, userType);
                         },
@@ -60203,9 +60210,9 @@ var Battlemind = function (_Component) {
                         },
                         activeUser: function activeUser(groupId, userId) {
                             return _this8.activeUser(groupId, userId);
-                        },
-                        types: this.state.types,
-                        userGroups: this.state.user.groups,
+                        }
+                        // types={this.state.types}
+                        , userGroups: this.state.user.groups,
                         addUser: function addUser(group) {
                             return _this8.addUser(group);
                         },
@@ -60220,27 +60227,27 @@ var Battlemind = function (_Component) {
                         userPlayers: this.state.userPlayers,
                         friendsPlayers: this.state.friendsPlayers,
                         leagues: this.state.leagues,
-                        type: this.state.type,
+                        types: this.state.userTypes,
                         hints: this.state.hints
                     }) : null,
                     this.state.action === "results" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_Result__["a" /* default */], {
                         scoreboards: this.state.userScoreboards,
-                        leagues: this.state.leagues,
+                        userLeagues: this.state.userLeagues,
                         friendsLeagues: this.state.friendsLeagues
                     }) : null,
                     this.state.action === "list" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_List__["a" /* default */], {
                         activeGroup: this.state.activeGroup,
                         object: this.state.object,
-                        types: this.state.types,
+                        types: this.state.userTypes,
                         hints: this.state.hints
                     }) : null,
                     this.state.action === "new" && this.state.object === "player" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Players_Newplayer__["a" /* default */], {
-                        types: this.state.types,
+                        types: this.state.userTypes,
                         hints: this.state.hints
                     }) : null,
                     this.state.action === "new" && this.state.object === "league" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Leagues_Newleague__["a" /* default */], { hints: this.state.hints }) : null,
                     this.state.action === "new" && this.state.object === "scoreboard" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Scoreboards_Newscoreboard__["a" /* default */], {
-                        types: this.state.types,
+                        types: this.state.userTypes,
                         hints: this.state.hints
                     }) : null
                 ),
@@ -60425,7 +60432,7 @@ var Newplayer = function (_Component) {
 
         _this.state = {
             name: "",
-            type: "planeswalker",
+            type: 0,
             url: "url",
             wins: 0,
             lost: 0,
@@ -60453,25 +60460,28 @@ var Newplayer = function (_Component) {
             var _this2 = this;
 
             e.preventDefault();
-            this.setState({ response: { status: "You are creating...:" } });
+            if (this.state.type !== 0) {
 
-            axios.post("/players", {
-                name: this.state.name,
-                type: this.state.type,
-                url: this.state.url,
-                wins: this.state.wins,
-                lost: this.state.lost,
-                draws: this.state.draws
-            }).then(function (response) {
-                _this2.setState({
-                    name: "",
-                    url: "url",
-                    wins: 0,
-                    lost: 0,
-                    draws: 0,
-                    response: response
+                this.setState({ response: { status: "You are creating...:" } });
+
+                axios.post("/players", {
+                    name: this.state.name,
+                    type: this.state.type,
+                    url: this.state.url,
+                    wins: this.state.wins,
+                    lost: this.state.lost,
+                    draws: this.state.draws
+                }).then(function (response) {
+                    _this2.setState({
+                        name: "",
+                        url: "url",
+                        wins: 0,
+                        lost: 0,
+                        draws: 0,
+                        response: response
+                    });
                 });
-            });
+            }
         }
     }, {
         key: "render",
@@ -60511,6 +60521,11 @@ var Newplayer = function (_Component) {
                                     return _this3.optionChangeHandler(e);
                                 }
                             },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "option",
+                                { value: "0" },
+                                "Choose a type"
+                            ),
                             this.props.types.map(function (type) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "option",
@@ -60744,7 +60759,7 @@ var Newscoreboard = function (_Component) {
 
         _this.state = {
             name: "",
-            type: "planeswalker",
+            type: 0,
             url: "",
             wins: 0,
             lost: 0,
@@ -60772,16 +60787,17 @@ var Newscoreboard = function (_Component) {
             var _this2 = this;
 
             e.preventDefault();
+            if (this.state.type !== 0) {
 
-            axios.post("/scoreboards", {
-                name: this.state.name,
-                type: this.state.type
-            }).then(function (response) {
-                _this2.setState({
-                    name: "",
-                    response: response
+                axios.post("/scoreboards", {
+                    name: this.state.name,
+                    type: this.state.type
+                }).then(function (response) {
+                    _this2.setState({
+                        name: ""
+                    });
                 });
-            });
+            }
         }
     }, {
         key: "render",
@@ -60820,6 +60836,11 @@ var Newscoreboard = function (_Component) {
                                     return _this3.optionChangeHandler(e);
                                 }
                             },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "option",
+                                { value: "0" },
+                                "Choose a type"
+                            ),
                             this.props.types.map(function (type) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "option",
@@ -62882,7 +62903,7 @@ var Result = function (_Component) {
                         { value: '0break0break0break0' },
                         'Choose a league'
                     ),
-                    this.props.leagues.map(function (league) {
+                    this.props.userLeagues.map(function (league) {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'option',
                             {
@@ -63167,6 +63188,15 @@ var AdminUser = function (_Component) {
     }
 
     _createClass(AdminUser, [{
+        key: "activeUser",
+        value: function activeUser(groupId) {
+            axios.put("/users/" + groupId, {
+                active: !this.props.user.active
+            }).then(function (response) {
+                console.log(response);
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -63211,9 +63241,9 @@ var AdminUser = function (_Component) {
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
                                         onChange: function onChange() {
-                                            return _this2.props.activeUser(group.id, user.id);
+                                            return _this2.activeUser(group.id);
                                         },
-                                        defaultChecked: user.pivot.active ? true : false,
+                                        defaultChecked: user.active ? true : false,
                                         type: "checkbox",
                                         name: "group",
                                         value: user.id
@@ -63530,8 +63560,6 @@ var substr = 'ab'.substr(-1) === 'b'
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__ = __webpack_require__(122);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -63552,11 +63580,7 @@ var Hypenotizer = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Hypenotizer.__proto__ || Object.getPrototypeOf(Hypenotizer)).call(this, props));
 
         _this.state = {
-            hypeLevels: [1, 2, 3, 4],
-            user: {},
-            groups: [{}],
-            activeGroup: 0
-
+            hypeLevels: [1, 2, 3, 4]
         };
         return _this;
     }
@@ -63566,26 +63590,7 @@ var Hypenotizer = function (_Component) {
         value: function componentDidUpdate(prevProps) {}
     }, {
         key: "componentDidMount",
-        value: function componentDidMount() {
-            var _this2 = this,
-                _setState;
-
-            var activeGroupMembersRatings = [];
-
-            this.props.groups.map(function (group) {
-
-                group.users.map(function (user) {
-                    if (group.id === _this2.state.activeGroup) {
-                        user.pivot.active ? activeGroupMembersRatings.push(user) : null;
-                    }
-                });
-            });
-
-            this.setState((_setState = {
-                user: this.props.user,
-                groups: this.props.groups
-            }, _defineProperty(_setState, "user", this.props.user), _defineProperty(_setState, "userTypes", this.props.user.types.sort(this.compareValues("type", true))), _defineProperty(_setState, "activeGroupMembersRatings", activeGroupMembersRatings), _defineProperty(_setState, "activeGroup", this.props.activeGroup), _setState));
-        }
+        value: function componentDidMount() {}
     }, {
         key: "compareValues",
         value: function compareValues(key) {
@@ -63611,9 +63616,8 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this3 = this;
+            var _this2 = this;
 
-            console.log(this.state);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
@@ -63628,19 +63632,19 @@ var Hypenotizer = function (_Component) {
                     ),
                     "Here we can show what and how much we like games in our Club. 1 - don't like ; 2 - I can play if my friends if they really want to ; 3 - I like the game; 4 - I like it so much my friend's must like it too :-)"
                 ),
-                this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], _defineProperty({
+                this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], {
                     user: this.props.user,
                     userTypes: this.props.userTypes.sort(this.compareValues("type")),
+                    groups: this.props.groups,
                     hypeLevels: this.state.hypeLevels,
-                    hypeLevelHandler: function hypeLevelHandler(e, userType) {
-                        return _this3.hypeLevelHandler(e, userType);
-                    },
                     hypenotizer: function hypenotizer() {
-                        return _this3.props.hypenotizer();
-                    }
-                }, "hypeLevelHandler", function hypeLevelHandler(e, userType) {
-                    return _this3.props.hypeLevelHandler(e, userType);
-                })) : null,
+                        return _this2.props.hypenotizer();
+                    },
+                    hypeLevelHandler: function hypeLevelHandler(e, typeId) {
+                        return _this2.props.hypeLevelHandler(e, typeId);
+                    },
+                    activeGroup: this.props.activeGroup
+                }) : null,
                 this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
                     user: this.props.user,
                     userTypes: this.props.userTypes.sort(this.compareValues("totalHype")),
@@ -63702,47 +63706,58 @@ var Hypeset = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "hype-wrapper" },
-                    Array.isArray(this.props.userTypes) ? this.props.userTypes.map(function (userType) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "hype-row", key: userType.type },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "hype-row-element" },
-                                userType.type
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "hype-row-element" },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "select",
-                                    {
-                                        onChange: function onChange(e) {
-                                            return _this2.props.hypeLevelHandler(e, userType);
-                                        }
-                                    },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "option",
-                                        {
-                                            key: "default" + userType.type,
-                                            defaultValue: userType.hype
-                                        },
-                                        userType.hype
-                                    ),
-                                    ")",
-                                    _this2.props.hypeLevels.map(function (level, index) {
+                    Array.isArray(this.props.userTypes) ? this.props.groups.map(function (group) {
+                        if (group.id === _this2.props.activeGroup) {
+                            return group.users.map(function (user) {
+
+                                return user.types.map(function (type) {
+
+                                    if (type.group_id === _this2.props.activeGroup) {
+
                                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "option",
-                                            {
-                                                key: userType.type + index,
-                                                value: level
-                                            },
-                                            level
+                                            "div",
+                                            { className: "hype-row", key: type.type },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                "div",
+                                                { className: "hype-row-element" },
+                                                type.type
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                "div",
+                                                { className: "hype-row-element" },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    "select",
+                                                    {
+                                                        onChange: function onChange(e) {
+                                                            return _this2.props.hypeLevelHandler(e, type.id);
+                                                        }
+                                                    },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        "option",
+                                                        {
+                                                            key: "default" + type.type,
+                                                            defaultValue: type.pivot.hype
+                                                        },
+                                                        type.pivot.hype
+                                                    ),
+                                                    ")",
+                                                    _this2.props.hypeLevels.map(function (level, index) {
+                                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                            "option",
+                                                            {
+                                                                key: type.type + index,
+                                                                value: level
+                                                            },
+                                                            level
+                                                        );
+                                                    })
+                                                )
+                                            )
                                         );
-                                    })
-                                )
-                            )
-                        );
+                                    }
+                                });
+                            });
+                        }
                     }) : null
                 )
             );
