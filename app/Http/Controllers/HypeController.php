@@ -86,7 +86,7 @@ class HypeController extends Controller
         foreach ($request->userTypes as $userType) { // loop and set values
          
             $type = Type::find($userType['id']);
-            $type->users()->updateExistingPivot($user->id, ['hype' => $userType['hype']]);
+            $type->users()->updateExistingPivot($user->id, ['hype' => $userType['pivot']['hype']]);
         }
         return response('success');
     }

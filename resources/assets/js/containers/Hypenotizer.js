@@ -52,9 +52,6 @@ class Hypenotizer extends Component {
                 {this.props.navigation === "Hypeset" ? (
                     <Hypeset
                         user={this.props.user}
-                        userTypes={this.props.userTypes.sort(
-                            this.compareValues("type")
-                        )}
                         groups={this.props.groups}
                         hypeLevels={this.state.hypeLevels}
                         hypenotizer={() => this.props.hypenotizer()}
@@ -66,8 +63,9 @@ class Hypenotizer extends Component {
                 {this.props.navigation === "Hypecheck" ? (
                     <Hypecheck
                         user={this.props.user}
-                        userTypes={this.props.userTypes.sort(this.compareValues("totalHype"))}
-                        groups={this.props.groups}
+                       // userTypes={this.props.userTypes.sort(this.compareValues("totalHype"))}
+                        group={this.props.group}
+                        activeGroup={this.props.activeGroup}
                     />
                 ) : null}
 

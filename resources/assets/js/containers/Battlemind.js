@@ -33,6 +33,7 @@ class Battlemind extends Component {
             groups: [{}],
             userGroups: [{}],
             activeGroup: 0,
+            activeGroupIndex: 0,
             hints: false
         };
     }
@@ -52,20 +53,43 @@ class Battlemind extends Component {
         // groups.map( group => {
 
         // })
+    //    console.log(data);
+    //     const userTypes = [...data];
+    //     data.forEach(userType => {
+    //         let totalHype = 0;
 
-        const userTypes = [...data];
-        userTypes.forEach(userType => {
+    //         userType.users.map(user => {
+    //             if (user.pivot.active === 1) {
+    //             }
+    //             totalHype += +user.pivot.hype; ///////////
+    //         });
+    //         userType.totalHype = totalHype;
+    //         userType.average = (totalHype / userType.users.length).toFixed(1);
+    //     });
+    //     return data;
+
+  
+    const groups = [...this.state.groups];
+    groups.forEach( group => {
+       if (group.id === this.state.activeGroup) {
+           group.types.forEach(type => {
             let totalHype = 0;
-
-            userType.users.map(user => {
-                if (user.pivot.active === 1) {
+            group.users.forEach( user => {
+                if(user.pivot.active === 1 ) {
+                    user.types.forEach( userType => {
+                        if(userType.pivot.type_id == type.id) {
+                            totalHype += userType.pivot.type_id
+                        }
+                    })
                 }
-                totalHype += +user.pivot.hype; ///////////
-            });
-            userType.totalHype = totalHype;
-            userType.average = (totalHype / userType.users.length).toFixed(1);
-        });
-        return userTypes;
+            })
+            type.totalHype = totalHype;
+           })
+       }
+    })
+ 
+    return groups;
+
     }
 
     hypeLevelHandler(e, typeId) {
@@ -74,9 +98,9 @@ class Battlemind extends Component {
 
         groups.map(group => {
             if(group.id === this.state.activeGroup) {
-             return   group.users.map( user => {
+                group.users.map( user => {
                     if(user.id === this.state.user.id) {
-                   return     user.types.map(type => {
+                       user.types.map(type => {
                             if(type.id === typeId)
                             type.pivot.hype = parseInt(e.target.value, 10);
                             return type;
@@ -85,42 +109,33 @@ class Battlemind extends Component {
                 })
             }
         })
-        console.log(groups);
+ 
         this.setState({
             groups: [...groups]
-            }, console.log(this.state.groups));
-        
-
-
-
-
-
-
-        // let userTypes = [...this.state.userTypes];
-        // userTypes.forEach(type => {
-        //     if (type === userType) {
-        //         type.hype = +e.target.value;
-        //         userType.users.map(user => {
-        //             if (user.id === this.state.user.id) {
-        //                 user.pivot.hype = +e.target.value;
-        //             }
-        //         });
-        //     }
-        // });
-        // let data = [...this.calculateTypeStatistics(userTypes)];
-        // this.setState({
-        //     userTypes: [...data]
-        // });
+            });
+      
     }
 
     hypenotizer() {
-        let userTypes = [...this.calculateTypeStatistics(this.state.userTypes)];
-        this.setState({
-            userTypes: [...userTypes]
-        });
+        let userTypes = this.state.groups.map( group => {
+            if (group.id === this.state.activeGroup) {
+              return   group.users.map( user => {
+                    if (user.id === this.state.user.id) {
+                     return    user.types
+                    }
+                }).filter(Boolean).flat(1);
+            }
+        }).filter(Boolean).flat(1);
         axios.post(`/hype/hypenotizer`, {
             userTypes: [...userTypes]
         });
+  
+        let groups = [...this.calculateTypeStatistics()];
+       
+        this.setState({
+            groups: [...groups]
+        });
+      
     }
 
     buttonHandler(e) {
@@ -186,7 +201,8 @@ class Battlemind extends Component {
         axios
             .get(`/types/${this.state.activeGroup}/userTypes`)
             .then(response => {
-                let userTypes = this.calculateTypeStatistics(response.data);
+                 let userTypes = this.calculateTypeStatistics(response.data);
+                //let userTypes = response.data;
                 this.setState({
                     userTypes: [...userTypes], /////////////////
                     // types: [...userTypes]
@@ -221,25 +237,27 @@ class Battlemind extends Component {
             if (group.id === this.state.activeGroup) {
                 group.users.map(user => {
                     if (user.id === userId) {
+
                         user.pivot.active = !user.pivot.active;
+                        console.log(user.pivot)
                     }
                 });
             }
         });
-        let activeGroupMembersRatings = [];
+        // let activeGroupMembersRatings = [];
 
-        groups.map(group => {
-            group.users.map(user => {
-                if (group.id === this.state.activeGroup) {
-                    user.pivot.active
-                        ? activeGroupMembersRatings.push(user)
-                        : null;
-                }
-            });
-        });
+        // groups.map(group => {
+        //     group.users.map(user => {
+        //         if (group.id === this.state.activeGroup) {
+        //             user.pivot.active
+        //                 ? activeGroupMembersRatings.push(user)
+        //                 : null;
+        //         }
+        //     });
+        // });
         this.setState({
             groups: groups,
-            activeGroupMembersRatings: activeGroupMembersRatings
+           
         });
         axios.put(`/groups/${groupId}/toggleActiveUser/${userId}`);
     }
@@ -270,10 +288,11 @@ class Battlemind extends Component {
             });
         }
     }
-    activeGroupChange(id) {
+    activeGroupChange(id, index) {
         this.setState(
             {
-                activeGroup: id
+                activeGroup: id,
+                activeGroupIndex: index,
             },
             () => {
                 this.getFriendsContent();
@@ -291,8 +310,8 @@ class Battlemind extends Component {
 
     render() {
          
-         console.log(this.state.groups);
-         console.log(this.state.activeGroup);
+        //  console.log(this.state.groups);
+          // console.log(this.state.activeGroupIndex);
         return (
             <div className="battlemind">
                 <Navigation
@@ -326,7 +345,7 @@ class Battlemind extends Component {
                                 this.state.activeGroupMembersRatings
                             }
                             groups={this.state.groups}
-                            userTypes={this.state.userTypes} ///////////////////
+                            group={this.state.groups[this.state.activeGroupIndex]}
                             navigation={this.state.object}
                             hypeLevelHandler={(e, userType) =>
                                 this.hypeLevelHandler(e, userType)
@@ -341,11 +360,10 @@ class Battlemind extends Component {
                             user={this.state.user}
                             groups={this.state.groups}
                             activeGroup={this.state.activeGroup}
-                            activeGroupChange={id => this.activeGroupChange(id)}
+                            activeGroupChange={(id, index) => this.activeGroupChange(id, index)}
                             activeUser={(groupId, userId) =>
                                 this.activeUser(groupId, userId)
                             }
-                            // types={this.state.types}
                             userGroups={this.state.user.groups}
                             addUser={group => this.addUser(group)}
                             contains={(userGroups, groups) =>

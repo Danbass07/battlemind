@@ -10,7 +10,7 @@ class Profile extends Component {
 
                 <div className="active-group-list">
                     {this.props.groups.length
-                        ? this.props.groups.map(group => {
+                        ? this.props.groups.map((group, index) => {
                               if (
                                   this.props.contains(
                                       this.props.userGroups,
@@ -22,7 +22,7 @@ class Profile extends Component {
                                           key={group.name + "active"}
                                           onClick={() =>
                                               this.props.activeGroupChange(
-                                                  group.id
+                                                  group.id, index
                                               )
                                           }
                                           className={

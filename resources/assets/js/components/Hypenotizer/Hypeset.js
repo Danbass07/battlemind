@@ -12,14 +12,14 @@ class Hypeset extends Component {
                     CLICK HERE TO SAVE
                 </button>
                 <div className="hype-wrapper">
-                    {Array.isArray(this.props.userTypes)
+                    {Array.isArray(this.props.groups)
                         ? this.props.groups.map(group => {
                         if (group.id === this.props.activeGroup) {
                             return group.users.map(user => {
 
                                 return user.types.map(type => {
                              
-                                    if (type.group_id === this.props.activeGroup) {
+                                    if (type.group_id === this.props.activeGroup && type.pivot.user_id === this.props.user.id) {
 
                                         return (
                                             <div className="hype-row" key={type.type}>
