@@ -7,6 +7,28 @@ class Hypecheck extends Component {
             click: true
         };
     }
+    
+    compareValues(key, ascending = false) {
+        return function(a, b) {
+            if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                // property doesn't exist on either object
+                return 0;
+            }
+            const varA =
+                typeof a[key] === "string" /// letter case insensitive
+                    ? a[key].toUpperCase()
+                    : a[key];
+            const varB =
+                typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+            let comparison = 0;
+            if (varA > varB) {
+                comparison = 1;
+            } else if (varA < varB) {
+                comparison = -1;
+            }
+            return ascending == false ? comparison * -1 : comparison;
+        };
+    }
 
     render() {
         let group = { ...this.props.group };
@@ -36,7 +58,7 @@ class Hypecheck extends Component {
             type.totalHype = totalHype;
         })
         // console.log([...new Set(zeroRated)]);
-        let data =[...group.types.filter( (type) => !zeroRated.includes(type))]; 
+        let data =[...group.types.filter( (type) => !zeroRated.includes(type)).sort(this.compareValues('totalHype', false))]; 
         console.log(data);
         return (
 

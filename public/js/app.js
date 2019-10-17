@@ -63809,6 +63809,28 @@ var Hypecheck = function (_Component) {
     }
 
     _createClass(Hypecheck, [{
+        key: "compareValues",
+        value: function compareValues(key) {
+            var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return function (a, b) {
+                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    return 0;
+                }
+                var varA = typeof a[key] === "string" /// letter case insensitive
+                ? a[key].toUpperCase() : a[key];
+                var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+                var comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return ascending == false ? comparison * -1 : comparison;
+            };
+        }
+    }, {
         key: "render",
         value: function render() {
             var group = _extends({}, this.props.group);
@@ -63837,7 +63859,7 @@ var Hypecheck = function (_Component) {
             // console.log([...new Set(zeroRated)]);
             var data = [].concat(_toConsumableArray(group.types.filter(function (type) {
                 return !zeroRated.includes(type);
-            })));
+            }).sort(this.compareValues('totalHype', false))));
             console.log(data);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
