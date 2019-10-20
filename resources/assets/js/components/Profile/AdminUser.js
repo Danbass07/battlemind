@@ -10,14 +10,14 @@ class AdminUser extends Component {
         return (
             <React.Fragment>
                 <div className="admin-group-list">
-                    {this.props.groups.length
-                        ? this.props.groups.map((group, index) => {
+                    {this.props.allGroups.length
+                        ? this.props.allGroups.map((group, index) => {
                             return (
-                                <div key={group.name + "groupListadmin"+index}>
+                                <div key={group.name + "groupListadmin" + index}>
                                     <input
                                       
                                         onChange={() =>
-                                            this.props.addUser(group)
+                                            this.props.addUser(group, this.props.user)
                                         }
                                         defaultChecked={
                                             this.props.contains(
@@ -71,6 +71,34 @@ class AdminUser extends Component {
                             }
 
                         }) : null}
+                </div>
+                <div className="admin-group-list">
+                    {this.props.users.length
+                        ? this.props.users.map((user, index) => {
+                            return (
+                                <div key={user.name + "groupListadmin" + index}>
+                                    <input
+                                      
+                                        onChange={() =>
+                                            this.props.addUser(this.props.group)
+                                        }
+                                        defaultChecked={
+                                            this.props.contains(
+                                                this.props.userGroups,
+                                                user
+                                            )
+                                                ? true
+                                                : false
+                                        }
+                                        type="checkbox"
+                                        name="group"
+                                        value={user.id}
+                                    />
+                                    {user.name}
+                                </div>
+                            );
+                        })
+                        : null}
                 </div>
 
             </React.Fragment>

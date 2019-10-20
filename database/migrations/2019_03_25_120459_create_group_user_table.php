@@ -22,6 +22,8 @@ class CreateGroupUserTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')
                   ->on('users')->onDelete('cascade');
+            $table->boolean('active');
+            $table->string('permissions')->default('basic');
             $table->timestamps();
         });
     }

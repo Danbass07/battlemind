@@ -47,8 +47,8 @@ Route::resource('/users', 'UserController');
 
 
 Route::resource('/groups', 'GroupController');
-Route::get('/groups/{id}/addUser', 'GroupController@addUser');
-Route::get('/groups/{id}/removeUser', 'GroupController@removeUser');
+Route::get('/groups/{id}/addUser/{cid}', 'GroupController@addUser');
+Route::get('/groups/{id}/removeUser/{cid}', 'GroupController@removeUser');
 Route::put('/groups/{id}/toggleActiveUser/{cid}', 'GroupController@toggleActiveUser');
 
 Route::resource('/types', 'TypeController');
@@ -58,5 +58,9 @@ Route::get('/types/{id}/userTypes','TypeController@userTypes' );
 
 
  Route::post('/hype/hypenotizer', 'HypeController@hypenotizer');
+
+
+ Route::resource('/vote', 'VoteController');
+ Route::get('/vote/votecheck/{groupid}', 'VoteController@votecheck');
  Route::post('/vote/setUpVote', 'VoteController@setUpVote');
  

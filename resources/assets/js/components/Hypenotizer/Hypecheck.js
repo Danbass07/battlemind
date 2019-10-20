@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Axios from "axios";
 
 class Hypecheck extends Component {
     constructor(props) {
@@ -6,6 +7,11 @@ class Hypecheck extends Component {
         this.state = {
             click: true
         };
+    }
+    componentDidMount() {
+        axios.get(`/vote/votecheck/${this.props.activeGroup}`).then(response => {
+            console.log(response.data)
+        })
     }
     
     compareValues(key, ascending = false) {
@@ -48,7 +54,6 @@ class Hypecheck extends Component {
                     if (userType.id === type.id) {
                         totalHype += +userType.pivot.hype
                         if(+userType.pivot.hype === 1) {
-                            // console.log(type);
                             zeroRated.push(type);
                         }
                     }
@@ -57,14 +62,15 @@ class Hypecheck extends Component {
             })
             type.totalHype = totalHype;
         })
-        // console.log([...new Set(zeroRated)]);
+    
         let data =[...group.types.filter( (type) => !zeroRated.includes(type)).sort(this.compareValues('totalHype', false))]; 
-        console.log(data);
+        let votingList =data.splice(0,3);
+
         return (
 
             <React.Fragment>
                
-
+            <div onClick={() => this.props.castVote(votingList)}> CAST VOTE</div>
                 {group.types ? (
                     <table className="hypecheck-results-list">
                         <tbody className="hypecheck-results-list">

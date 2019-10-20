@@ -4,40 +4,20 @@ class Hypevote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            votingOptions: [1, 2, 3, 4],
-            voteStage: 0,
-            results:{},
+            data: [],
         };
     }
     componentDidMount() {
-        this.setState({
-            results: this.props.votingList,
-        });
-    }
-
-    voteStageController(voteStage) {
-        this.setState({
-            voteStage: voteStage
-        });
-    }
-    castVote(options){
-        const results = JSON.stringify(options)
-        axios.post('/vote/setUpVote', {
-            active: true,
-            stage: 1,
-            results: results,
-    
-        }).then(response => {
+        axios.get(`/vote/votecheck/${this.props.activeGroup}`).then(response => {
+            console.log(response.data);
             this.setState({
-                results: JSON.parse(response.data)
-            });
-          console.log(JSON.parse(response.data));
-          
-
-        });
+                data: response.data,
+            })
+        })
     }
+
+  
     render() {
-        console.log(this.state.results);
         // voting will be cast by first who click he need to finish or cancel to let anyone else do anything but voting
         const style = {
             color: "white"
@@ -45,77 +25,12 @@ class Hypevote extends Component {
         return (
             <div className={"hype-vote-wrapper"}>
                 <h1 style={style}>HYPEVOTE </h1>
-
-                <div className={"main-area"}>
-                    {this.state.voteStage === 0 ? (
-                        <div className="none">
-                            <h1>Prepare to vote</h1>
-                            <div className={"options"}>
-                                <div>
-                                    remove games hype 1 by someone
-                                    <input
-                                        type="checkbox"
-                                        name="ones"
-                                        value="false"
-                                        onClick={(e) => this.props.voteOptions(e)}
-                                    />
-                                </div>
-                                <div>
-                                    remove winner from last vote
-                                    <input
-                                        type="checkbox"
-                                        name="winner"
-                                        value="false"
-                                        onClick={(e) => this.props.voteOptions(e)}
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                {this.props.votingList.map((type,index) => {
-                                  return  <div key={index}>{type.type}</div> 
-                                })}
-                            </div>
-                            <button onClick={() => this.castVote(this.props.votingList)}>Cast Vote</button>
-                        </div>
-                    ) : null}
-
-                    {this.state.voteStage === 1 ? (
-                        <div className="none">
-                            <h1>Vote</h1>
-                        </div>
-                    ) : null}
-
-                    {this.state.voteStage === 2 ? (
-                        <div className="none">
-                            <h1>See Results</h1>
-                        </div>
-                    ) : null}
-                </div>
-
-                <div className={"buttons-area"}>
-                    {this.state.voteStage !== 0 ? (
-                        <button
-                            onClick={() =>
-                                this.voteStageController(
-                                    +this.state.voteStage + -1
-                                )
-                            }
-                        >
-                            PREVIOUS
-                        </button>
-                    ) : null}
-                    {this.state.voteStage !== 2 ? (
-                        <button
-                            onClick={() =>
-                                this.voteStageController(
-                                    +this.state.voteStage + 1
-                                )
-                            }
-                        >
-                            NEXT
-                        </button>
-                    ) : null}
-                </div>
+            {/* {this.state.data.map(candidate => {
+                return (
+                    <div key={candidate.id}>{candidate.type}</div>
+                )
+            })} */} <h1 style={style}>{this.state.data.type}</h1>
+            
             </div>
         );
     }

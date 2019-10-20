@@ -4,6 +4,7 @@ import AdminUser from "../components/Profile/AdminUser";
 
 class Profile extends Component {
     render() {
+        console.log(this.props.groups)
         return (
             <div className="workarea">
     
@@ -49,13 +50,16 @@ class Profile extends Component {
                     key={group.id+'admin'}
                     user={this.props.user}
                     groups={this.props.groups}
+                    allGroups={this.props.allGroups}
+                    users={this.props.users}
+                    group={this.props.group}
                     activeGroup={this.props.activeGroup}
                     activeUser={(groupId, userId) => this.props.activeUser(groupId, userId)}
 
 
                     types={this.props.types}
                     userGroups={this.props.user.groups}
-                    addUser={group => this.props.addUser(group)}
+                    addUser={(group, user) => this.props.addUser(group, user)}
                     contains={(userGroups, groups) =>
                         this.props.contains(userGroups, groups)
                     }

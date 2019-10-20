@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import Hypeset from "../components/Hypenotizer/Hypeset";
 import Hypecheck from "../components/Hypenotizer/Hypecheck";
 import Hypevote from "../components/Hypenotizer/Hypevote";
+import Axios from "axios";
 
 class Hypenotizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hypeLevels: [1, 2, 3, 4],            
+            hypeLevels: [1, 2, 3, 4],     
+            votingList:[]       
         };
     }
   
@@ -16,6 +18,21 @@ class Hypenotizer extends Component {
     }
     componentDidMount() {
        
+    }
+    castVote(data) {
+        console.log(JSON.stringify(data));
+        axios
+        .post("/vote/setUpVote", {
+            data: JSON.stringify(data),
+            group_id:this.props.activeGroup,
+      
+        })
+        .then(() => {
+            this.setState({
+                votingList: data,
+            })
+        });
+      
     }
 
     compareValues(key, ascending = false) {
@@ -66,16 +83,15 @@ class Hypenotizer extends Component {
                        // userTypes={this.props.userTypes.sort(this.compareValues("totalHype"))}
                         group={this.props.group}
                         activeGroup={this.props.activeGroup}
+                        castVote={(data) => this.castVote(data)}
                     />
                 ) : null}
 
-                {/* {this.props.navigation === "Hypevote" ? (
+                {this.props.navigation === "Hypevote" ? (
                     <Hypevote
-                        votingList={this.state.votingList}
-                        hypeLevels={this.state.hypeLevels}
-                        voteOptions={() => this.voteOptions()}
+                    activeGroup={this.props.activeGroup}
                     />
-                ) : null} */}
+                ) : null}
             </React.Fragment>
         );
     }

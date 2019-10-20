@@ -32,6 +32,7 @@ class Battlemind extends Component {
             },
             groups: [{}],
             userGroups: [{}],
+            allGroups:[{}],
             activeGroup: 0,
             activeGroupIndex: 0,
             hints: false
@@ -154,6 +155,7 @@ class Battlemind extends Component {
             this.setState(
                 {
                     user: { ...response.data.user },
+                    users:[...response.data.users],
                     activeGroup: response.data.user.groups[0].id
                 },
                 () => {
@@ -191,9 +193,10 @@ class Battlemind extends Component {
             });
             this.setState({
                 groups: [...groups],
+                allGroups: [...response.data.allGroups],
                 userGroups: [...response.data.userGroups],
                 activeGroupMembersRatings: activeGroupMembersRatings
-            });
+            },console.log(this.state.allGroups));
         });
     }
 
@@ -275,14 +278,14 @@ class Battlemind extends Component {
         }
     }
 
-    addUser(group) {
+    addUser(group, user=this.props.user.id) {
         if (!this.contains(this.state.user.groups, group)) {
-            axios.get(`/groups/${group.id}/addUser`).then(() => {
+            axios.get(`/groups/${group.id}/addUser/${user.id}`).then(() => {
                 this.getUserContent();
                 this.getFriendsContent();
             });
         } else {
-            axios.get(`/groups/${group.id}/removeUser`).then(() => {
+            axios.get(`/groups/${group.id}/removeUser/${user.id}`).then(() => {
                 this.getUserContent();
                 this.getFriendsContent();
             });
@@ -310,7 +313,7 @@ class Battlemind extends Component {
 
     render() {
          
-        //  console.log(this.state.groups);
+         // console.log(this.state.allGroups);
           // console.log(this.state.activeGroupIndex);
         return (
             <div className="battlemind">
@@ -359,13 +362,16 @@ class Battlemind extends Component {
                         <Profile
                             user={this.state.user}
                             groups={this.state.groups}
+                            allGroups={this.state.allGroups}
+                            group={this.state.groups[this.state.activeGroup]}
                             activeGroup={this.state.activeGroup}
+                            users={this.state.users}
                             activeGroupChange={(id, index) => this.activeGroupChange(id, index)}
                             activeUser={(groupId, userId) =>
                                 this.activeUser(groupId, userId)
                             }
                             userGroups={this.state.user.groups}
-                            addUser={group => this.addUser(group)}
+                            addUser={(group, user) => this.addUser(group, user)}
                             contains={(userGroups, groups) =>
                                 this.contains(userGroups, groups)
                             }

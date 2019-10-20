@@ -59893,6 +59893,7 @@ var Battlemind = function (_Component) {
             },
             groups: [{}],
             userGroups: [{}],
+            allGroups: [{}],
             activeGroup: 0,
             activeGroupIndex: 0,
             hints: false
@@ -60023,6 +60024,7 @@ var Battlemind = function (_Component) {
             axios.get("/users").then(function (response) {
                 return _this5.setState({
                     user: _extends({}, response.data.user),
+                    users: [].concat(_toConsumableArray(response.data.users)),
                     activeGroup: response.data.user.groups[0].id
                 }, function () {
                     _this5.getFriendsContent();
@@ -60056,9 +60058,10 @@ var Battlemind = function (_Component) {
                 });
                 _this5.setState({
                     groups: [].concat(_toConsumableArray(groups)),
+                    allGroups: [].concat(_toConsumableArray(response.data.allGroups)),
                     userGroups: [].concat(_toConsumableArray(response.data.userGroups)),
                     activeGroupMembersRatings: activeGroupMembersRatings
-                });
+                }, console.log(_this5.state.allGroups));
             });
         }
     }, {
@@ -60144,13 +60147,15 @@ var Battlemind = function (_Component) {
         value: function addUser(group) {
             var _this8 = this;
 
+            var user = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props.user.id;
+
             if (!this.contains(this.state.user.groups, group)) {
-                axios.get("/groups/" + group.id + "/addUser").then(function () {
+                axios.get("/groups/" + group.id + "/addUser/" + user.id).then(function () {
                     _this8.getUserContent();
                     _this8.getFriendsContent();
                 });
             } else {
-                axios.get("/groups/" + group.id + "/removeUser").then(function () {
+                axios.get("/groups/" + group.id + "/removeUser/" + user.id).then(function () {
                     _this8.getUserContent();
                     _this8.getFriendsContent();
                 });
@@ -60185,7 +60190,7 @@ var Battlemind = function (_Component) {
         value: function render() {
             var _this10 = this;
 
-            //  console.log(this.state.groups);
+            // console.log(this.state.allGroups);
             // console.log(this.state.activeGroupIndex);
             return __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                 "div",
@@ -60233,7 +60238,10 @@ var Battlemind = function (_Component) {
                     this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__containers_Profile__["a" /* default */], {
                         user: this.state.user,
                         groups: this.state.groups,
+                        allGroups: this.state.allGroups,
+                        group: this.state.groups[this.state.activeGroup],
                         activeGroup: this.state.activeGroup,
+                        users: this.state.users,
                         activeGroupChange: function activeGroupChange(id, index) {
                             return _this10.activeGroupChange(id, index);
                         },
@@ -60241,8 +60249,8 @@ var Battlemind = function (_Component) {
                             return _this10.activeUser(groupId, userId);
                         },
                         userGroups: this.state.user.groups,
-                        addUser: function addUser(group) {
-                            return _this10.addUser(group);
+                        addUser: function addUser(group, user) {
+                            return _this10.addUser(group, user);
                         },
                         contains: function contains(userGroups, groups) {
                             return _this10.contains(userGroups, groups);
@@ -63040,6 +63048,7 @@ var Profile = function (_Component) {
         value: function render() {
             var _this2 = this;
 
+            console.log(this.props.groups);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "workarea" },
@@ -63066,6 +63075,9 @@ var Profile = function (_Component) {
                             key: group.id + 'admin',
                             user: _this2.props.user,
                             groups: _this2.props.groups,
+                            allGroups: _this2.props.allGroups,
+                            users: _this2.props.users,
+                            group: _this2.props.group,
                             activeGroup: _this2.props.activeGroup,
                             activeUser: function activeUser(groupId, userId) {
                                 return _this2.props.activeUser(groupId, userId);
@@ -63073,8 +63085,8 @@ var Profile = function (_Component) {
 
                             types: _this2.props.types,
                             userGroups: _this2.props.user.groups,
-                            addUser: function addUser(group) {
-                                return _this2.props.addUser(group);
+                            addUser: function addUser(group, user) {
+                                return _this2.props.addUser(group, user);
                             },
                             contains: function contains(userGroups, groups) {
                                 return _this2.props.contains(userGroups, groups);
@@ -63211,14 +63223,14 @@ var AdminUser = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "admin-group-list" },
-                    this.props.groups.length ? this.props.groups.map(function (group, index) {
+                    this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
                             { key: group.name + "groupListadmin" + index },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
 
                                 onChange: function onChange() {
-                                    return _this2.props.addUser(group);
+                                    return _this2.props.addUser(group, _this2.props.user);
                                 },
                                 defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
                                 type: "checkbox",
@@ -63255,6 +63267,27 @@ var AdminUser = function (_Component) {
                                 );
                             });
                         }
+                    }) : null
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "admin-group-list" },
+                    this.props.users.length ? this.props.users.map(function (user, index) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { key: user.name + "groupListadmin" + index },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+
+                                onChange: function onChange() {
+                                    return _this2.props.addUser(_this2.props.group);
+                                },
+                                defaultChecked: _this2.props.contains(_this2.props.userGroups, user) ? true : false,
+                                type: "checkbox",
+                                name: "group",
+                                value: user.id
+                            }),
+                            user.name
+                        );
                     }) : null
                 )
             );
@@ -63562,6 +63595,8 @@ var substr = 'ab'.substr(-1) === 'b'
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63569,6 +63604,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -63584,7 +63620,8 @@ var Hypenotizer = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Hypenotizer.__proto__ || Object.getPrototypeOf(Hypenotizer)).call(this, props));
 
         _this.state = {
-            hypeLevels: [1, 2, 3, 4]
+            hypeLevels: [1, 2, 3, 4],
+            votingList: []
         };
         return _this;
     }
@@ -63595,6 +63632,22 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "componentDidMount",
         value: function componentDidMount() {}
+    }, {
+        key: "castVote",
+        value: function castVote(data) {
+            var _this2 = this;
+
+            console.log(JSON.stringify(data));
+            axios.post("/vote/setUpVote", {
+                data: JSON.stringify(data),
+                group_id: this.props.activeGroup
+
+            }).then(function () {
+                _this2.setState({
+                    votingList: data
+                });
+            });
+        }
     }, {
         key: "compareValues",
         value: function compareValues(key) {
@@ -63620,7 +63673,7 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
@@ -63641,10 +63694,10 @@ var Hypenotizer = function (_Component) {
                     groups: this.props.groups,
                     hypeLevels: this.state.hypeLevels,
                     hypenotizer: function hypenotizer() {
-                        return _this2.props.hypenotizer();
+                        return _this3.props.hypenotizer();
                     },
                     hypeLevelHandler: function hypeLevelHandler(e, typeId) {
-                        return _this2.props.hypeLevelHandler(e, typeId);
+                        return _this3.props.hypeLevelHandler(e, typeId);
                     },
                     activeGroup: this.props.activeGroup
                 }) : null,
@@ -63652,6 +63705,12 @@ var Hypenotizer = function (_Component) {
                     user: this.props.user
                     // userTypes={this.props.userTypes.sort(this.compareValues("totalHype"))}
                     , group: this.props.group,
+                    activeGroup: this.props.activeGroup,
+                    castVote: function castVote(data) {
+                        return _this3.castVote(data);
+                    }
+                }) : null,
+                this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
                     activeGroup: this.props.activeGroup
                 }) : null
             );
@@ -63780,6 +63839,8 @@ var Hypeset = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -63791,6 +63852,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -63809,6 +63871,13 @@ var Hypecheck = function (_Component) {
     }
 
     _createClass(Hypecheck, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
+                console.log(response.data);
+            });
+        }
+    }, {
         key: "compareValues",
         value: function compareValues(key) {
             var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -63833,6 +63902,8 @@ var Hypecheck = function (_Component) {
     }, {
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             var group = _extends({}, this.props.group);
             var zeroRated = [];
 
@@ -63848,7 +63919,6 @@ var Hypecheck = function (_Component) {
                         if (userType.id === type.id) {
                             totalHype += +userType.pivot.hype;
                             if (+userType.pivot.hype === 1) {
-                                // console.log(type);
                                 zeroRated.push(type);
                             }
                         }
@@ -63856,14 +63926,22 @@ var Hypecheck = function (_Component) {
                 });
                 type.totalHype = totalHype;
             });
-            // console.log([...new Set(zeroRated)]);
+
             var data = [].concat(_toConsumableArray(group.types.filter(function (type) {
                 return !zeroRated.includes(type);
             }).sort(this.compareValues('totalHype', false))));
-            console.log(data);
+            var votingList = data.splice(0, 3);
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { onClick: function onClick() {
+                            return _this2.props.castVote(votingList);
+                        } },
+                    " CAST VOTE"
+                ),
                 group.types ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "table",
                     { className: "hypecheck-results-list" },
@@ -63947,9 +64025,7 @@ var Hypevote = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Hypevote.__proto__ || Object.getPrototypeOf(Hypevote)).call(this, props));
 
         _this.state = {
-            votingOptions: [1, 2, 3, 4],
-            voteStage: 0,
-            results: {}
+            data: []
         };
         return _this;
     }
@@ -63957,41 +64033,18 @@ var Hypevote = function (_Component) {
     _createClass(Hypevote, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            this.setState({
-                results: this.props.votingList
-            });
-        }
-    }, {
-        key: "voteStageController",
-        value: function voteStageController(voteStage) {
-            this.setState({
-                voteStage: voteStage
-            });
-        }
-    }, {
-        key: "castVote",
-        value: function castVote(options) {
             var _this2 = this;
 
-            var results = JSON.stringify(options);
-            axios.post('/vote/setUpVote', {
-                active: true,
-                stage: 1,
-                results: results
-
-            }).then(function (response) {
+            axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
+                console.log(response.data);
                 _this2.setState({
-                    results: JSON.parse(response.data)
+                    data: response.data
                 });
-                console.log(JSON.parse(response.data));
             });
         }
     }, {
         key: "render",
         value: function render() {
-            var _this3 = this;
-
-            console.log(this.state.results);
             // voting will be cast by first who click he need to finish or cancel to let anyone else do anything but voting
             var style = {
                 color: "white"
@@ -64004,106 +64057,11 @@ var Hypevote = function (_Component) {
                     { style: style },
                     "HYPEVOTE "
                 ),
+                " ",
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "main-area" },
-                    this.state.voteStage === 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "none" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h1",
-                            null,
-                            "Prepare to vote"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "options" },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                null,
-                                "remove games hype 1 by someone",
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                    type: "checkbox",
-                                    name: "ones",
-                                    value: "false",
-                                    onClick: function onClick(e) {
-                                        return _this3.props.voteOptions(e);
-                                    }
-                                })
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                null,
-                                "remove winner from last vote",
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                    type: "checkbox",
-                                    name: "winner",
-                                    value: "false",
-                                    onClick: function onClick(e) {
-                                        return _this3.props.voteOptions(e);
-                                    }
-                                })
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            null,
-                            this.props.votingList.map(function (type, index) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    { key: index },
-                                    type.type
-                                );
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "button",
-                            { onClick: function onClick() {
-                                    return _this3.castVote(_this3.props.votingList);
-                                } },
-                            "Cast Vote"
-                        )
-                    ) : null,
-                    this.state.voteStage === 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "none" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h1",
-                            null,
-                            "Vote"
-                        )
-                    ) : null,
-                    this.state.voteStage === 2 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "none" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h1",
-                            null,
-                            "See Results"
-                        )
-                    ) : null
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "buttons-area" },
-                    this.state.voteStage !== 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "button",
-                        {
-                            onClick: function onClick() {
-                                return _this3.voteStageController(+_this3.state.voteStage + -1);
-                            }
-                        },
-                        "PREVIOUS"
-                    ) : null,
-                    this.state.voteStage !== 2 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "button",
-                        {
-                            onClick: function onClick() {
-                                return _this3.voteStageController(+_this3.state.voteStage + 1);
-                            }
-                        },
-                        "NEXT"
-                    ) : null
+                    "h1",
+                    { style: style },
+                    this.state.data.type
                 )
             );
         }
@@ -64112,7 +64070,7 @@ var Hypevote = function (_Component) {
     return Hypevote;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Hypevote);
+/* harmony default export */ __webpack_exports__["a"] = (Hypevote);
 
 /***/ }),
 /* 123 */

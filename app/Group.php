@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Type;
 use App\User;
+use App\Vote;
 
 class Group extends Model
 {
@@ -18,5 +19,9 @@ class Group extends Model
     }
     public function types() {
         return $this->hasMany(Type::class);
+        
+    }
+    public function votes() {
+        return $this->hasMany(Vote::class);
     }
 }

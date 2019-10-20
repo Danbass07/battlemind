@@ -22,11 +22,12 @@ class GroupController extends Controller
      
         
         $userGroups = $user->groups->load('users.types');
-        $groups =  Group::with(['users', 'types', 'types.users'])->get();
+        $groups =  Group::all()->load(['users', 'types', 'types.users']);
     
        return response()->json([
         'groups' => $userGroups,
         'userGroups' => $userGroups,
+        'allGroups' => $groups,
        ]);
     }
 
@@ -95,10 +96,10 @@ class GroupController extends Controller
     {
         //
     }
-    public function addUser($id)
+    public function addUser($id, $cid)
     {
         $group = \App\Group::findOrfail($id);
-        $user =  Auth::user();
+        $user = User::findOrFail($cid);
        
       
         if (! $group->users->contains($user->id)) {
@@ -111,10 +112,10 @@ class GroupController extends Controller
         }
        return response()->json($group->users); 
     }
-    public function removeUser($id)
+    public function removeUser($id, $cid)
     {
         $group = \App\Group::findOrfail($id);
-        $user =  Auth::user()->load('groups');
+        $user =  User::findOrFail($cid)->load('groups');
         foreach ($group->types as $type){
 
             $user->types()->detach($type);
