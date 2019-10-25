@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Hypeset extends Component {
     render() {
-
+console.log(this.props.group);
         return (
             <React.Fragment>
                 <button
@@ -12,10 +12,8 @@ class Hypeset extends Component {
                     CLICK HERE TO SAVE
                 </button>
                 <div className="hype-wrapper">
-                    {Array.isArray(this.props.groups)
-                        ? this.props.groups.map(group => {
-                        if (group.id === this.props.activeGroup) {
-                            return group.users.map(user => {
+                    {Array.isArray(this.props.group.users)
+                        ? this.props.group.users.map(user => {
 
                                 return user.types.map(type => {
                              
@@ -69,9 +67,9 @@ class Hypeset extends Component {
 
                                 })
                             })
-                        }
+                        
 
-                        })
+                        
                         : null}
                 </div>
             </React.Fragment>

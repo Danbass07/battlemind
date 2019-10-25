@@ -18,15 +18,31 @@ class VoteController extends Controller
     }
     public function setUpVote(Request $request)
     {
-        $vote = new Vote;
-        $vote = Vote::create([
-            'data' => $request->data,
-            'stage' => 2,
-            'group_id' => $request->group_id,
-            'active' => true,
-       
-        ]);
+        $group= Group::find($request->group_id);
+        $vote = $group->votes->where('active','=',true)->first();
+        if (!$vote) {
+            $vote = new Vote;
+            $vote = Vote::create([
+                'data' => $request->data,
+                'stage' => 1,
+                'group_id' => $request->group_id,
+                'active' => true,
+           
+            ]);
+        }
+    
            
         return response()->json($vote->results);
+    }
+    public function voteclose ($id) {
+        $group= Group::find($id);
+        $vote = $group->votes->where('active','=',true)->first();
+        if($vote) {
+            $vote->active = false;
+            $vote->save();
+        }
+ 
+
+        return response('success');
     }
 }

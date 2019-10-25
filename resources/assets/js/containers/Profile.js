@@ -4,7 +4,6 @@ import AdminUser from "../components/Profile/AdminUser";
 
 class Profile extends Component {
     render() {
-        console.log(this.props.groups)
         return (
             <div className="workarea">
     

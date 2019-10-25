@@ -20,7 +20,6 @@ class Hypenotizer extends Component {
        
     }
     castVote(data) {
-        console.log(JSON.stringify(data));
         axios
         .post("/vote/setUpVote", {
             data: JSON.stringify(data),
@@ -69,7 +68,7 @@ class Hypenotizer extends Component {
                 {this.props.navigation === "Hypeset" ? (
                     <Hypeset
                         user={this.props.user}
-                        groups={this.props.groups}
+                        group={this.props.groups[this.props.activeGroupIndex]}
                         hypeLevels={this.state.hypeLevels}
                         hypenotizer={() => this.props.hypenotizer()}
                         hypeLevelHandler={(e, typeId) => this.props.hypeLevelHandler(e, typeId)}

@@ -10,7 +10,8 @@ class Hypecheck extends Component {
     }
     componentDidMount() {
         axios.get(`/vote/votecheck/${this.props.activeGroup}`).then(response => {
-            console.log(response.data)
+            // console.log(response.data)
+            // console.log(this.props.activeGroup)
         })
     }
     
@@ -36,11 +37,13 @@ class Hypecheck extends Component {
         };
     }
 
-    render() {
+    render() 
+  
+    {
         let group = { ...this.props.group };
         let zeroRated = []
         
-   
+      
         let activeUsersRating = group.users.map(user => {
           return  user.pivot.active ?  user : null  
             }).filter(Boolean);
@@ -62,15 +65,16 @@ class Hypecheck extends Component {
             })
             type.totalHype = totalHype;
         })
-    
-        let data =[...group.types.filter( (type) => !zeroRated.includes(type)).sort(this.compareValues('totalHype', false))]; 
-        let votingList =data.splice(0,3);
-
+        
+        let data =[...group.types.filter( (type) =>{return !zeroRated.includes(type) ? type : null  } ).sort(this.compareValues('totalHype', false))]; 
+       
+        let votingList =[...data];
+        votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
         return (
 
             <React.Fragment>
                
-            <div onClick={() => this.props.castVote(votingList)}> CAST VOTE</div>
+            <div onClick={() => this.props.castVote(votingList.sort(this.compareValues('totalHype', false)).slice(0,3))}> CAST VOTE</div>
                 {group.types ? (
                     <table className="hypecheck-results-list">
                         <tbody className="hypecheck-results-list">
@@ -88,7 +92,7 @@ class Hypecheck extends Component {
                                           );
                                       }
                                   })
-                                : data.map((type, index) => {
+                                : data.map((type) => {
 
                                
                                       return (

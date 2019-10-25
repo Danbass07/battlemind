@@ -63,4 +63,5 @@ Route::get('/types/{id}/userTypes','TypeController@userTypes' );
  Route::resource('/vote', 'VoteController');
  Route::get('/vote/votecheck/{groupid}', 'VoteController@votecheck');
  Route::post('/vote/setUpVote', 'VoteController@setUpVote');
+ Route::put('/vote/voteclose/{groupid}', 'VoteController@voteclose');
  
