@@ -63556,21 +63556,53 @@ var Hypenotizer = function (_Component) {
         value: function componentDidUpdate(prevProps) {}
     }, {
         key: "componentDidMount",
-        value: function componentDidMount() {}
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
+
+                response.data.data = JSON.parse(response.data.data);
+
+                _this2.setState({
+                    votingList: response.data
+                });
+            });
+        }
     }, {
         key: "castVote",
         value: function castVote(data) {
-            var _this2 = this;
+            var _this3 = this;
 
-            console.log(JSON.stringify(data));
+            var newData = data.map(function (type) {
+                return type = {
+                    name: type.type,
+                    votersId: [],
+                    winner: false
+                };
+            });
             axios.post("/vote/setUpVote", {
-                data: JSON.stringify(data),
+                data: JSON.stringify(newData),
                 group_id: this.props.activeGroup
 
-            }).then(function () {
-                _this2.setState({
-                    votingList: data
-                });
+            }).then(function (response) {
+                if (response.status) {
+                    _this3.setState({
+                        votingList: response.data.data
+                    });
+                }
+            }, console.log(this.state.votingList));
+        }
+    }, {
+        key: "closeVote",
+        value: function closeVote() {
+            var _this4 = this;
+
+            axios.put("/vote/voteclose/" + this.props.activeGroup).then(function (response) {
+                if (response.status) {
+                    _this4.setState({
+                        votingList: []
+                    });
+                }
             });
         }
     }, {
@@ -63598,7 +63630,7 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this3 = this;
+            var _this5 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
@@ -63619,10 +63651,10 @@ var Hypenotizer = function (_Component) {
                     group: this.props.groups[this.props.activeGroupIndex],
                     hypeLevels: this.state.hypeLevels,
                     hypenotizer: function hypenotizer() {
-                        return _this3.props.hypenotizer();
+                        return _this5.props.hypenotizer();
                     },
                     hypeLevelHandler: function hypeLevelHandler(e, typeId) {
-                        return _this3.props.hypeLevelHandler(e, typeId);
+                        return _this5.props.hypeLevelHandler(e, typeId);
                     },
                     activeGroup: this.props.activeGroup
                 }) : null,
@@ -63632,11 +63664,15 @@ var Hypenotizer = function (_Component) {
                     , group: this.props.group,
                     activeGroup: this.props.activeGroup,
                     castVote: function castVote(data) {
-                        return _this3.castVote(data);
+                        return _this5.castVote(data);
                     }
                 }) : null,
                 this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
-                    activeGroup: this.props.activeGroup
+                    activeGroup: this.props.activeGroup,
+                    votingList: this.state.votingList,
+                    closeVote: function closeVote() {
+                        return _this5.closeVote();
+                    }
                 }) : null
             );
         }
@@ -63958,44 +63994,17 @@ var Hypevote = function (_Component) {
 
     _createClass(Hypevote, [{
         key: "componentDidMount",
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
-
-                response.data.data = JSON.parse(response.data.data);
-
-                _this2.setState({
-                    data: response.data
-                });
-            });
-        }
-    }, {
-        key: "closeVote",
-        value: function closeVote() {
-            var _this3 = this;
-
-            axios.put("/vote/voteclose/" + this.props.activeGroup).then(function () {
-                axios.get("/vote/votecheck/" + _this3.props.activeGroup).then(function (response) {
-
-                    response.data.data = JSON.parse(response.data.data);
-
-                    _this3.setState({
-                        data: response.data
-                    });
-                });
-            });
-        }
+        value: function componentDidMount() {}
     }, {
         key: "render",
         value: function render() {
-            var _this4 = this;
+            var _this2 = this;
 
             // voting will be cast by first who click he need to finish or cancel to let anyone else do anything but voting
             var style = {
                 color: "white"
             };
-            console.log(this.state);
+            console.log(this.props.votingList.data);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "hype-vote-wrapper" },
@@ -64004,17 +64013,17 @@ var Hypevote = function (_Component) {
                     { style: style },
                     "HYPEVOTE "
                 ),
-                this.state.data.data.map(function (type) {
+                this.props.votingList.data ? this.props.votingList.data.map(function (type) {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { key: type.id },
-                        type.type
+                        { key: type.name },
+                        type.name
                     );
-                }),
+                }) : null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { onClick: function onClick() {
-                            return _this4.closeVote();
+                            return _this2.props.closeVote();
                         } },
                     "Close Vote"
                 )

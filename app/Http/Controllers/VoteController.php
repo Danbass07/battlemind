@@ -21,6 +21,7 @@ class VoteController extends Controller
         $group= Group::find($request->group_id);
         $vote = $group->votes->where('active','=',true)->first();
         if (!$vote) {
+            $status = true;
             $vote = new Vote;
             $vote = Vote::create([
                 'data' => $request->data,
@@ -29,20 +30,28 @@ class VoteController extends Controller
                 'active' => true,
            
             ]);
-        }
+            $vote = $group->votes->where('active','=',true)->first();
+            }
+         else { $status = false; }
     
            
-        return response()->json($vote->results);
+        return response()->json([
+            'data' => $vote,
+             'vote' => '$vote->results',
+             'status' => $status,
+             ]);
     }
     public function voteclose ($id) {
+        $status = false;
         $group= Group::find($id);
         $vote = $group->votes->where('active','=',true)->first();
         if($vote) {
+            $status = true;
             $vote->active = false;
             $vote->save();
         }
  
 
-        return response('success');
+        return response()->json([ 'status' => $status]);
     }
 }

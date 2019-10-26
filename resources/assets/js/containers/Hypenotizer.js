@@ -17,21 +17,54 @@ class Hypenotizer extends Component {
    
     }
     componentDidMount() {
-       
+        axios.get(`/vote/votecheck/${this.props.activeGroup}`).then(response => {
+           
+            response.data.data = JSON.parse(response.data.data);
+           
+            this.setState({
+                votingList: response.data,
+            })
+        })
     }
     castVote(data) {
+       
+    const newData =    data.map( type => {
+          return  type = {
+                name: type.type,
+                votersId: [],
+                winner: false,
+            }
+            
+        })
         axios
         .post("/vote/setUpVote", {
-            data: JSON.stringify(data),
+            data: JSON.stringify(newData),
             group_id:this.props.activeGroup,
       
         })
-        .then(() => {
-            this.setState({
-                votingList: data,
-            })
-        });
+        .then( response => {
+            if (response.status) {
+                this.setState({
+                    votingList: response.data.data,
+                })
+            }
+            
+        },console.log(this.state.votingList));
       
+    }
+    closeVote(){
+
+        axios.put(`/vote/voteclose/${this.props.activeGroup}`).then( response => {
+            if (response.status) {
+                this.setState({
+                    votingList: [],
+                })
+            }
+           
+     
+        })
+       
+
     }
 
     compareValues(key, ascending = false) {
@@ -58,6 +91,7 @@ class Hypenotizer extends Component {
 
 
     render() {
+     
         return (
             <React.Fragment>
                     <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
@@ -89,6 +123,8 @@ class Hypenotizer extends Component {
                 {this.props.navigation === "Hypevote" ? (
                     <Hypevote
                     activeGroup={this.props.activeGroup}
+                    votingList={this.state.votingList}
+                    closeVote={() => this.closeVote()}
                     />
                 ) : null}
             </React.Fragment>

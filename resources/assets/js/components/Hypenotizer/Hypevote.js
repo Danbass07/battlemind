@@ -10,47 +10,25 @@ class Hypevote extends Component {
         };
     }
     componentDidMount() {
-        axios.get(`/vote/votecheck/${this.props.activeGroup}`).then(response => {
-           
-            response.data.data = JSON.parse(response.data.data);
-           
-            this.setState({
-                data: response.data,
-            })
-        })
+    
     }
 
-    closeVote(){
 
-        axios.put(`/vote/voteclose/${this.props.activeGroup}`).then( () => {
-            axios.get(`/vote/votecheck/${this.props.activeGroup}`).then(response => {
-           
-                response.data.data = JSON.parse(response.data.data);
-               
-                this.setState({
-                    data: response.data,
-                })
-            })
-     
-        })
-       
-
-    }
     render() {
         // voting will be cast by first who click he need to finish or cancel to let anyone else do anything but voting
         const style = {
             color: "white"
         };
-        console.log(this.state)
+        console.log(this.props.votingList.data)
         return (
             <div className={"hype-vote-wrapper"}>
                 <h1 style={style}>HYPEVOTE </h1>
-            {this.state.data.data.map(type => {
+            {this.props.votingList.data ? this.props.votingList.data.map(type => {
                 return (
-                    <div key={type.id}>{type.type}</div>
+                    <div key={type.name}>{type.name}</div>
                 )
-            })} 
-             <div onClick={() => this.closeVote()}>Close Vote</div>
+            }): null} 
+             <div onClick={() => this.props.closeVote()}>Close Vote</div>
             </div>
            
         );
