@@ -63546,7 +63546,7 @@ var Hypenotizer = function (_Component) {
 
         _this.state = {
             hypeLevels: [1, 2, 3, 4],
-            votingList: []
+            votingList: null
         };
         return _this;
     }
@@ -63561,19 +63561,19 @@ var Hypenotizer = function (_Component) {
 
             axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
 
-                response.data.data = JSON.parse(response.data.data);
-
+                var activeVoteDetails = response.data.activeVoteDetails;
+                activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
                 _this2.setState({
-                    votingList: response.data
+                    votingList: activeVoteDetails
                 });
             });
         }
     }, {
-        key: "castVote",
-        value: function castVote(data) {
+        key: "setUpVote",
+        value: function setUpVote(activeVoteDetails) {
             var _this3 = this;
 
-            var newData = data.map(function (type) {
+            var newData = activeVoteDetails.map(function (type) {
                 return type = {
                     name: type.type,
                     votersId: [],
@@ -63585,12 +63585,14 @@ var Hypenotizer = function (_Component) {
                 group_id: this.props.activeGroup
 
             }).then(function (response) {
-                if (response.status) {
-                    _this3.setState({
-                        votingList: response.data.data
-                    });
-                }
-            }, console.log(this.state.votingList));
+
+                var activeVoteDetails = response.data.activeVoteDetails;
+                activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
+                console.log(activeVoteDetails);
+                _this3.setState({
+                    votingList: activeVoteDetails
+                });
+            });
         }
     }, {
         key: "closeVote",
@@ -63599,8 +63601,9 @@ var Hypenotizer = function (_Component) {
 
             axios.put("/vote/voteclose/" + this.props.activeGroup).then(function (response) {
                 if (response.status) {
+
                     _this4.setState({
-                        votingList: []
+                        votingList: null
                     });
                 }
             });
@@ -63663,8 +63666,8 @@ var Hypenotizer = function (_Component) {
                     // userTypes={this.props.userTypes.sort(this.compareValues("totalHype"))}
                     , group: this.props.group,
                     activeGroup: this.props.activeGroup,
-                    castVote: function castVote(data) {
-                        return _this5.castVote(data);
+                    setUpVote: function setUpVote(activeVoteDetails) {
+                        return _this5.setUpVote(activeVoteDetails);
                     }
                 }) : null,
                 this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
@@ -63895,13 +63898,13 @@ var Hypecheck = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                this.props.user.permissions === "admin" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { onClick: function onClick() {
-                            return _this2.props.castVote(votingList.sort(_this2.compareValues('totalHype', false)).slice(0, 3));
+                            return _this2.props.setUpVote(votingList.sort(_this2.compareValues('totalHype', false)).slice(0, 3));
                         } },
-                    " CAST VOTE"
-                ),
+                    "CAST VOTE "
+                ) : null,
                 group.types ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "table",
                     { className: "hypecheck-results-list" },
@@ -64004,7 +64007,6 @@ var Hypevote = function (_Component) {
             var style = {
                 color: "white"
             };
-            console.log(this.props.votingList.data);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "hype-vote-wrapper" },
@@ -64013,11 +64015,31 @@ var Hypevote = function (_Component) {
                     { style: style },
                     "HYPEVOTE "
                 ),
-                this.props.votingList.data ? this.props.votingList.data.map(function (type) {
+                this.props.votingList ? this.props.votingList.data.map(function (type) {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
                         { key: type.name },
-                        type.name
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            null,
+                            type.name
+                        ),
+                        type.votersId.map(function (voter) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { key: voter },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
+                                    voter
+                                )
+                            );
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            null,
+                            type.votersId.length
+                        )
                     );
                 }) : null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

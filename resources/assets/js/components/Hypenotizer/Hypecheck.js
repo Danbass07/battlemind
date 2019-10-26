@@ -73,11 +73,14 @@ class Hypecheck extends Component {
         return (
 
             <React.Fragment>
-               
-            <div onClick={() => this.props.castVote(votingList.sort(this.compareValues('totalHype', false)).slice(0,3))}> CAST VOTE</div>
+                {this.props.user.permissions === "admin" ? 
+                            <div onClick={() => this.props.setUpVote(votingList.sort(this.compareValues('totalHype', false)).slice(0,3))}>
+                                 CAST VOTE </div> : null}
+            
                 {group.types ? (
                     <table className="hypecheck-results-list">
                         <tbody className="hypecheck-results-list">
+                       
                             {this.props.user.permissions === "basic"
                                 ? data.map((type, index) => {
                                       if (index < 3) {
@@ -96,6 +99,8 @@ class Hypecheck extends Component {
 
                                
                                       return (
+                                       
+                                       
                                           <tr key={type.id + ' ' + type.hype}>
                                               <td>{type.type}</td>
 
@@ -110,6 +115,7 @@ class Hypecheck extends Component {
                                                   {type.average}
                                               </td>
                                           </tr>
+                                         
                                       );
 
 

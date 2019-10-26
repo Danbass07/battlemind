@@ -19,13 +19,24 @@ class Hypevote extends Component {
         const style = {
             color: "white"
         };
-        console.log(this.props.votingList.data)
         return (
             <div className={"hype-vote-wrapper"}>
                 <h1 style={style}>HYPEVOTE </h1>
-            {this.props.votingList.data ? this.props.votingList.data.map(type => {
+            {this.props.votingList ? this.props.votingList.data.map(type => {
                 return (
-                    <div key={type.name}>{type.name}</div>
+                    <div key={type.name}>
+                    
+                    <div>{type.name}</div>
+                     {type.votersId.map(voter => {
+                         return (
+                             <div key={voter}>
+                             <div>{voter}</div>
+                             
+                             </div>
+                         )
+                     })}
+                    <div>{type.votersId.length}</div>
+                    </div>
                 )
             }): null} 
              <div onClick={() => this.props.closeVote()}>Close Vote</div>

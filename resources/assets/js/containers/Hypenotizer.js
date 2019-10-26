@@ -9,7 +9,7 @@ class Hypenotizer extends Component {
         super(props);
         this.state = {
             hypeLevels: [1, 2, 3, 4],     
-            votingList:[]       
+            votingList: null,       
         };
     }
   
@@ -19,16 +19,23 @@ class Hypenotizer extends Component {
     componentDidMount() {
         axios.get(`/vote/votecheck/${this.props.activeGroup}`).then(response => {
            
-            response.data.data = JSON.parse(response.data.data);
            
+            let activeVoteDetails = response.data.activeVoteDetails;
+            activeVoteDetails !== null ? 
+            
+            activeVoteDetails.data = JSON.parse(activeVoteDetails.data)
+          
+            : null ;
             this.setState({
-                votingList: response.data,
+                votingList: activeVoteDetails,
             })
+           
         })
     }
-    castVote(data) {
+
+    setUpVote(activeVoteDetails) {
        
-    const newData =    data.map( type => {
+    const newData =    activeVoteDetails.map( type => {
           return  type = {
                 name: type.type,
                 votersId: [],
@@ -43,21 +50,29 @@ class Hypenotizer extends Component {
       
         })
         .then( response => {
-            if (response.status) {
-                this.setState({
-                    votingList: response.data.data,
-                })
-            }
+
+            let activeVoteDetails = response.data.activeVoteDetails;
+            activeVoteDetails !== null ? 
             
-        },console.log(this.state.votingList));
+            activeVoteDetails.data = JSON.parse(activeVoteDetails.data)
+          
+            : null ;
+            console.log(activeVoteDetails)
+                this.setState({
+                    votingList: activeVoteDetails,
+                })
+            
+            
+        });
       
     }
     closeVote(){
 
         axios.put(`/vote/voteclose/${this.props.activeGroup}`).then( response => {
             if (response.status) {
+
                 this.setState({
-                    votingList: [],
+                    votingList: null,
                 })
             }
            
@@ -116,7 +131,7 @@ class Hypenotizer extends Component {
                        // userTypes={this.props.userTypes.sort(this.compareValues("totalHype"))}
                         group={this.props.group}
                         activeGroup={this.props.activeGroup}
-                        castVote={(data) => this.castVote(data)}
+                        setUpVote={(activeVoteDetails) => this.setUpVote(activeVoteDetails)}
                     />
                 ) : null}
 

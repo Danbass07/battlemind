@@ -14,7 +14,9 @@ class VoteController extends Controller
         $vote = $group->votes->where('active','=',true)->first();
 
            
-        return response()->json($vote);
+        return response()->json([
+            'activeVoteDetails' => $vote,
+             ]);
     }
     public function setUpVote(Request $request)
     {
@@ -32,13 +34,11 @@ class VoteController extends Controller
             ]);
             $vote = $group->votes->where('active','=',true)->first();
             }
-         else { $status = false; }
+        
     
            
         return response()->json([
-            'data' => $vote,
-             'vote' => '$vote->results',
-             'status' => $status,
+            'activeVoteDetails' => $vote,
              ]);
     }
     public function voteclose ($id) {
