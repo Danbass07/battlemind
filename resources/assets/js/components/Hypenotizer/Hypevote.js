@@ -26,7 +26,7 @@ class Hypevote extends Component {
                 return (
                     <div key={type.name}>
                     
-                    <div>{type.name}</div>
+                    <div onClick={() => this.props.castVote(type.id, this.props.user.id)}>{type.name}</div>
                      {type.votersId.map(voter => {
                          return (
                              <div key={voter}>

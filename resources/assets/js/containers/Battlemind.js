@@ -287,6 +287,9 @@ class Battlemind extends Component {
                             }
                             hypenotizer={() => this.hypenotizer()}
                             hints={this.state.hints}
+                            contains={(votersId, voterId) =>
+                                this.contains(votersId, voterId)
+                            }
                         />
                     ) : null}
 

@@ -70,12 +70,14 @@ class Hypecheck extends Component {
        
         let votingList =[...data];
         votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
+
         return (
 
             <React.Fragment>
-                {this.props.user.permissions === "admin" ? 
+                {/* {this.props.user.permissions === "admin" ?  */}
                             <div onClick={() => this.props.setUpVote(votingList.sort(this.compareValues('totalHype', false)).slice(0,3))}>
-                                 CAST VOTE </div> : null}
+                                 CAST VOTE </div>
+                                  {/* : null} */}
             
                 {group.types ? (
                     <table className="hypecheck-results-list">

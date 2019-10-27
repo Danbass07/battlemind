@@ -37,6 +37,7 @@ class Hypenotizer extends Component {
        
     const newData =    activeVoteDetails.map( type => {
           return  type = {
+                id: type.id,
                 name: type.type,
                 votersId: [],
                 winner: false,
@@ -57,7 +58,7 @@ class Hypenotizer extends Component {
             activeVoteDetails.data = JSON.parse(activeVoteDetails.data)
           
             : null ;
-            console.log(activeVoteDetails)
+          
                 this.setState({
                     votingList: activeVoteDetails,
                 })
@@ -81,6 +82,26 @@ class Hypenotizer extends Component {
        
 
     }
+    castVote(typeId, userId) {
+        let votingList = [...this.state.votingList];
+        let voteCount = 0;
+        this.state.votingList.data.map( type => { this.props.contains(type.votersId, userId) ? voteCount += +1 : null})
+        if (voteCount < 3) {
+        let data = [...this.state.votingList.data.map( type => {
+                if(type.id === typeId && !this.props.contains(type.votersId, userId)) { /// 3 votes but on different game.
+                   type.votersId.push(userId);
+                }
+                return type
+            })]
+            votingList.data = [...data];
+            this.setState({
+                votingList: votingList
+            }, console.log(this.state.votingList))
+        } else {  return }
+        // console.log(data);
+     
+      
+    }
 
     compareValues(key, ascending = false) {
         return function(a, b) {
@@ -103,6 +124,7 @@ class Hypenotizer extends Component {
             return ascending == false ? comparison * -1 : comparison;
         };
     }
+   
 
 
     render() {
@@ -137,9 +159,11 @@ class Hypenotizer extends Component {
 
                 {this.props.navigation === "Hypevote" ? (
                     <Hypevote
+                    user={this.props.user}
                     activeGroup={this.props.activeGroup}
                     votingList={this.state.votingList}
                     closeVote={() => this.closeVote()}
+                    castVote={(typeId, userId) =>this.castVote(typeId, userId)}
                     />
                 ) : null}
             </React.Fragment>

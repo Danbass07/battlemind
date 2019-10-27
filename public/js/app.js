@@ -60159,7 +60159,10 @@ var Battlemind = function (_Component) {
                         hypenotizer: function hypenotizer() {
                             return _this9.hypenotizer();
                         },
-                        hints: this.state.hints
+                        hints: this.state.hints,
+                        contains: function contains(votersId, voterId) {
+                            return _this9.contains(votersId, voterId);
+                        }
                     }) : null,
                     this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__containers_Profile__["a" /* default */], {
                         user: this.state.user,
@@ -63524,6 +63527,8 @@ var substr = 'ab'.substr(-1) === 'b'
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -63575,6 +63580,7 @@ var Hypenotizer = function (_Component) {
 
             var newData = activeVoteDetails.map(function (type) {
                 return type = {
+                    id: type.id,
                     name: type.type,
                     votersId: [],
                     winner: false
@@ -63588,7 +63594,7 @@ var Hypenotizer = function (_Component) {
 
                 var activeVoteDetails = response.data.activeVoteDetails;
                 activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
-                console.log(activeVoteDetails);
+
                 _this3.setState({
                     votingList: activeVoteDetails
                 });
@@ -63607,6 +63613,33 @@ var Hypenotizer = function (_Component) {
                     });
                 }
             });
+        }
+    }, {
+        key: "castVote",
+        value: function castVote(typeId, userId) {
+            var _this5 = this;
+
+            var votingList = [].concat(_toConsumableArray(this.state.votingList));
+            var voteCount = 0;
+            this.state.votingList.data.map(function (type) {
+                _this5.props.contains(type.votersId, userId) ? voteCount += +1 : null;
+            });
+            if (voteCount < 3) {
+                var data = [].concat(_toConsumableArray(this.state.votingList.data.map(function (type) {
+                    if (type.id === typeId && !_this5.props.contains(type.votersId, userId)) {
+                        type.votersId.push(userId);
+                    }
+                    return type;
+                })));
+                votingList.data = [].concat(_toConsumableArray(data));
+                this.setState({
+                    votingList: votingList
+                }, console.log(this.state.votingList));
+            } else {
+                return;
+            }
+            // console.log(data);
+
         }
     }, {
         key: "compareValues",
@@ -63633,7 +63666,7 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this5 = this;
+            var _this6 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
@@ -63654,10 +63687,10 @@ var Hypenotizer = function (_Component) {
                     group: this.props.groups[this.props.activeGroupIndex],
                     hypeLevels: this.state.hypeLevels,
                     hypenotizer: function hypenotizer() {
-                        return _this5.props.hypenotizer();
+                        return _this6.props.hypenotizer();
                     },
                     hypeLevelHandler: function hypeLevelHandler(e, typeId) {
-                        return _this5.props.hypeLevelHandler(e, typeId);
+                        return _this6.props.hypeLevelHandler(e, typeId);
                     },
                     activeGroup: this.props.activeGroup
                 }) : null,
@@ -63667,14 +63700,18 @@ var Hypenotizer = function (_Component) {
                     , group: this.props.group,
                     activeGroup: this.props.activeGroup,
                     setUpVote: function setUpVote(activeVoteDetails) {
-                        return _this5.setUpVote(activeVoteDetails);
+                        return _this6.setUpVote(activeVoteDetails);
                     }
                 }) : null,
                 this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
+                    user: this.props.user,
                     activeGroup: this.props.activeGroup,
                     votingList: this.state.votingList,
                     closeVote: function closeVote() {
-                        return _this5.closeVote();
+                        return _this6.closeVote();
+                    },
+                    castVote: function castVote(typeId, userId) {
+                        return _this6.castVote(typeId, userId);
                     }
                 }) : null
             );
@@ -63895,16 +63932,17 @@ var Hypecheck = function (_Component) {
 
             var votingList = [].concat(_toConsumableArray(data));
             votingList.sort(this.compareValues('totalHype', false)).slice(0, 3);
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
-                this.props.user.permissions === "admin" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { onClick: function onClick() {
                             return _this2.props.setUpVote(votingList.sort(_this2.compareValues('totalHype', false)).slice(0, 3));
                         } },
                     "CAST VOTE "
-                ) : null,
+                ),
                 group.types ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "table",
                     { className: "hypecheck-results-list" },
@@ -64021,7 +64059,9 @@ var Hypevote = function (_Component) {
                         { key: type.name },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
-                            null,
+                            { onClick: function onClick() {
+                                    return _this2.props.castVote(type.id, _this2.props.user.id);
+                                } },
                             type.name
                         ),
                         type.votersId.map(function (voter) {
