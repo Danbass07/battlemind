@@ -63564,11 +63564,21 @@ var Hypenotizer = function (_Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
+            this.getData();
+            this.interval = setInterval(function () {
+                _this2.getData();
+            }, 5000);
+        }
+    }, {
+        key: "getData",
+        value: function getData() {
+            var _this3 = this;
+
             axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
 
                 var activeVoteDetails = response.data.activeVoteDetails;
                 activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
-                _this2.setState({
+                _this3.setState({
                     votingList: activeVoteDetails
                 });
             });
@@ -63576,7 +63586,7 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "setUpVote",
         value: function setUpVote(activeVoteDetails) {
-            var _this3 = this;
+            var _this4 = this;
 
             var newData = activeVoteDetails.map(function (type) {
                 return type = {
@@ -63595,7 +63605,7 @@ var Hypenotizer = function (_Component) {
                 var activeVoteDetails = response.data.activeVoteDetails;
                 activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
 
-                _this3.setState({
+                _this4.setState({
                     votingList: activeVoteDetails
                 });
             });
@@ -63603,12 +63613,12 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "closeVote",
         value: function closeVote() {
-            var _this4 = this;
+            var _this5 = this;
 
             axios.put("/vote/voteclose/" + this.props.activeGroup).then(function (response) {
                 if (response.status) {
 
-                    _this4.setState({
+                    _this5.setState({
                         votingList: null
                     });
                 }
@@ -63617,29 +63627,33 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "castVote",
         value: function castVote(typeId, userId) {
-            var _this5 = this;
-
+            console.log(userId);
             var votingList = [].concat(_toConsumableArray(this.state.votingList));
             var voteCount = 0;
             this.state.votingList.data.map(function (type) {
-                _this5.props.contains(type.votersId, userId) ? voteCount += +1 : null;
+                console.log(type.votersId);type.votersId.includes(userId) ? voteCount += +1 : console.log('didnt pass userId check');
             });
-            if (voteCount < 3) {
+            console.log(voteCount);
+            if (voteCount < 2) {
                 var data = [].concat(_toConsumableArray(this.state.votingList.data.map(function (type) {
-                    if (type.id === typeId && !_this5.props.contains(type.votersId, userId)) {
+                    console.log(type);
+                    if (type.id === typeId && !type.votersId.includes(userId)) {
+                        /// 3 votes but on different game.
                         type.votersId.push(userId);
                     }
                     return type;
                 })));
                 votingList.data = [].concat(_toConsumableArray(data));
+                var voteData = JSON.stringify(data);
+                axios.put("/vote/castvote/" + this.props.activeGroup, {
+                    voteData: voteData
+                });
                 this.setState({
                     votingList: votingList
                 }, console.log(this.state.votingList));
             } else {
-                return;
+                console.log('vote count didnt pass');
             }
-            // console.log(data);
-
         }
     }, {
         key: "compareValues",
@@ -63712,7 +63726,8 @@ var Hypenotizer = function (_Component) {
                     },
                     castVote: function castVote(typeId, userId) {
                         return _this6.castVote(typeId, userId);
-                    }
+                    },
+                    group: this.props.group
                 }) : null
             );
         }
@@ -64065,15 +64080,19 @@ var Hypevote = function (_Component) {
                             type.name
                         ),
                         type.votersId.map(function (voter) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { key: voter },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    null,
-                                    voter
-                                )
-                            );
+                            return _this2.props.group.users.map(function (user) {
+                                if (user.id === voter) {
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "div",
+                                        { key: voter },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            "div",
+                                            null,
+                                            user.name
+                                        )
+                                    );
+                                }
+                            });
                         }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",

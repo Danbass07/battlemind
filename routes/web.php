@@ -64,4 +64,4 @@ Route::get('/types/{id}/userTypes','TypeController@userTypes' );
  Route::get('/vote/votecheck/{groupid}', 'VoteController@votecheck');
  Route::post('/vote/setUpVote', 'VoteController@setUpVote');
  Route::put('/vote/voteclose/{groupid}', 'VoteController@voteclose');
- 
+ Route::put('/vote/castvote/{groupid}', 'VoteController@castvote');

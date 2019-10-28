@@ -54,4 +54,13 @@ class VoteController extends Controller
 
         return response()->json([ 'status' => $status]);
     }
+    public function castvote (Request $request, $id)
+    {
+        $group= Group::find($id);
+        $vote = $group->votes->where('active','=',true)->first();
+        $vote->data = $request->voteData;
+        $vote->save();
+           
+        return;
+    }
 }
