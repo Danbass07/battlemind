@@ -7,8 +7,46 @@
     margin-top: 2%;
     color: white;
 }
+.hype-row{
+    display: flex;
+    border: none;
+}
 .options{
     display: flex;
     justify-content: space-around;
 
+}
+.hype-type-bubble{
+    color:$secondarycolor;
+    padding:20px;
+    border: 10px $secondarycolor ;
+    box-sizing: border-box;
+    border-style: double;
+    width: 40%;
+    height: 160px;
+    margin: 20px auto;
+    margin-right: 0;
+}
+.vote-bubble-voters-names{
+    display:flex;
+}
+.vote-bubble-voter-name{
+    font-size: 14px;
+    margin-left: 10px;
+}
+.hype-type-bubble-type-name{
+    font-size: 28px;
+}
+.hype-vote-count{
+    color:$secondarycolor;
+    padding:20px;
+    border: 10px $secondarycolor ;
+    border-style: double;
+    width: 160px;
+    height: 160px;
+    margin: 20px auto;
+    margin-left:10px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 64px;
 }

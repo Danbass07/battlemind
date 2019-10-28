@@ -64056,47 +64056,52 @@ var Hypevote = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            // voting will be cast by first who click he need to finish or cancel to let anyone else do anything but voting
-            var style = {
-                color: "white"
-            };
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "hype-vote-wrapper" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "h1",
-                    { style: style },
-                    "HYPEVOTE "
-                ),
                 this.props.votingList ? this.props.votingList.data.map(function (type) {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { key: type.name },
+                        { className: "hype-row" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
-                            { onClick: function onClick() {
-                                    return _this2.props.castVote(type.id, _this2.props.user.id);
-                                } },
-                            type.name
+                            {
+                                className: "hype-type-bubble",
+                                key: type.name
+                            },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                {
+                                    className: "hype-type-bubble-type-name",
+                                    onClick: function onClick() {
+                                        return _this2.props.castVote(type.id, _this2.props.user.id);
+                                    }
+                                },
+                                type.name
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { className: "vote-bubble-voters-names" },
+                                type.votersId.map(function (voter) {
+                                    return _this2.props.group.users.map(function (user) {
+                                        if (user.id === voter) {
+                                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                "div",
+                                                { className: "vote-bubble-voter-name", key: voter },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    "div",
+                                                    null,
+                                                    user.name
+                                                )
+                                            );
+                                        }
+                                    });
+                                })
+                            )
                         ),
-                        type.votersId.map(function (voter) {
-                            return _this2.props.group.users.map(function (user) {
-                                if (user.id === voter) {
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { key: voter },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "div",
-                                            null,
-                                            user.name
-                                        )
-                                    );
-                                }
-                            });
-                        }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
-                            null,
+                            { className: "hype-vote-count" },
                             type.votersId.length
                         )
                     );

@@ -5,48 +5,62 @@ class Hypevote extends Component {
         super(props);
         this.state = {
             data: {
-                data:[]
-            },
+                data: []
+            }
         };
     }
-    componentDidMount() {
-    
-    }
-
+    componentDidMount() {}
 
     render() {
-        // voting will be cast by first who click he need to finish or cancel to let anyone else do anything but voting
-        const style = {
-            color: "white"
-        };
         return (
             <div className={"hype-vote-wrapper"}>
-                <h1 style={style}>HYPEVOTE </h1>
-            {this.props.votingList ? this.props.votingList.data.map(type => {
-                return (
-                    <div key={type.name}>
-                    
-                    <div onClick={() => this.props.castVote(type.id, this.props.user.id)}>{type.name}</div>
-                     {type.votersId.map(voter => {
-                    return    this.props.group.users.map(user => {
-                            if(user.id === voter) {
-                                return (
-                                    <div key={voter}>
-                                    <div>{user.name}</div>
-                                    
-                                    </div>
-                                )
-                            }
-                        })
-                       
-                     })}
-                    <div>{type.votersId.length}</div>
-                    </div>
-                )
-            }): null} 
-             <div onClick={() => this.props.closeVote()}>Close Vote</div>
+                {this.props.votingList
+                    ? this.props.votingList.data.map(type => {
+                          return (
+                              <div className={"hype-row"}>
+                                  <div
+                                      className={"hype-type-bubble"}
+                                      key={type.name}
+                                  >
+                                      <div
+                                         className={"hype-type-bubble-type-name"}
+                                          onClick={() =>
+                                              this.props.castVote(
+                                                  type.id,
+                                                  this.props.user.id
+                                              )
+                                          }
+                                      >
+                                          {type.name} 
+                                          {/* type name????? */}
+                                      </div>
+                                      <div className={"vote-bubble-voters-names"}>
+                                      {type.votersId.map(voter => {
+                                          return this.props.group.users.map(
+                                              user => {
+                                                  if (user.id === voter) {
+                                                      return (
+                                                          <div className={"vote-bubble-voter-name"} key={voter}>
+                                                              <div>
+                                                                  {user.name}
+                                                              </div>
+                                                          </div>
+                                                      );
+                                                  }
+                                              }
+                                          );
+                                      })}
+                                      </div>
+                                     
+                                      
+                                  </div>
+                                  <div className={"hype-vote-count"}>{type.votersId.length}</div>
+                              </div>
+                          );
+                      })
+                    : null}
+                <div onClick={() => this.props.closeVote()}>Close Vote</div>
             </div>
-           
         );
     }
 }
