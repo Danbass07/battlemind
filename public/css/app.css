@@ -11136,7 +11136,7 @@ a:hover {
 }
 
 .hype-vote-wrapper {
-  height: 80%;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -11148,6 +11148,7 @@ a:hover {
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin-top: 2%;
+  margin-bottom: 570px;
   color: white;
   overflow: scroll;
 }
