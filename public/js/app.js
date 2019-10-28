@@ -64108,7 +64108,7 @@ var Hypevote = function (_Component) {
                 }) : null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { onClick: function onClick() {
+                    { className: "close-vote", onClick: function onClick() {
                             return _this2.props.closeVote();
                         } },
                     "Close Vote"
