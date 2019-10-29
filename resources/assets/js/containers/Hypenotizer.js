@@ -90,14 +90,14 @@ class Hypenotizer extends Component {
 
     }
     castVote(typeId, userId) {
-        console.log(userId);
+       
         let votingList = [...this.state.votingList];
         let voteCount = 0;
-        this.state.votingList.data.map( type => {    console.log(type.votersId); type.votersId.includes(userId) ? voteCount += +1 : console.log('didnt pass userId check')})
-        console.log(voteCount);
+        this.state.votingList.data.map( type => {   type.votersId.includes(userId) ? voteCount += +1 : null })
+   
         if (voteCount < 2) {
         let data = [...this.state.votingList.data.map( type => {
-            console.log(type)
+           
                 if(type.id === typeId && !type.votersId.includes(userId) ) { /// 3 votes but on different game.
                    type.votersId.push(userId);
                 }
@@ -110,8 +110,30 @@ class Hypenotizer extends Component {
             });
             this.setState({
                 votingList: votingList
-            }, console.log(this.state.votingList))
-        } else {     console.log('vote count didnt pass'); }
+            })
+        } else {  
+               
+        
+               let data = [...this.state.votingList.data.map( type => {
+           
+                if(type.id === typeId && type.votersId.includes(userId) ) { /// 3 votes but on different game.
+                   function checkVoterId(voterId) {
+                       return voterId === this.props.user.Id
+                   }
+                    type.votersId.filter(checkVoterId);
+                }
+                return type
+            })]
+            votingList.data = [...data];
+            console.log(data);
+            let voteData = JSON.stringify(data)
+            axios.put(`/vote/castvote/${this.props.activeGroup}`, {
+                voteData: voteData
+            });
+            this.setState({
+                votingList: votingList
+            })
+             }
       
      
       

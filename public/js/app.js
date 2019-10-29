@@ -63627,16 +63627,16 @@ var Hypenotizer = function (_Component) {
     }, {
         key: "castVote",
         value: function castVote(typeId, userId) {
-            console.log(userId);
+
             var votingList = [].concat(_toConsumableArray(this.state.votingList));
             var voteCount = 0;
             this.state.votingList.data.map(function (type) {
-                console.log(type.votersId);type.votersId.includes(userId) ? voteCount += +1 : console.log('didnt pass userId check');
+                type.votersId.includes(userId) ? voteCount += +1 : null;
             });
-            console.log(voteCount);
+
             if (voteCount < 2) {
                 var data = [].concat(_toConsumableArray(this.state.votingList.data.map(function (type) {
-                    console.log(type);
+
                     if (type.id === typeId && !type.votersId.includes(userId)) {
                         /// 3 votes but on different game.
                         type.votersId.push(userId);
@@ -63650,9 +63650,30 @@ var Hypenotizer = function (_Component) {
                 });
                 this.setState({
                     votingList: votingList
-                }, console.log(this.state.votingList));
+                });
             } else {
-                console.log('vote count didnt pass');
+
+                var _data = [].concat(_toConsumableArray(this.state.votingList.data.map(function (type) {
+
+                    if (type.id === typeId && type.votersId.includes(userId)) {
+                        /// 3 votes but on different game.
+                        var checkVoterId = function checkVoterId(voterId) {
+                            return voterId === this.props.user.Id;
+                        };
+
+                        type.votersId.filter(checkVoterId);
+                    }
+                    return type;
+                })));
+                votingList.data = [].concat(_toConsumableArray(_data));
+                console.log(_data);
+                var _voteData = JSON.stringify(_data);
+                axios.put("/vote/castvote/" + this.props.activeGroup, {
+                    voteData: _voteData
+                });
+                this.setState({
+                    votingList: votingList
+                });
             }
         }
     }, {
@@ -64082,7 +64103,7 @@ var Hypevote = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "div",
                                 { className: "vote-bubble-voters-names" },
-                                type.votersId.map(function (voter) {
+                                type.votersId ? type.votersId.map(function (voter) {
                                     return _this2.props.group.users.map(function (user) {
                                         if (user.id === voter) {
                                             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -64096,13 +64117,13 @@ var Hypevote = function (_Component) {
                                             );
                                         }
                                     });
-                                })
+                                }) : null
                             )
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
                             { className: "hype-vote-count" },
-                            type.votersId.length
+                            type.votersId ? type.votersId.length : null
                         )
                     );
                 }) : null,

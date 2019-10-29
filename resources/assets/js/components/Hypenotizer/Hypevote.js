@@ -35,7 +35,7 @@ class Hypevote extends Component {
                                           {/* type name????? */}
                                       </div>
                                       <div className={"vote-bubble-voters-names"}>
-                                      {type.votersId.map(voter => {
+                                      {type.votersId ? type.votersId.map(voter => {
                                           return this.props.group.users.map(
                                               user => {
                                                   if (user.id === voter) {
@@ -49,12 +49,12 @@ class Hypevote extends Component {
                                                   }
                                               }
                                           );
-                                      })}
+                                      }) : null}
                                       </div>
                                      
                                       
                                   </div>
-                                  <div className={"hype-vote-count"}>{type.votersId.length}</div>
+                                  <div className={"hype-vote-count"}>{type.votersId ? type.votersId.length : null}</div>
                               </div>
                           );
                       })
