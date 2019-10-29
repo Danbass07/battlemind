@@ -21,12 +21,12 @@ class Hypenotizer extends Component {
    this.interval = setInterval(() => {
     this.getData();
   
-  }, 5000);
+  }, 50000);
     }
     getData(){
         axios.get(`/vote/votecheck/${this.props.activeGroup}`).then(response => {
            
-           
+           console.log(response);
             let activeVoteDetails = response.data.activeVoteDetails;
             activeVoteDetails !== null ? 
             
@@ -51,6 +51,7 @@ class Hypenotizer extends Component {
             }
             
         })
+       
         axios
         .post("/vote/setUpVote", {
             data: JSON.stringify(newData),
@@ -112,18 +113,29 @@ class Hypenotizer extends Component {
                 votingList: votingList
             })
         } else {  
-               
-        
-               let data = [...this.state.votingList.data.map( type => {
+            let data = [...this.state.votingList.data];
+  
+        data.map(type => {
+            type.votersId.map( voterId => {
+               let removedIndx = data.indexOf(voterId);
+               if(typeId === type.id) {
+                type.votersId.splice(removedIndx,1);
+               }
+                
+            })
+        })
+            //    let data = [...this.state.votingList.data.map( type => {
            
-                if(type.id === typeId && type.votersId.includes(userId) ) { /// 3 votes but on different game.
-                   function checkVoterId(voterId) {
-                       return voterId === this.props.user.Id
-                   }
-                    type.votersId.filter(checkVoterId);
-                }
-                return type
-            })]
+            //     if(type.id === typeId && type.votersId.includes(userId) ) { /// 3 votes but on different game.
+                
+            //       type.votersId.map(checkVoterId => {
+            //             if (checkVoterId !== userId) {
+            //                 return type   
+            //             }
+            //         } );
+            //     }
+              
+            // })]
             votingList.data = [...data];
             console.log(data);
             let voteData = JSON.stringify(data)
@@ -164,7 +176,7 @@ class Hypenotizer extends Component {
 
 
     render() {
-     
+     console.log(this.state.votingList);
         return (
             <React.Fragment>
                     <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>

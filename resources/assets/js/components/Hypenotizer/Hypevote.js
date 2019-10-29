@@ -32,7 +32,7 @@ class Hypevote extends Component {
                                           }
                                       >
                                           {type.name} 
-                                          {/* type name????? */}
+                                          {/* type name VotingList its rearranged from group types type.type */}
                                       </div>
                                       <div className={"vote-bubble-voters-names"}>
                                       {type.votersId ? type.votersId.map(voter => {
