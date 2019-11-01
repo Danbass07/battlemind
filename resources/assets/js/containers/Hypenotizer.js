@@ -25,8 +25,7 @@ class Hypenotizer extends Component {
     }
     getData(){
         axios.get(`/vote/votecheck/${this.props.activeGroup}`).then(response => {
-           
-           console.log(response);
+ 
             let activeVoteDetails = response.data.activeVoteDetails;
             activeVoteDetails !== null ? 
             
@@ -124,20 +123,8 @@ class Hypenotizer extends Component {
                 
             })
         })
-            //    let data = [...this.state.votingList.data.map( type => {
-           
-            //     if(type.id === typeId && type.votersId.includes(userId) ) { /// 3 votes but on different game.
-                
-            //       type.votersId.map(checkVoterId => {
-            //             if (checkVoterId !== userId) {
-            //                 return type   
-            //             }
-            //         } );
-            //     }
-              
-            // })]
+     
             votingList.data = [...data];
-            console.log(data);
             let voteData = JSON.stringify(data)
             axios.put(`/vote/castvote/${this.props.activeGroup}`, {
                 voteData: voteData
@@ -176,7 +163,6 @@ class Hypenotizer extends Component {
 
 
     render() {
-     console.log(this.state.votingList);
         return (
             <React.Fragment>
                     <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>

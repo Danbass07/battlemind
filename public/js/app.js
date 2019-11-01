@@ -59892,6 +59892,7 @@ var Battlemind = function (_Component) {
                 groups: []
             },
             groups: [{}],
+
             userGroups: [{}],
             allGroups: [{}],
             activeGroup: 0,
@@ -60072,7 +60073,7 @@ var Battlemind = function (_Component) {
         value: function addUser(group) {
             var _this7 = this;
 
-            var user = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props.user.id;
+            var user = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state.user;
 
             if (!this.contains(this.state.user.groups, group)) {
                 axios.get("/groups/" + group.id + "/addUser/" + user.id).then(function () {
@@ -60087,15 +60088,34 @@ var Battlemind = function (_Component) {
             }
         }
     }, {
+        key: "addAnyUserToActiveGroup",
+        value: function addAnyUserToActiveGroup() {
+            var _this8 = this;
+
+            var user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.user;
+
+            if (!this.contains(user.groups, this.state.user.groups[this.state.activeGroupIndex])) {
+                axios.get("/groups/" + this.state.activeGroup + "/addUser/" + user.id).then(function () {
+                    _this8.getUserContent();
+                    _this8.getFriendsContent();
+                });
+            } else {
+                axios.get("/groups/" + this.state.activeGroup + "/removeUser/" + user.id).then(function () {
+                    _this8.getUserContent();
+                    _this8.getFriendsContent();
+                });
+            }
+        }
+    }, {
         key: "activeGroupChange",
         value: function activeGroupChange(id, index) {
-            var _this8 = this;
+            var _this9 = this;
 
             this.setState({
                 activeGroup: id,
                 activeGroupIndex: index
             }, function () {
-                _this8.getFriendsContent();
+                _this9.getFriendsContent();
             });
         }
     }, {
@@ -60113,16 +60133,16 @@ var Battlemind = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this9 = this;
+            var _this10 = this;
 
-            // console.log(this.state.allGroups);
-            // console.log(this.state.activeGroupIndex);
+            //    console.log(this.state.groups);
+            //  console.log(this.state.groups[this.state.activeGroupIndex]);
             return __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
                 "div",
                 { className: "battlemind" },
                 __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], {
                     button: function button(e) {
-                        return _this9.buttonHandler(e);
+                        return _this10.buttonHandler(e);
                     },
                     object: this.state.object,
                     action: this.state.action
@@ -60154,35 +60174,35 @@ var Battlemind = function (_Component) {
                         group: this.state.groups[this.state.activeGroupIndex],
                         navigation: this.state.object,
                         hypeLevelHandler: function hypeLevelHandler(e, userType) {
-                            return _this9.hypeLevelHandler(e, userType);
+                            return _this10.hypeLevelHandler(e, userType);
                         },
                         hypenotizer: function hypenotizer() {
-                            return _this9.hypenotizer();
+                            return _this10.hypenotizer();
                         },
                         hints: this.state.hints,
                         contains: function contains(votersId, voterId) {
-                            return _this9.contains(votersId, voterId);
+                            return _this10.contains(votersId, voterId);
                         }
                     }) : null,
                     this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__containers_Profile__["a" /* default */], {
                         user: this.state.user,
                         groups: this.state.groups,
                         allGroups: this.state.allGroups,
-                        group: this.state.groups[this.state.activeGroup],
+                        group: this.state.groups[this.state.activeGroupIndex],
                         activeGroup: this.state.activeGroup,
                         users: this.state.users,
                         activeGroupChange: function activeGroupChange(id, index) {
-                            return _this9.activeGroupChange(id, index);
+                            return _this10.activeGroupChange(id, index);
                         },
                         activeUser: function activeUser(groupId, userId) {
-                            return _this9.activeUser(groupId, userId);
+                            return _this10.activeUser(groupId, userId);
                         },
                         userGroups: this.state.user.groups,
                         addUser: function addUser(group, user) {
-                            return _this9.addUser(group, user);
+                            return _this10.addUser(group, user);
                         },
                         contains: function contains(userGroups, groups) {
-                            return _this9.contains(userGroups, groups);
+                            return _this10.contains(userGroups, groups);
                         },
                         hints: this.state.hints
                     }) : null,
@@ -60221,7 +60241,7 @@ var Battlemind = function (_Component) {
                     {
                         className: "hints-toggle",
                         onClick: function onClick() {
-                            return _this9.hintsToggle();
+                            return _this10.hintsToggle();
                         }
                     },
                     this.state.hints === true ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
@@ -62977,6 +62997,7 @@ var Profile = function (_Component) {
         value: function render() {
             var _this2 = this;
 
+            //console.log(this.props.group);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "workarea" },
@@ -63123,6 +63144,8 @@ var BasicUser = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -63134,89 +63157,166 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var AdminUser = function (_Component) {
     _inherits(AdminUser, _Component);
 
-    function AdminUser() {
+    function AdminUser(props) {
         _classCallCheck(this, AdminUser);
 
-        return _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
     }
 
     _createClass(AdminUser, [{
-        key: "render",
-        value: function render() {
+        key: "addYourselfToGroup",
+        value: function addYourselfToGroup() {
             var _this2 = this;
 
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "admin-group-list" },
-                    this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
+            return this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
+                // console.log(this.props.userGroups);
+                // console.log(group);
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                    {
+                        key: group.name + "groupListadmin" + index
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                            onChange: function onChange() {
+                                return _this2.props.addUser(group, _this2.props.user);
+                            },
+                            defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
+                            type: "checkbox",
+                            name: "group",
+                            value: group.id
+                        }),
+                        group.name
+                    )
+                );
+            }) : null;
+        }
+    }, {
+        key: "activateUserController",
+        value: function activateUserController() {
+            var _this3 = this;
+
+            return this.props.groups.length > 1 ? this.props.groups.map(function (group) {
+                if (group.id === _this3.props.activeGroup) {
+                    return group.users.map(function (user) {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
-                            { key: group.name + "groupListadmin" + index },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-
-                                onChange: function onChange() {
-                                    return _this2.props.addUser(group, _this2.props.user);
-                                },
-                                defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
-                                type: "checkbox",
-                                name: "group",
-                                value: group.id
-                            }),
-                            group.name
+                            { className: "", key: user.name + group.id },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
+                                    user.name
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                    onChange: function onChange() {
+                                        return _this3.props.activeUser(group.id, user.id);
+                                    },
+                                    defaultChecked: user.pivot.active ? true : false,
+                                    type: "checkbox",
+                                    name: "group",
+                                    value: user.id
+                                })
+                            )
                         );
-                    }) : null
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    });
+                }
+            }) : null;
+        }
+    }, {
+        key: "addAnyUserToGroup",
+        value: function addAnyUserToGroup() {
+            var _this4 = this;
+
+            if (this.props.group && this.props.group.users) {
+                var groupUsersIds = [].concat(_toConsumableArray(this.props.group.users.map(function (user) {
+                    return user.id;
+                })));
+                console.log(groupUsersIds);
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "admin-group-list" },
-                    this.props.groups.length > 1 ? this.props.groups.map(function (group) {
-                        if (group.id === _this2.props.activeGroup) {
-                            return group.users.map(function (user) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                                    { key: user.name + group.id },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        null,
-                                        user.name
-                                    ),
+                    { className: "name-list" },
+                    this.props.users.length ? this.props.users.map(function (user, index) {
+
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            {
+                                className: "name-list-element",
+                                key: user.name + "groupListadmin" + index
+                            },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
                                         onChange: function onChange() {
-                                            return _this2.props.activeUser(group.id, user.id);
+                                            return _this4.props.addAnyUserToActiveGroup(user.id);
                                         },
-                                        defaultChecked: user.pivot.active ? true : false,
+                                        defaultChecked: groupUsersIds.filter(function (id) {
+                                            return id === user.id;
+                                        }).length < 1 ? false : true,
                                         type: "checkbox",
                                         name: "group",
                                         value: user.id
-                                    })
-                                );
-                            });
-                        }
+                                    }),
+                                    user.name
+                                )
+                            )
+                        );
                     }) : null
+                );
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "profile-grid " },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "admin-group-list div1" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "h4",
+                        null,
+                        "Add YourSelf To Group"
+                    ),
+                    this.addYourselfToGroup()
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "admin-group-list" },
-                    this.props.users.length ? this.props.users.map(function (user, index) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { key: user.name + "groupListadmin" + index },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-
-                                onChange: function onChange() {
-                                    return _this2.props.addUser(_this2.props.group);
-                                },
-                                defaultChecked: _this2.props.contains(_this2.props.userGroups, user) ? true : false,
-                                type: "checkbox",
-                                name: "group",
-                                value: user.id
-                            }),
-                            user.name
-                        );
-                    }) : null
+                    { className: "admin-group-list div2" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "h4",
+                        null,
+                        "Active/Nonactie UserController"
+                    ),
+                    this.activateUserController()
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "admin-group-list div3" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "h4",
+                        null,
+                        "Empty Slot"
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "admin-group-list div4" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "h4",
+                        null,
+                        "Add Any User To Group"
+                    ),
+                    this.addAnyUserToGroup()
                 )
             );
         }
@@ -63576,7 +63676,6 @@ var Hypenotizer = function (_Component) {
 
             axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
 
-                console.log(response);
                 var activeVoteDetails = response.data.activeVoteDetails;
                 activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
                 _this3.setState({
@@ -63664,20 +63763,8 @@ var Hypenotizer = function (_Component) {
                         }
                     });
                 });
-                //    let data = [...this.state.votingList.data.map( type => {
 
-                //     if(type.id === typeId && type.votersId.includes(userId) ) { /// 3 votes but on different game.
-
-                //       type.votersId.map(checkVoterId => {
-                //             if (checkVoterId !== userId) {
-                //                 return type   
-                //             }
-                //         } );
-                //     }
-
-                // })]
                 votingList.data = [].concat(_toConsumableArray(_data));
-                console.log(_data);
                 var _voteData = JSON.stringify(_data);
                 axios.put("/vote/castvote/" + this.props.activeGroup, {
                     voteData: _voteData
@@ -63714,7 +63801,6 @@ var Hypenotizer = function (_Component) {
         value: function render() {
             var _this6 = this;
 
-            console.log(this.state.votingList);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
@@ -63919,10 +64005,7 @@ var Hypecheck = function (_Component) {
     _createClass(Hypecheck, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
-                // console.log(response.data)
-                // console.log(this.props.activeGroup)
-            });
+            axios.get("/vote/votecheck/" + this.props.activeGroup);
         }
     }, {
         key: "compareValues",
@@ -64095,12 +64178,12 @@ var Hypevote = function (_Component) {
                 this.props.votingList ? this.props.votingList.data.map(function (type) {
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "hype-row" },
+                        { className: "hype-row", key: type.name },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
                             {
-                                className: "hype-type-bubble",
-                                key: type.name
+                                className: "hype-type-bubble"
+
                             },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "div",

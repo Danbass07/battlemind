@@ -31,6 +31,7 @@ class Battlemind extends Component {
                 groups: []
             },
             groups: [{}],
+          
             userGroups: [{}],
             allGroups:[{}],
             activeGroup: 0,
@@ -209,7 +210,7 @@ class Battlemind extends Component {
         }
     }
 
-    addUser(group, user=this.props.user.id) {
+    addUser(group, user=this.state.user) {
         if (!this.contains(this.state.user.groups, group)) {
             axios.get(`/groups/${group.id}/addUser/${user.id}`).then(() => {
                 this.getUserContent();
@@ -217,6 +218,19 @@ class Battlemind extends Component {
             });
         } else {
             axios.get(`/groups/${group.id}/removeUser/${user.id}`).then(() => {
+                this.getUserContent();
+                this.getFriendsContent();
+            });
+        }
+    }
+    addAnyUserToActiveGroup(user=this.state.user) {
+        if (!this.contains(user.groups, this.state.user.groups[this.state.activeGroupIndex])) {
+            axios.get(`/groups/${this.state.activeGroup}/addUser/${user.id}`).then(() => {
+                this.getUserContent();
+                this.getFriendsContent();
+            });
+        } else {
+            axios.get(`/groups/${this.state.activeGroup}/removeUser/${user.id}`).then(() => {
                 this.getUserContent();
                 this.getFriendsContent();
             });
@@ -244,8 +258,8 @@ class Battlemind extends Component {
 
     render() {
          
-         // console.log(this.state.allGroups);
-          // console.log(this.state.activeGroupIndex);
+    //    console.log(this.state.groups);
+         //  console.log(this.state.groups[this.state.activeGroupIndex]);
         return (
             <div className="battlemind">
                 <Navigation
@@ -272,6 +286,7 @@ class Battlemind extends Component {
                     ></Route>
 
                     {this.state.action === "hype" ? (
+                        
                         <Hypenotizer
                             user={this.state.user}
                             activeGroup={this.state.activeGroup}
@@ -298,7 +313,7 @@ class Battlemind extends Component {
                             user={this.state.user}
                             groups={this.state.groups}
                             allGroups={this.state.allGroups}
-                            group={this.state.groups[this.state.activeGroup]}
+                            group={this.state.groups[this.state.activeGroupIndex]}
                             activeGroup={this.state.activeGroup}
                             users={this.state.users}
                             activeGroupChange={(id, index) => this.activeGroupChange(id, index)}

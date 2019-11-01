@@ -17,10 +17,10 @@ class Hypevote extends Component {
                 {this.props.votingList
                     ? this.props.votingList.data.map(type => {
                           return (
-                              <div className={"hype-row"}>
+                              <div className={"hype-row"}  key={type.name}>
                                   <div
                                       className={"hype-type-bubble"}
-                                      key={type.name}
+                                     
                                   >
                                       <div
                                          className={"hype-type-bubble-type-name"}
