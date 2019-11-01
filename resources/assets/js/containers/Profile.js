@@ -55,7 +55,7 @@ class Profile extends Component {
                     group={this.props.group}
                     activeGroup={this.props.activeGroup}
                     activeUser={(groupId, userId) => this.props.activeUser(groupId, userId)}
-
+                    addAnyUserToActiveGroup={(userId) => this.props.addAnyUserToActiveGroup(userId)}
 
                     types={this.props.types}
                     userGroups={this.props.user.groups}

@@ -60065,7 +60065,7 @@ var Battlemind = function (_Component) {
                 }
                 return false;
             } else {
-                console.log(a);
+                // console.log(a);
             }
         }
     }, {
@@ -60089,12 +60089,15 @@ var Battlemind = function (_Component) {
         }
     }, {
         key: "addAnyUserToActiveGroup",
-        value: function addAnyUserToActiveGroup() {
+        value: function addAnyUserToActiveGroup(user) {
             var _this8 = this;
 
-            var user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.user;
-
-            if (!this.contains(user.groups, this.state.user.groups[this.state.activeGroupIndex])) {
+            var groupUsersIds = [].concat(_toConsumableArray(this.state.groups[this.state.activeGroupIndex].users.map(function (user) {
+                return user.id;
+            })));
+            if (groupUsersIds.filter(function (id) {
+                return id === user.id;
+            }).length < 1) {
                 axios.get("/groups/" + this.state.activeGroup + "/addUser/" + user.id).then(function () {
                     _this8.getUserContent();
                     _this8.getFriendsContent();
@@ -60204,7 +60207,10 @@ var Battlemind = function (_Component) {
                         contains: function contains(userGroups, groups) {
                             return _this10.contains(userGroups, groups);
                         },
-                        hints: this.state.hints
+                        hints: this.state.hints,
+                        addAnyUserToActiveGroup: function addAnyUserToActiveGroup(userId) {
+                            return _this10.addAnyUserToActiveGroup(userId);
+                        }
                     }) : null,
                     this.state.action === "event" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event__["a" /* default */], {
                         scoreboards: this.state.userScoreboards,
@@ -63031,6 +63037,9 @@ var Profile = function (_Component) {
                             activeUser: function activeUser(groupId, userId) {
                                 return _this2.props.activeUser(groupId, userId);
                             },
+                            addAnyUserToActiveGroup: function addAnyUserToActiveGroup(userId) {
+                                return _this2.props.addAnyUserToActiveGroup(userId);
+                            },
 
                             types: _this2.props.types,
                             userGroups: _this2.props.user.groups,
@@ -63160,7 +63169,17 @@ var AdminUser = function (_Component) {
     function AdminUser(props) {
         _classCallCheck(this, AdminUser);
 
-        return _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
+
+        _this.state = {
+
+            usersSelected: [{
+                id: 0,
+                name: 'test'
+            }]
+
+        };
+        return _this;
     }
 
     _createClass(AdminUser, [{
@@ -63194,6 +63213,22 @@ var AdminUser = function (_Component) {
             }) : null;
         }
     }, {
+        key: "addUser",
+        value: function addUser(user) {
+            var usersAdded = [].concat(_toConsumableArray(this.state.usersSelected));
+            var usersAddedId = [].concat(_toConsumableArray(this.state.usersSelected.map(function (user) {
+                return user.id;
+            })));
+            usersAddedId.filter(function (id) {
+                return id === user.id;
+            }).length < 1 ? usersAdded.push(user) : null;
+            console.log(usersAdded);
+            console.log(user);
+            this.setState({
+                usersSelected: usersAdded
+            });
+        }
+    }, {
         key: "activateUserController",
         value: function activateUserController() {
             var _this3 = this;
@@ -63209,7 +63244,9 @@ var AdminUser = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "div",
-                                    null,
+                                    { onClick: function onClick() {
+                                            return _this3.addUser(user);
+                                        } },
                                     user.name
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
@@ -63236,7 +63273,7 @@ var AdminUser = function (_Component) {
                 var groupUsersIds = [].concat(_toConsumableArray(this.props.group.users.map(function (user) {
                     return user.id;
                 })));
-                console.log(groupUsersIds);
+
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "name-list" },
@@ -63256,7 +63293,7 @@ var AdminUser = function (_Component) {
                                     null,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
                                         onChange: function onChange() {
-                                            return _this4.props.addAnyUserToActiveGroup(user.id);
+                                            return _this4.props.addAnyUserToActiveGroup(user);
                                         },
                                         defaultChecked: groupUsersIds.filter(function (id) {
                                             return id === user.id;
@@ -63277,46 +63314,65 @@ var AdminUser = function (_Component) {
         key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "profile-grid " },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "admin-group-list div1" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "h4",
-                        null,
-                        "Add YourSelf To Group"
-                    ),
-                    this.addYourselfToGroup()
+                    { className: "action-screen" },
+                    this.state.usersSelected.map(function (user) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                            { key: user.id + user.name },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                null,
+                                user.name
+                            )
+                        );
+                    })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "admin-group-list div2" },
+                    { className: "profile-grid " },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "h4",
-                        null,
-                        "Active/Nonactie UserController"
+                        "div",
+                        { className: "admin-group-list div1" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Add YourSelf To Group"
+                        ),
+                        this.addYourselfToGroup()
                     ),
-                    this.activateUserController()
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "admin-group-list div3" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "h4",
-                        null,
-                        "Empty Slot"
+                        "div",
+                        { className: "admin-group-list div2" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Active/Nonactie UserController"
+                        ),
+                        this.activateUserController()
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "admin-group-list div3" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Empty Slot"
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "admin-group-list div4" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Add Any User To Group"
+                        ),
+                        this.addAnyUserToGroup()
                     )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "admin-group-list div4" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "h4",
-                        null,
-                        "Add Any User To Group"
-                    ),
-                    this.addAnyUserToGroup()
                 )
             );
         }

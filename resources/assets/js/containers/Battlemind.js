@@ -206,7 +206,7 @@ class Battlemind extends Component {
             }
             return false;
         } else {
-            console.log(a);
+           // console.log(a);
         }
     }
 
@@ -223,9 +223,10 @@ class Battlemind extends Component {
             });
         }
     }
-    addAnyUserToActiveGroup(user=this.state.user) {
-        if (!this.contains(user.groups, this.state.user.groups[this.state.activeGroupIndex])) {
-            axios.get(`/groups/${this.state.activeGroup}/addUser/${user.id}`).then(() => {
+    addAnyUserToActiveGroup(user) {
+        let groupUsersIds = [...this.state.groups[this.state.activeGroupIndex].users.map(user => user.id)];
+        if (groupUsersIds.filter(id => id === user.id ).length < 1) {
+           axios.get(`/groups/${this.state.activeGroup}/addUser/${user.id}`).then(() => {
                 this.getUserContent();
                 this.getFriendsContent();
             });
@@ -235,6 +236,7 @@ class Battlemind extends Component {
                 this.getFriendsContent();
             });
         }
+     
     }
     activeGroupChange(id, index) {
         this.setState(
@@ -326,6 +328,7 @@ class Battlemind extends Component {
                                 this.contains(userGroups, groups)
                             }
                             hints={this.state.hints}
+                            addAnyUserToActiveGroup={(userId) => this.addAnyUserToActiveGroup(userId)}
                         />
                     ) : null}
 
