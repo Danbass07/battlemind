@@ -69,7 +69,8 @@ class Profile extends Component {
                        
                       
                
-                } else {
+                } else if (group.id === this.props.activeGroup && 
+                    group.pivot.permissions === 'basic') {
                     <BasicUser 
                     key={group.id+'basic'}
                     user={this.props.user}

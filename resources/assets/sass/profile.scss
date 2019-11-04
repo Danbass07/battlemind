@@ -69,3 +69,28 @@
     width:40%;
     color:$secondarycolor;
 }
+.action-screen {
+    display:flex;
+    height: 300px;
+    width: 95%;
+    color:$maincolor;
+    background-color: darken($secondarycolor, 20%);
+    font-size: 18px;
+    margin: auto;
+    border: 10px double darken($secondarycolor, 10%);
+}
+.action-screen-list{
+ border: 1px solid black;
+ width:70%;
+ height: 100%;
+}
+.action-screen-actions-list{
+    border: 1px solid black;
+    width:30%;
+    height: 100%;
+}
+.action-button{
+    margin: 5px 5px;
+    font-size:14px;
+    border: 3px double $maincolor;
+}

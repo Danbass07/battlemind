@@ -63051,7 +63051,7 @@ var Profile = function (_Component) {
                             },
                             hints: _this2.props.hints
                         });
-                    } else {
+                    } else if (group.id === _this2.props.activeGroup && group.pivot.permissions === 'basic') {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__["a" /* default */], {
                             key: group.id + 'basic',
                             user: _this2.props.user,
@@ -63222,8 +63222,7 @@ var AdminUser = function (_Component) {
             usersAddedId.filter(function (id) {
                 return id === user.id;
             }).length < 1 ? usersAdded.push(user) : null;
-            console.log(usersAdded);
-            console.log(user);
+
             this.setState({
                 usersSelected: usersAdded
             });
@@ -63238,7 +63237,7 @@ var AdminUser = function (_Component) {
                     return group.users.map(function (user) {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
-                            { className: "", key: user.name + group.id },
+                            { className: "admin-group-list", key: user.name + group.id },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                                 null,
@@ -63319,17 +63318,64 @@ var AdminUser = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "action-screen" },
-                    this.state.usersSelected.map(function (user) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                            { key: user.id + user.name },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                null,
-                                user.name
-                            )
-                        );
-                    })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "action-screen-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "List of Users to do an action"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "screen-group-list" },
+                            this.state.usersSelected.map(function (user) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                    { key: user.id + user.name },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "div",
+                                        null,
+                                        user.name
+                                    )
+                                );
+                            })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "action-screen-actions-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Action to do"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "action-button" },
+                            "Paid Subs Today"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "action-button" },
+                            "Will pay next time"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "action-button" },
+                            "Create Tournament"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "action-button" },
+                            "Create Painting Competition"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "action-button" },
+                            "Send them to the Moont"
+                        )
+                    )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",

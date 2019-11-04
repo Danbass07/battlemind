@@ -11164,6 +11164,37 @@ a:hover {
   color: #009625;
 }
 
+.action-screen {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 300px;
+  width: 95%;
+  color: #000000;
+  background-color: #00300c;
+  font-size: 18px;
+  margin: auto;
+  border: 10px double #006318;
+}
+
+.action-screen-list {
+  border: 1px solid black;
+  width: 70%;
+  height: 100%;
+}
+
+.action-screen-actions-list {
+  border: 1px solid black;
+  width: 30%;
+  height: 100%;
+}
+
+.action-button {
+  margin: 5px 5px;
+  font-size: 14px;
+  border: 3px double #000000;
+}
+
 .hype-wrapper {
   height: 60%;
   border: solid 2px red;
