@@ -15889,7 +15889,7 @@ var generatePath = function generatePath() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(39);
-module.exports = __webpack_require__(123);
+module.exports = __webpack_require__(124);
 
 
 /***/ }),
@@ -59836,8 +59836,8 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Event__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Result__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__containers_Profile__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_FlashMessage__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__containers_Hypenotizer__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_FlashMessage__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__containers_Hypenotizer__ = __webpack_require__(120);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -62977,6 +62977,7 @@ var Result = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile_SuperUser__ = __webpack_require__(117);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -62984,6 +62985,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -63003,7 +63005,6 @@ var Profile = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            //console.log(this.props.group);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "workarea" },
@@ -63025,7 +63026,9 @@ var Profile = function (_Component) {
                     }) : null
                 ),
                 this.props.user.groups.map(function (group) {
+
                     if (group.id === _this2.props.activeGroup && group.pivot.permissions === 'admin') {
+
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__["a" /* default */], {
                             key: group.id + 'admin',
                             user: _this2.props.user,
@@ -63051,8 +63054,35 @@ var Profile = function (_Component) {
                             },
                             hints: _this2.props.hints
                         });
-                    } else if (group.id === _this2.props.activeGroup && group.pivot.permissions === 'basic') {
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__["a" /* default */], {
+                    } else if (group.id === _this2.props.activeGroup && group.pivot.permissions === 'superuser') {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Profile_SuperUser__["a" /* default */], {
+                            key: group.id + 'admin',
+                            user: _this2.props.user,
+                            groups: _this2.props.groups,
+                            allGroups: _this2.props.allGroups,
+                            users: _this2.props.users,
+                            group: _this2.props.group,
+                            activeGroup: _this2.props.activeGroup,
+                            activeUser: function activeUser(groupId, userId) {
+                                return _this2.props.activeUser(groupId, userId);
+                            },
+                            addAnyUserToActiveGroup: function addAnyUserToActiveGroup(userId) {
+                                return _this2.props.addAnyUserToActiveGroup(userId);
+                            },
+
+                            types: _this2.props.types,
+                            userGroups: _this2.props.user.groups,
+                            addUser: function addUser(group, user) {
+                                return _this2.props.addUser(group, user);
+                            },
+                            contains: function contains(userGroups, groups) {
+                                return _this2.props.contains(userGroups, groups);
+                            },
+                            hints: _this2.props.hints
+                        });
+                    } else {
+
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__["a" /* default */], {
                             key: group.id + 'basic',
                             user: _this2.props.user,
                             groups: _this2.props.groups,
@@ -63146,6 +63176,350 @@ var BasicUser = function (_Component) {
 
 /***/ }),
 /* 116 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AdminUser = function (_Component) {
+    _inherits(AdminUser, _Component);
+
+    function AdminUser(props) {
+        _classCallCheck(this, AdminUser);
+
+        var _this = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
+
+        _this.state = {
+            usersSelected: [],
+            toggle: false,
+            action: "userList"
+        };
+        return _this;
+    }
+
+    _createClass(AdminUser, [{
+        key: "actionController",
+        value: function actionController(action) {
+            this.setState({
+                action: action
+            });
+        }
+    }, {
+        key: "displayTournament",
+        value: function displayTournament() {
+
+            function shuffle(array) {
+                var currentIndex = array.length,
+                    temporaryValue,
+                    randomIndex;
+
+                // While there remain elements to shuffle...
+                while (0 !== currentIndex) {
+
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // And swap it with the current element.
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+
+                return array;
+            }
+            var tournament = [].concat(_toConsumableArray(this.state.usersSelected));
+            if (tournament.length % 2 !== 0) {
+                tournament.push({ name: 'Bye - Free Win' });
+            }
+
+            console.log(shuffle(tournament));
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "action-screen-list" },
+                tournament.map(function (user, index) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { key: user.name + user.id,
+                            className: index % 2 == 0 ? null : "even" },
+                        user.name
+                    );
+                })
+            );
+        }
+    }, {
+        key: "addYourselfToGroup",
+        value: function addYourselfToGroup() {
+            var _this2 = this;
+
+            return this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
+                // console.log(this.props.userGroups);
+                // console.log(group);
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                    {
+                        key: group.name + "groupListadmin" + index
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                            onChange: function onChange() {
+                                return _this2.props.addUser(group, _this2.props.user);
+                            },
+                            defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
+                            type: "checkbox",
+                            name: "group",
+                            value: group.id
+                        }),
+                        group.name
+                    )
+                );
+            }) : null;
+        }
+    }, {
+        key: "addUser",
+        value: function addUser(user) {
+            var usersAdded = [].concat(_toConsumableArray(this.state.usersSelected));
+            var usersAddedId = [].concat(_toConsumableArray(this.state.usersSelected.map(function (user) {
+                return user.id;
+            })));
+            usersAddedId.filter(function (id) {
+                return id === user.id;
+            }).length < 1 ? usersAdded.push(user) : null;
+
+            this.setState({
+                usersSelected: usersAdded
+            });
+        }
+    }, {
+        key: "activateUserController",
+        value: function activateUserController() {
+            var _this3 = this;
+
+            return this.props.groups.length > 0 ? this.props.groups.map(function (group) {
+                if (group.id === _this3.props.activeGroup) {
+                    return group.users.map(function (user) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "", key: user.name + group.id },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { className: "user-list-element" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
+                                    "Active"
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                    onChange: function onChange() {
+                                        return _this3.props.activeUser(group.id, user.id);
+                                    },
+                                    defaultChecked: user.pivot.active ? true : false,
+                                    type: "checkbox",
+                                    name: "group",
+                                    value: user.id
+                                })
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { className: "user-list-element" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    { onClick: function onClick() {
+                                            return _this3.addUser(user);
+                                        } },
+                                    user.name
+                                )
+                            )
+                        );
+                    });
+                }
+            }) : null;
+        }
+    }, {
+        key: "addAnyUserToGroup",
+        value: function addAnyUserToGroup() {
+            var _this4 = this;
+
+            if (this.props.group && this.props.group.users) {
+                var groupUsersIds = [].concat(_toConsumableArray(this.props.group.users.map(function (user) {
+                    return user.id;
+                })));
+
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "name-list" },
+                    this.props.users.length ? this.props.users.map(function (user, index) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            {
+                                className: "name-list-element",
+                                key: user.name + "groupListadmin" + index
+                            },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                        onChange: function onChange() {
+                                            return _this4.props.addAnyUserToActiveGroup(user);
+                                        },
+                                        defaultChecked: groupUsersIds.filter(function (id) {
+                                            return id === user.id;
+                                        }).length < 1 ? false : true,
+                                        type: "checkbox",
+                                        name: "group",
+                                        value: user.id
+                                    }),
+                                    user.name
+                                )
+                            )
+                        );
+                    }) : null
+                );
+            }
+        }
+    }, {
+        key: "toggle",
+        value: function toggle() {
+            this.setState({
+                toggle: !this.state.toggle
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this5 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "action-screen" },
+                    this.state.action === "userList" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "action-screen-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "List of Users to do an action"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "screen-group-list" },
+                            this.state.usersSelected.map(function (user) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                    {
+                                        key: user.id + user.name
+                                    },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "div",
+                                        null,
+                                        user.name
+                                    )
+                                );
+                            })
+                        )
+                    ) : this.displayTournament(),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "action-screen-actions-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Action to do"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "action-button" },
+                            "Paid Subs Today"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "action-button" },
+                            "Will pay next time"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            {
+                                onClick: function onClick() {
+                                    return _this5.actionController("tournament");
+                                },
+                                className: "action-button"
+                            },
+                            "Create Tournament"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "action-button" },
+                            "Create Painting Competition"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "action-button" },
+                            "Send them to the Moon"
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                        className: this.state.toggle ? "admin-users-list-wrapper" : "admin-users-list-wrapper hidden"
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "admin-users-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Choose User by clicking his name. Mark him as active"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "user-list" },
+                            this.activateUserController()
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                        onClick: function onClick() {
+                            return _this5.toggle();
+                        },
+                        className: "admin-users-list-button"
+                    },
+                    "Toggle Group Users List"
+                )
+            );
+        }
+    }]);
+
+    return AdminUser;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (AdminUser);
+
+/***/ }),
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63382,7 +63756,7 @@ var AdminUser = function (_Component) {
                     { className: "profile-grid " },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "admin-group-list div1" },
+                        { className: "superuser-group-list div1" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "h4",
                             null,
@@ -63392,7 +63766,7 @@ var AdminUser = function (_Component) {
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "admin-group-list div2" },
+                        { className: "superuser-group-list div2" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "h4",
                             null,
@@ -63402,7 +63776,7 @@ var AdminUser = function (_Component) {
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "admin-group-list div3" },
+                        { className: "superuser-group-list div3" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "h4",
                             null,
@@ -63411,7 +63785,7 @@ var AdminUser = function (_Component) {
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "admin-group-list div4" },
+                        { className: "superuser-group-list div4" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "h4",
                             null,
@@ -63430,13 +63804,13 @@ var AdminUser = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (AdminUser);
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_path__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -63485,7 +63859,7 @@ var FlashMessage = function (_Component) {
 /* unused harmony default export */ var _unused_webpack_default_export = (FlashMessage);
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -63716,15 +64090,15 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)))
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -63960,7 +64334,7 @@ var Hypenotizer = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Hypenotizer);
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63997,7 +64371,7 @@ var Hypeset = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "button",
                     {
-                        className: "hype-button",
+                        className: "mega-button",
                         onClick: function onClick() {
                             return _this2.props.hypenotizer();
                         }
@@ -64007,55 +64381,60 @@ var Hypeset = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "hype-wrapper" },
-                    Array.isArray(this.props.group.users) ? this.props.group.users.map(function (user) {
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "hype-list" },
+                        Array.isArray(this.props.group.users) ? this.props.group.users.map(function (user) {
 
-                        return user.types.map(function (type) {
+                            return user.types.map(function (type) {
 
-                            if (type.group_id === _this2.props.activeGroup && type.pivot.user_id === _this2.props.user.id) {
+                                if (type.group_id === _this2.props.activeGroup && type.pivot.user_id === _this2.props.user.id) {
 
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    { className: "hype-row", key: type.type },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         "div",
-                                        { className: "hype-row-element" },
-                                        type.type
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "hype-row-element" },
+                                        { className: "hype-set-row", key: type.type },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "select",
-                                            {
-                                                onChange: function onChange(e) {
-                                                    return _this2.props.hypeLevelHandler(e, type.id);
-                                                }
-                                            },
+                                            "div",
+                                            { className: "hype-row-element" },
+                                            type.type
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            "div",
+                                            { className: "hype-row-element" },
                                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                "option",
+                                                "select",
                                                 {
-                                                    key: "default" + type.type,
-                                                    defaultValue: type.pivot.hype
+                                                    className: 'hype-options',
+                                                    onChange: function onChange(e) {
+                                                        return _this2.props.hypeLevelHandler(e, type.id);
+                                                    }
                                                 },
-                                                type.pivot.hype
-                                            ),
-                                            ")",
-                                            _this2.props.hypeLevels.map(function (level, index) {
-                                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                     "option",
                                                     {
-                                                        key: type.type + index,
-                                                        value: level
+                                                        key: "default" + type.type,
+                                                        defaultValue: type.pivot.hype
                                                     },
-                                                    level
-                                                );
-                                            })
+                                                    type.pivot.hype
+                                                ),
+                                                ")",
+                                                _this2.props.hypeLevels.map(function (level, index) {
+                                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        "option",
+                                                        {
+                                                            key: type.type + index,
+                                                            value: level
+                                                        },
+                                                        level
+                                                    );
+                                                })
+                                            )
                                         )
-                                    )
-                                );
-                            }
-                        });
-                    }) : null
+                                    );
+                                }
+                            });
+                        }) : null
+                    )
                 )
             );
         }
@@ -64067,7 +64446,7 @@ var Hypeset = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Hypeset);
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64234,7 +64613,7 @@ var Hypecheck = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Hypecheck);
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64326,7 +64705,7 @@ var Hypevote = function (_Component) {
                 }) : null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "close-vote", onClick: function onClick() {
+                    { className: "mega-button", onClick: function onClick() {
                             return _this2.props.closeVote();
                         } },
                     "Close Vote"
@@ -64341,7 +64720,7 @@ var Hypevote = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Hypevote);
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -1,23 +1,31 @@
 .hype-wrapper {
     height: 60%;
-    border: solid 2px red;
     overflow: scroll;
+    margin:auto auto;
     margin-bottom: 200px;
+    width:max-content;
+    font-size: 26px;
 
 }
-.hype-button {
-    width: 100%;
-    background-color: lemonchiffon;
-    height: 60px;
+
+.hype-set-row {
+    display:flex;
+    border-bottom: 1px solid $secondarycolor;   
+
 }
-.hype-row {
-    display: flex;
-    width: 100%;
-    background-color: black;
-    color: wheat;
-    font-size: 26px;
-    border: 1px solid wheat;
-}
+
 .hype-row-element {
     margin-left: auto;
+    color: $secondarycolor;
+}
+
+.hype-list {
+    margin-top: 20px;
+}
+.hype-options{
+    background-color: $secondarycolor;
+    border: 2px dotted $maincolor;
+    border-radius: 50%;
+    height: 38px;
+    margin-left:15px;
 }

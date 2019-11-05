@@ -10564,11 +10564,21 @@ a:visited {
   color: #000000;
   min-height: 60px;
   width: 50px;
-  position: absolute;
-  top: 55vh;
-  left: 0;
+  position: fixed;
+  bottom: 39px;
+  right: 0;
   z-index: 1;
   text-align: center;
+}
+
+.mega-button {
+  width: 100%;
+  height: 80px;
+  background-color: #009625;
+  color: #000000;
+  font-size: 32px;
+  text-align: center;
+  border: none;
 }
 
 /* Madia */
@@ -11064,70 +11074,12 @@ a:hover {
   display: flex;
 }
 
-.profile-grid {
-  height: 50px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-}
-
-.div1 {
-  grid-area: 1 / 1 / 2 / 2;
-}
-
-.div2 {
-  grid-area: 1 / 2 / 2 / 3;
-}
-
-.div3 {
-  grid-area: 1 / 3 / 2 / 4;
-}
-
-.div4 {
-  grid-area: 2 / 1 / 3 / 4;
-}
-
-.div5 {
-  grid-area: 3 / 1 / 4 / 2;
-}
-
-.div6 {
-  grid-area: 3 / 2 / 4 / 3;
-}
-
-.div7 {
-  grid-area: 3 / 3 / 4 / 4;
-}
-
-.name-list-element {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 10px;
-  border: 1px solid #009625;
-  margin-left: 25px;
-}
-
-.admin-group-list {
+.superuser-group-list {
   background-color: #000000;
   color: #009625;
   border: 1px solid #009625;
   padding: 15px;
   margin: 5px 5px;
-}
-
-.name-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
 }
 
 .group-list {
@@ -11168,7 +11120,7 @@ a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 300px;
+  height: 400px;
   width: 95%;
   color: #000000;
   background-color: #00300c;
@@ -11197,30 +11149,37 @@ a:hover {
 
 .hype-wrapper {
   height: 60%;
-  border: solid 2px red;
   overflow: scroll;
+  margin: auto auto;
   margin-bottom: 200px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  font-size: 26px;
 }
 
-.hype-button {
-  width: 100%;
-  background-color: lemonchiffon;
-  height: 60px;
-}
-
-.hype-row {
+.hype-set-row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
-  background-color: black;
-  color: wheat;
-  font-size: 26px;
-  border: 1px solid wheat;
+  border-bottom: 1px solid #009625;
 }
 
 .hype-row-element {
   margin-left: auto;
+  color: #009625;
+}
+
+.hype-list {
+  margin-top: 20px;
+}
+
+.hype-options {
+  background-color: #009625;
+  border: 2px dotted #000000;
+  border-radius: 50%;
+  height: 38px;
+  margin-left: 15px;
 }
 
 .hype-vote-wrapper {
@@ -11298,15 +11257,6 @@ a:hover {
   font-size: 64px;
 }
 
-.close-vote {
-  widows: 100%;
-  height: 80px;
-  background-color: #009625;
-  color: #000000;
-  font-size: 48px;
-  text-align: center;
-}
-
 @media only screen and (max-width: 550px) {
   .hype-type-bubble {
     height: 220px;
@@ -11362,6 +11312,111 @@ a:hover {
   border: solid 1px #009625;
   border-radius: 25px;
   padding: 15px;
+}
+
+.admin-users-list-wrapper {
+  position: fixed;
+  top: 5px;
+  z-index: 10;
+}
+
+.admin-users-list-button {
+  position: fixed;
+  height: 30px;
+  font-size: 18px;
+  background-color: #009625;
+  color: #000000;
+  z-index: 3;
+  bottom: 54px;
+  left: 20%;
+}
+
+.hidden {
+  display: none;
+}
+
+.admin-group-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #000000;
+  color: #009625;
+  border: 1px solid #009625;
+  padding: 15px;
+  margin: 5px auto;
+  width: 95%;
+}
+
+.admin-users-list {
+  background-color: #000000;
+  color: #009625;
+  border: 1px solid #009625;
+  padding: 15px;
+  margin: 5px auto;
+  width: 95%;
+}
+
+.user-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.user-list-element {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 10px;
+  border: 1px solid #009625;
+  margin-left: 25px;
+}
+
+.profile-grid {
+  height: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.div1 {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.div2 {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.div3 {
+  grid-area: 1 / 3 / 2 / 4;
+}
+
+.div4 {
+  grid-area: 2 / 1 / 3 / 4;
+}
+
+.div5 {
+  grid-area: 3 / 1 / 4 / 2;
+}
+
+.div6 {
+  grid-area: 3 / 2 / 4 / 3;
+}
+
+.div7 {
+  grid-area: 3 / 3 / 4 / 4;
+}
+
+.even {
+  border-bottom: 1px solid #000000;
+  margin-bottom: 23px;
 }
 
 /* Madia */

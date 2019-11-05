@@ -59,7 +59,7 @@ class Hypevote extends Component {
                           );
                       })
                     : null}
-                <div className={"close-vote"} onClick={() => this.props.closeVote()}>Close Vote</div>
+                <div className={"mega-button"} onClick={() => this.props.closeVote()}>Close Vote</div>
             </div>
         );
     }

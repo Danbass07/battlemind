@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import BasicUser from "../components/Profile/BasicUser";
 import AdminUser from "../components/Profile/AdminUser";
+import SuperUser from "../components/Profile/SuperUser";
 
 class Profile extends Component {
     render() {
-        //console.log(this.props.group);
+  
         return (
             <div className="workarea">
     
@@ -43,9 +44,12 @@ class Profile extends Component {
               
        
                 {this.props.user.groups.map( (group) => {
+                
                 if (group.id === this.props.activeGroup && 
                 group.pivot.permissions === 'admin') {
+               
                    return(
+                       
                     <AdminUser
                     key={group.id+'admin'}
                     user={this.props.user}
@@ -67,21 +71,45 @@ class Profile extends Component {
                     />
                    )
                        
-                      
-               
                 } else if (group.id === this.props.activeGroup && 
-                    group.pivot.permissions === 'basic') {
-                    <BasicUser 
-                    key={group.id+'basic'}
-                    user={this.props.user}
-                    groups={this.props.groups}
-                    userGroups={this.props.user.groups}
-                    addUser={group => this.props.addUser(group)}
-                    contains={(userGroups, groups) =>
-                       this.props.contains(userGroups, groups)
-                   }
-                    hints={this.props.hints}
-                    />
+                    group.pivot.permissions === 'superuser') {
+                        return(
+                            <SuperUser
+                            key={group.id+'admin'}
+                            user={this.props.user}
+                            groups={this.props.groups}
+                            allGroups={this.props.allGroups}
+                            users={this.props.users}
+                            group={this.props.group}
+                            activeGroup={this.props.activeGroup}
+                            activeUser={(groupId, userId) => this.props.activeUser(groupId, userId)}
+                            addAnyUserToActiveGroup={(userId) => this.props.addAnyUserToActiveGroup(userId)}
+        
+                            types={this.props.types}
+                            userGroups={this.props.user.groups}
+                            addUser={(group, user) => this.props.addUser(group, user)}
+                            contains={(userGroups, groups) =>
+                                this.props.contains(userGroups, groups)
+                            }
+                            hints={this.props.hints}
+                            />
+                           )
+                } else  {
+               
+                    return (
+                        <BasicUser 
+                        key={group.id+'basic'}
+                        user={this.props.user}
+                        groups={this.props.groups}
+                        userGroups={this.props.user.groups}
+                        addUser={group => this.props.addUser(group)}
+                        contains={(userGroups, groups) =>
+                           this.props.contains(userGroups, groups)
+                       }
+                        hints={this.props.hints}
+                        />
+                    )
+              
                 }
          
               

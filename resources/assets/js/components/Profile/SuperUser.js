@@ -168,18 +168,18 @@ class AdminUser extends Component {
 
                 </div>
                 <div className={"profile-grid "}>
-                    <div className="admin-group-list div1">
+                    <div className="superuser-group-list div1">
                         <h4>Add YourSelf To Group</h4>
                         {this.addYourselfToGroup()}
                     </div>
-                    <div className="admin-group-list div2">
+                    <div className="superuser-group-list div2">
                         <h4>Active/Nonactie UserController</h4>
                         {this.activateUserController()}
                     </div>
-                    <div className="admin-group-list div3">
+                    <div className="superuser-group-list div3">
                         <h4>Empty Slot</h4>
                     </div>
-                    <div className="admin-group-list div4">
+                    <div className="superuser-group-list div4">
                         <h4>Add Any User To Group</h4>
                         {this.addAnyUserToGroup()}
                     </div>
