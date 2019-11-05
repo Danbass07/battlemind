@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BasicUser from "../components/Profile/BasicUser";
-import AdminUser from "../components/Profile/AdminUser";
-import SuperUser from "../components/Profile/SuperUser";
+import AdminUser from "../components/Profile/SuperUser";
+import SuperUser from "../components/Profile/AdminUser";
 
 class Profile extends Component {
     render() {
