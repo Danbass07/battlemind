@@ -75,6 +75,7 @@ class Profile extends Component {
                     group.pivot.permissions === 'superuser') {
                         return(
                             <SuperUser
+                            hints={this.props.hints}
                             key={group.id+'admin'}
                             user={this.props.user}
                             groups={this.props.groups}

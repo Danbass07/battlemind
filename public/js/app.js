@@ -62976,9 +62976,11 @@ var Result = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile_SuperUser__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_SuperUser__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile_AdminUser__ = __webpack_require__(116);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -63029,7 +63031,7 @@ var Profile = function (_Component) {
 
                     if (group.id === _this2.props.activeGroup && group.pivot.permissions === 'admin') {
 
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__["a" /* default */], {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Profile_SuperUser__["a" /* default */], {
                             key: group.id + 'admin',
                             user: _this2.props.user,
                             groups: _this2.props.groups,
@@ -63055,7 +63057,8 @@ var Profile = function (_Component) {
                             hints: _this2.props.hints
                         });
                     } else if (group.id === _this2.props.activeGroup && group.pivot.permissions === 'superuser') {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Profile_SuperUser__["a" /* default */], {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Profile_AdminUser__["a" /* default */], _defineProperty({
+                            hints: _this2.props.hints,
                             key: group.id + 'admin',
                             user: _this2.props.user,
                             groups: _this2.props.groups,
@@ -63077,9 +63080,8 @@ var Profile = function (_Component) {
                             },
                             contains: function contains(userGroups, groups) {
                                 return _this2.props.contains(userGroups, groups);
-                            },
-                            hints: _this2.props.hints
-                        });
+                            }
+                        }, "hints", _this2.props.hints));
                     } else {
 
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__["a" /* default */], {
@@ -63693,6 +63695,11 @@ var AdminUser = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
+                    "Now We can organize people in clubs. And as we have user feature. We can use it to number of things. I need to know what we want to use. Groups are not aware of each other for know. But one user might be member of few groups."
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "action-screen" },

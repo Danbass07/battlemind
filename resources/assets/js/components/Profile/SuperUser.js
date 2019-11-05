@@ -191,6 +191,12 @@ class AdminUser extends Component {
     render() {
         return (
             <React.Fragment>
+            <div className={this.props.hints === true ? "info-bar" : "info-bar-off"}>
+                    Now We can organize people in clubs. And as we have user 
+                    feature. We can use it to number of things. I need to know what we want to use.
+                    Groups are not aware of each other for know. But one user might be member of few 
+                    groups.
+                </div>
                 <div className={"action-screen"}>
                     {this.state.action === "userList" ? (
                         <div className={"action-screen-list"}>
