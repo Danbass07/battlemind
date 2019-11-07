@@ -57,7 +57,20 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+        $type = new Type;
+        $type->type = $request->type;
+        $type->group_id = $request->groupId;
+        $type->save();
+
+        $group = Group::find($request->groupId);
+        Log::info($group->users);
+            foreach ($group->users as $user) {
+                $user->types()->save($type);
+                $user->types()->updateExistingPivot($type->id, ['hype' => 2]);
+            }
+            return;
+           
     }
 
     /**

@@ -10935,6 +10935,24 @@ a:hover {
   }
 }
 
+.venue-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-bottom: 200px;
+}
+
+.table {
+  width: 180px;
+  height: 180px;
+  overflow: hidden;
+  color: #009625;
+  border: 8px double #009625;
+  margin: 10px auto;
+}
+
 .navbar {
   position: fixed;
   width: 100%;

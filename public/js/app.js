@@ -62203,19 +62203,13 @@ var List = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Card__ = __webpack_require__(112);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 
 
 
@@ -62228,366 +62222,77 @@ var Event = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).call(this, props));
 
         _this.state = {
-            action: 1,
-            scoreboard: 0,
-            scoreboardplayers: [],
-            type: "",
-            url: "jace",
-            playerid: 0,
-            index: 1,
-            player: {
-                url: "url",
-                name: "empty"
-            }
+            tables: 12,
+            renderTables: [],
+            tableInfo: [{
+                type: "NAME OF THE GAME",
+                usersPlaying: [{
+                    name: "user1"
+                }, {
+                    name: "user2"
+                }, {
+                    name: "user3"
+                }, {
+                    name: "user4"
+                }]
+            }]
         };
         return _this;
     }
 
     _createClass(Event, [{
-        key: "checkAvailability",
-        value: function checkAvailability(arr, val) {
-            return arr.some(function (arrVal) {
-                return val === arrVal;
-            });
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.renderTables();
         }
     }, {
-        key: "contains",
-        value: function contains(a, obj) {
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].id === obj.id) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-    }, {
-        key: "actionController",
-        value: function actionController() {
-            this.setState({
-                action: this.state.action * -1
-            });
-        }
-    }, {
-        key: "buttonController",
-        value: function buttonController(category, value) {
-            var scoreboardPlayersUpdate = [].concat(_toConsumableArray(this.state.scoreboardplayers));
-            if (category === "Win") {
-                scoreboardPlayersUpdate[this.state.index].pivot.win += value;
-                if (scoreboardPlayersUpdate[this.state.index].pivot.win < 0) {
-                    scoreboardPlayersUpdate[this.state.index].pivot.win = 0;
-                }
-            }
-            if (category === "Lost") {
-                scoreboardPlayersUpdate[this.state.index].pivot.lost += value;
-                if (scoreboardPlayersUpdate[this.state.index].pivot.lost < 0) {
-                    scoreboardPlayersUpdate[this.state.index].pivot.lost = 0;
-                }
-            }
-            if (category === "Draw") {
-                scoreboardPlayersUpdate[this.state.index].pivot.draw += value;
-                if (scoreboardPlayersUpdate[this.state.index].pivot.draw < 0) {
-                    scoreboardPlayersUpdate[this.state.index].pivot.draw = 0;
-                }
-            }
-
-            this.setState({
-                scoreboardplayers: scoreboardPlayersUpdate
-            });
-        }
-    }, {
-        key: "scoreboardChangeHandler",
-        value: function scoreboardChangeHandler(e) {
-            var _this2 = this;
-
-            this.setState({
-                playerid: 0
-            });
-
-            if (e.target.value !== "Choose a scoreboard") {
-                var value = e.target.value.split("break");
-
-                axios.get("/scoreboards/" + value[0] + "/edit").then(function (response) {
-                    return _this2.setState({
-                        scoreboard: value[0],
-                        type: value[1],
-                        scoreboardplayers: response.data.scoreboardPlayers
-                    });
-                });
-            } else {
-                this.setState({
-                    scoreboard: 0
-                });
-            }
-        }
-    }, {
-        key: "addPlayer",
-        value: function addPlayer(scoreboard, player) {
-            var _this3 = this;
-
-            axios.get("/scoreboards/" + scoreboard + "/addPlayer/" + player).then(function (response) {
-                return _this3.setState({
-                    scoreboard: scoreboard,
-                    scoreboardplayers: [].concat(_toConsumableArray(response.data))
-                });
-            });
-        }
-    }, {
-        key: "removePlayer",
-        value: function removePlayer(scoreboard, player) {
-            var _this4 = this;
-
-            axios.get("/scoreboards/" + scoreboard + "/removePlayer/" + player).then(function (response) {
-                return _this4.setState({
-                    focusOn: "",
-                    scoreboard: scoreboard,
-                    scoreboardplayers: [].concat(_toConsumableArray(response.data))
-                });
-            });
-        }
-    }, {
-        key: "selectPlayer",
-        value: function selectPlayer(player, index) {
-            this.setState({
-                focusOn: "player",
-                editedPlayer: _extends({}, player),
-                index: index
-            });
-        }
-    }, {
-        key: "renderOptions",
-        value: function renderOptions(scoreboards, friendsScoreboards) {
-            var _this5 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "select",
-                {
-                    name: "Choose an event",
-                    className: "myform-control",
-                    onChange: function onChange(e) {
-                        return _this5.scoreboardChangeHandler(e);
-                    }
-                },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "option",
-                    null,
-                    "Choose an Event"
-                ),
-                scoreboards.map(function (scoreboard) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "option",
-                        {
-                            value: scoreboard.id + "break" + scoreboard.type,
-                            key: scoreboard.id + scoreboard.name
-                        },
-                        scoreboard.name,
-                        " ",
-                        scoreboard.type
-                    );
-                }),
-                friendsScoreboards.map(function (scoreboard) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "option",
-                        {
-                            value: scoreboard.id + "break" + scoreboard.type,
-                            key: scoreboard.id + scoreboard.name
-                        },
-                        scoreboard.name,
-                        " ",
-                        scoreboard.type,
-                        " ",
-                        scoreboard.user_name
-                    );
-                })
-            );
-        }
-    }, {
-        key: "renderPlayers",
-        value: function renderPlayers(option, players) {
-            var _this6 = this;
-
-            if (option === "noexist") {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        key: "renderTables",
+        value: function renderTables() {
+            var i = void 0;
+            var tables = [];
+            for (i = 0; i < this.state.tables; i++) {
+                var a = i + 1;
+                tables.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "Event-list-grid-addplayers" },
-                    players.map(function (player) {
-                        return !_this6.contains(_this6.state.scoreboardplayers, player) && _this6.state.type === player.type ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    { key: "table " + i, className: "table tag" + i },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "event-table-title" },
+                        this.state.tableInfo[0].type + " " + a
+                    ),
+                    this.state.tableInfo[0].usersPlaying.map(function (user) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
-                            {
-                                className: "Event-list-item",
-                                onClick: function onClick() {
-                                    return _this6.addPlayer(_this6.state.scoreboard, player.id);
-                                },
-                                key: player.type + player.id + player.name
-                            },
-                            player.name,
-                            player.user_name
-                        ) : null;
-                    })
-                );
-            } else {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "Event-list-grid" },
-                    this.state.scoreboardplayers.map(function (player, index) {
-                        return _this6.contains(_this6.state.scoreboardplayers, player) ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            {
-                                className: "Event-list-item Select-player",
-                                onClick: function onClick() {
-                                    return _this6.selectPlayer(player, index);
-                                },
-                                key: player.type + player.id + player.name
-                            },
-                            player.name,
-                            " ",
-                            player.user_name,
+                            { className: "event-table-user element1" },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "div",
-                                { className: "Result-mini-strip" },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    { className: "Result-mini-item" },
-                                    "W : " + player.pivot.win
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    { className: "Result-mini-item" },
-                                    "L : " + player.pivot.lost
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    { className: "Result-mini-item" },
-                                    "D : " + player.pivot.draw
-                                )
+                                null,
+                                user.name,
+                                " "
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "div",
-                                {
-                                    className: "Remove-button",
-                                    onClick: function onClick() {
-                                        return _this6.removePlayer(_this6.state.scoreboard, player.id);
-                                    }
-                                },
-                                "X"
+                                null,
+                                "Choose his player "
                             )
-                        ) : null;
+                        );
                     })
-                );
+                ));
             }
-        }
-    }, {
-        key: "submitHandler",
-        value: function submitHandler() {
-            this.setState({ focusOn: "" });
-            axios.post("/scoreboards/" + this.state.scoreboard + "/updateResults", {
-                scoreboardplayers: [].concat(_toConsumableArray(this.state.scoreboardplayers))
-            }).then(function (response) {
-                if (response.status == 200) {}
+            this.setState({
+                renderTables: tables
             });
+            return tables;
         }
     }, {
         key: "render",
         value: function render() {
-            var _this7 = this;
-
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "workarea" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
-                    "There it is. A main part of the app. Here we store the result. Choose a Scorboard, add some players and keep track of games. That part of the app will tell our WebSite what to display. What we did every week. NO CHEATING!!!"
-                ),
-                this.state.focusOn === "player" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "Pop-up" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "Card-wrapper" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            {
-                                className: "Closing-div",
-                                onClick: function onClick() {
-                                    return _this7.submitHandler();
-                                }
-                            },
-                            "X"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Card__["a" /* default */], {
-                            actioncontroller: function actioncontroller() {
-                                return _this7.actionController();
-                            },
-                            action: this.state.action,
-                            buttoncontroller: function buttoncontroller(category, value) {
-                                return _this7.buttonController(category, value);
-                            },
-                            player: this.state.editedPlayer
-                        })
-                    )
-                ) : null,
-                this.state.focusOn === "addPlayers" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "Pop-up" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "Card-wrapper" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            {
-                                className: "Closing-div",
-                                onClick: function onClick() {
-                                    return _this7.setState({ focusOn: "" });
-                                }
-                            },
-                            "X"
-                        ),
-                        this.renderPlayers("noexist", this.props.userPlayers),
-                        this.renderPlayers("noexist", this.props.friendsPlayers)
-                    )
-                ) : null,
-                this.state.focusOn === "viewPlayers" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "Pop-up" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "Card-wrapper" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            {
-                                className: "Closing-div",
-                                onClick: function onClick() {
-                                    return _this7.setState({ focusOn: "" });
-                                }
-                            },
-                            "X"
-                        ),
-                        this.renderPlayers("", this.props.userPlayers),
-                        this.renderPlayers("", this.props.friendsPlayers)
-                    )
-                ) : null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "form",
-                    { className: "Scoreboard-dropdown" },
-                    this.renderOptions(this.props.scoreboards, this.props.friendsScoreboards),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "button",
-                        {
-                            className: "Scoreboard-addPlayer-button",
-                            onClick: function onClick(e) {
-                                e.preventDefault();
-                                _this7.setState({ focusOn: "addPlayers" });
-                            }
-                        },
-                        "ADD PLAYERS"
-                    )
-                ),
-                this.state.scoreboard !== 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                    null,
-                    this.renderPlayers("", [])
-                ) : null
+                { className: "venue-area" },
+                this.state.renderTables.map(function (item) {
+                    return item;
+                })
             );
         }
     }]);
@@ -62598,140 +62303,7 @@ var Event = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Event);
 
 /***/ }),
-/* 112 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var Card = function (_Component) {
-    _inherits(Card, _Component);
-
-    function Card() {
-        _classCallCheck(this, Card);
-
-        return _possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).apply(this, arguments));
-    }
-
-    _createClass(Card, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var style = {
-                height: '250px',
-                backgroundImage: 'url("/images/' + this.props.player.url + '")',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                backgroundSize: 'contain',
-                padding: '2px'
-            };
-            var style2 = {
-                width: '100%',
-                backgroundColor: 'rgb(245, 222, 179, 0.8)',
-                margin: '13% auto',
-                textAlign: 'center'
-
-            };
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'Player-results-board' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Player-results' },
-                        'Wins:',
-                        ' ',
-                        this.props.player.pivot.win
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Player-results' },
-                        'Losts:',
-                        ' ',
-                        this.props.player.pivot.lost
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'Player-results' },
-                        'Draws:',
-                        ' ',
-                        this.props.player.pivot.draw
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    { className: "Score-button", onClick: function onClick() {
-                            return _this2.props.buttoncontroller('Win', 1);
-                        } },
-                    '+'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    { className: "Score-button", onClick: function onClick() {
-                            return _this2.props.buttoncontroller('Win', -1);
-                        } },
-                    '-'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    { className: "Score-button", onClick: function onClick() {
-                            return _this2.props.buttoncontroller('Lost', 1);
-                        } },
-                    '+'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    { className: "Score-button", onClick: function onClick() {
-                            return _this2.props.buttoncontroller('Lost', -1);
-                        } },
-                    '-'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    { className: "Score-button", onClick: function onClick() {
-                            return _this2.props.buttoncontroller('Draw', 1);
-                        } },
-                    '+'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    { className: "Score-button", onClick: function onClick() {
-                            return _this2.props.buttoncontroller('Draw', -1);
-                        } },
-                    '-'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { style: style },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'h1',
-                        { style: style2 },
-                        this.props.player.name
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Card;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Card);
-
-/***/ }),
+/* 112 */,
 /* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -62976,8 +62548,8 @@ var Result = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_SuperUser__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile_AdminUser__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_SuperUser__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile_AdminUser__ = __webpack_require__(117);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -63178,291 +62750,6 @@ var BasicUser = function (_Component) {
 
 /***/ }),
 /* 116 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var AdminUser = function (_Component) {
-    _inherits(AdminUser, _Component);
-
-    function AdminUser(props) {
-        _classCallCheck(this, AdminUser);
-
-        var _this = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
-
-        _this.state = {
-
-            usersSelected: [{
-                id: 0,
-                name: 'test'
-            }]
-
-        };
-        return _this;
-    }
-
-    _createClass(AdminUser, [{
-        key: "addYourselfToGroup",
-        value: function addYourselfToGroup() {
-            var _this2 = this;
-
-            return this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
-                // console.log(this.props.userGroups);
-                // console.log(group);
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                    {
-                        key: group.name + "groupListadmin" + index
-                    },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                            onChange: function onChange() {
-                                return _this2.props.addUser(group, _this2.props.user);
-                            },
-                            defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
-                            type: "checkbox",
-                            name: "group",
-                            value: group.id
-                        }),
-                        group.name
-                    )
-                );
-            }) : null;
-        }
-    }, {
-        key: "addUser",
-        value: function addUser(user) {
-            var usersAdded = [].concat(_toConsumableArray(this.state.usersSelected));
-            var usersAddedId = [].concat(_toConsumableArray(this.state.usersSelected.map(function (user) {
-                return user.id;
-            })));
-            usersAddedId.filter(function (id) {
-                return id === user.id;
-            }).length < 1 ? usersAdded.push(user) : null;
-
-            this.setState({
-                usersSelected: usersAdded
-            });
-        }
-    }, {
-        key: "activateUserController",
-        value: function activateUserController() {
-            var _this3 = this;
-
-            return this.props.groups.length > 1 ? this.props.groups.map(function (group) {
-                if (group.id === _this3.props.activeGroup) {
-                    return group.users.map(function (user) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "admin-group-list", key: user.name + group.id },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                                null,
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    { onClick: function onClick() {
-                                            return _this3.addUser(user);
-                                        } },
-                                    user.name
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                    onChange: function onChange() {
-                                        return _this3.props.activeUser(group.id, user.id);
-                                    },
-                                    defaultChecked: user.pivot.active ? true : false,
-                                    type: "checkbox",
-                                    name: "group",
-                                    value: user.id
-                                })
-                            )
-                        );
-                    });
-                }
-            }) : null;
-        }
-    }, {
-        key: "addAnyUserToGroup",
-        value: function addAnyUserToGroup() {
-            var _this4 = this;
-
-            if (this.props.group && this.props.group.users) {
-                var groupUsersIds = [].concat(_toConsumableArray(this.props.group.users.map(function (user) {
-                    return user.id;
-                })));
-
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "name-list" },
-                    this.props.users.length ? this.props.users.map(function (user, index) {
-
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            {
-                                className: "name-list-element",
-                                key: user.name + "groupListadmin" + index
-                            },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                                null,
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    null,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                        onChange: function onChange() {
-                                            return _this4.props.addAnyUserToActiveGroup(user);
-                                        },
-                                        defaultChecked: groupUsersIds.filter(function (id) {
-                                            return id === user.id;
-                                        }).length < 1 ? false : true,
-                                        type: "checkbox",
-                                        name: "group",
-                                        value: user.id
-                                    }),
-                                    user.name
-                                )
-                            )
-                        );
-                    }) : null
-                );
-            }
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "action-screen" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "action-screen-list" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            null,
-                            "List of Users to do an action"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "screen-group-list" },
-                            this.state.usersSelected.map(function (user) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                                    { key: user.id + user.name },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        null,
-                                        user.name
-                                    )
-                                );
-                            })
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "action-screen-actions-list" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            null,
-                            "Action to do"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "action-button" },
-                            "Paid Subs Today"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "action-button" },
-                            "Will pay next time"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "action-button" },
-                            "Create Tournament"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "action-button" },
-                            "Create Painting Competition"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "action-button" },
-                            "Send them to the Moont"
-                        )
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "profile-grid " },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "superuser-group-list div1" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            null,
-                            "Add YourSelf To Group"
-                        ),
-                        this.addYourselfToGroup()
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "superuser-group-list div2" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            null,
-                            "Active/Nonactie UserController"
-                        ),
-                        this.activateUserController()
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "superuser-group-list div3" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            null,
-                            "Empty Slot"
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "superuser-group-list div4" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            null,
-                            "Add Any User To Group"
-                        ),
-                        this.addAnyUserToGroup()
-                    )
-                )
-            );
-        }
-    }]);
-
-    return AdminUser;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (AdminUser);
-
-/***/ }),
-/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63798,6 +63085,339 @@ var AdminUser = function (_Component) {
                         className: "admin-users-list-button"
                     },
                     "Toggle Group Users List"
+                )
+            );
+        }
+    }]);
+
+    return AdminUser;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (AdminUser);
+
+/***/ }),
+/* 117 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AdminUser = function (_Component) {
+    _inherits(AdminUser, _Component);
+
+    function AdminUser(props) {
+        _classCallCheck(this, AdminUser);
+
+        var _this = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
+
+        _this.state = {
+
+            usersSelected: [{
+                id: 0,
+                name: 'test'
+            }],
+            type: ''
+
+        };
+        return _this;
+    }
+
+    _createClass(AdminUser, [{
+        key: 'addType',
+        value: function addType(groupId) {
+            var _this2 = this;
+
+            console.log(groupId);
+            console.log(this.state.type);
+            axios.post("/types", {
+                type: this.state.type,
+                groupId: this.props.activeGroup
+
+            }).then(function () {
+                _this2.setState({
+                    type: ""
+
+                });
+            });
+        }
+    }, {
+        key: 'changeHandler',
+        value: function changeHandler(e) {
+            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
+        }
+    }, {
+        key: 'addYourselfToGroup',
+        value: function addYourselfToGroup() {
+            var _this3 = this;
+
+            return this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
+                // console.log(this.props.userGroups);
+                // console.log(group);
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                    {
+                        key: group.name + "groupListadmin" + index
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                            onChange: function onChange() {
+                                return _this3.props.addUser(group, _this3.props.user);
+                            },
+                            defaultChecked: _this3.props.contains(_this3.props.userGroups, group) ? true : false,
+                            type: 'checkbox',
+                            name: 'group',
+                            value: group.id
+                        }),
+                        group.name
+                    )
+                );
+            }) : null;
+        }
+    }, {
+        key: 'addUser',
+        value: function addUser(user) {
+            var usersAdded = [].concat(_toConsumableArray(this.state.usersSelected));
+            var usersAddedId = [].concat(_toConsumableArray(this.state.usersSelected.map(function (user) {
+                return user.id;
+            })));
+            usersAddedId.filter(function (id) {
+                return id === user.id;
+            }).length < 1 ? usersAdded.push(user) : null;
+
+            this.setState({
+                usersSelected: usersAdded
+            });
+        }
+    }, {
+        key: 'activateUserController',
+        value: function activateUserController() {
+            var _this4 = this;
+
+            return this.props.groups.length > 1 ? this.props.groups.map(function (group) {
+                if (group.id === _this4.props.activeGroup) {
+                    return group.users.map(function (user) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "admin-group-list", key: user.name + group.id },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { onClick: function onClick() {
+                                            return _this4.addUser(user);
+                                        } },
+                                    user.name
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                    onChange: function onChange() {
+                                        return _this4.props.activeUser(group.id, user.id);
+                                    },
+                                    defaultChecked: user.pivot.active ? true : false,
+                                    type: 'checkbox',
+                                    name: 'group',
+                                    value: user.id
+                                })
+                            )
+                        );
+                    });
+                }
+            }) : null;
+        }
+    }, {
+        key: 'addAnyUserToGroup',
+        value: function addAnyUserToGroup() {
+            var _this5 = this;
+
+            if (this.props.group && this.props.group.users) {
+                var groupUsersIds = [].concat(_toConsumableArray(this.props.group.users.map(function (user) {
+                    return user.id;
+                })));
+
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: "name-list" },
+                    this.props.users.length ? this.props.users.map(function (user, index) {
+
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            {
+                                className: "name-list-element",
+                                key: user.name + "groupListadmin" + index
+                            },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    null,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        onChange: function onChange() {
+                                            return _this5.props.addAnyUserToActiveGroup(user);
+                                        },
+                                        defaultChecked: groupUsersIds.filter(function (id) {
+                                            return id === user.id;
+                                        }).length < 1 ? false : true,
+                                        type: 'checkbox',
+                                        name: 'group',
+                                        value: user.id
+                                    }),
+                                    user.name
+                                )
+                            )
+                        );
+                    }) : null
+                );
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this6 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    null,
+                    ' Add New Type to Group',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'type',
+                        onChange: function onChange(e) {
+                            return _this6.changeHandler(e);
+                        },
+                        required: true
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        { onClick: function onClick() {
+                                return _this6.addType(_this6.props.activeGroup);
+                            } },
+                        'Save'
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: "action-screen" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: "action-screen-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'List of Users to do an action'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "screen-group-list" },
+                            this.state.usersSelected.map(function (user) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                    { key: user.id + user.name },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        null,
+                                        user.name
+                                    )
+                                );
+                            })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: "action-screen-actions-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Action to do'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Paid Subs Today'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Will pay next time'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Create Tournament'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Create Painting Competition'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Send them to the Moont'
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: "profile-grid " },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'superuser-group-list div1' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Add YourSelf To Group'
+                        ),
+                        this.addYourselfToGroup()
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'superuser-group-list div2' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Active/Nonactie UserController'
+                        ),
+                        this.activateUserController()
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'superuser-group-list div3' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Empty Slot'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'superuser-group-list div4' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Add Any User To Group'
+                        ),
+                        this.addAnyUserToGroup()
+                    )
                 )
             );
         }
@@ -64370,75 +63990,168 @@ var Hypeset = function (_Component) {
             var _this2 = this;
 
             console.log(this.props.group);
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                null,
+            return (
+                // <React.Fragment>
+                //     <button
+                //         className="mega-button"
+                //         onClick={() => this.props.hypenotizer()}
+                //     >
+                //         CLICK HERE TO SAVE
+                //     </button>
+                //     <div className="hype-wrapper">
+                //         <div className={"hype-list"}>
+                //             {Array.isArray(this.props.group.types)
+                //                 ? this.props.group.types.map(type => {
+                //                       if (
+                //                           type.group_id === this.props.activeGroup
+                //                       ) {
+                //                           return (
+                //                               <div
+                //                                   className="hype-set-row"
+                //                                   key={type.type}
+                //                               >
+                //                                   <div className="hype-row-element">
+                //                                       {type.type}
+                //                                   </div>
+                //                                   <div className="hype-row-element">
+                //                                       <select
+                //                                           className={"hype-options"}
+                //                                           onChange={e =>
+                //                                               this.props.hypeLevelHandler(
+                //                                                   e,
+                //                                                   type.id
+                //                                               )
+                //                                           }
+                //                                       >
+                //                                           {this.props.group.users.map(user => {
+
+                //                                               if (
+                //                                                   user.id ===
+                //                                                   this.props.user.id
+                //                                               ) {
+                //                                                 return  user.types.map( userType => {
+                //                                                       if (userType.id === type.id) {
+
+                //                                                      return (
+                //                                                         <option
+                //                                                         key={
+                //                                                             "default" +
+                //                                                             userType.type
+                //                                                         }
+                //                                                         defaultValue={
+                //                                                             userType.pivot.hype
+                //                                                         }
+                //                                                     >
+                //                                                         {
+                //                                                             userType.pivot.hype
+                //                                                         }
+                //                                                     </option>
+                //                                                      )
+
+                //                                                         ;
+                //                                                       }
+                //                                                   })
+
+                //                                               }
+                //                                           })}
+
+                //                                           {this.props.hypeLevels.map(
+                //                                               (level, index) => {
+                //                                                   return (
+                //                                                       <option
+                //                                                           key={
+                //                                                               type.type +
+                //                                                               index
+                //                                                           }
+                //                                                           value={
+                //                                                               level
+                //                                                           }
+                //                                                       >
+                //                                                           {level}
+                //                                                       </option>
+                //                                                   );
+                //                                               }
+                //                                           )}
+                //                                       </select>
+                //                                   </div>
+                //                               </div>
+                //                           );
+                //                       }
+                //                   })
+                //                 : null}
+                //         </div>
+                //     </div>
+                // </React.Fragment>
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "button",
-                    {
-                        className: "mega-button",
-                        onClick: function onClick() {
-                            return _this2.props.hypenotizer();
-                        }
-                    },
-                    "CLICK HERE TO SAVE"
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "hype-wrapper" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        {
+                            className: "mega-button",
+                            onClick: function onClick() {
+                                return _this2.props.hypenotizer();
+                            }
+                        },
+                        "CLICK HERE TO SAVE"
+                    ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "hype-list" },
-                        Array.isArray(this.props.group.users) ? this.props.group.users.map(function (user) {
+                        { className: "hype-wrapper" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "hype-list" },
+                            Array.isArray(this.props.group.users) ? this.props.group.users.map(function (user) {
 
-                            return user.types.map(function (type) {
+                                return user.types.map(function (type) {
 
-                                if (type.group_id === _this2.props.activeGroup && type.pivot.user_id === _this2.props.user.id) {
+                                    if (type.group_id === _this2.props.activeGroup && type.pivot.user_id === _this2.props.user.id) {
 
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "hype-set-row", key: type.type },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             "div",
-                                            { className: "hype-row-element" },
-                                            type.type
-                                        ),
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "div",
-                                            { className: "hype-row-element" },
+                                            { className: "hype-set-row", key: type.type },
                                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                "select",
-                                                {
-                                                    className: 'hype-options',
-                                                    onChange: function onChange(e) {
-                                                        return _this2.props.hypeLevelHandler(e, type.id);
-                                                    }
-                                                },
+                                                "div",
+                                                { className: "hype-row-element" },
+                                                type.type
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                "div",
+                                                { className: "hype-row-element" },
                                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                    "option",
+                                                    "select",
                                                     {
-                                                        key: "default" + type.type,
-                                                        defaultValue: type.pivot.hype
+                                                        className: 'hype-options',
+                                                        onChange: function onChange(e) {
+                                                            return _this2.props.hypeLevelHandler(e, type.id);
+                                                        }
                                                     },
-                                                    type.pivot.hype
-                                                ),
-                                                ")",
-                                                _this2.props.hypeLevels.map(function (level, index) {
-                                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                         "option",
                                                         {
-                                                            key: type.type + index,
-                                                            value: level
+                                                            key: "default" + type.type,
+                                                            defaultValue: type.pivot.hype
                                                         },
-                                                        level
-                                                    );
-                                                })
+                                                        type.pivot.hype
+                                                    ),
+                                                    ")",
+                                                    _this2.props.hypeLevels.map(function (level, index) {
+                                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                            "option",
+                                                            {
+                                                                key: type.type + index,
+                                                                value: level
+                                                            },
+                                                            level
+                                                        );
+                                                    })
+                                                )
                                             )
-                                        )
-                                    );
-                                }
-                            });
-                        }) : null
+                                        );
+                                    }
+                                });
+                            }) : null
+                        )
                     )
                 )
             );

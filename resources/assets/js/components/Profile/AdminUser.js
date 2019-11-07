@@ -8,11 +8,35 @@ class AdminUser extends Component {
             usersSelected: [{
                 id: 0,
                 name: 'test'
-            }]
+            }],
+           type: ''
 
         }
     }
-
+    addType(groupId) {
+        console.log(groupId);
+        console.log(this.state.type);
+        axios
+        .post("/types", {
+            type: this.state.type,
+            groupId: this.props.activeGroup,
+          
+        })
+        .then(() => {
+            this.setState({
+                type: "",
+             
+            });
+        });
+    }
+    changeHandler(e) {
+        this.setState({
+      
+                [e.target.placeholder]: e.target.value
+            
+            
+        });
+    }
     addYourselfToGroup() {
         return this.props.allGroups.length
             ? this.props.allGroups.map((group, index) => {
@@ -138,8 +162,18 @@ class AdminUser extends Component {
         }
     }
     render() {
+        
         return (
             <React.Fragment>
+                <div> Add New Type to Group 
+                <input
+                            className="myform-control"
+                            placeholder="type"
+                            onChange={e => this.changeHandler(e)}
+                            required
+                        />
+                        <button onClick={() => this.addType(this.props.activeGroup)}>Save</button>
+                </div>
                 <div className={"action-screen"}>
                     <div className={"action-screen-list"}>
                         <h4>List of Users to do an action</h4>
