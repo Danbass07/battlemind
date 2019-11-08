@@ -10945,11 +10945,27 @@ a:hover {
 }
 
 .table {
-  width: 180px;
+  width: 320px;
   height: 180px;
   overflow: hidden;
   color: #009625;
   border: 8px double #009625;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.event-table-user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  text-align: center;
+}
+
+.element {
+  width: 45%;
+  border: solid 1px #009625;
   margin: 10px auto;
 }
 

@@ -341,6 +341,8 @@ class Battlemind extends Component {
                             leagues={this.state.leagues}
                             types={this.state.userTypes}
                             hints={this.state.hints}
+                            group={this.state.groups[this.state.activeGroupIndex]}
+                            
                         />
                     ) : null}
 

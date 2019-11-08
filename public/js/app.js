@@ -60219,7 +60219,9 @@ var Battlemind = function (_Component) {
                         friendsPlayers: this.state.friendsPlayers,
                         leagues: this.state.leagues,
                         types: this.state.userTypes,
-                        hints: this.state.hints
+                        hints: this.state.hints,
+                        group: this.state.groups[this.state.activeGroupIndex]
+
                     }) : null,
                     this.state.action === "results" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_Result__["a" /* default */], {
                         scoreboards: this.state.userScoreboards,
@@ -62258,31 +62260,74 @@ var Event = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
                         { className: "event-table-title" },
-                        this.state.tableInfo[0].type + " " + a
+                        this.renderTypes()
                     ),
-                    this.state.tableInfo[0].usersPlaying.map(function (user) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "event-table-user element1" },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "event-table-user" },
+                        this.state.tableInfo[0].usersPlaying.map(function (user) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "div",
-                                null,
-                                user.name,
-                                " "
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                null,
-                                "Choose his player "
-                            )
-                        );
-                    })
+                                { className: " element" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
+                                    user.name,
+                                    " "
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
+                                    "Choose his player "
+                                )
+                            );
+                        })
+                    )
                 ));
             }
             this.setState({
                 renderTables: tables
             });
             return tables;
+        }
+    }, {
+        key: "renderTypes",
+        value: function renderTypes() {
+            var _this2 = this;
+
+            console.log(this.props.group);
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "form",
+                    { onSubmit: function onSubmit(e) {
+                            return _this2.updateEvent(e);
+                        } },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "form-group" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "select",
+                            {
+                                className: "myform-control",
+                                required: true,
+                                value: this.state.type,
+                                onChange: function onChange(e) {
+                                    return _this2.chooseType(e);
+                                }
+                            },
+                            this.props.group.types.map(function (type) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "option",
+                                    { value: type.type, key: type.id },
+                                    type.type
+                                );
+                            })
+                        )
+                    )
+                )
+            );
         }
     }, {
         key: "render",
@@ -62767,13 +62812,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var AdminUser = function (_Component) {
-    _inherits(AdminUser, _Component);
+var SuperUser = function (_Component) {
+    _inherits(SuperUser, _Component);
 
-    function AdminUser(props) {
-        _classCallCheck(this, AdminUser);
+    function SuperUser(props) {
+        _classCallCheck(this, SuperUser);
 
-        var _this = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (SuperUser.__proto__ || Object.getPrototypeOf(SuperUser)).call(this, props));
 
         _this.state = {
             usersSelected: [],
@@ -62783,7 +62828,7 @@ var AdminUser = function (_Component) {
         return _this;
     }
 
-    _createClass(AdminUser, [{
+    _createClass(SuperUser, [{
         key: "actionController",
         value: function actionController(action) {
             this.setState({
@@ -63090,10 +63135,10 @@ var AdminUser = function (_Component) {
         }
     }]);
 
-    return AdminUser;
+    return SuperUser;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (AdminUser);
+/* harmony default export */ __webpack_exports__["a"] = (SuperUser);
 
 /***/ }),
 /* 117 */

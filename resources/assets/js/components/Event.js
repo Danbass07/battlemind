@@ -34,20 +34,23 @@ class Event extends Component {
         let i;
         let tables = [];
         for (i = 0; i < this.state.tables; i++) {
-            let a = i+1
+            let a = i + 1;
             tables.push(
                 <div key={"table " + i} className={"table tag" + i}>
                     <div className={"event-table-title"}>
-                        {this.state.tableInfo[0].type +" "+ a}
+                        {this.renderTypes()}
+                        {/* {this.state.tableInfo[0].type + " " + a} */}
                     </div>
-                    {this.state.tableInfo[0].usersPlaying.map(user => {
-                        return (
-                            <div className={"event-table-user element1"}>
-                                <div>{user.name} </div>
-                                <div>Choose his player </div>
-                            </div>
-                        );
-                    })}
+                    <div className={"event-table-user"}>
+                        {this.state.tableInfo[0].usersPlaying.map(user => {
+                            return (
+                                <div className={" element"}>
+                                    <div>{user.name} </div>
+                                    <div>Choose his player </div>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             );
         }
@@ -55,6 +58,36 @@ class Event extends Component {
             renderTables: tables
         });
         return tables;
+    }
+    renderTypes() {
+        console.log(this.props.group)
+        return (
+            <React.Fragment>
+                <form onSubmit={e => this.updateEvent(e)}>
+                    <div className="form-group">
+                        <select
+                            className="myform-control"
+                            required
+                            value={this.state.type}
+                            onChange={e => this.chooseType(e)}
+                        >
+                            {this.props.group.types.map(type => (
+                                <option value={type.type} key={type.id}>
+                                    {type.type}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* <button
+          type="submit"
+          className="btn btn-primary"
+      >
+          Edit player
+      </button> */}
+                </form>
+            </React.Fragment>
+        );
     }
 
     render() {

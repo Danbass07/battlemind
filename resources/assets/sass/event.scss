@@ -176,10 +176,22 @@
   margin-bottom: 200px
   }
 .table {
-    width: 180px;
+    width: 320px;
     height: 180px;
     overflow: hidden;
     color: $secondarycolor;
     border: 8px double $secondarycolor;
+    margin: 10px auto;
+    text-align: center;
+}
+.event-table-user{
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+   
+}
+.element {
+    width: 45%;
+    border: solid 1px $secondarycolor;
     margin: 10px auto;
 }
