@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Group;
+use App\Event;
 
 use Illuminate\Http\Request;
 
@@ -11,9 +13,9 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+       
     }
 
     /**
@@ -34,11 +36,11 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $group= Group::find($request->group_id);
+        $group= Group::findOrFail($request->group_id);
         $event = $group->events->where('active','=',true)->first();
         if (!$event) {
-            $event = new Vote;
-            $event = Vote::create([
+            $event = new Event;
+            $event = Event::create([
                 'data' => $request->data,
                 'group_id' => $request->group_id,
                 'active' => true,
@@ -50,7 +52,7 @@ class EventController extends Controller
     
            
         return response()->json([
-            'activeEventDetails' => $vote,
+            'activeEventDetails' => $event,
              ]);
     }
 
@@ -97,5 +99,13 @@ class EventController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function getActiveEvent($group_id)
+    {
+        $group= Group::findOrFail($group_id);
+        $event = $group->events->where('active','=',true)->first();
+        return response()->json([
+            'activeEventDetails' => $event,
+             ]);
     }
 }

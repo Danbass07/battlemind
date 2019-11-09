@@ -177,7 +177,7 @@
   }
 .table {
     width: 320px;
-    height: 180px;
+    height: 200px;
     overflow: hidden;
     color: $secondarycolor;
     border: 8px double $secondarycolor;
@@ -194,4 +194,12 @@
     width: 45%;
     border: solid 1px $secondarycolor;
     margin: 10px auto;
+}
+.event-type-dropdown {
+    color:$secondarycolor;
+    background-color: $maincolor;
+    width: 95%;
+    height: 40px;
+    margin: 5px auto;
+    border: 1px dotted $secondarycolor;
 }

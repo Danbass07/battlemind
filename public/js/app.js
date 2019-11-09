@@ -15889,7 +15889,7 @@ var generatePath = function generatePath() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(39);
-module.exports = __webpack_require__(123);
+module.exports = __webpack_require__(124);
 
 
 /***/ }),
@@ -59836,8 +59836,8 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Event__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Result__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__containers_Profile__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_FlashMessage__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__containers_Hypenotizer__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_FlashMessage__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__containers_Hypenotizer__ = __webpack_require__(120);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -62225,7 +62225,9 @@ var Event = function (_Component) {
 
         _this.state = {
             tables: 12,
-            activeEventDetails: [],
+            activeEventDetails: {
+                data: []
+            },
             renderTables: [],
             tableInfo: [{
                 type: "NAME OF THE GAME",
@@ -62246,27 +62248,34 @@ var Event = function (_Component) {
     _createClass(Event, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            this.renderTables();
+            var _this2 = this;
+
+            axios.get("/event/getActiveEvent/" + this.props.group.id).then(function (response) {
+                response.data.activeEventDetails.data = JSON.parse(response.data.activeEventDetails.data);
+                _this2.setState({
+                    activeEventDetails: response.data.activeEventDetails
+                }, console.log(response.data.activeEventDetails));
+            }).then(this.renderTables());
         }
     }, {
         key: "renderTables",
         value: function renderTables() {
-            var _this2 = this;
+            var _this3 = this;
 
             var tables = [];
-            this.state.activeEventDetails.map(function (table, index) {
+            this.state.activeEventDetails.data.map(function (table, index) {
                 tables.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { key: "table " + index, className: "table tag" + index },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
                         { className: "event-table-title" },
-                        _this2.renderTypes(table.tableNumber)
+                        _this3.renderTypes(table.tableNumber)
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
                         { className: "event-table-user" },
-                        _this2.state.tableInfo[0].usersPlaying.map(function (user) {
+                        _this3.state.tableInfo[0].usersPlaying.map(function (user) {
                             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "div",
                                 { key: user.id + user.name, className: " element" },
@@ -62287,6 +62296,7 @@ var Event = function (_Component) {
                 ));
             });
 
+            console.log(this.state.activeEventDetails.data);
             this.setState({
                 renderTables: tables
             });
@@ -62294,7 +62304,7 @@ var Event = function (_Component) {
     }, {
         key: "renderTypes",
         value: function renderTypes(tableNumber) {
-            var _this3 = this;
+            var _this4 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
@@ -62302,22 +62312,22 @@ var Event = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "form",
                     { onSubmit: function onSubmit(e) {
-                            return _this3.updateEvent(e);
+                            return _this4.updateEvent(e);
                         } },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "form-group" },
+                        { className: "form-event" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "select",
                             {
-                                className: "myform-control",
+                                className: "event-type-dropdown",
                                 required: true,
                                 value: this.state.type,
                                 onChange: function onChange(e) {
-                                    return _this3.chooseType(e);
+                                    return _this4.chooseType(e);
                                 }
                             },
-                            this.state.activeEventDetails.map(function (table, index) {
+                            this.state.activeEventDetails.data.map(function (table, index) {
                                 return tableNumber === index ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "option",
                                     { value: table.type, key: table.type },
@@ -62339,6 +62349,8 @@ var Event = function (_Component) {
     }, {
         key: "createEvent",
         value: function createEvent() {
+            var _this5 = this;
+
             var newData = [];
             var i = void 0;
             for (i = 0; i < this.state.tables; i++) {
@@ -62353,32 +62365,24 @@ var Event = function (_Component) {
             this.setState({
                 activeEventDetails: newData
             }, this.renderTables());
-            //   axios
-            //   .post("/event", {
-            //       data: JSON.stringify(newData),
-            //       group_id:this.props.activeGroup,
+            axios.post("/event", {
+                data: JSON.stringify(newData),
+                group_id: this.props.group.id
 
-            //   })
-            //   .then( response => {
+            }).then(function (response) {
 
-            //       let activeEventDetails = response.data.activeEventDetails;
-            //       activeVoteDetails !== null ? 
+                var activeEventDetails = response.data.activeEventDetails;
+                activeVoteDetails !== null ? activeEventDetails.data = JSON.parse(activeEventDetails.data) : null;
 
-            //       activeEventDetails.data = JSON.parse(activeEventDetails.data)
-
-            //       : null ;
-
-            //           this.setState({
-            //             activeEventDetails: activeEventDetails,
-            //           })
-
-
-            //   });
+                _this5.setState({
+                    activeEventDetails: activeEventDetails
+                });
+            });
         }
     }, {
         key: "render",
         value: function render() {
-            var _this4 = this;
+            var _this6 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
@@ -62386,7 +62390,7 @@ var Event = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { onClick: function onClick() {
-                            return _this4.createEvent();
+                            return _this6.createEvent();
                         }, className: "mega-button" },
                     "Create Event"
                 ),
@@ -62648,8 +62652,8 @@ var Result = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_SuperUser__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile_AdminUser__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_SuperUser__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile_AdminUser__ = __webpack_require__(117);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -62850,1358 +62854,6 @@ var BasicUser = function (_Component) {
 
 /***/ }),
 /* 116 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var AdminUser = function (_Component) {
-    _inherits(AdminUser, _Component);
-
-    function AdminUser(props) {
-        _classCallCheck(this, AdminUser);
-
-        var _this = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
-
-        _this.state = {
-
-            usersSelected: [{
-                id: 0,
-                name: 'test'
-            }],
-            type: ''
-
-        };
-        return _this;
-    }
-
-    _createClass(AdminUser, [{
-        key: 'addType',
-        value: function addType(groupId) {
-            var _this2 = this;
-
-            console.log(groupId);
-            console.log(this.state.type);
-            axios.post("/types", {
-                type: this.state.type,
-                groupId: this.props.activeGroup
-
-            }).then(function () {
-                _this2.setState({
-                    type: ""
-
-                });
-            });
-        }
-    }, {
-        key: 'changeHandler',
-        value: function changeHandler(e) {
-            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
-        }
-    }, {
-        key: 'addYourselfToGroup',
-        value: function addYourselfToGroup() {
-            var _this3 = this;
-
-            return this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
-                // console.log(this.props.userGroups);
-                // console.log(group);
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                    {
-                        key: group.name + "groupListadmin" + index
-                    },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                            onChange: function onChange() {
-                                return _this3.props.addUser(group, _this3.props.user);
-                            },
-                            defaultChecked: _this3.props.contains(_this3.props.userGroups, group) ? true : false,
-                            type: 'checkbox',
-                            name: 'group',
-                            value: group.id
-                        }),
-                        group.name
-                    )
-                );
-            }) : null;
-        }
-    }, {
-        key: 'addUser',
-        value: function addUser(user) {
-            var usersAdded = [].concat(_toConsumableArray(this.state.usersSelected));
-            var usersAddedId = [].concat(_toConsumableArray(this.state.usersSelected.map(function (user) {
-                return user.id;
-            })));
-            usersAddedId.filter(function (id) {
-                return id === user.id;
-            }).length < 1 ? usersAdded.push(user) : null;
-
-            this.setState({
-                usersSelected: usersAdded
-            });
-        }
-    }, {
-        key: 'activateUserController',
-        value: function activateUserController() {
-            var _this4 = this;
-
-            return this.props.groups.length > 1 ? this.props.groups.map(function (group) {
-                if (group.id === _this4.props.activeGroup) {
-                    return group.users.map(function (user) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: "admin-group-list", key: user.name + group.id },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                                null,
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    { onClick: function onClick() {
-                                            return _this4.addUser(user);
-                                        } },
-                                    user.name
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                    onChange: function onChange() {
-                                        return _this4.props.activeUser(group.id, user.id);
-                                    },
-                                    defaultChecked: user.pivot.active ? true : false,
-                                    type: 'checkbox',
-                                    name: 'group',
-                                    value: user.id
-                                })
-                            )
-                        );
-                    });
-                }
-            }) : null;
-        }
-    }, {
-        key: 'addAnyUserToGroup',
-        value: function addAnyUserToGroup() {
-            var _this5 = this;
-
-            if (this.props.group && this.props.group.users) {
-                var groupUsersIds = [].concat(_toConsumableArray(this.props.group.users.map(function (user) {
-                    return user.id;
-                })));
-
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: "name-list" },
-                    this.props.users.length ? this.props.users.map(function (user, index) {
-
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            {
-                                className: "name-list-element",
-                                key: user.name + "groupListadmin" + index
-                            },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                                null,
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    null,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        onChange: function onChange() {
-                                            return _this5.props.addAnyUserToActiveGroup(user);
-                                        },
-                                        defaultChecked: groupUsersIds.filter(function (id) {
-                                            return id === user.id;
-                                        }).length < 1 ? false : true,
-                                        type: 'checkbox',
-                                        name: 'group',
-                                        value: user.id
-                                    }),
-                                    user.name
-                                )
-                            )
-                        );
-                    }) : null
-                );
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this6 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    null,
-                    ' Add New Type to Group',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                        className: 'myform-control',
-                        placeholder: 'type',
-                        onChange: function onChange(e) {
-                            return _this6.changeHandler(e);
-                        },
-                        required: true
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { onClick: function onClick() {
-                                return _this6.addType(_this6.props.activeGroup);
-                            } },
-                        'Save'
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: "action-screen" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: "action-screen-list" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h4',
-                            null,
-                            'List of Users to do an action'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: "screen-group-list" },
-                            this.state.usersSelected.map(function (user) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                                    { key: user.id + user.name },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        null,
-                                        user.name
-                                    )
-                                );
-                            })
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: "action-screen-actions-list" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h4',
-                            null,
-                            'Action to do'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: "action-button" },
-                            'Paid Subs Today'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: "action-button" },
-                            'Will pay next time'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: "action-button" },
-                            'Create Tournament'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: "action-button" },
-                            'Create Painting Competition'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: "action-button" },
-                            'Send them to the Moont'
-                        )
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: "profile-grid " },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'superuser-group-list div1' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h4',
-                            null,
-                            'Add YourSelf To Group'
-                        ),
-                        this.addYourselfToGroup()
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'superuser-group-list div2' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h4',
-                            null,
-                            'Active/Nonactie UserController'
-                        ),
-                        this.activateUserController()
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'superuser-group-list div3' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h4',
-                            null,
-                            'Empty Slot'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'superuser-group-list div4' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h4',
-                            null,
-                            'Add Any User To Group'
-                        ),
-                        this.addAnyUserToGroup()
-                    )
-                )
-            );
-        }
-    }]);
-
-    return AdminUser;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (AdminUser);
-
-/***/ }),
-/* 117 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_path__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var FlashMessage = function (_Component) {
-    _inherits(FlashMessage, _Component);
-
-    function FlashMessage() {
-        _classCallCheck(this, FlashMessage);
-
-        return _possibleConstructorReturn(this, (FlashMessage.__proto__ || Object.getPrototypeOf(FlashMessage)).apply(this, arguments));
-    }
-
-    _createClass(FlashMessage, [{
-        key: 'render',
-        value: function render() {
-            var style = {
-                position: 'absolute',
-                height: '250px',
-                width: '100%',
-                backgroundColor: 'wheat',
-                color: 'darkred',
-                top: '250px',
-                zIndex: '1000'
-            };
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { style: style },
-                this.props.message
-            );
-        }
-    }]);
-
-    return FlashMessage;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* unused harmony default export */ var _unused_webpack_default_export = (FlashMessage);
-
-/***/ }),
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// resolves . and .. elements in a path array with directory names there
-// must be no slashes, empty elements, or device names (c:\) in the array
-// (so also no leading and trailing slashes - it does not distinguish
-// relative and absolute paths)
-function normalizeArray(parts, allowAboveRoot) {
-  // if the path tries to go above the root, `up` ends up > 0
-  var up = 0;
-  for (var i = parts.length - 1; i >= 0; i--) {
-    var last = parts[i];
-    if (last === '.') {
-      parts.splice(i, 1);
-    } else if (last === '..') {
-      parts.splice(i, 1);
-      up++;
-    } else if (up) {
-      parts.splice(i, 1);
-      up--;
-    }
-  }
-
-  // if the path is allowed to go above the root, restore leading ..s
-  if (allowAboveRoot) {
-    for (; up--; up) {
-      parts.unshift('..');
-    }
-  }
-
-  return parts;
-}
-
-// Split a filename into [root, dir, basename, ext], unix version
-// 'root' is just a slash, or nothing.
-var splitPathRe =
-    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-var splitPath = function(filename) {
-  return splitPathRe.exec(filename).slice(1);
-};
-
-// path.resolve([from ...], to)
-// posix version
-exports.resolve = function() {
-  var resolvedPath = '',
-      resolvedAbsolute = false;
-
-  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
-    var path = (i >= 0) ? arguments[i] : process.cwd();
-
-    // Skip empty and invalid entries
-    if (typeof path !== 'string') {
-      throw new TypeError('Arguments to path.resolve must be strings');
-    } else if (!path) {
-      continue;
-    }
-
-    resolvedPath = path + '/' + resolvedPath;
-    resolvedAbsolute = path.charAt(0) === '/';
-  }
-
-  // At this point the path should be resolved to a full absolute path, but
-  // handle relative paths to be safe (might happen when process.cwd() fails)
-
-  // Normalize the path
-  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
-    return !!p;
-  }), !resolvedAbsolute).join('/');
-
-  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-};
-
-// path.normalize(path)
-// posix version
-exports.normalize = function(path) {
-  var isAbsolute = exports.isAbsolute(path),
-      trailingSlash = substr(path, -1) === '/';
-
-  // Normalize the path
-  path = normalizeArray(filter(path.split('/'), function(p) {
-    return !!p;
-  }), !isAbsolute).join('/');
-
-  if (!path && !isAbsolute) {
-    path = '.';
-  }
-  if (path && trailingSlash) {
-    path += '/';
-  }
-
-  return (isAbsolute ? '/' : '') + path;
-};
-
-// posix version
-exports.isAbsolute = function(path) {
-  return path.charAt(0) === '/';
-};
-
-// posix version
-exports.join = function() {
-  var paths = Array.prototype.slice.call(arguments, 0);
-  return exports.normalize(filter(paths, function(p, index) {
-    if (typeof p !== 'string') {
-      throw new TypeError('Arguments to path.join must be strings');
-    }
-    return p;
-  }).join('/'));
-};
-
-
-// path.relative(from, to)
-// posix version
-exports.relative = function(from, to) {
-  from = exports.resolve(from).substr(1);
-  to = exports.resolve(to).substr(1);
-
-  function trim(arr) {
-    var start = 0;
-    for (; start < arr.length; start++) {
-      if (arr[start] !== '') break;
-    }
-
-    var end = arr.length - 1;
-    for (; end >= 0; end--) {
-      if (arr[end] !== '') break;
-    }
-
-    if (start > end) return [];
-    return arr.slice(start, end - start + 1);
-  }
-
-  var fromParts = trim(from.split('/'));
-  var toParts = trim(to.split('/'));
-
-  var length = Math.min(fromParts.length, toParts.length);
-  var samePartsLength = length;
-  for (var i = 0; i < length; i++) {
-    if (fromParts[i] !== toParts[i]) {
-      samePartsLength = i;
-      break;
-    }
-  }
-
-  var outputParts = [];
-  for (var i = samePartsLength; i < fromParts.length; i++) {
-    outputParts.push('..');
-  }
-
-  outputParts = outputParts.concat(toParts.slice(samePartsLength));
-
-  return outputParts.join('/');
-};
-
-exports.sep = '/';
-exports.delimiter = ':';
-
-exports.dirname = function(path) {
-  var result = splitPath(path),
-      root = result[0],
-      dir = result[1];
-
-  if (!root && !dir) {
-    // No dirname whatsoever
-    return '.';
-  }
-
-  if (dir) {
-    // It has a dirname, strip trailing slash
-    dir = dir.substr(0, dir.length - 1);
-  }
-
-  return root + dir;
-};
-
-
-exports.basename = function(path, ext) {
-  var f = splitPath(path)[2];
-  // TODO: make this comparison case-insensitive on windows?
-  if (ext && f.substr(-1 * ext.length) === ext) {
-    f = f.substr(0, f.length - ext.length);
-  }
-  return f;
-};
-
-
-exports.extname = function(path) {
-  return splitPath(path)[3];
-};
-
-function filter (xs, f) {
-    if (xs.filter) return xs.filter(f);
-    var res = [];
-    for (var i = 0; i < xs.length; i++) {
-        if (f(xs[i], i, xs)) res.push(xs[i]);
-    }
-    return res;
-}
-
-// String.prototype.substr - negative index don't work in IE8
-var substr = 'ab'.substr(-1) === 'b'
-    ? function (str, start, len) { return str.substr(start, len) }
-    : function (str, start, len) {
-        if (start < 0) start = str.length + start;
-        return str.substr(start, len);
-    }
-;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)))
-
-/***/ }),
-/* 119 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-var Hypenotizer = function (_Component) {
-    _inherits(Hypenotizer, _Component);
-
-    function Hypenotizer(props) {
-        _classCallCheck(this, Hypenotizer);
-
-        var _this = _possibleConstructorReturn(this, (Hypenotizer.__proto__ || Object.getPrototypeOf(Hypenotizer)).call(this, props));
-
-        _this.state = {
-            hypeLevels: [1, 2, 3, 4],
-            votingList: null
-        };
-        return _this;
-    }
-
-    _createClass(Hypenotizer, [{
-        key: "componentDidUpdate",
-        value: function componentDidUpdate(prevProps) {}
-    }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            this.getData();
-            this.interval = setInterval(function () {
-                _this2.getData();
-            }, 50000);
-        }
-    }, {
-        key: "getData",
-        value: function getData() {
-            var _this3 = this;
-
-            axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
-
-                var activeVoteDetails = response.data.activeVoteDetails;
-                activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
-                _this3.setState({
-                    votingList: activeVoteDetails
-                });
-            });
-        }
-    }, {
-        key: "setUpVote",
-        value: function setUpVote(activeVoteDetails) {
-            var _this4 = this;
-
-            var newData = activeVoteDetails.map(function (type) {
-                return type = {
-                    id: type.id,
-                    name: type.type,
-                    votersId: [],
-                    winner: false
-                };
-            });
-
-            axios.post("/vote/setUpVote", {
-                data: JSON.stringify(newData),
-                group_id: this.props.activeGroup
-
-            }).then(function (response) {
-
-                var activeVoteDetails = response.data.activeVoteDetails;
-                activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
-
-                _this4.setState({
-                    votingList: activeVoteDetails
-                });
-            });
-        }
-    }, {
-        key: "closeVote",
-        value: function closeVote() {
-            var _this5 = this;
-
-            axios.put("/vote/voteclose/" + this.props.activeGroup).then(function (response) {
-                if (response.status) {
-
-                    _this5.setState({
-                        votingList: null
-                    });
-                }
-            });
-        }
-    }, {
-        key: "castVote",
-        value: function castVote(typeId, userId) {
-
-            var votingList = [].concat(_toConsumableArray(this.state.votingList));
-            var voteCount = 0;
-            this.state.votingList.data.map(function (type) {
-                type.votersId.includes(userId) ? voteCount += +1 : null;
-            });
-
-            if (voteCount < 2) {
-                var data = [].concat(_toConsumableArray(this.state.votingList.data.map(function (type) {
-
-                    if (type.id === typeId && !type.votersId.includes(userId)) {
-                        /// 3 votes but on different game.
-                        type.votersId.push(userId);
-                    }
-                    return type;
-                })));
-                votingList.data = [].concat(_toConsumableArray(data));
-                var voteData = JSON.stringify(data);
-                axios.put("/vote/castvote/" + this.props.activeGroup, {
-                    voteData: voteData
-                });
-                this.setState({
-                    votingList: votingList
-                });
-            } else {
-                var _data = [].concat(_toConsumableArray(this.state.votingList.data));
-
-                _data.map(function (type) {
-                    type.votersId.map(function (voterId) {
-                        var removedIndx = _data.indexOf(voterId);
-                        if (typeId === type.id) {
-                            type.votersId.splice(removedIndx, 1);
-                        }
-                    });
-                });
-
-                votingList.data = [].concat(_toConsumableArray(_data));
-                var _voteData = JSON.stringify(_data);
-                axios.put("/vote/castvote/" + this.props.activeGroup, {
-                    voteData: _voteData
-                });
-                this.setState({
-                    votingList: votingList
-                });
-            }
-        }
-    }, {
-        key: "compareValues",
-        value: function compareValues(key) {
-            var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            return function (a, b) {
-                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-                    // property doesn't exist on either object
-                    return 0;
-                }
-                var varA = typeof a[key] === "string" /// letter case insensitive
-                ? a[key].toUpperCase() : a[key];
-                var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
-                var comparison = 0;
-                if (varA > varB) {
-                    comparison = 1;
-                } else if (varA < varB) {
-                    comparison = -1;
-                }
-                return ascending == false ? comparison * -1 : comparison;
-            };
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this6 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
-                    "Hello ",
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "h1",
-                        null,
-                        this.props.user.name
-                    ),
-                    "Here we can show what and how much we like games in our Club. 1 - don't like ; 2 - I can play if my friends if they really want to ; 3 - I like the game; 4 - I like it so much my friend's must like it too :-)"
-                ),
-                this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], {
-                    user: this.props.user,
-                    group: this.props.groups[this.props.activeGroupIndex],
-                    hypeLevels: this.state.hypeLevels,
-                    hypenotizer: function hypenotizer() {
-                        return _this6.props.hypenotizer();
-                    },
-                    hypeLevelHandler: function hypeLevelHandler(e, typeId) {
-                        return _this6.props.hypeLevelHandler(e, typeId);
-                    },
-                    activeGroup: this.props.activeGroup
-                }) : null,
-                this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
-                    user: this.props.user
-                    // userTypes={this.props.userTypes.sort(this.compareValues("totalHype"))}
-                    , group: this.props.group,
-                    activeGroup: this.props.activeGroup,
-                    setUpVote: function setUpVote(activeVoteDetails) {
-                        return _this6.setUpVote(activeVoteDetails);
-                    }
-                }) : null,
-                this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
-                    user: this.props.user,
-                    activeGroup: this.props.activeGroup,
-                    votingList: this.state.votingList,
-                    closeVote: function closeVote() {
-                        return _this6.closeVote();
-                    },
-                    castVote: function castVote(typeId, userId) {
-                        return _this6.castVote(typeId, userId);
-                    },
-                    group: this.props.group
-                }) : null
-            );
-        }
-    }]);
-
-    return Hypenotizer;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Hypenotizer);
-
-/***/ }),
-/* 120 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var Hypeset = function (_Component) {
-    _inherits(Hypeset, _Component);
-
-    function Hypeset() {
-        _classCallCheck(this, Hypeset);
-
-        return _possibleConstructorReturn(this, (Hypeset.__proto__ || Object.getPrototypeOf(Hypeset)).apply(this, arguments));
-    }
-
-    _createClass(Hypeset, [{
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            console.log(this.props.group);
-            return (
-                // <React.Fragment>
-                //     <button
-                //         className="mega-button"
-                //         onClick={() => this.props.hypenotizer()}
-                //     >
-                //         CLICK HERE TO SAVE
-                //     </button>
-                //     <div className="hype-wrapper">
-                //         <div className={"hype-list"}>
-                //             {Array.isArray(this.props.group.types)
-                //                 ? this.props.group.types.map(type => {
-                //                       if (
-                //                           type.group_id === this.props.activeGroup
-                //                       ) {
-                //                           return (
-                //                               <div
-                //                                   className="hype-set-row"
-                //                                   key={type.type}
-                //                               >
-                //                                   <div className="hype-row-element">
-                //                                       {type.type}
-                //                                   </div>
-                //                                   <div className="hype-row-element">
-                //                                       <select
-                //                                           className={"hype-options"}
-                //                                           onChange={e =>
-                //                                               this.props.hypeLevelHandler(
-                //                                                   e,
-                //                                                   type.id
-                //                                               )
-                //                                           }
-                //                                       >
-                //                                           {this.props.group.users.map(user => {
-
-                //                                               if (
-                //                                                   user.id ===
-                //                                                   this.props.user.id
-                //                                               ) {
-                //                                                 return  user.types.map( userType => {
-                //                                                       if (userType.id === type.id) {
-
-                //                                                      return (
-                //                                                         <option
-                //                                                         key={
-                //                                                             "default" +
-                //                                                             userType.type
-                //                                                         }
-                //                                                         defaultValue={
-                //                                                             userType.pivot.hype
-                //                                                         }
-                //                                                     >
-                //                                                         {
-                //                                                             userType.pivot.hype
-                //                                                         }
-                //                                                     </option>
-                //                                                      )
-
-                //                                                         ;
-                //                                                       }
-                //                                                   })
-
-                //                                               }
-                //                                           })}
-
-                //                                           {this.props.hypeLevels.map(
-                //                                               (level, index) => {
-                //                                                   return (
-                //                                                       <option
-                //                                                           key={
-                //                                                               type.type +
-                //                                                               index
-                //                                                           }
-                //                                                           value={
-                //                                                               level
-                //                                                           }
-                //                                                       >
-                //                                                           {level}
-                //                                                       </option>
-                //                                                   );
-                //                                               }
-                //                                           )}
-                //                                       </select>
-                //                                   </div>
-                //                               </div>
-                //                           );
-                //                       }
-                //                   })
-                //                 : null}
-                //         </div>
-                //     </div>
-                // </React.Fragment>
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "button",
-                        {
-                            className: "mega-button",
-                            onClick: function onClick() {
-                                return _this2.props.hypenotizer();
-                            }
-                        },
-                        "CLICK HERE TO SAVE"
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "hype-wrapper" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "hype-list" },
-                            Array.isArray(this.props.group.users) ? this.props.group.users.map(function (user) {
-
-                                return user.types.map(function (type) {
-
-                                    if (type.group_id === _this2.props.activeGroup && type.pivot.user_id === _this2.props.user.id) {
-
-                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "div",
-                                            { className: "hype-set-row", key: type.type },
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                "div",
-                                                { className: "hype-row-element" },
-                                                type.type
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                "div",
-                                                { className: "hype-row-element" },
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                    "select",
-                                                    {
-                                                        className: 'hype-options',
-                                                        onChange: function onChange(e) {
-                                                            return _this2.props.hypeLevelHandler(e, type.id);
-                                                        }
-                                                    },
-                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                        "option",
-                                                        {
-                                                            key: "default" + type.type,
-                                                            defaultValue: type.pivot.hype
-                                                        },
-                                                        type.pivot.hype
-                                                    ),
-                                                    ")",
-                                                    _this2.props.hypeLevels.map(function (level, index) {
-                                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                            "option",
-                                                            {
-                                                                key: type.type + index,
-                                                                value: level
-                                                            },
-                                                            level
-                                                        );
-                                                    })
-                                                )
-                                            )
-                                        );
-                                    }
-                                });
-                            }) : null
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Hypeset;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Hypeset);
-
-/***/ }),
-/* 121 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var Hypecheck = function (_Component) {
-    _inherits(Hypecheck, _Component);
-
-    function Hypecheck(props) {
-        _classCallCheck(this, Hypecheck);
-
-        var _this = _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
-
-        _this.state = {
-            click: true
-        };
-        return _this;
-    }
-
-    _createClass(Hypecheck, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            axios.get("/vote/votecheck/" + this.props.activeGroup);
-        }
-    }, {
-        key: "compareValues",
-        value: function compareValues(key) {
-            var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            return function (a, b) {
-                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-                    // property doesn't exist on either object
-                    return 0;
-                }
-                var varA = typeof a[key] === "string" /// letter case insensitive
-                ? a[key].toUpperCase() : a[key];
-                var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
-                var comparison = 0;
-                if (varA > varB) {
-                    comparison = 1;
-                } else if (varA < varB) {
-                    comparison = -1;
-                }
-                return ascending == false ? comparison * -1 : comparison;
-            };
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            var group = _extends({}, this.props.group);
-            var zeroRated = [];
-
-            var activeUsersRating = group.users.map(function (user) {
-                return user.pivot.active ? user : null;
-            }).filter(Boolean);
-
-            group.types.map(function (type) {
-                var totalHype = 0;
-
-                activeUsersRating.map(function (user) {
-                    return user.types.map(function (userType) {
-                        if (userType.id === type.id) {
-                            totalHype += +userType.pivot.hype;
-                            if (+userType.pivot.hype === 1) {
-                                zeroRated.push(type);
-                            }
-                        }
-                    });
-                });
-                type.totalHype = totalHype;
-            });
-
-            var data = [].concat(_toConsumableArray(group.types.filter(function (type) {
-                return !zeroRated.includes(type) ? type : null;
-            }).sort(this.compareValues('totalHype', false))));
-
-            var votingList = [].concat(_toConsumableArray(data));
-            votingList.sort(this.compareValues('totalHype', false)).slice(0, 3);
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { onClick: function onClick() {
-                            return _this2.props.setUpVote(votingList.sort(_this2.compareValues('totalHype', false)).slice(0, 3));
-                        } },
-                    "CAST VOTE "
-                ),
-                group.types ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "table",
-                    { className: "hypecheck-results-list" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "tbody",
-                        { className: "hypecheck-results-list" },
-                        this.props.user.permissions === "basic" ? data.map(function (type, index) {
-                            if (index < 3) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "tr",
-                                    {
-                                        key: type.id + " " + type.hype
-                                    },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "td",
-                                        null,
-                                        type.type
-                                    )
-                                );
-                            }
-                        }) : data.map(function (type) {
-
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "tr",
-                                { key: type.id + ' ' + type.hype },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "td",
-                                    null,
-                                    type.type
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "td",
-                                    {
-                                        style: { marginLeft: "auto" }
-                                    },
-                                    type.totalHype
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "td",
-                                    {
-                                        style: { marginLeft: "20px" }
-                                    },
-                                    type.average
-                                )
-                            );
-                        })
-                    )
-                ) : null
-            );
-        }
-    }]);
-
-    return Hypecheck;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Hypecheck);
-
-/***/ }),
-/* 122 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var Hypevote = function (_Component) {
-    _inherits(Hypevote, _Component);
-
-    function Hypevote(props) {
-        _classCallCheck(this, Hypevote);
-
-        var _this = _possibleConstructorReturn(this, (Hypevote.__proto__ || Object.getPrototypeOf(Hypevote)).call(this, props));
-
-        _this.state = {
-            data: {
-                data: []
-            }
-        };
-        return _this;
-    }
-
-    _createClass(Hypevote, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {}
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "hype-vote-wrapper" },
-                this.props.votingList ? this.props.votingList.data.map(function (type) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "hype-row", key: type.name },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            {
-                                className: "hype-type-bubble"
-
-                            },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                {
-                                    className: "hype-type-bubble-type-name",
-                                    onClick: function onClick() {
-                                        return _this2.props.castVote(type.id, _this2.props.user.id);
-                                    }
-                                },
-                                type.name
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "vote-bubble-voters-names" },
-                                type.votersId ? type.votersId.map(function (voter) {
-                                    return _this2.props.group.users.map(function (user) {
-                                        if (user.id === voter) {
-                                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                "div",
-                                                { className: "vote-bubble-voter-name", key: voter },
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                    "div",
-                                                    null,
-                                                    user.name
-                                                )
-                                            );
-                                        }
-                                    });
-                                }) : null
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "hype-vote-count" },
-                            type.votersId ? type.votersId.length : null
-                        )
-                    );
-                }) : null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "mega-button", onClick: function onClick() {
-                            return _this2.props.closeVote();
-                        } },
-                    "Close Vote"
-                )
-            );
-        }
-    }]);
-
-    return Hypevote;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Hypevote);
-
-/***/ }),
-/* 123 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64546,6 +63198,1354 @@ var SuperUser = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (SuperUser);
+
+/***/ }),
+/* 117 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AdminUser = function (_Component) {
+    _inherits(AdminUser, _Component);
+
+    function AdminUser(props) {
+        _classCallCheck(this, AdminUser);
+
+        var _this = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
+
+        _this.state = {
+
+            usersSelected: [{
+                id: 0,
+                name: 'test'
+            }],
+            type: ''
+
+        };
+        return _this;
+    }
+
+    _createClass(AdminUser, [{
+        key: 'addType',
+        value: function addType(groupId) {
+            var _this2 = this;
+
+            console.log(groupId);
+            console.log(this.state.type);
+            axios.post("/types", {
+                type: this.state.type,
+                groupId: this.props.activeGroup
+
+            }).then(function () {
+                _this2.setState({
+                    type: ""
+
+                });
+            });
+        }
+    }, {
+        key: 'changeHandler',
+        value: function changeHandler(e) {
+            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
+        }
+    }, {
+        key: 'addYourselfToGroup',
+        value: function addYourselfToGroup() {
+            var _this3 = this;
+
+            return this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
+                // console.log(this.props.userGroups);
+                // console.log(group);
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                    {
+                        key: group.name + "groupListadmin" + index
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                            onChange: function onChange() {
+                                return _this3.props.addUser(group, _this3.props.user);
+                            },
+                            defaultChecked: _this3.props.contains(_this3.props.userGroups, group) ? true : false,
+                            type: 'checkbox',
+                            name: 'group',
+                            value: group.id
+                        }),
+                        group.name
+                    )
+                );
+            }) : null;
+        }
+    }, {
+        key: 'addUser',
+        value: function addUser(user) {
+            var usersAdded = [].concat(_toConsumableArray(this.state.usersSelected));
+            var usersAddedId = [].concat(_toConsumableArray(this.state.usersSelected.map(function (user) {
+                return user.id;
+            })));
+            usersAddedId.filter(function (id) {
+                return id === user.id;
+            }).length < 1 ? usersAdded.push(user) : null;
+
+            this.setState({
+                usersSelected: usersAdded
+            });
+        }
+    }, {
+        key: 'activateUserController',
+        value: function activateUserController() {
+            var _this4 = this;
+
+            return this.props.groups.length > 1 ? this.props.groups.map(function (group) {
+                if (group.id === _this4.props.activeGroup) {
+                    return group.users.map(function (user) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "admin-group-list", key: user.name + group.id },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { onClick: function onClick() {
+                                            return _this4.addUser(user);
+                                        } },
+                                    user.name
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                    onChange: function onChange() {
+                                        return _this4.props.activeUser(group.id, user.id);
+                                    },
+                                    defaultChecked: user.pivot.active ? true : false,
+                                    type: 'checkbox',
+                                    name: 'group',
+                                    value: user.id
+                                })
+                            )
+                        );
+                    });
+                }
+            }) : null;
+        }
+    }, {
+        key: 'addAnyUserToGroup',
+        value: function addAnyUserToGroup() {
+            var _this5 = this;
+
+            if (this.props.group && this.props.group.users) {
+                var groupUsersIds = [].concat(_toConsumableArray(this.props.group.users.map(function (user) {
+                    return user.id;
+                })));
+
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: "name-list" },
+                    this.props.users.length ? this.props.users.map(function (user, index) {
+
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            {
+                                className: "name-list-element",
+                                key: user.name + "groupListadmin" + index
+                            },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    null,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                        onChange: function onChange() {
+                                            return _this5.props.addAnyUserToActiveGroup(user);
+                                        },
+                                        defaultChecked: groupUsersIds.filter(function (id) {
+                                            return id === user.id;
+                                        }).length < 1 ? false : true,
+                                        type: 'checkbox',
+                                        name: 'group',
+                                        value: user.id
+                                    }),
+                                    user.name
+                                )
+                            )
+                        );
+                    }) : null
+                );
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this6 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    null,
+                    ' Add New Type to Group',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'myform-control',
+                        placeholder: 'type',
+                        onChange: function onChange(e) {
+                            return _this6.changeHandler(e);
+                        },
+                        required: true
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        { onClick: function onClick() {
+                                return _this6.addType(_this6.props.activeGroup);
+                            } },
+                        'Save'
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: "action-screen" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: "action-screen-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'List of Users to do an action'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "screen-group-list" },
+                            this.state.usersSelected.map(function (user) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                    { key: user.id + user.name },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        null,
+                                        user.name
+                                    )
+                                );
+                            })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: "action-screen-actions-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Action to do'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Paid Subs Today'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Will pay next time'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Create Tournament'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Create Painting Competition'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: "action-button" },
+                            'Send them to the Moont'
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: "profile-grid " },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'superuser-group-list div1' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Add YourSelf To Group'
+                        ),
+                        this.addYourselfToGroup()
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'superuser-group-list div2' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Active/Nonactie UserController'
+                        ),
+                        this.activateUserController()
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'superuser-group-list div3' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Empty Slot'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'superuser-group-list div4' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            null,
+                            'Add Any User To Group'
+                        ),
+                        this.addAnyUserToGroup()
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AdminUser;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (AdminUser);
+
+/***/ }),
+/* 118 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_path__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var FlashMessage = function (_Component) {
+    _inherits(FlashMessage, _Component);
+
+    function FlashMessage() {
+        _classCallCheck(this, FlashMessage);
+
+        return _possibleConstructorReturn(this, (FlashMessage.__proto__ || Object.getPrototypeOf(FlashMessage)).apply(this, arguments));
+    }
+
+    _createClass(FlashMessage, [{
+        key: 'render',
+        value: function render() {
+            var style = {
+                position: 'absolute',
+                height: '250px',
+                width: '100%',
+                backgroundColor: 'wheat',
+                color: 'darkred',
+                top: '250px',
+                zIndex: '1000'
+            };
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { style: style },
+                this.props.message
+            );
+        }
+    }]);
+
+    return FlashMessage;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* unused harmony default export */ var _unused_webpack_default_export = (FlashMessage);
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// resolves . and .. elements in a path array with directory names there
+// must be no slashes, empty elements, or device names (c:\) in the array
+// (so also no leading and trailing slashes - it does not distinguish
+// relative and absolute paths)
+function normalizeArray(parts, allowAboveRoot) {
+  // if the path tries to go above the root, `up` ends up > 0
+  var up = 0;
+  for (var i = parts.length - 1; i >= 0; i--) {
+    var last = parts[i];
+    if (last === '.') {
+      parts.splice(i, 1);
+    } else if (last === '..') {
+      parts.splice(i, 1);
+      up++;
+    } else if (up) {
+      parts.splice(i, 1);
+      up--;
+    }
+  }
+
+  // if the path is allowed to go above the root, restore leading ..s
+  if (allowAboveRoot) {
+    for (; up--; up) {
+      parts.unshift('..');
+    }
+  }
+
+  return parts;
+}
+
+// Split a filename into [root, dir, basename, ext], unix version
+// 'root' is just a slash, or nothing.
+var splitPathRe =
+    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+var splitPath = function(filename) {
+  return splitPathRe.exec(filename).slice(1);
+};
+
+// path.resolve([from ...], to)
+// posix version
+exports.resolve = function() {
+  var resolvedPath = '',
+      resolvedAbsolute = false;
+
+  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+    var path = (i >= 0) ? arguments[i] : process.cwd();
+
+    // Skip empty and invalid entries
+    if (typeof path !== 'string') {
+      throw new TypeError('Arguments to path.resolve must be strings');
+    } else if (!path) {
+      continue;
+    }
+
+    resolvedPath = path + '/' + resolvedPath;
+    resolvedAbsolute = path.charAt(0) === '/';
+  }
+
+  // At this point the path should be resolved to a full absolute path, but
+  // handle relative paths to be safe (might happen when process.cwd() fails)
+
+  // Normalize the path
+  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+    return !!p;
+  }), !resolvedAbsolute).join('/');
+
+  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+};
+
+// path.normalize(path)
+// posix version
+exports.normalize = function(path) {
+  var isAbsolute = exports.isAbsolute(path),
+      trailingSlash = substr(path, -1) === '/';
+
+  // Normalize the path
+  path = normalizeArray(filter(path.split('/'), function(p) {
+    return !!p;
+  }), !isAbsolute).join('/');
+
+  if (!path && !isAbsolute) {
+    path = '.';
+  }
+  if (path && trailingSlash) {
+    path += '/';
+  }
+
+  return (isAbsolute ? '/' : '') + path;
+};
+
+// posix version
+exports.isAbsolute = function(path) {
+  return path.charAt(0) === '/';
+};
+
+// posix version
+exports.join = function() {
+  var paths = Array.prototype.slice.call(arguments, 0);
+  return exports.normalize(filter(paths, function(p, index) {
+    if (typeof p !== 'string') {
+      throw new TypeError('Arguments to path.join must be strings');
+    }
+    return p;
+  }).join('/'));
+};
+
+
+// path.relative(from, to)
+// posix version
+exports.relative = function(from, to) {
+  from = exports.resolve(from).substr(1);
+  to = exports.resolve(to).substr(1);
+
+  function trim(arr) {
+    var start = 0;
+    for (; start < arr.length; start++) {
+      if (arr[start] !== '') break;
+    }
+
+    var end = arr.length - 1;
+    for (; end >= 0; end--) {
+      if (arr[end] !== '') break;
+    }
+
+    if (start > end) return [];
+    return arr.slice(start, end - start + 1);
+  }
+
+  var fromParts = trim(from.split('/'));
+  var toParts = trim(to.split('/'));
+
+  var length = Math.min(fromParts.length, toParts.length);
+  var samePartsLength = length;
+  for (var i = 0; i < length; i++) {
+    if (fromParts[i] !== toParts[i]) {
+      samePartsLength = i;
+      break;
+    }
+  }
+
+  var outputParts = [];
+  for (var i = samePartsLength; i < fromParts.length; i++) {
+    outputParts.push('..');
+  }
+
+  outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+  return outputParts.join('/');
+};
+
+exports.sep = '/';
+exports.delimiter = ':';
+
+exports.dirname = function(path) {
+  var result = splitPath(path),
+      root = result[0],
+      dir = result[1];
+
+  if (!root && !dir) {
+    // No dirname whatsoever
+    return '.';
+  }
+
+  if (dir) {
+    // It has a dirname, strip trailing slash
+    dir = dir.substr(0, dir.length - 1);
+  }
+
+  return root + dir;
+};
+
+
+exports.basename = function(path, ext) {
+  var f = splitPath(path)[2];
+  // TODO: make this comparison case-insensitive on windows?
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+};
+
+
+exports.extname = function(path) {
+  return splitPath(path)[3];
+};
+
+function filter (xs, f) {
+    if (xs.filter) return xs.filter(f);
+    var res = [];
+    for (var i = 0; i < xs.length; i++) {
+        if (f(xs[i], i, xs)) res.push(xs[i]);
+    }
+    return res;
+}
+
+// String.prototype.substr - negative index don't work in IE8
+var substr = 'ab'.substr(-1) === 'b'
+    ? function (str, start, len) { return str.substr(start, len) }
+    : function (str, start, len) {
+        if (start < 0) start = str.length + start;
+        return str.substr(start, len);
+    }
+;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)))
+
+/***/ }),
+/* 120 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var Hypenotizer = function (_Component) {
+    _inherits(Hypenotizer, _Component);
+
+    function Hypenotizer(props) {
+        _classCallCheck(this, Hypenotizer);
+
+        var _this = _possibleConstructorReturn(this, (Hypenotizer.__proto__ || Object.getPrototypeOf(Hypenotizer)).call(this, props));
+
+        _this.state = {
+            hypeLevels: [1, 2, 3, 4],
+            votingList: null
+        };
+        return _this;
+    }
+
+    _createClass(Hypenotizer, [{
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps) {}
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            this.getData();
+            this.interval = setInterval(function () {
+                _this2.getData();
+            }, 50000);
+        }
+    }, {
+        key: "getData",
+        value: function getData() {
+            var _this3 = this;
+
+            axios.get("/vote/votecheck/" + this.props.activeGroup).then(function (response) {
+
+                var activeVoteDetails = response.data.activeVoteDetails;
+                activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
+                _this3.setState({
+                    votingList: activeVoteDetails
+                });
+            });
+        }
+    }, {
+        key: "setUpVote",
+        value: function setUpVote(activeVoteDetails) {
+            var _this4 = this;
+
+            var newData = activeVoteDetails.map(function (type) {
+                return type = {
+                    id: type.id,
+                    name: type.type,
+                    votersId: [],
+                    winner: false
+                };
+            });
+
+            axios.post("/vote/setUpVote", {
+                data: JSON.stringify(newData),
+                group_id: this.props.activeGroup
+
+            }).then(function (response) {
+
+                var activeVoteDetails = response.data.activeVoteDetails;
+                activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
+
+                _this4.setState({
+                    votingList: activeVoteDetails
+                });
+            });
+        }
+    }, {
+        key: "closeVote",
+        value: function closeVote() {
+            var _this5 = this;
+
+            axios.put("/vote/voteclose/" + this.props.activeGroup).then(function (response) {
+                if (response.status) {
+
+                    _this5.setState({
+                        votingList: null
+                    });
+                }
+            });
+        }
+    }, {
+        key: "castVote",
+        value: function castVote(typeId, userId) {
+
+            var votingList = [].concat(_toConsumableArray(this.state.votingList));
+            var voteCount = 0;
+            this.state.votingList.data.map(function (type) {
+                type.votersId.includes(userId) ? voteCount += +1 : null;
+            });
+
+            if (voteCount < 2) {
+                var data = [].concat(_toConsumableArray(this.state.votingList.data.map(function (type) {
+
+                    if (type.id === typeId && !type.votersId.includes(userId)) {
+                        /// 3 votes but on different game.
+                        type.votersId.push(userId);
+                    }
+                    return type;
+                })));
+                votingList.data = [].concat(_toConsumableArray(data));
+                var voteData = JSON.stringify(data);
+                axios.put("/vote/castvote/" + this.props.activeGroup, {
+                    voteData: voteData
+                });
+                this.setState({
+                    votingList: votingList
+                });
+            } else {
+                var _data = [].concat(_toConsumableArray(this.state.votingList.data));
+
+                _data.map(function (type) {
+                    type.votersId.map(function (voterId) {
+                        var removedIndx = _data.indexOf(voterId);
+                        if (typeId === type.id) {
+                            type.votersId.splice(removedIndx, 1);
+                        }
+                    });
+                });
+
+                votingList.data = [].concat(_toConsumableArray(_data));
+                var _voteData = JSON.stringify(_data);
+                axios.put("/vote/castvote/" + this.props.activeGroup, {
+                    voteData: _voteData
+                });
+                this.setState({
+                    votingList: votingList
+                });
+            }
+        }
+    }, {
+        key: "compareValues",
+        value: function compareValues(key) {
+            var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return function (a, b) {
+                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    return 0;
+                }
+                var varA = typeof a[key] === "string" /// letter case insensitive
+                ? a[key].toUpperCase() : a[key];
+                var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+                var comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return ascending == false ? comparison * -1 : comparison;
+            };
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this6 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
+                    "Hello ",
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "h1",
+                        null,
+                        this.props.user.name
+                    ),
+                    "Here we can show what and how much we like games in our Club. 1 - don't like ; 2 - I can play if my friends if they really want to ; 3 - I like the game; 4 - I like it so much my friend's must like it too :-)"
+                ),
+                this.props.navigation === "Hypeset" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Hypenotizer_Hypeset__["a" /* default */], {
+                    user: this.props.user,
+                    group: this.props.groups[this.props.activeGroupIndex],
+                    hypeLevels: this.state.hypeLevels,
+                    hypenotizer: function hypenotizer() {
+                        return _this6.props.hypenotizer();
+                    },
+                    hypeLevelHandler: function hypeLevelHandler(e, typeId) {
+                        return _this6.props.hypeLevelHandler(e, typeId);
+                    },
+                    activeGroup: this.props.activeGroup
+                }) : null,
+                this.props.navigation === "Hypecheck" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Hypenotizer_Hypecheck__["a" /* default */], {
+                    user: this.props.user
+                    // userTypes={this.props.userTypes.sort(this.compareValues("totalHype"))}
+                    , group: this.props.group,
+                    activeGroup: this.props.activeGroup,
+                    setUpVote: function setUpVote(activeVoteDetails) {
+                        return _this6.setUpVote(activeVoteDetails);
+                    }
+                }) : null,
+                this.props.navigation === "Hypevote" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Hypenotizer_Hypevote__["a" /* default */], {
+                    user: this.props.user,
+                    activeGroup: this.props.activeGroup,
+                    votingList: this.state.votingList,
+                    closeVote: function closeVote() {
+                        return _this6.closeVote();
+                    },
+                    castVote: function castVote(typeId, userId) {
+                        return _this6.castVote(typeId, userId);
+                    },
+                    group: this.props.group
+                }) : null
+            );
+        }
+    }]);
+
+    return Hypenotizer;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Hypenotizer);
+
+/***/ }),
+/* 121 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Hypeset = function (_Component) {
+    _inherits(Hypeset, _Component);
+
+    function Hypeset() {
+        _classCallCheck(this, Hypeset);
+
+        return _possibleConstructorReturn(this, (Hypeset.__proto__ || Object.getPrototypeOf(Hypeset)).apply(this, arguments));
+    }
+
+    _createClass(Hypeset, [{
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            console.log(this.props.group);
+            return (
+                // <React.Fragment>
+                //     <button
+                //         className="mega-button"
+                //         onClick={() => this.props.hypenotizer()}
+                //     >
+                //         CLICK HERE TO SAVE
+                //     </button>
+                //     <div className="hype-wrapper">
+                //         <div className={"hype-list"}>
+                //             {Array.isArray(this.props.group.types)
+                //                 ? this.props.group.types.map(type => {
+                //                       if (
+                //                           type.group_id === this.props.activeGroup
+                //                       ) {
+                //                           return (
+                //                               <div
+                //                                   className="hype-set-row"
+                //                                   key={type.type}
+                //                               >
+                //                                   <div className="hype-row-element">
+                //                                       {type.type}
+                //                                   </div>
+                //                                   <div className="hype-row-element">
+                //                                       <select
+                //                                           className={"hype-options"}
+                //                                           onChange={e =>
+                //                                               this.props.hypeLevelHandler(
+                //                                                   e,
+                //                                                   type.id
+                //                                               )
+                //                                           }
+                //                                       >
+                //                                           {this.props.group.users.map(user => {
+
+                //                                               if (
+                //                                                   user.id ===
+                //                                                   this.props.user.id
+                //                                               ) {
+                //                                                 return  user.types.map( userType => {
+                //                                                       if (userType.id === type.id) {
+
+                //                                                      return (
+                //                                                         <option
+                //                                                         key={
+                //                                                             "default" +
+                //                                                             userType.type
+                //                                                         }
+                //                                                         defaultValue={
+                //                                                             userType.pivot.hype
+                //                                                         }
+                //                                                     >
+                //                                                         {
+                //                                                             userType.pivot.hype
+                //                                                         }
+                //                                                     </option>
+                //                                                      )
+
+                //                                                         ;
+                //                                                       }
+                //                                                   })
+
+                //                                               }
+                //                                           })}
+
+                //                                           {this.props.hypeLevels.map(
+                //                                               (level, index) => {
+                //                                                   return (
+                //                                                       <option
+                //                                                           key={
+                //                                                               type.type +
+                //                                                               index
+                //                                                           }
+                //                                                           value={
+                //                                                               level
+                //                                                           }
+                //                                                       >
+                //                                                           {level}
+                //                                                       </option>
+                //                                                   );
+                //                                               }
+                //                                           )}
+                //                                       </select>
+                //                                   </div>
+                //                               </div>
+                //                           );
+                //                       }
+                //                   })
+                //                 : null}
+                //         </div>
+                //     </div>
+                // </React.Fragment>
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        {
+                            className: "mega-button",
+                            onClick: function onClick() {
+                                return _this2.props.hypenotizer();
+                            }
+                        },
+                        "CLICK HERE TO SAVE"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "hype-wrapper" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "hype-list" },
+                            Array.isArray(this.props.group.users) ? this.props.group.users.map(function (user) {
+
+                                return user.types.map(function (type) {
+
+                                    if (type.group_id === _this2.props.activeGroup && type.pivot.user_id === _this2.props.user.id) {
+
+                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            "div",
+                                            { className: "hype-set-row", key: type.type },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                "div",
+                                                { className: "hype-row-element" },
+                                                type.type
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                "div",
+                                                { className: "hype-row-element" },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    "select",
+                                                    {
+                                                        className: 'hype-options',
+                                                        onChange: function onChange(e) {
+                                                            return _this2.props.hypeLevelHandler(e, type.id);
+                                                        }
+                                                    },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        "option",
+                                                        {
+                                                            key: "default" + type.type,
+                                                            defaultValue: type.pivot.hype
+                                                        },
+                                                        type.pivot.hype
+                                                    ),
+                                                    ")",
+                                                    _this2.props.hypeLevels.map(function (level, index) {
+                                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                            "option",
+                                                            {
+                                                                key: type.type + index,
+                                                                value: level
+                                                            },
+                                                            level
+                                                        );
+                                                    })
+                                                )
+                                            )
+                                        );
+                                    }
+                                });
+                            }) : null
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Hypeset;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Hypeset);
+
+/***/ }),
+/* 122 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var Hypecheck = function (_Component) {
+    _inherits(Hypecheck, _Component);
+
+    function Hypecheck(props) {
+        _classCallCheck(this, Hypecheck);
+
+        var _this = _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
+
+        _this.state = {
+            click: true
+        };
+        return _this;
+    }
+
+    _createClass(Hypecheck, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            axios.get("/vote/votecheck/" + this.props.activeGroup);
+        }
+    }, {
+        key: "compareValues",
+        value: function compareValues(key) {
+            var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return function (a, b) {
+                if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    // property doesn't exist on either object
+                    return 0;
+                }
+                var varA = typeof a[key] === "string" /// letter case insensitive
+                ? a[key].toUpperCase() : a[key];
+                var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+                var comparison = 0;
+                if (varA > varB) {
+                    comparison = 1;
+                } else if (varA < varB) {
+                    comparison = -1;
+                }
+                return ascending == false ? comparison * -1 : comparison;
+            };
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            var group = _extends({}, this.props.group);
+            var zeroRated = [];
+
+            var activeUsersRating = group.users.map(function (user) {
+                return user.pivot.active ? user : null;
+            }).filter(Boolean);
+
+            group.types.map(function (type) {
+                var totalHype = 0;
+
+                activeUsersRating.map(function (user) {
+                    return user.types.map(function (userType) {
+                        if (userType.id === type.id) {
+                            totalHype += +userType.pivot.hype;
+                            if (+userType.pivot.hype === 1) {
+                                zeroRated.push(type);
+                            }
+                        }
+                    });
+                });
+                type.totalHype = totalHype;
+            });
+
+            var data = [].concat(_toConsumableArray(group.types.filter(function (type) {
+                return !zeroRated.includes(type) ? type : null;
+            }).sort(this.compareValues('totalHype', false))));
+
+            var votingList = [].concat(_toConsumableArray(data));
+            votingList.sort(this.compareValues('totalHype', false)).slice(0, 3);
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { onClick: function onClick() {
+                            return _this2.props.setUpVote(votingList.sort(_this2.compareValues('totalHype', false)).slice(0, 3));
+                        } },
+                    "CAST VOTE "
+                ),
+                group.types ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "table",
+                    { className: "hypecheck-results-list" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "tbody",
+                        { className: "hypecheck-results-list" },
+                        this.props.user.permissions === "basic" ? data.map(function (type, index) {
+                            if (index < 3) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "tr",
+                                    {
+                                        key: type.id + " " + type.hype
+                                    },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "td",
+                                        null,
+                                        type.type
+                                    )
+                                );
+                            }
+                        }) : data.map(function (type) {
+
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "tr",
+                                { key: type.id + ' ' + type.hype },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "td",
+                                    null,
+                                    type.type
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "td",
+                                    {
+                                        style: { marginLeft: "auto" }
+                                    },
+                                    type.totalHype
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "td",
+                                    {
+                                        style: { marginLeft: "20px" }
+                                    },
+                                    type.average
+                                )
+                            );
+                        })
+                    )
+                ) : null
+            );
+        }
+    }]);
+
+    return Hypecheck;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Hypecheck);
+
+/***/ }),
+/* 123 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Hypevote = function (_Component) {
+    _inherits(Hypevote, _Component);
+
+    function Hypevote(props) {
+        _classCallCheck(this, Hypevote);
+
+        var _this = _possibleConstructorReturn(this, (Hypevote.__proto__ || Object.getPrototypeOf(Hypevote)).call(this, props));
+
+        _this.state = {
+            data: {
+                data: []
+            }
+        };
+        return _this;
+    }
+
+    _createClass(Hypevote, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {}
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "hype-vote-wrapper" },
+                this.props.votingList ? this.props.votingList.data.map(function (type) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "hype-row", key: type.name },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            {
+                                className: "hype-type-bubble"
+
+                            },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                {
+                                    className: "hype-type-bubble-type-name",
+                                    onClick: function onClick() {
+                                        return _this2.props.castVote(type.id, _this2.props.user.id);
+                                    }
+                                },
+                                type.name
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { className: "vote-bubble-voters-names" },
+                                type.votersId ? type.votersId.map(function (voter) {
+                                    return _this2.props.group.users.map(function (user) {
+                                        if (user.id === voter) {
+                                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                "div",
+                                                { className: "vote-bubble-voter-name", key: voter },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    "div",
+                                                    null,
+                                                    user.name
+                                                )
+                                            );
+                                        }
+                                    });
+                                }) : null
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "hype-vote-count" },
+                            type.votersId ? type.votersId.length : null
+                        )
+                    );
+                }) : null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "mega-button", onClick: function onClick() {
+                            return _this2.props.closeVote();
+                        } },
+                    "Close Vote"
+                )
+            );
+        }
+    }]);
+
+    return Hypevote;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Hypevote);
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

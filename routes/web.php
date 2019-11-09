@@ -65,3 +65,8 @@ Route::get('/types/{id}/userTypes','TypeController@userTypes' );
  Route::post('/vote/setUpVote', 'VoteController@setUpVote');
  Route::put('/vote/voteclose/{groupid}', 'VoteController@voteclose');
  Route::put('/vote/castvote/{groupid}', 'VoteController@castvote');
+
+ Route::resource('/event', 'EventController');
+ Route::get('/event/getActiveEvent/{groupid}', 'EventController@getActiveEvent');
+
+ 

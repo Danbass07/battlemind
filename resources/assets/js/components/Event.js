@@ -5,7 +5,9 @@ class Event extends Component {
         super(props);
         this.state = {
             tables: 12,
-            activeEventDetails: [],
+            activeEventDetails: {
+                data: []
+            },
             renderTables: [],
             tableInfo: [
                 {
@@ -29,11 +31,21 @@ class Event extends Component {
         };
     }
     componentDidMount() {
-        this.renderTables();
+    axios.get(`/event/getActiveEvent/${this.props.group.id}`)
+    .then(response => {
+        response.data.activeEventDetails.data = JSON.parse(response.data.activeEventDetails.data );
+        this.setState({
+            activeEventDetails: response.data.activeEventDetails,
+        },console.log(response.data.activeEventDetails))
+    }
+    ).then(this.renderTables());
+    
+        
+        
     }
     renderTables() {
         let tables = []
-        this.state.activeEventDetails.map((table, index) => {
+        this.state.activeEventDetails.data.map((table, index) => {
             tables.push(
                 <div key={"table " + index} className={"table tag" + index}>
                     <div className={"event-table-title"}>
@@ -55,7 +67,7 @@ class Event extends Component {
             );
         })
 
-
+console.log(this.state.activeEventDetails.data)
         this.setState({
             renderTables: tables
         });
@@ -65,14 +77,14 @@ class Event extends Component {
         return (
             <React.Fragment>
                 <form onSubmit={e => this.updateEvent(e)}>
-                    <div className="form-group">
+                    <div className="form-event">
                         <select
-                            className="myform-control"
+                            className="event-type-dropdown"
                             required
                             value={this.state.type}
                             onChange={e => this.chooseType(e)}
                         >
-                            {this.state.activeEventDetails.map((table, index) => (
+                            {this.state.activeEventDetails.data.map((table, index) => (
                                 tableNumber === index ?
                                     <option value={table.type} key={table.type}>
                                         {table.type}
@@ -114,27 +126,27 @@ class Event extends Component {
         this.setState({
             activeEventDetails: newData,
         }, this.renderTables())
-        //   axios
-        //   .post("/event", {
-        //       data: JSON.stringify(newData),
-        //       group_id:this.props.activeGroup,
+          axios
+          .post("/event", {
+              data: JSON.stringify(newData),
+              group_id:this.props.group.id,
 
-        //   })
-        //   .then( response => {
+          })
+          .then( response => {
 
-        //       let activeEventDetails = response.data.activeEventDetails;
-        //       activeVoteDetails !== null ? 
+              let activeEventDetails = response.data.activeEventDetails;
+              activeVoteDetails !== null ? 
 
-        //       activeEventDetails.data = JSON.parse(activeEventDetails.data)
+              activeEventDetails.data = JSON.parse(activeEventDetails.data)
 
-        //       : null ;
+              : null ;
 
-        //           this.setState({
-        //             activeEventDetails: activeEventDetails,
-        //           })
+                  this.setState({
+                    activeEventDetails: activeEventDetails,
+                  })
 
 
-        //   });
+          });
     }
     render() {
         return (
