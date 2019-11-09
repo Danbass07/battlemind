@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Type;
 use App\User;
 use App\Vote;
+use App\Event;
 
 class Group extends Model
 {
@@ -23,5 +24,8 @@ class Group extends Model
     }
     public function votes() {
         return $this->hasMany(Vote::class);
+    }
+    public function events() {
+        return $this->hasMany(Event::class);
     }
 }
