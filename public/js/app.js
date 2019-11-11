@@ -62264,7 +62264,6 @@ var Event = function (_Component) {
 
             var tables = [];
             activeEventDetails.data.map(function (table, index) {
-                console.log('table');
                 tables.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { key: "table " + index, className: "table tag" + index },
@@ -62297,7 +62296,6 @@ var Event = function (_Component) {
                 ));
             });
 
-            console.log(activeEventDetails.data);
             this.setState({
                 renderTables: tables
             });
