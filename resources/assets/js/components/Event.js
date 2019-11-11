@@ -36,16 +36,17 @@ class Event extends Component {
         response.data.activeEventDetails.data = JSON.parse(response.data.activeEventDetails.data );
         this.setState({
             activeEventDetails: response.data.activeEventDetails,
-        },console.log(response.data.activeEventDetails))
+        },this.renderTables(response.data.activeEventDetails))
     }
-    ).then(this.renderTables());
+    ).then();
     
         
         
     }
-    renderTables() {
+    renderTables(activeEventDetails) {
+
         let tables = []
-        this.state.activeEventDetails.data.map((table, index) => {
+        activeEventDetails.data.map((table, index) => {
             tables.push(
                 <div key={"table " + index} className={"table tag" + index}>
                     <div className={"event-table-title"}>
@@ -67,7 +68,6 @@ class Event extends Component {
             );
         })
 
-console.log(this.state.activeEventDetails.data)
         this.setState({
             renderTables: tables
         });

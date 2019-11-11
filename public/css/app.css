@@ -10565,8 +10565,8 @@ a:visited {
   min-height: 60px;
   width: 50px;
   position: fixed;
-  bottom: 39px;
-  right: 0;
+  bottom: 42px;
+  left: 0;
   z-index: 1;
   text-align: center;
 }
