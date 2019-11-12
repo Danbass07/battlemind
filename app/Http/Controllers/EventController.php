@@ -108,4 +108,24 @@ class EventController extends Controller
             'activeEventDetails' => $event,
              ]);
     }
+    public function updateActiveEvent(Request $request, $group_id)
+    {
+        $group= Group::findOrFail($group_id);
+        $event = $group->events->where('active','=',true)->first();
+        $event->data = $request->data;
+        $event->save();
+        return response()->json([
+            'activeEventDetails' => $event,
+             ]);
+    }
+    public function closeActiveEvent($group_id)
+    {
+        $group= Group::findOrFail($group_id);
+        $event = $group->events->where('active','=',true)->first();
+        $event->active = false;
+        $event->save();
+        return response()->json([
+            'activeEventDetails' => $event,
+             ]);
+    }
 }

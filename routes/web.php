@@ -68,5 +68,7 @@ Route::get('/types/{id}/userTypes','TypeController@userTypes' );
 
  Route::resource('/event', 'EventController');
  Route::get('/event/getActiveEvent/{groupid}', 'EventController@getActiveEvent');
+ Route::put('/event/updateActiveEvent/{groupid}', 'EventController@updateActiveEvent');
+ Route::put('/event/closeActiveEvent/{groupid}', 'EventController@closeActiveEvent');
 
  

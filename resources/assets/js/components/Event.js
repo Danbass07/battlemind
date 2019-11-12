@@ -4,9 +4,17 @@ class Event extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loadingPleaseWait: true,
             tables: 12,
             activeEventDetails: {
-                data: []
+                
+                type: "empty",
+                data: [
+                    {   
+
+                        users: [[], [], [], []]
+                    }
+                ]
             },
             renderTables: [],
             tableInfo: [
@@ -30,68 +38,219 @@ class Event extends Component {
             ]
         };
     }
+
     componentDidMount() {
-    axios.get(`/event/getActiveEvent/${this.props.group.id}`)
-    .then(response => {
-        response.data.activeEventDetails.data = JSON.parse(response.data.activeEventDetails.data );
-        this.setState({
-            activeEventDetails: response.data.activeEventDetails,
-        },this.renderTables(response.data.activeEventDetails))
+        axios
+            .get(`/event/getActiveEvent/${this.props.group.id}`)
+            .then(response => {
+                console.log(response.data)
+                if (response.data.activeEventDetails !== null) {
+                    response.data.activeEventDetails.data = JSON.parse(
+                        response.data.activeEventDetails.data
+                    );
+                    this.setState(
+                        {
+                            loadingPleaseWait: false,
+                            activeEventDetails: {
+                                ...response.data.activeEventDetails
+                            }
+                        },
+                        this.renderTables(response.data.activeEventDetails)
+                    );
+                } else {
+                    this.setState(
+                        {
+                            loadingPleaseWait: false,
+                            activeEventDetails: {
+                               active: false,
+                            }
+                        }
+                    );
+                }
+
+            });
     }
-    ).then();
+    tableGameController(e, table) {
+        let activeEventDetails = { ...this.state.activeEventDetails };
+        activeEventDetails.data[table.tableNumber].type = e.target.value;
+        this.setState({
+            activeEventDetails: activeEventDetails
+        });
+    }
+    tableUserController(e, table, index) {
+        // console.log(e.target.value);
+        // console.log(table);
+        // console.log(index);
+        let activeEventDetails = { ...this.state.activeEventDetails };
+        activeEventDetails.data[table.tableNumber].users[index] =
+            e.target.value;
+        this.setState({
+            activeEventDetails: activeEventDetails
+        });
+    }
+    closeEvent() {
+        let activeEventDetails = {...this.state.activeEventDetails}
+        let newData = [];
+        let i;
+        for (i = 0; i < this.state.tables; i++) {
+            let table = {
+                tableNumber: i,
+                type: "empty",
+                users: [[], [], [], []]
+            };
+            newData.push(table);
+        }
+        activeEventDetails.data = newData;
+        activeEventDetails.active = false;
+        this.setState({
+            activeEventDetails:  activeEventDetails
+                
+        });
+        axios
+        .put(`/event/closeActiveEvent/${this.props.group.id}`);
+    }
     
+    saveEvent() {
+        axios
+        .put(`/event/updateActiveEvent/${this.props.group.id}`, {
+            data: JSON.stringify(this.state.activeEventDetails.data),
         
-        
+        })
+        .then(() => {
+    
+        });
+        console.log(this.state.activeEventDetails);
+    }
+    createEvent() {
+        let activeEventDetails = [...this.state.activeEventDetails]
+        let newData = [];
+        let i;
+        for (i = 0; i < this.state.tables; i++) {
+            let table = {
+                tableNumber: i,
+                type: "empty",
+                users: [[], [], [], []]
+            };
+            newData.push(table);
+        }
+        activeEventDetails.data = newData;
+        activeEventDetails.active = true;
+        this.setState({
+            activeEventDetails: activeEventDetails,
+        },this.renderTables(activeEventDetails));
+        axios
+            .post("/event", {
+                data: JSON.stringify(newData),
+                group_id: this.props.group.id
+            })
+            .then(response => {
+             activeEventDetails = response.data.activeEventDetails;
+             activeEventDetails !== null
+                    ? (activeEventDetails.data = JSON.parse(
+                          activeEventDetails.data
+                      ))
+                    : null;
+
+                // this.setState({
+                //     activeEventDetails: activeEventDetails
+                // });
+            });
     }
     renderTables(activeEventDetails) {
-
-        let tables = []
+        let tables = [];
         activeEventDetails.data.map((table, index) => {
             tables.push(
                 <div key={"table " + index} className={"table tag" + index}>
                     <div className={"event-table-title"}>
-
-                        {this.renderTypes(table.tableNumber)}
-                        {/* {this.state.tableInfo[0].type + " " + a} */}
+                        {this.renderTypes(table)}
                     </div>
                     <div className={"event-table-user"}>
-                        {this.state.tableInfo[0].usersPlaying.map(user => {
+                        {table.users.map((user, index) => {
                             return (
-                                <div key={user.id + user.name} className={" element"}>
-                                    <div>{user.name} </div>
-                                    <div>Choose his player </div>
-                                </div>
+                                <select
+                                    key={user.name + "  " + index}
+                                    className={" element"}
+                                    onClick={e =>
+                                        this.tableUserController(
+                                            e,
+                                            table,
+                                            index
+                                        )
+                                    }
+                                >
+                                    {user.length === 0 ? (
+                                        <option value={"empty " + index}>
+                                            Empty {index}
+                                        </option>
+                                    ) : (
+                                        <option
+                                            value={user + "  " + index}
+                                        >
+                                            {user}
+                                        </option>
+                                    )}
+                                    {this.props.group.users.map(user => {
+                                        return (
+                                            <option
+                                                key={user.name}
+                                                value={user.name}
+                                            >
+                                                {user.name}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
                             );
                         })}
+
+                        {/* {table.users.map((user, index) => { /////////////////////next
+                
+                         return (
+
+                             user.name ?  
+                            <div
+                                key={user.id + user.name}
+                                className={" element"}
+                            >
+                                <div>{user.name} </div>
+                                <div>Choose his player </div>
+                            </div> 
+                            :
+                            <div
+                            key={index}
+                            className={" element"}
+                        >
+                            <div>Choose User </div>
+                            <div>Choose his player </div>
+                        </div> 
+                            
+                          ) 
+                            
+                        })} */}
                     </div>
                 </div>
             );
-        })
+        });
 
         this.setState({
             renderTables: tables
         });
-
     }
-    renderTypes(tableNumber) {
+    renderTypes(table) {
         return (
             <React.Fragment>
                 <form onSubmit={e => this.updateEvent(e)}>
                     <div className="form-event">
                         <select
                             className="event-type-dropdown"
-                            required
-                            value={this.state.type}
-                            onChange={e => this.chooseType(e)}
+                            onChange={e => this.tableGameController(e, table)}
                         >
-                            {this.state.activeEventDetails.data.map((table, index) => (
-                                tableNumber === index ?
-                                    <option value={table.type} key={table.type}>
-                                        {table.type}
-                                    </option> : null
-                            ))}
+                            <option value="0">{table.type}</option>
                             {this.props.group.types.map(type => (
-                                <option value={type.type} key={type.id + type.type}>
+                                <option
+                                    value={type.type}
+                                    key={type.id + type.type}
+                                >
                                     {type.type}
                                 </option>
                             ))}
@@ -108,53 +267,43 @@ class Event extends Component {
             </React.Fragment>
         );
     }
-    createEvent() {
-        const newData = []
-        let i;
-        for (i = 0; i < this.state.tables; i++) {
-            let table = {
-                tableNumber: i,
-                type: 'empty',
-                users: [
-
-                ],
-            }
-            newData.push(table);
-        }
-
-
-        this.setState({
-            activeEventDetails: newData,
-        }, this.renderTables())
-          axios
-          .post("/event", {
-              data: JSON.stringify(newData),
-              group_id:this.props.group.id,
-
-          })
-          .then( response => {
-
-              let activeEventDetails = response.data.activeEventDetails;
-              activeVoteDetails !== null ? 
-
-              activeEventDetails.data = JSON.parse(activeEventDetails.data)
-
-              : null ;
-
-                  this.setState({
-                    activeEventDetails: activeEventDetails,
-                  })
-
-
-          });
-    }
+    
     render() {
         return (
             <div className={"venue-area"}>
-                <div onClick={() => this.createEvent()} className={"mega-button"}>Create Event</div>
-                {this.state.renderTables.map(item => {
+                {!this.state.loadingPleaseWait ? this.state.activeEventDetails.active ? (
+                    <div
+                        onClick={() => this.saveEvent()}
+                        className={"mega-button"}
+                    >
+                        Save Event
+                    </div>
+                ) : (
+                    <div
+                        onClick={() => this.createEvent()}
+                        className={"mega-button"}
+                    >
+                        Create Event
+                    </div>
+                ):  <div
+                className={"mega-button"}
+            >
+                Please Wait
+            </div> }
+{this.state.activeEventDetails.active ? 
+                this.state.renderTables.map(item => {
                     return item;
-                })}
+                }): null }
+                 {this.state.activeEventDetails.active ? (
+                    <div
+                        onClick={() => this.closeEvent()}
+                        className={"mega-button"}
+                    >
+                        Close Event
+                    </div>
+                ) : (
+                    null
+                )}
             </div>
         );
     }
