@@ -5,7 +5,8 @@ class Hypecheck extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            click: true
+            click: true,
+            exludeLevel: 0,  
         };
     }
     componentDidMount() {
@@ -33,6 +34,14 @@ class Hypecheck extends Component {
             return ascending == false ? comparison * -1 : comparison;
         };
     }
+    checkPlayerRating(user) {
+        let theOne = []
+        theOne.push(user)
+        this.setState({
+            theOne: theOne,
+            onlyOne: !this.state.onlyOne,
+        })
+    }
 
     render() 
   
@@ -45,15 +54,18 @@ class Hypecheck extends Component {
           return  user.pivot.active ?  user : null  
             }).filter(Boolean);
 
+       
       
         group.types.map( type => {
             let totalHype = 0;
-          
+          if(this.state.onlyOne){
+            activeUsersRating = [...this.state.theOne] 
+          }
             activeUsersRating.map( user => { 
             return    user.types.map( userType => {
                     if (userType.id === type.id) {
                         totalHype += +userType.pivot.hype
-                        if(+userType.pivot.hype === 0) {
+                        if(+userType.pivot.hype === this.state.exludeLevel) {
                             zeroRated.push(type);
                         }
                     }
@@ -71,10 +83,24 @@ class Hypecheck extends Component {
         return (
 
             <React.Fragment>
-                {/* {this.props.user.permissions === "admin" ?  */}
-                            <div onClick={() => this.props.setUpVote(votingList.sort(this.compareValues('totalHype', false)).slice(0,3))}>
+                  {this.props.group.pivot.permissions === "superuser" ? 
+                        <div
+          className={"mega-button"}
+          onClick={() => this.props.setUpVote(votingList.sort(this.compareValues('totalHype', false)).slice(0,3))}>
                                  CAST VOTE </div>
-                                  {/* : null} */}
+                                 : null} 
+                <div className={"active-user-minilist"}>
+                    {activeUsersRating.map(user => {
+                        return (
+                            <div
+                            className={"active-user-minilist"} 
+                            onClick={() => this.checkPlayerRating(user)}
+                            key={user.name}
+                            >{user.name}</div>
+                        )
+                    })}
+                </div>
+      
             
                 {group.types ? (
                     <table className="hypecheck-results-list">
@@ -123,7 +149,8 @@ class Hypecheck extends Component {
                         </tbody>
                     </table>
                 ) : null}
-
+        
+  
             </React.Fragment>
         );
     }

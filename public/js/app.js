@@ -64221,6 +64221,7 @@ var Hypenotizer = function (_Component) {
         _this.state = {
             hypeLevels: [0, 1, 2, 3, 4],
             votingList: null
+
         };
         return _this;
     }
@@ -64664,7 +64665,8 @@ var Hypecheck = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Hypecheck.__proto__ || Object.getPrototypeOf(Hypecheck)).call(this, props));
 
         _this.state = {
-            click: true
+            click: true,
+            exludeLevel: 0
         };
         return _this;
     }
@@ -64697,6 +64699,16 @@ var Hypecheck = function (_Component) {
             };
         }
     }, {
+        key: "checkPlayerRating",
+        value: function checkPlayerRating(user) {
+            var theOne = [];
+            theOne.push(user);
+            this.setState({
+                theOne: theOne,
+                onlyOne: !this.state.onlyOne
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -64710,12 +64722,14 @@ var Hypecheck = function (_Component) {
 
             group.types.map(function (type) {
                 var totalHype = 0;
-
+                if (_this2.state.onlyOne) {
+                    activeUsersRating = [].concat(_toConsumableArray(_this2.state.theOne));
+                }
                 activeUsersRating.map(function (user) {
                     return user.types.map(function (userType) {
                         if (userType.id === type.id) {
                             totalHype += +userType.pivot.hype;
-                            if (+userType.pivot.hype === 0) {
+                            if (+userType.pivot.hype === _this2.state.exludeLevel) {
                                 zeroRated.push(type);
                             }
                         }
@@ -64734,12 +64748,31 @@ var Hypecheck = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                this.props.group.pivot.permissions === "superuser" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { onClick: function onClick() {
+                    {
+                        className: "mega-button",
+                        onClick: function onClick() {
                             return _this2.props.setUpVote(votingList.sort(_this2.compareValues('totalHype', false)).slice(0, 3));
                         } },
                     "CAST VOTE "
+                ) : null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "active-user-minilist" },
+                    activeUsersRating.map(function (user) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            {
+                                className: "active-user-minilist",
+                                onClick: function onClick() {
+                                    return _this2.checkPlayerRating(user);
+                                },
+                                key: user.name
+                            },
+                            user.name
+                        );
+                    })
                 ),
                 group.types ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "table",
