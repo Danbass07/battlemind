@@ -53,7 +53,7 @@ class Hypecheck extends Component {
             return    user.types.map( userType => {
                     if (userType.id === type.id) {
                         totalHype += +userType.pivot.hype
-                        if(+userType.pivot.hype === 1) {
+                        if(+userType.pivot.hype === 0) {
                             zeroRated.push(type);
                         }
                     }

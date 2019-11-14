@@ -82,7 +82,7 @@ class Event extends Component {
         // console.log(table);
         // console.log(index);
         let activeEventDetails = { ...this.state.activeEventDetails };
-        activeEventDetails.data[table.tableNumber].users[index] =
+        activeEventDetails.data[table.tableNumber].users[index].name =
             e.target.value;
         this.setState({
             activeEventDetails: activeEventDetails
@@ -96,7 +96,19 @@ class Event extends Component {
             let table = {
                 tableNumber: i,
                 type: "empty",
-                users: [[], [], [], []]
+                users: [ {
+                    id: 0,
+                    name: 'empty'
+                },{
+                    id: 0,
+                    name: 'empty'
+                }, {
+                    id: 0,
+                    name: 'empty'
+                }, {
+                    id: 0,
+                    name: 'empty'
+                }, ]
             };
             newData.push(table);
         }
@@ -129,7 +141,19 @@ class Event extends Component {
             let table = {
                 tableNumber: i,
                 type: "empty",
-                users: [[], [], [], []]
+                users: [ {
+                    id: 0,
+                    name: 'empty'
+                },{
+                    id: 0,
+                    name: 'empty'
+                }, {
+                    id: 0,
+                    name: 'empty'
+                }, {
+                    id: 0,
+                    name: 'empty'
+                }, ]
             };
             newData.push(table);
         }
@@ -184,9 +208,9 @@ class Event extends Component {
                                         </option>
                                     ) : (
                                         <option
-                                            value={user + "  " + index}
+                                            value={user.name + "  " + index}
                                         >
-                                            {user}
+                                            {user.name}
                                         </option>
                                     )}
                                     {this.props.group.users.map(user => {
@@ -203,30 +227,6 @@ class Event extends Component {
                             );
                         })}
 
-                        {/* {table.users.map((user, index) => { /////////////////////next
-                
-                         return (
-
-                             user.name ?  
-                            <div
-                                key={user.id + user.name}
-                                className={" element"}
-                            >
-                                <div>{user.name} </div>
-                                <div>Choose his player </div>
-                            </div> 
-                            :
-                            <div
-                            key={index}
-                            className={" element"}
-                        >
-                            <div>Choose User </div>
-                            <div>Choose his player </div>
-                        </div> 
-                            
-                          ) 
-                            
-                        })} */}
                     </div>
                 </div>
             );
@@ -246,23 +246,17 @@ class Event extends Component {
                             onChange={e => this.tableGameController(e, table)}
                         >
                             <option value="0">{table.type}</option>
-                            {this.props.group.types.map(type => (
+                            {this.props.group.types ? this.props.group.types.map(type => (
                                 <option
                                     value={type.type}
                                     key={type.id + type.type}
                                 >
                                     {type.type}
                                 </option>
-                            ))}
+                            )): null }
                         </select>
                     </div>
 
-                    {/* <button
-          type="submit"
-          className="btn btn-primary"
-      >
-          Edit player
-      </button> */}
                 </form>
             </React.Fragment>
         );

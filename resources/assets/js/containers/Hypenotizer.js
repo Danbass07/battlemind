@@ -8,7 +8,7 @@ class Hypenotizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hypeLevels: [1, 2, 3, 4],     
+            hypeLevels: [0, 1, 2, 3, 4],     
             votingList: null,       
         };
     }

@@ -128,4 +128,26 @@ class EventController extends Controller
             'activeEventDetails' => $event,
              ]);
     }
+    public function updateTableDetails($group_id)
+    {
+        $group= Group::findOrFail($group_id);
+        $event = $group->events->where('active','=',true)->first();
+        $event->data =  json_decode($event->data );
+        $userEvent='';
+        foreach ($event->data as $table ) {
+            foreach ($table->users as $user) {
+                if ($user->name === 'Daniel Malek') {
+                    $userEvent= $table;
+                }
+            }
+            
+               
+           
+        } ;
+        // $event->save();
+
+        return response()->json([
+            'activeEventDetails' => $userEvent,
+             ]);
+    }
 }

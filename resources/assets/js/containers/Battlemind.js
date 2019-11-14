@@ -8,7 +8,8 @@ import League from "../components/Leagues/League";
 import Scoreboard from "../components/Scoreboards/Scoreboard";
 import React, { Component } from "react";
 import List from "../components/List";
-import Event from "../components/Event";
+import Event from "../components/Event/Event";
+import EventBasic from "../components/Event/EventBasic";
 import Result from "../components/Result";
 import Profile from "../containers//Profile";
 import FlashMessage from "../components/FlashMessage";
@@ -28,6 +29,7 @@ class Battlemind extends Component {
             userLeagues: [{}],
             friendsLeagues:[{}],
             user: {
+          
                 groups: []
             },
             groups: [{}],
@@ -333,6 +335,8 @@ class Battlemind extends Component {
                     ) : null}
 
                     {this.state.action === "event" ? (
+                        this.state.groups[this.state.activeGroupIndex].pivot &&
+                        this.state.groups[this.state.activeGroupIndex].pivot.permissions === 'superuser' ?
                         <Event
                             scoreboards={this.state.userScoreboards}
                             friendsScoreboards={this.state.friendsScoreboards}
@@ -343,7 +347,18 @@ class Battlemind extends Component {
                             hints={this.state.hints}
                             group={this.state.groups[this.state.activeGroupIndex]}
                             
-                        />
+                        /> : 
+                        <EventBasic
+                        scoreboards={this.state.userScoreboards}
+                        friendsScoreboards={this.state.friendsScoreboards}
+                        userPlayers={this.state.userPlayers}
+                        friendsPlayers={this.state.friendsPlayers}
+                        leagues={this.state.leagues}
+                        types={this.state.userTypes}
+                        hints={this.state.hints}
+                        group={this.state.groups[this.state.activeGroupIndex]}
+                        
+                    />
                     ) : null}
 
                     {this.state.action === "results" ? (
