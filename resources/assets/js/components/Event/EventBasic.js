@@ -34,11 +34,36 @@ class EventBasic extends Component {
         axios
             .get(`/event/getActiveEvent/${this.props.group.id}`)
             .then(response => {
-         
-               this.setState({
-                loadingPleaseWait: false,
-               })
-                console.log(response.data)
+          
+             
+                    let tableInfo;
+                    let activeEventDetails = {...response.data.activeEventDetails};
+                    activeEventDetails.data = JSON.parse(activeEventDetails.data);
+                    activeEventDetails.data.map( table => {
+                     
+                        table.users.map(user => {
+                            if (user.name === this.props.user.name) {
+                                tableInfo = table;
+                            }
+                        })
+                    })
+                    console.log(tableInfo)
+                    if(tableInfo) {
+                        this.setState({
+                            tableInfo: {...tableInfo},
+                            loadingPleaseWait: false,
+                            hasBooking: true,
+                           })
+                    } else {
+                        this.setState({
+                            loadingPleaseWait: false,
+                            hasBooking: false,
+                           })
+                    }
+                 
+                
+               
+               
             });
     }
     tableGameController(e) {
@@ -57,10 +82,10 @@ class EventBasic extends Component {
     }
    
     
-    sendRequest() {
+    updateTableDetails() {
         axios
-        .put(`/event/updateTableDetails/${this.props.group.id}/newTable`, {
-            tableData: this.state.tableInfo
+        .put(`/event/updateTableDetails/${this.props.group.id}`, {
+            tableInfo: this.state.tableInfo
         
         })
         .then((response) => {
@@ -68,9 +93,21 @@ class EventBasic extends Component {
         });
         
     }
+    bookTable() {
+        axios
+        .put(`/event/bookTable/${this.props.group.id}`, {
+            tableInfo: this.state.tableInfo
+        
+        })
+        .then((response) => {
+            console.log(response);
+        });
+        
+    } 
+    
   
     renderTable() {
-   
+   console.log(this.state.tableInfo)
        return (
         <div key={"table "} className={"table tag" }>
         <div className={"event-table-title"}>
@@ -149,14 +186,22 @@ class EventBasic extends Component {
     render() {
         return (
             <div className={"venue-area"}>
-                {!this.state.loadingPleaseWait ? (
+                {!this.state.loadingPleaseWait && this.state.hasBooking ? (
+                    
                     <div
-                        onClick={() => this.sendRequest()}
+                        onClick={() => this.updateTableDetails()}
                         className={"mega-button"}
                     >
                         Update Details
                     </div>
-                ) :  <div
+                ) : !this.state.loadingPleaseWait && !this.state.hasBooking ?
+                <div
+                onClick={() => this.bookTable()}
+                className={"mega-button"}
+            >
+               Book Table
+            </div>
+                :<div
                 className={"mega-button"}
             >
                 Please Wait

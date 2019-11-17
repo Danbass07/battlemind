@@ -60226,6 +60226,7 @@ var Battlemind = function (_Component) {
                         group: this.state.groups[this.state.activeGroupIndex]
 
                     }) : __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_Event_EventBasic__["a" /* default */], {
+                        user: this.state.user,
                         scoreboards: this.state.userScoreboards,
                         friendsScoreboards: this.state.friendsScoreboards,
                         userPlayers: this.state.userPlayers,
@@ -62617,10 +62618,30 @@ var EventBasic = function (_Component) {
 
             axios.get("/event/getActiveEvent/" + this.props.group.id).then(function (response) {
 
-                _this2.setState({
-                    loadingPleaseWait: false
+                var tableInfo = void 0;
+                var activeEventDetails = _extends({}, response.data.activeEventDetails);
+                activeEventDetails.data = JSON.parse(activeEventDetails.data);
+                activeEventDetails.data.map(function (table) {
+
+                    table.users.map(function (user) {
+                        if (user.name === _this2.props.user.name) {
+                            tableInfo = table;
+                        }
+                    });
                 });
-                console.log(response.data);
+                console.log(tableInfo);
+                if (tableInfo) {
+                    _this2.setState({
+                        tableInfo: _extends({}, tableInfo),
+                        loadingPleaseWait: false,
+                        hasBooking: true
+                    });
+                } else {
+                    _this2.setState({
+                        loadingPleaseWait: false,
+                        hasBooking: false
+                    });
+                }
             });
         }
     }, {
@@ -62642,10 +62663,20 @@ var EventBasic = function (_Component) {
             });
         }
     }, {
-        key: "sendRequest",
-        value: function sendRequest() {
-            axios.put("/event/updateTableDetails/" + this.props.group.id + "/newTable", {
-                tableData: this.state.tableInfo
+        key: "updateTableDetails",
+        value: function updateTableDetails() {
+            axios.put("/event/updateTableDetails/" + this.props.group.id, {
+                tableInfo: this.state.tableInfo
+
+            }).then(function (response) {
+                console.log(response);
+            });
+        }
+    }, {
+        key: "bookTable",
+        value: function bookTable() {
+            axios.put("/event/bookTable/" + this.props.group.id, {
+                tableInfo: this.state.tableInfo
 
             }).then(function (response) {
                 console.log(response);
@@ -62656,6 +62687,7 @@ var EventBasic = function (_Component) {
         value: function renderTable() {
             var _this3 = this;
 
+            console.log(this.state.tableInfo);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { key: "table ", className: "table tag" },
@@ -62745,15 +62777,24 @@ var EventBasic = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "venue-area" },
-                !this.state.loadingPleaseWait ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                !this.state.loadingPleaseWait && this.state.hasBooking ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     {
                         onClick: function onClick() {
-                            return _this5.sendRequest();
+                            return _this5.updateTableDetails();
                         },
                         className: "mega-button"
                     },
                     "Update Details"
+                ) : !this.state.loadingPleaseWait && !this.state.hasBooking ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                        onClick: function onClick() {
+                            return _this5.bookTable();
+                        },
+                        className: "mega-button"
+                    },
+                    "Book Table"
                 ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     {

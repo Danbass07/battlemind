@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Log;
 use App\Group;
 use App\Event;
 
@@ -128,26 +129,50 @@ class EventController extends Controller
             'activeEventDetails' => $event,
              ]);
     }
-    public function updateTableDetails($group_id)
+    public function updateTableDetails(Request $request, $group_id)
     {
         $group= Group::findOrFail($group_id);
         $event = $group->events->where('active','=',true)->first();
-        $event->data =  json_decode($event->data );
-        $userEvent='';
-        foreach ($event->data as $table ) {
-            foreach ($table->users as $user) {
-                if ($user->name === 'Daniel Malek') {
-                    $userEvent= $table;
-                }
-            }
-            
-               
-           
-        } ;
-        // $event->save();
+       $event->data =  json_decode($event->data );
+        $newData= $event->data;
+        $tableInfo = (object) $request->tableInfo;
+   
+        $newData[$tableInfo->tableNumber] = $tableInfo;
+
+        $event->data = $newData;
+    
+     $event->data = json_encode($event->data);
+     
+         $event->save();
 
         return response()->json([
-            'activeEventDetails' => $userEvent,
+            'activeEventDetails' => $event,
+             ]);
+    }
+    public function bookTable(Request $request, $group_id) {
+        $group= Group::findOrFail($group_id);
+        $event = $group->events->where('active','=',true)->first();
+        $event->data =  json_decode($event->data );
+        $newData= $event->data;
+        $tableInfo = (object) $request->tableInfo;
+        $emptyTableIndex = 110;
+            
+        foreach ($newData as $table) {
+            if ($table->type === "empty") {
+               
+                $emptyTableIndex = $table->tableNumber;
+             
+            }
+            Log::info($emptyTableIndex);  
+        }
+        $newData[$emptyTableIndex] = $tableInfo;
+        $event->data = $newData;
+    
+     $event->data = json_encode($event->data);
+     
+         $event->save();
+         return response()->json([
+            'activeEventDetails' => $event,
              ]);
     }
 }

@@ -349,6 +349,7 @@ class Battlemind extends Component {
                             
                         /> : 
                         <EventBasic
+                        user={this.state.user}
                         scoreboards={this.state.userScoreboards}
                         friendsScoreboards={this.state.friendsScoreboards}
                         userPlayers={this.state.userPlayers}

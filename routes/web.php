@@ -70,5 +70,6 @@ Route::get('/types/{id}/userTypes','TypeController@userTypes' );
  Route::get('/event/getActiveEvent/{groupid}', 'EventController@getActiveEvent');
  Route::put('/event/updateActiveEvent/{groupid}', 'EventController@updateActiveEvent');
  Route::put('/event/closeActiveEvent/{groupid}', 'EventController@closeActiveEvent');
- Route::put('/event/updateTableDetails/{groupid}/newTable', 'EventController@updateTableDetails');
+ Route::put('/event/updateTableDetails/{groupid}', 'EventController@updateTableDetails');
+ Route::put('/event/bookTable/{groupid}', 'EventController@bookTable');
  
