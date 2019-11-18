@@ -138,8 +138,9 @@ class EventController extends Controller
         $tableInfo = (object) $request->tableInfo;
    
         $newData[$tableInfo->tableNumber] = $tableInfo;
-
+   
         $event->data = $newData;
+        
     
      $event->data = json_encode($event->data);
      
@@ -166,6 +167,7 @@ class EventController extends Controller
             Log::info($emptyTableIndex);  
         }
         $newData[$emptyTableIndex] = $tableInfo;
+        $newData[$emptyTableIndex]->tableNumber = $emptyTableIndex;
         $event->data = $newData;
     
      $event->data = json_encode($event->data);

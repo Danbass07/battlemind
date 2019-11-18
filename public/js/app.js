@@ -62589,7 +62589,7 @@ var EventBasic = function (_Component) {
             loadingPleaseWait: true,
             tableInfo: {
 
-                tableNumer: 99,
+                tableNumber: 89,
                 type: "empty",
                 users: [{
                     id: 0,
@@ -62622,14 +62622,15 @@ var EventBasic = function (_Component) {
                 var activeEventDetails = _extends({}, response.data.activeEventDetails);
                 activeEventDetails.data = JSON.parse(activeEventDetails.data);
                 activeEventDetails.data.map(function (table) {
-
+                    console.log(activeEventDetails);
                     table.users.map(function (user) {
                         if (user.name === _this2.props.user.name) {
+
                             tableInfo = table;
                         }
                     });
                 });
-                console.log(tableInfo);
+
                 if (tableInfo) {
                     _this2.setState({
                         tableInfo: _extends({}, tableInfo),
@@ -62665,6 +62666,7 @@ var EventBasic = function (_Component) {
     }, {
         key: "updateTableDetails",
         value: function updateTableDetails() {
+            // console.log(this.state.tableInfo);
             axios.put("/event/updateTableDetails/" + this.props.group.id, {
                 tableInfo: this.state.tableInfo
 
@@ -62675,19 +62677,25 @@ var EventBasic = function (_Component) {
     }, {
         key: "bookTable",
         value: function bookTable() {
+            var _this3 = this;
+
             axios.put("/event/bookTable/" + this.props.group.id, {
                 tableInfo: this.state.tableInfo
 
             }).then(function (response) {
                 console.log(response);
+                _this3.setState({
+                    loadingPleaseWait: false,
+                    hasBooking: true
+                });
             });
         }
     }, {
         key: "renderTable",
         value: function renderTable() {
-            var _this3 = this;
+            var _this4 = this;
 
-            console.log(this.state.tableInfo);
+            //    console.log(this.state.tableInfo)
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { key: "table ", className: "table tag" },
@@ -62706,17 +62714,17 @@ var EventBasic = function (_Component) {
                                 key: user.name + "  " + index,
                                 className: " element",
                                 onClick: function onClick(e) {
-                                    return _this3.tableUserController(e, index);
+                                    return _this4.tableUserController(e, index);
                                 }
                             },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "option",
                                 {
-                                    value: _this3.state.tableInfo.users[index].name
+                                    value: _this4.state.tableInfo.users[index].name
                                 },
-                                _this3.state.tableInfo.users[index].name
+                                _this4.state.tableInfo.users[index].name
                             ),
-                            _this3.props.group.types ? _this3.props.group.users.map(function (user) {
+                            _this4.props.group.types ? _this4.props.group.users.map(function (user) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "option",
                                     {
@@ -62734,7 +62742,7 @@ var EventBasic = function (_Component) {
     }, {
         key: "renderTypes",
         value: function renderTypes() {
-            var _this4 = this;
+            var _this5 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
@@ -62747,7 +62755,7 @@ var EventBasic = function (_Component) {
                         {
                             className: "event-type-dropdown",
                             onChange: function onChange(e) {
-                                return _this4.tableGameController(e);
+                                return _this5.tableGameController(e);
                             }
                         },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -62772,7 +62780,7 @@ var EventBasic = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this5 = this;
+            var _this6 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
@@ -62781,7 +62789,7 @@ var EventBasic = function (_Component) {
                     "div",
                     {
                         onClick: function onClick() {
-                            return _this5.updateTableDetails();
+                            return _this6.updateTableDetails();
                         },
                         className: "mega-button"
                     },
@@ -62790,7 +62798,7 @@ var EventBasic = function (_Component) {
                     "div",
                     {
                         onClick: function onClick() {
-                            return _this5.bookTable();
+                            return _this6.bookTable();
                         },
                         className: "mega-button"
                     },

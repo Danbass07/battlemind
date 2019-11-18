@@ -7,7 +7,7 @@ class EventBasic extends Component {
             loadingPleaseWait: true,
             tableInfo: {
                 
-                        tableNumer: 99,
+                        tableNumber: 89,
                         type: "empty",
                         users: [ {
                             id: 0,
@@ -40,14 +40,15 @@ class EventBasic extends Component {
                     let activeEventDetails = {...response.data.activeEventDetails};
                     activeEventDetails.data = JSON.parse(activeEventDetails.data);
                     activeEventDetails.data.map( table => {
-                     
+                        console.log(activeEventDetails)
                         table.users.map(user => {
                             if (user.name === this.props.user.name) {
+                               
                                 tableInfo = table;
                             }
                         })
                     })
-                    console.log(tableInfo)
+                    
                     if(tableInfo) {
                         this.setState({
                             tableInfo: {...tableInfo},
@@ -83,6 +84,7 @@ class EventBasic extends Component {
    
     
     updateTableDetails() {
+        // console.log(this.state.tableInfo);
         axios
         .put(`/event/updateTableDetails/${this.props.group.id}`, {
             tableInfo: this.state.tableInfo
@@ -101,13 +103,17 @@ class EventBasic extends Component {
         })
         .then((response) => {
             console.log(response);
+            this.setState({
+                loadingPleaseWait: false,
+                hasBooking: true,
+               })
         });
         
     } 
     
   
     renderTable() {
-   console.log(this.state.tableInfo)
+//    console.log(this.state.tableInfo)
        return (
         <div key={"table "} className={"table tag" }>
         <div className={"event-table-title"}>
