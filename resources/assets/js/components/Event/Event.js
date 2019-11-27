@@ -44,6 +44,7 @@ class Event extends Component {
             .get(`/event/getActiveEvent/${this.props.group.id}`)
             .then(response => {
                 console.log(response.data)
+                console.log('did mount')
                 if (response.data.activeEventDetails !== null) {
                     response.data.activeEventDetails.data = JSON.parse(
                         response.data.activeEventDetails.data
@@ -181,56 +182,60 @@ class Event extends Component {
             });
     }
     renderTables(activeEventDetails) {
+
         let tables = [];
-        activeEventDetails.data.map((table, index) => {
-            tables.push(
-                <div key={"table " + index} className={"table tag" + index}>
-                    <div className={"event-table-title"}>
-                        {this.renderTypes(table)}
-                    </div>
-                    <div className={"event-table-user"}>
-                        {table.users.map((user, index) => {
-                            return (
-                                <select
-                                    key={user.name + "  " + index}
-                                    className={" element"}
-                                    onClick={e =>
-                                        this.tableUserController(
-                                            e,
-                                            table,
-                                            index
-                                        )
-                                    }
-                                >
-                                    {user.length === 0 ? (
-                                        <option value={"empty " + index}>
-                                            Empty {index}
-                                        </option>
-                                    ) : (
-                                        <option
-                                            value={user.name + "  " + index}
-                                        >
-                                            {user.name}
-                                        </option>
-                                    )}
-                                    {this.props.group.users.map(user => {
-                                        return (
+        if (activeEventDetails.data) {
+            activeEventDetails.data.map((table, index) => {
+                tables.push(
+                    <div key={"table " + index} className={"table tag" + index}>
+                        <div className={"event-table-title"}>
+                            {this.renderTypes(table)}
+                        </div>
+                        <div className={"event-table-user"}>
+                            {table.users.map((user, index) => {
+                                return (
+                                    <select
+                                        key={user.name + "  " + index}
+                                        className={" element"}
+                                        onClick={e =>
+                                            this.tableUserController(
+                                                e,
+                                                table,
+                                                index
+                                            )
+                                        }
+                                    >
+                                        {user.length === 0 ? (
+                                            <option value={"empty " + index}>
+                                                Empty {index}
+                                            </option>
+                                        ) : (
                                             <option
-                                                key={user.name}
-                                                value={user.name}
+                                                value={user.name + "  " + index}
                                             >
                                                 {user.name}
                                             </option>
-                                        );
-                                    })}
-                                </select>
-                            );
-                        })}
-
+                                        )}
+                                        {this.props.group.users.map(user => {
+                                            return (
+                                                <option
+                                                    key={user.name}
+                                                    value={user.name}
+                                                >
+                                                    {user.name}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                );
+                            })}
+    
+                        </div>
                     </div>
-                </div>
-            );
-        });
+                );
+            });
+        }
+ 
 
         this.setState({
             renderTables: tables
