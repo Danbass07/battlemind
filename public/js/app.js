@@ -60125,6 +60125,36 @@ var Battlemind = function (_Component) {
             });
         }
     }, {
+        key: "deleteType",
+        value: function deleteType(typeId) {
+            console.log('del');
+            axios.delete("/types/" + typeId).then(this.refresh());
+        }
+    }, {
+        key: "refresh",
+        value: function refresh() {
+            var _this10 = this;
+
+            axios.get("/groups").then(function (response) {
+                var groups = [].concat(_toConsumableArray(response.data.groups));
+                var activeGroupMembersRatings = [];
+
+                groups.map(function (group) {
+                    group.users.map(function (user) {
+                        if (group.id === _this10.state.activeGroup) {
+                            user.pivot.active ? activeGroupMembersRatings.push(user) : null;
+                        }
+                    });
+                });
+                _this10.setState({
+                    groups: [].concat(_toConsumableArray(groups)),
+                    allGroups: [].concat(_toConsumableArray(response.data.allGroups)),
+                    userGroups: [].concat(_toConsumableArray(response.data.userGroups)),
+                    activeGroupMembersRatings: activeGroupMembersRatings
+                });
+            });
+        }
+    }, {
         key: "hintsToggle",
         value: function hintsToggle() {
             this.setState({
@@ -60139,7 +60169,7 @@ var Battlemind = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this10 = this;
+            var _this11 = this;
 
             //    console.log(this.state.groups);
             //  console.log(this.state.groups[this.state.activeGroupIndex]);
@@ -60148,7 +60178,7 @@ var Battlemind = function (_Component) {
                 { className: "battlemind" },
                 __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_Navigation_Navigation__["a" /* default */], {
                     button: function button(e) {
-                        return _this10.buttonHandler(e);
+                        return _this11.buttonHandler(e);
                     },
                     object: this.state.object,
                     action: this.state.action
@@ -60180,14 +60210,14 @@ var Battlemind = function (_Component) {
                         group: this.state.groups[this.state.activeGroupIndex],
                         navigation: this.state.object,
                         hypeLevelHandler: function hypeLevelHandler(e, userType) {
-                            return _this10.hypeLevelHandler(e, userType);
+                            return _this11.hypeLevelHandler(e, userType);
                         },
                         hypenotizer: function hypenotizer() {
-                            return _this10.hypenotizer();
+                            return _this11.hypenotizer();
                         },
                         hints: this.state.hints,
                         contains: function contains(votersId, voterId) {
-                            return _this10.contains(votersId, voterId);
+                            return _this11.contains(votersId, voterId);
                         }
                     }) : null,
                     this.state.action === "profile" ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__containers_Profile__["a" /* default */], {
@@ -60198,24 +60228,30 @@ var Battlemind = function (_Component) {
                         activeGroup: this.state.activeGroup,
                         users: this.state.users,
                         activeGroupChange: function activeGroupChange(id, index) {
-                            return _this10.activeGroupChange(id, index);
+                            return _this11.activeGroupChange(id, index);
                         },
                         activeUser: function activeUser(groupId, userId) {
-                            return _this10.activeUser(groupId, userId);
+                            return _this11.activeUser(groupId, userId);
                         },
                         userGroups: this.state.user.groups,
                         addUser: function addUser(group, user) {
-                            return _this10.addUser(group, user);
+                            return _this11.addUser(group, user);
                         },
                         contains: function contains(userGroups, groups) {
-                            return _this10.contains(userGroups, groups);
+                            return _this11.contains(userGroups, groups);
                         },
                         hints: this.state.hints,
                         addAnyUserToActiveGroup: function addAnyUserToActiveGroup(userId) {
-                            return _this10.addAnyUserToActiveGroup(userId);
+                            return _this11.addAnyUserToActiveGroup(userId);
+                        },
+                        deleteType: function deleteType(typeId) {
+                            return _this11.deleteType(typeId);
+                        },
+                        refresh: function refresh() {
+                            return _this11.refresh();
                         }
                     }) : null,
-                    this.state.action === "event" ? this.state.groups[this.state.activeGroupIndex].pivot && this.state.groups[this.state.activeGroupIndex].pivot.permissions === 'superuser' ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event_Event__["a" /* default */], {
+                    this.state.action === "event" ? this.state.groups[this.state.activeGroupIndex].pivot && this.state.groups[this.state.activeGroupIndex].pivot.permissions === 'superuser' || this.state.groups[this.state.activeGroupIndex].pivot.permissions === 'admin' ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__components_Event_Event__["a" /* default */], {
                         scoreboards: this.state.userScoreboards,
                         friendsScoreboards: this.state.friendsScoreboards,
                         userPlayers: this.state.userPlayers,
@@ -60263,7 +60299,7 @@ var Battlemind = function (_Component) {
                     {
                         className: "hints-toggle",
                         onClick: function onClick() {
-                            return _this10.hintsToggle();
+                            return _this11.hintsToggle();
                         }
                     },
                     this.state.hints === true ? __WEBPACK_IMPORTED_MODULE_8_react___default.a.createElement(
@@ -62276,6 +62312,7 @@ var Event = function (_Component) {
 
             axios.get("/event/getActiveEvent/" + this.props.group.id).then(function (response) {
                 console.log(response.data);
+                console.log('did mount');
                 if (response.data.activeEventDetails !== null) {
                     response.data.activeEventDetails.data = JSON.parse(response.data.activeEventDetails.data);
                     _this2.setState({
@@ -62405,55 +62442,57 @@ var Event = function (_Component) {
             var _this3 = this;
 
             var tables = [];
-            activeEventDetails.data.map(function (table, index) {
-                tables.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { key: "table " + index, className: "table tag" + index },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            if (activeEventDetails.data) {
+                activeEventDetails.data.map(function (table, index) {
+                    tables.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "event-table-title" },
-                        _this3.renderTypes(table)
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "event-table-user" },
-                        table.users.map(function (user, index) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "select",
-                                {
-                                    key: user.name + "  " + index,
-                                    className: " element",
-                                    onClick: function onClick(e) {
-                                        return _this3.tableUserController(e, table, index);
-                                    }
-                                },
-                                user.length === 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "option",
-                                    { value: "empty " + index },
-                                    "Empty ",
-                                    index
-                                ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "option",
+                        { key: "table " + index, className: "table tag" + index },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "event-table-title" },
+                            _this3.renderTypes(table)
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "event-table-user" },
+                            table.users.map(function (user, index) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "select",
                                     {
-                                        value: user.name + "  " + index
+                                        key: user.name + "  " + index,
+                                        className: " element",
+                                        onClick: function onClick(e) {
+                                            return _this3.tableUserController(e, table, index);
+                                        }
                                     },
-                                    user.name
-                                ),
-                                _this3.props.group.users.map(function (user) {
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    user.length === 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "option",
+                                        { value: "empty " + index },
+                                        "Empty ",
+                                        index
+                                    ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         "option",
                                         {
-                                            key: user.name,
-                                            value: user.name
+                                            value: user.name + "  " + index
                                         },
                                         user.name
-                                    );
-                                })
-                            );
-                        })
-                    )
-                ));
-            });
+                                    ),
+                                    _this3.props.group.users.map(function (user) {
+                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            "option",
+                                            {
+                                                key: user.name,
+                                                value: user.name
+                                            },
+                                            user.name
+                                        );
+                                    })
+                                );
+                            })
+                        )
+                    ));
+                });
+            }
 
             this.setState({
                 renderTables: tables
@@ -62622,7 +62661,7 @@ var EventBasic = function (_Component) {
                 var activeEventDetails = _extends({}, response.data.activeEventDetails);
                 activeEventDetails.data = JSON.parse(activeEventDetails.data);
                 activeEventDetails.data.map(function (table) {
-                    console.log(activeEventDetails);
+
                     table.users.map(function (user) {
                         if (user.name === _this2.props.user.name) {
 
@@ -62630,7 +62669,7 @@ var EventBasic = function (_Component) {
                         }
                     });
                 });
-
+                console.log(tableInfo);
                 if (tableInfo) {
                     _this2.setState({
                         tableInfo: _extends({}, tableInfo),
@@ -62683,10 +62722,11 @@ var EventBasic = function (_Component) {
                 tableInfo: this.state.tableInfo
 
             }).then(function (response) {
-                console.log(response);
+                // console.log(response);
                 _this3.setState({
                     loadingPleaseWait: false,
-                    hasBooking: true
+                    hasBooking: true,
+                    tableInfo: _extends({}, response.data.tableInfo)
                 });
             });
         }
@@ -62782,6 +62822,7 @@ var EventBasic = function (_Component) {
         value: function render() {
             var _this6 = this;
 
+            console.log(this.state.tableInfo);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "venue-area" },
@@ -63065,8 +63106,8 @@ var Result = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Profile_BasicUser__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_SuperUser__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile_AdminUser__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Profile_SuperUser__ = __webpack_require__(116);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -63120,7 +63161,7 @@ var Profile = function (_Component) {
 
                     if (group.id === _this2.props.activeGroup && group.pivot.permissions === 'admin') {
 
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Profile_SuperUser__["a" /* default */], {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Profile_AdminUser__["a" /* default */], {
                             key: group.id + 'admin',
                             user: _this2.props.user,
                             groups: _this2.props.groups,
@@ -63143,10 +63184,16 @@ var Profile = function (_Component) {
                             contains: function contains(userGroups, groups) {
                                 return _this2.props.contains(userGroups, groups);
                             },
-                            hints: _this2.props.hints
+                            hints: _this2.props.hints,
+                            deleteType: function deleteType(typeId) {
+                                return _this2.props.deleteType(typeId);
+                            },
+                            refresh: function refresh() {
+                                return _this2.props.refresh();
+                            }
                         });
                     } else if (group.id === _this2.props.activeGroup && group.pivot.permissions === 'superuser') {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Profile_AdminUser__["a" /* default */], _defineProperty({
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Profile_SuperUser__["a" /* default */], _defineProperty({
                             hints: _this2.props.hints,
                             key: group.id + 'admin',
                             user: _this2.props.user,
@@ -63276,6 +63323,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -63293,355 +63342,6 @@ var SuperUser = function (_Component) {
         var _this = _possibleConstructorReturn(this, (SuperUser.__proto__ || Object.getPrototypeOf(SuperUser)).call(this, props));
 
         _this.state = {
-            usersSelected: [],
-            toggle: false,
-            action: "userList"
-        };
-        return _this;
-    }
-
-    _createClass(SuperUser, [{
-        key: "actionController",
-        value: function actionController(action) {
-            this.setState({
-                action: action
-            });
-        }
-    }, {
-        key: "displayTournament",
-        value: function displayTournament() {
-
-            function shuffle(array) {
-                var currentIndex = array.length,
-                    temporaryValue,
-                    randomIndex;
-
-                // While there remain elements to shuffle...
-                while (0 !== currentIndex) {
-
-                    // Pick a remaining element...
-                    randomIndex = Math.floor(Math.random() * currentIndex);
-                    currentIndex -= 1;
-
-                    // And swap it with the current element.
-                    temporaryValue = array[currentIndex];
-                    array[currentIndex] = array[randomIndex];
-                    array[randomIndex] = temporaryValue;
-                }
-
-                return array;
-            }
-            var tournament = [].concat(_toConsumableArray(this.state.usersSelected));
-            if (tournament.length % 2 !== 0) {
-                tournament.push({ name: 'Bye - Free Win' });
-            }
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "action-screen-list" },
-                tournament.map(function (user, index) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { key: user.name + user.id,
-                            className: index % 2 == 0 ? null : "even" },
-                        user.name
-                    );
-                })
-            );
-        }
-    }, {
-        key: "addYourselfToGroup",
-        value: function addYourselfToGroup() {
-            var _this2 = this;
-
-            return this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
-                // console.log(this.props.userGroups);
-                // console.log(group);
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                    {
-                        key: group.name + "groupListadmin" + index
-                    },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                            onChange: function onChange() {
-                                return _this2.props.addUser(group, _this2.props.user);
-                            },
-                            defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
-                            type: "checkbox",
-                            name: "group",
-                            value: group.id
-                        }),
-                        group.name
-                    )
-                );
-            }) : null;
-        }
-    }, {
-        key: "addUser",
-        value: function addUser(user) {
-            var usersAdded = [].concat(_toConsumableArray(this.state.usersSelected));
-            var usersAddedId = [].concat(_toConsumableArray(this.state.usersSelected.map(function (user) {
-                return user.id;
-            })));
-            usersAddedId.filter(function (id) {
-                return id === user.id;
-            }).length < 1 ? usersAdded.push(user) : null;
-
-            this.setState({
-                usersSelected: usersAdded
-            });
-        }
-    }, {
-        key: "activateUserController",
-        value: function activateUserController() {
-            var _this3 = this;
-
-            return this.props.groups.length > 0 ? this.props.groups.map(function (group) {
-                if (group.id === _this3.props.activeGroup) {
-                    return group.users.map(function (user) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "", key: user.name + group.id },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "user-list-element" },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    null,
-                                    "Active"
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                    onChange: function onChange() {
-                                        return _this3.props.activeUser(group.id, user.id);
-                                    },
-                                    defaultChecked: user.pivot.active ? true : false,
-                                    type: "checkbox",
-                                    name: "group",
-                                    value: user.id
-                                })
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "user-list-element" },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    { onClick: function onClick() {
-                                            return _this3.addUser(user);
-                                        } },
-                                    user.name
-                                )
-                            )
-                        );
-                    });
-                }
-            }) : null;
-        }
-    }, {
-        key: "addAnyUserToGroup",
-        value: function addAnyUserToGroup() {
-            var _this4 = this;
-
-            if (this.props.group && this.props.group.users) {
-                var groupUsersIds = [].concat(_toConsumableArray(this.props.group.users.map(function (user) {
-                    return user.id;
-                })));
-
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "name-list" },
-                    this.props.users.length ? this.props.users.map(function (user, index) {
-                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            {
-                                className: "name-list-element",
-                                key: user.name + "groupListadmin" + index
-                            },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                                null,
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    null,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                        onChange: function onChange() {
-                                            return _this4.props.addAnyUserToActiveGroup(user);
-                                        },
-                                        defaultChecked: groupUsersIds.filter(function (id) {
-                                            return id === user.id;
-                                        }).length < 1 ? false : true,
-                                        type: "checkbox",
-                                        name: "group",
-                                        value: user.id
-                                    }),
-                                    user.name
-                                )
-                            )
-                        );
-                    }) : null
-                );
-            }
-        }
-    }, {
-        key: "toggle",
-        value: function toggle() {
-            this.setState({
-                toggle: !this.state.toggle
-            });
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this5 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: this.props.hints === true ? "info-bar" : "info-bar-off" },
-                    "Now We can organize people in clubs. And as we have user feature. We can use it to number of things. I need to know what we want to use. Groups are not aware of each other for know. But one user might be member of few groups."
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "action-screen" },
-                    this.state.action === "userList" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "action-screen-list" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            null,
-                            "List of Users to do an action"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "screen-group-list" },
-                            this.state.usersSelected.map(function (user) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
-                                    {
-                                        key: user.id + user.name
-                                    },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        null,
-                                        user.name
-                                    )
-                                );
-                            })
-                        )
-                    ) : this.displayTournament(),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "action-screen-actions-list" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            null,
-                            "Action to do"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "action-button" },
-                            "Paid Subs Today"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "action-button" },
-                            "Will pay next time"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            {
-                                onClick: function onClick() {
-                                    return _this5.actionController("tournament");
-                                },
-                                className: "action-button"
-                            },
-                            "Create Tournament"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "action-button" },
-                            "Create Painting Competition"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "action-button" },
-                            "Send them to the Moon"
-                        )
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    {
-                        className: this.state.toggle ? "admin-users-list-wrapper" : "admin-users-list-wrapper hidden"
-                    },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "admin-users-list" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            null,
-                            "Choose User by clicking his name. Mark him as active"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "user-list" },
-                            this.activateUserController()
-                        )
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    {
-                        onClick: function onClick() {
-                            return _this5.toggle();
-                        },
-                        className: "admin-users-list-button"
-                    },
-                    "Toggle Group Users List"
-                )
-            );
-        }
-    }]);
-
-    return SuperUser;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (SuperUser);
-
-/***/ }),
-/* 117 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var AdminUser = function (_Component) {
-    _inherits(AdminUser, _Component);
-
-    function AdminUser(props) {
-        _classCallCheck(this, AdminUser);
-
-        var _this = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
-
-        _this.state = {
 
             usersSelected: [{
                 id: 0,
@@ -63653,7 +63353,7 @@ var AdminUser = function (_Component) {
         return _this;
     }
 
-    _createClass(AdminUser, [{
+    _createClass(SuperUser, [{
         key: 'addType',
         value: function addType(groupId) {
             var _this2 = this;
@@ -63889,7 +63589,7 @@ var AdminUser = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: "action-button" },
-                            'Send them to the Moont'
+                            'Send them to the Moon'
                         )
                     )
                 ),
@@ -63935,6 +63635,428 @@ var AdminUser = function (_Component) {
                         ),
                         this.addAnyUserToGroup()
                     )
+                )
+            );
+        }
+    }]);
+
+    return SuperUser;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (SuperUser);
+
+/***/ }),
+/* 117 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AdminUser = function (_Component) {
+    _inherits(AdminUser, _Component);
+
+    function AdminUser(props) {
+        _classCallCheck(this, AdminUser);
+
+        var _this = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
+
+        _this.state = {
+            usersSelected: [],
+            toggle: false,
+            action: "userList",
+            type: ""
+        };
+        return _this;
+    }
+
+    _createClass(AdminUser, [{
+        key: "actionController",
+        value: function actionController(action) {
+            this.setState({
+                action: action
+            });
+        }
+    }, {
+        key: "displayTournament",
+        value: function displayTournament() {
+            function shuffle(array) {
+                var currentIndex = array.length,
+                    temporaryValue,
+                    randomIndex;
+
+                // While there remain elements to shuffle...
+                while (0 !== currentIndex) {
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // And swap it with the current element.
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+
+                return array;
+            }
+            var tournament = [].concat(_toConsumableArray(this.state.usersSelected));
+            if (tournament.length % 2 !== 0) {
+                tournament.push({ name: "Bye - Free Win" });
+            }
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "action-screen-list" },
+                tournament.map(function (user, index) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        {
+                            key: user.name + user.id,
+                            className: index % 2 == 0 ? null : "even"
+                        },
+                        user.name
+                    );
+                })
+            );
+        }
+    }, {
+        key: "addYourselfToGroup",
+        value: function addYourselfToGroup() {
+            var _this2 = this;
+
+            return this.props.allGroups.length ? this.props.allGroups.map(function (group, index) {
+                // console.log(this.props.userGroups);
+                // console.log(group);
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                    {
+                        key: group.name + "groupListadmin" + index
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                            onChange: function onChange() {
+                                return _this2.props.addUser(group, _this2.props.user);
+                            },
+                            defaultChecked: _this2.props.contains(_this2.props.userGroups, group) ? true : false,
+                            type: "checkbox",
+                            name: "group",
+                            value: group.id
+                        }),
+                        group.name
+                    )
+                );
+            }) : null;
+        }
+    }, {
+        key: "addUser",
+        value: function addUser(user) {
+            var usersAdded = [].concat(_toConsumableArray(this.state.usersSelected));
+            var usersAddedId = [].concat(_toConsumableArray(this.state.usersSelected.map(function (user) {
+                return user.id;
+            })));
+            usersAddedId.filter(function (id) {
+                return id === user.id;
+            }).length < 1 ? usersAdded.push(user) : null;
+
+            this.setState({
+                usersSelected: usersAdded
+            });
+        }
+    }, {
+        key: "activateUserController",
+        value: function activateUserController() {
+            var _this3 = this;
+
+            return this.props.groups.length > 0 ? this.props.groups.map(function (group) {
+                if (group.id === _this3.props.activeGroup) {
+                    return group.users.map(function (user) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "", key: user.name + group.id },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { className: "user-list-element" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
+                                    "Active"
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                    onChange: function onChange() {
+                                        return _this3.props.activeUser(group.id, user.id);
+                                    },
+                                    defaultChecked: user.pivot.active ? true : false,
+                                    type: "checkbox",
+                                    name: "group",
+                                    value: user.id
+                                })
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { className: "user-list-element" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    { onClick: function onClick() {
+                                            return _this3.addUser(user);
+                                        } },
+                                    user.name
+                                )
+                            )
+                        );
+                    });
+                }
+            }) : null;
+        }
+    }, {
+        key: "addAnyUserToGroup",
+        value: function addAnyUserToGroup() {
+            var _this4 = this;
+
+            if (this.props.group && this.props.group.users) {
+                var groupUsersIds = [].concat(_toConsumableArray(this.props.group.users.map(function (user) {
+                    return user.id;
+                })));
+
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "name-list" },
+                    this.props.users.length ? this.props.users.map(function (user, index) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            {
+                                className: "name-list-element",
+                                key: user.name + "groupListadmin" + index
+                            },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                        onChange: function onChange() {
+                                            return _this4.props.addAnyUserToActiveGroup(user);
+                                        },
+                                        defaultChecked: groupUsersIds.filter(function (id) {
+                                            return id === user.id;
+                                        }).length < 1 ? false : true,
+                                        type: "checkbox",
+                                        name: "group",
+                                        value: user.id
+                                    }),
+                                    user.name
+                                )
+                            )
+                        );
+                    }) : null
+                );
+            }
+        }
+    }, {
+        key: "toggle",
+        value: function toggle() {
+            this.setState({
+                toggle: !this.state.toggle,
+                action: "userList"
+            });
+        }
+    }, {
+        key: "addType",
+        value: function addType(groupId) {
+            var _this5 = this;
+
+            axios.post("/types", {
+                type: this.state.type,
+                groupId: this.props.activeGroup
+            }).then(function () {
+                _this5.props.refresh();
+                _this5.setState({
+                    type: ""
+                });
+            });
+        }
+    }, {
+        key: "changeHandler",
+        value: function changeHandler(e) {
+            this.setState(_defineProperty({}, e.target.placeholder, e.target.value));
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this6 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                        className: this.props.hints === true ? "info-bar" : "info-bar-off"
+                    },
+                    "Now We can organize people in clubs. And as we have user feature. We can use it to number of things. I need to know what we want to use. Groups are not aware of each other for know. But one user might be member of few groups."
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "action-screen" },
+                    this.state.action === "userList" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "action-screen-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "List of Users to do an action"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "screen-group-list" },
+                            this.state.usersSelected.map(function (user) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment,
+                                    {
+                                        key: user.id + user.name
+                                    },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "div",
+                                        null,
+                                        user.name
+                                    )
+                                );
+                            })
+                        )
+                    ) : null,
+                    this.state.action === "tournament" ? this.displayTournament() : null,
+                    this.state.action === "groupTypes" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "action-screen-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Manage Group Types"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            null,
+                            " ",
+                            "Add New Type to Group",
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                                className: "myform-control",
+                                placeholder: "type",
+                                onChange: function onChange(e) {
+                                    return _this6.changeHandler(e);
+                                },
+                                required: true,
+                                value: this.state.type
+                            }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "button",
+                                {
+                                    onClick: function onClick() {
+                                        return _this6.addType(_this6.props.activeGroup);
+                                    }
+                                },
+                                "Save"
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "admin-type-list-wrapper" },
+                            this.props.group.types.map(function (type) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    {
+                                        key: type.id,
+                                        className: "admin-type-list"
+                                    },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "div",
+                                        null,
+                                        type.type
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "div",
+                                        { onClick: function onClick() {
+                                                return _this6.props.deleteType(type.id);
+                                            } },
+                                        "X"
+                                    )
+                                );
+                            })
+                        )
+                    ) : null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "action-screen-actions-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Action to do"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            {
+                                className: "action-button",
+                                onClick: function onClick() {
+                                    return _this6.actionController("groupTypes");
+                                }
+                            },
+                            "Manage Club Games"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            {
+                                onClick: function onClick() {
+                                    return _this6.actionController("tournament");
+                                },
+                                className: "action-button"
+                            },
+                            "Create Tournament"
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                        className: this.state.toggle ? "admin-users-list-wrapper" : "admin-users-list-wrapper hidden"
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "admin-users-list" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            null,
+                            "Choose User by clicking his name. Mark him as active"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "user-list" },
+                            this.activateUserController()
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                        onClick: function onClick() {
+                            return _this6.toggle();
+                        },
+                        className: "admin-users-list-button"
+                    },
+                    "Toggle Group Users List"
                 )
             );
         }

@@ -40,7 +40,7 @@ class EventBasic extends Component {
                     let activeEventDetails = {...response.data.activeEventDetails};
                     activeEventDetails.data = JSON.parse(activeEventDetails.data);
                     activeEventDetails.data.map( table => {
-                        console.log(activeEventDetails)
+            
                         table.users.map(user => {
                             if (user.name === this.props.user.name) {
                                
@@ -48,7 +48,7 @@ class EventBasic extends Component {
                             }
                         })
                     })
-                    
+                    console.log(tableInfo);
                     if(tableInfo) {
                         this.setState({
                             tableInfo: {...tableInfo},
@@ -102,10 +102,11 @@ class EventBasic extends Component {
         
         })
         .then((response) => {
-            console.log(response);
+            // console.log(response);
             this.setState({
                 loadingPleaseWait: false,
                 hasBooking: true,
+                tableInfo: {...response.data.tableInfo},
                })
         });
         
@@ -190,6 +191,7 @@ class EventBasic extends Component {
     }
     
     render() {
+        console.log(this.state.tableInfo)
         return (
             <div className={"venue-area"}>
                 {!this.state.loadingPleaseWait && this.state.hasBooking ? (

@@ -156,7 +156,7 @@ class EventController extends Controller
         $event->data =  json_decode($event->data );
         $newData= $event->data;
         $tableInfo = (object) $request->tableInfo;
-        $emptyTableIndex = 110;
+   
             
         foreach ($newData as $table) {
             if ($table->type === "empty") {
@@ -175,6 +175,7 @@ class EventController extends Controller
          $event->save();
          return response()->json([
             'activeEventDetails' => $event,
+            'tableInfo' => $newData[$emptyTableIndex],
              ]);
     }
 }

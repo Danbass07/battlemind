@@ -10939,8 +10939,8 @@ a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -ms-flex-wrap: wrap-reverse;
+      flex-wrap: wrap-reverse;
   margin-bottom: 200px;
 }
 
@@ -11411,6 +11411,20 @@ a:hover {
   padding: 15px;
   margin: 5px auto;
   width: 95%;
+}
+
+.admin-type-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.admin-type-list-wrapper {
+  overflow: scroll;
+  height: 60%;
+  padding-bottom: 100px;
 }
 
 .user-list {

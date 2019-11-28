@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BasicUser from "../components/Profile/BasicUser";
-import AdminUser from "../components/Profile/SuperUser";
-import SuperUser from "../components/Profile/AdminUser";
+import AdminUser from "../components/Profile/AdminUser";
+import SuperUser from "../components/Profile/SuperUser";
 
 class Profile extends Component {
     render() {
@@ -68,6 +68,8 @@ class Profile extends Component {
                         this.props.contains(userGroups, groups)
                     }
                     hints={this.props.hints}
+                    deleteType={(typeId) => this.props.deleteType(typeId)}
+                    refresh={() => this.props.refresh()}
                     />
                    )
                        

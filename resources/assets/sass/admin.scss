@@ -34,6 +34,17 @@
     margin: 5px auto;
     width: 95%;
 }
+.admin-type-list {
+ display: flex;
+ justify-content: space-around;
+
+
+}
+.admin-type-list-wrapper {
+   overflow: scroll;
+   height: 60%;
+   padding-bottom: 100px;
+   }
 
 .user-list{
     display: flex;

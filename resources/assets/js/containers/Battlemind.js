@@ -251,6 +251,35 @@ class Battlemind extends Component {
             }
         );
     }
+    deleteType(typeId) {
+        console.log('del')
+        axios
+            .delete(`/types/${typeId}`).then(
+                this.refresh() 
+            );
+    }
+    refresh() {
+        axios.get(`/groups`).then(response => {
+            var groups = [...response.data.groups];
+            let activeGroupMembersRatings = [];
+
+            groups.map(group => {
+                group.users.map(user => {
+                    if (group.id === this.state.activeGroup) {
+                        user.pivot.active
+                            ? activeGroupMembersRatings.push(user)
+                            : null;
+                    }
+                });
+            });
+            this.setState({
+                groups: [...groups],
+                allGroups: [...response.data.allGroups],
+                userGroups: [...response.data.userGroups],
+                activeGroupMembersRatings: activeGroupMembersRatings
+            });
+        })
+    }
     hintsToggle() {
         this.setState({
             hints: !this.state.hints
@@ -331,12 +360,15 @@ class Battlemind extends Component {
                             }
                             hints={this.state.hints}
                             addAnyUserToActiveGroup={(userId) => this.addAnyUserToActiveGroup(userId)}
+                            deleteType={(typeId) => this.deleteType(typeId)}
+                            refresh={() => this.refresh()}
                         />
                     ) : null}
 
                     {this.state.action === "event" ? (
                         this.state.groups[this.state.activeGroupIndex].pivot &&
-                        this.state.groups[this.state.activeGroupIndex].pivot.permissions === 'superuser' ?
+                        this.state.groups[this.state.activeGroupIndex].pivot.permissions === 'superuser' ||
+                        this.state.groups[this.state.activeGroupIndex].pivot.permissions === 'admin' ?
                         <Event
                             scoreboards={this.state.userScoreboards}
                             friendsScoreboards={this.state.friendsScoreboards}
