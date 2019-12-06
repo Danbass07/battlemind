@@ -78,15 +78,28 @@ class Hypecheck extends Component {
         let data =[...group.types.filter( (type) =>{return !zeroRated.includes(type) ? type : null  } ).sort(this.compareValues('totalHype', false))]; 
        
         let votingList =[...data];
-        votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
 
+        let firstPlace = null;
+        let topList = []
+        votingList.map((candidate, index) => {
+                // console.log(candidate)
+                topList.length < 3 ? topList.push(candidate) : topList[index-1] ?
+                topList[index-1].totalHype === candidate.totalHype ? topList.push(candidate) :
+                console.log('list is full') : null
+            
+            
+        })
+        console.log(topList)
+        // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
+
+votingList=topList
         return (
 
             <React.Fragment>
                   {this.props.group.pivot.permissions === "superuser" ? 
                         <div
           className={"mega-button"}
-          onClick={() => this.props.setUpVote(votingList.sort(this.compareValues('totalHype', false)).slice(0,3))}>
+          onClick={() => this.props.setUpVote(votingList)}>
                                  CAST VOTE </div>
                                  : null} 
                 <div className={"active-user-minilist"}>
