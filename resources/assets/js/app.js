@@ -14,3 +14,4 @@ require('./bootstrap');
  */
 
 require('./index.js');
+require('./NewLayout/AppBrain.js');
