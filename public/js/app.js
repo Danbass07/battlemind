@@ -69465,6 +69465,8 @@ function (_Component) {
         },
         theme: this.state.theme[this.state.themeActive]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Screen__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        hypeLevels: [1, 2, 3, 4, 5],
+        activeGroup: this.props.data.user.groups[this.props.data.activeGroupIndex].id,
         theme: this.state.theme[this.state.themeActive],
         userData: this.props.data,
         group: this.props.data.user.groups[this.props.data.activeGroupIndex]
@@ -69729,6 +69731,93 @@ var Buttons = function Buttons(props) {
 
 /***/ }),
 
+/***/ "./resources/assets/js/NewLayout/components/HypeSet.js":
+/*!*************************************************************!*\
+  !*** ./resources/assets/js/NewLayout/components/HypeSet.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _this = undefined;
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n   \n    "]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    active: true
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      setComponentStatus = _useState2[0],
+      newComponentStatus = _useState2[1];
+
+  console.log(props);
+  var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "mega-button",
+    onClick: function onClick() {
+      return _this.props.hypenotizer();
+    }
+  }, "CLICK HERE TO SAVE"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "hype-wrapper"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "hype-list"
+  }, Array.isArray(props.group.users) ? props.group.users.map(function (user) {
+    return user.types.map(function (type) {
+      if (type.group_id === props.activeGroup && type.pivot.user_id === props.user.id) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "hype-set-row",
+          key: type.type
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "hype-row-element"
+        }, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "hype-row-element"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+          className: 'hype-options',
+          onChange: function onChange(e) {
+            return _this.props.hypeLevelHandler(e, type.id);
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: "default" + type.type,
+          defaultValue: type.pivot.hype
+        }, type.pivot.hype), ")", props.hypeLevels.map(function (level, index) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+            key: type.type + index,
+            value: level
+          }, level);
+        }))));
+      }
+    });
+  }) : null)));
+});
+/* harmony default export */ __webpack_exports__["default"] = (HypeSet);
+
+/***/ }),
+
 /***/ "./resources/assets/js/NewLayout/components/InfoDisplay.js":
 /*!*****************************************************************!*\
   !*** ./resources/assets/js/NewLayout/components/InfoDisplay.js ***!
@@ -69923,6 +70012,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _HypeSet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HypeSet */ "./resources/assets/js/NewLayout/components/HypeSet.js");
 function _templateObject() {
   var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 30%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n    "]);
 
@@ -69937,9 +70027,15 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
 var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorOne, props.theme.colorTwo, props.theme.colorFive);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, props.userData.user.name, console.log(props.group));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, props.userData.user.name, console.log(props.group), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HypeSet__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    group: props.group,
+    user: props.userData.user,
+    activeGroup: props.activeGroup,
+    hypeLevels: [1, 2, 3, 4, 5]
+  }));
 });
 /* harmony default export */ __webpack_exports__["default"] = (Screen);
 

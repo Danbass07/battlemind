@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import HypeSet from "./HypeSet";
 
 const Screen = React.memo(props => {
     const MainWrapper = styled.div`
@@ -17,7 +18,12 @@ const Screen = React.memo(props => {
         <MainWrapper >
              {props.userData.user.name}
              {console.log(props.group)}
-             
+        <HypeSet
+            group={props.group}
+            user={props.userData.user}
+            activeGroup={props.activeGroup}
+            hypeLevels={[1,2,3,4,5]} 
+        />
         </MainWrapper>
     );
    

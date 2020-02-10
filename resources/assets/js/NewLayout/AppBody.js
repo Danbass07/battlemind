@@ -111,7 +111,9 @@ console.log(this.props.data.user)
                     moveSection={(moveValue) => this.moveSection(moveValue)}
                     theme={this.state.theme[this.state.themeActive]} />
 
-                    <Screen 
+                    <Screen
+                        
+                        activeGroup={this.props.data.user.groups[this.props.data.activeGroupIndex].id}
                         theme={this.state.theme[this.state.themeActive]}
                         userData={this.props.data}
                         group={this.props.data.user.groups[this.props.data.activeGroupIndex]}

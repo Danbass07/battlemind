@@ -15,7 +15,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $user = User::with(['types', 'groups.types', 'groups.users.players', 'players', 'groups'])->where('id', '=' ,$request->user()->id)->first();
+        $user = User::with(['types', 'groups.types', 'groups.users.players', 'players', 'groups', 'groups.users.types'])->where('id', '=' ,$request->user()->id)->first();
     //    $user1 = User::find($user->id)->withPivot(['user_id','role_id','acive'])->get();
     //    $userFullInfo = Auth::user()->with('groups')->where('id',$user->id)->get();
     //    foreach($user1->groups as $group)  {
