@@ -60,6 +60,7 @@ Route::get('/types/{id}/userTypes','TypeController@userTypes' );
 
 
  Route::post('/hype/hypenotizer', 'HypeController@hypenotizer');
+ Route::post('/hype/hypenotizerrr', 'HypeController@hypenotizerrr');
 
 
  Route::resource('/vote', 'VoteController');

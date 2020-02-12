@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import HypeSet from "./HypeSet";
+import HypeSet from "./Hype/HypeSet";
 
 const Screen = React.memo(props => {
     const MainWrapper = styled.div`

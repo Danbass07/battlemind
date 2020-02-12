@@ -80,7 +80,7 @@ class Battlemind extends Component {
 
         axios.post(`/hype/hypenotizer`, {
             userTypes: [...activeGroupTypes]
-        });
+        },console.log(activeGroupTypes));
   
       
     }

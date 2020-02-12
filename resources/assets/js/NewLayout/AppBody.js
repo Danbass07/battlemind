@@ -122,6 +122,8 @@ class AppBody extends Component {
                     
                     
                     <RightMenu 
+                    user={this.props.data}
+                    group={this.props.data.user.groups[this.props.data.activeGroupIndex]}
                     moved={this.state.moved}
                     moveSection={(moveValue) => this.moveSection(moveValue)}
                     theme={this.state.theme[this.state.themeActive]} />

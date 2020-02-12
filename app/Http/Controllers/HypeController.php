@@ -90,6 +90,18 @@ class HypeController extends Controller
         }
         return response('success');
     }
+    public function hypenotizerrr(Request $request) {
+
+        $user =  Auth::user();              //find user
+              //delete past results
+
+       
+         
+            $type = Type::find($request->typeId);
+            $type->users()->updateExistingPivot($user->id, ['hype' => $request->value]);
+        
+        return response('success');
+    }
 
 
 }

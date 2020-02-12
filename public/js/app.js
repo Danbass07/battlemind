@@ -69472,6 +69472,8 @@ function (_Component) {
         userData: this.props.data,
         group: this.props.data.user.groups[this.props.data.activeGroupIndex]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_RightMenu__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        user: this.props.data,
+        group: this.props.data.user.groups[this.props.data.activeGroupIndex],
         moved: this.state.moved,
         moveSection: function moveSection(moveValue) {
           return _this2.moveSection(moveValue);
@@ -69546,9 +69548,11 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(AppBrain).call(this, props));
     _this.state = {
       user: {
-        name: 'loading',
+        name: "loading",
         groups: [{
-          id: 0
+          id: 0,
+          users: [],
+          types: []
         }]
       },
       activeGroupIndex: 0
@@ -69557,6 +69561,26 @@ function (_Component) {
   }
 
   _createClass(AppBrain, [{
+    key: "hypeLevelHandler",
+    value: function hypeLevelHandler(e, typeId) {
+      var _this2 = this;
+
+      var user = _objectSpread({}, this.state.user);
+
+      user.groups[this.state.activeGroupIndex].users.filter(function (user) {
+        return user.id === _this2.state.user.id;
+      })[0].types.filter(function (type) {
+        return type.id === typeId;
+      })[0].pivot.hype = e.target.value;
+      this.setState({
+        user: _objectSpread({}, user)
+      });
+      axios.post("/hype/hypenotizerrr", {
+        typeId: typeId,
+        value: e.target.value
+      });
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.getUserContent();
@@ -69577,10 +69601,10 @@ function (_Component) {
   }, {
     key: "getUserContent",
     value: function getUserContent() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/users").then(function (response) {
-        return _this2.setState({
+        return _this3.setState({
           user: _objectSpread({}, response.data.user)
         });
       });
@@ -69588,12 +69612,15 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        hypeLevelHandler: function hypeLevelHandler(e, typeId) {
+          return _this4.hypeLevelHandler(e, typeId);
+        },
         data: this.state,
         activeGroupChange: function activeGroupChange() {
-          return _this3.activeGroupChange();
+          return _this4.activeGroupChange();
         }
       });
     }
@@ -69604,8 +69631,8 @@ function (_Component) {
 
 /* harmony default export */ __webpack_exports__["default"] = (AppBrain);
 
-if (document.getElementById('AppBrain')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AppBrain, null), document.getElementById('AppBrain'));
+if (document.getElementById("AppBrain")) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AppBrain, null), document.getElementById("AppBrain"));
 }
 
 /***/ }),
@@ -69731,10 +69758,219 @@ var Buttons = function Buttons(props) {
 
 /***/ }),
 
-/***/ "./resources/assets/js/NewLayout/components/HypeSet.js":
-/*!*************************************************************!*\
-  !*** ./resources/assets/js/NewLayout/components/HypeSet.js ***!
-  \*************************************************************/
+/***/ "./resources/assets/js/NewLayout/components/Hype/HypeCheck.js":
+/*!********************************************************************!*\
+  !*** ./resources/assets/js/NewLayout/components/Hype/HypeCheck.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n        "]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var HypeCheck =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(HypeCheck, _Component);
+
+  function HypeCheck(props) {
+    var _this;
+
+    _classCallCheck(this, HypeCheck);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HypeCheck).call(this, props));
+    _this.state = {
+      click: true,
+      exludeLevel: 0
+    };
+    return _this;
+  }
+
+  _createClass(HypeCheck, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {}
+  }, {
+    key: "compareValues",
+    value: function compareValues(key) {
+      var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return function (a, b) {
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+          // property doesn't exist on either object
+          return 0;
+        }
+
+        var varA = typeof a[key] === "string" /// letter case insensitive
+        ? a[key].toUpperCase() : a[key];
+        var varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+        var comparison = 0;
+
+        if (varA > varB) {
+          comparison = 1;
+        } else if (varA < varB) {
+          comparison = -1;
+        }
+
+        return ascending == false ? comparison * -1 : comparison;
+      };
+    }
+  }, {
+    key: "checkPlayerRating",
+    value: function checkPlayerRating(user) {
+      var theOne = [];
+      theOne.push(user);
+      this.setState({
+        theOne: theOne,
+        onlyOne: !this.state.onlyOne
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var group = _objectSpread({}, this.props.group);
+
+      var zeroRated = [];
+      var activeUsersRating = group.users.map(function (user) {
+        return user.pivot.active ? user : null;
+      }).filter(Boolean);
+      group.types.map(function (type) {
+        var totalHype = 0;
+
+        if (_this2.state.onlyOne) {
+          activeUsersRating = _toConsumableArray(_this2.state.theOne);
+        }
+
+        activeUsersRating.map(function (user) {
+          return user.types.map(function (userType) {
+            if (userType.id === type.id) {
+              totalHype += +userType.pivot.hype;
+
+              if (+userType.pivot.hype === _this2.state.exludeLevel) {
+                zeroRated.push(type);
+              }
+            }
+          });
+        });
+        type.totalHype = totalHype;
+      });
+
+      var data = _toConsumableArray(group.types.filter(function (type) {
+        return !zeroRated.includes(type) ? type : null;
+      }).sort(this.compareValues('totalHype', false)));
+
+      var votingList = _toConsumableArray(data);
+
+      var firstPlace = null;
+      var topList = [];
+      votingList.map(function (candidate, index) {
+        // console.log(candidate)
+        topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : console.log('list is full') : null;
+      });
+      votingList = topList;
+      console.log(this.props.user.user.id); // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
+
+      var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject());
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, this.props.user.user.id === 1 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
+        onClick: function onClick() {
+          return _this2.props.setUpVote(votingList);
+        }
+      }, "CAST VOTE ") : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: ""
+      }, activeUsersRating.map(function (user) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "",
+          onClick: function onClick() {
+            return _this2.checkPlayerRating(user);
+          },
+          key: user.name
+        }, user.name);
+      })), group.types ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "hypecheck-results-list"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
+        className: "hypecheck-results-list"
+      }, !group.types ? data.map(function (type, index) {
+        if (index < 3) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+            key: type.id + " " + type.hype
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, type.type));
+        }
+      }) : data.map(function (type) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: type.id + ' ' + type.hype
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          style: {
+            marginLeft: "auto"
+          }
+        }, type.totalHype), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          style: {
+            marginLeft: "20px"
+          }
+        }, type.average));
+      }))) : null);
+    }
+  }]);
+
+  return HypeCheck;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (HypeCheck);
+
+/***/ }),
+
+/***/ "./resources/assets/js/NewLayout/components/Hype/HypeSet.js":
+/*!******************************************************************!*\
+  !*** ./resources/assets/js/NewLayout/components/Hype/HypeSet.js ***!
+  \******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -69754,7 +69990,7 @@ function _templateObject8() {
 }
 
 function _templateObject7() {
-  var data = _taggedTemplateLiteral(["\n        background-color: ", ";\n        border: 2px dotted ", ";\n        border-radius: 50%;\n        height: 38px;\n        margin: 15px 5px;\n        color: ", ";\n        padding-left: 12px;\n       \n    "]);
+  var data = _taggedTemplateLiteral(["\n        background-color: ", ";\n        border: 2px dotted ", ";\n        border-radius: 50%;\n        height: 38px;\n        margin: 5px 5px;\n        color: ", ";\n        padding-left: 12px;\n       \n    "]);
 
   _templateObject7 = function _templateObject7() {
     return data;
@@ -70018,6 +70254,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _Hype_HypeCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Hype/HypeCheck */ "./resources/assets/js/NewLayout/components/Hype/HypeCheck.js");
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n    width: 30px;\n    height: 100%;\n    background-color: ", ";\n    writing-mode: vertical-rl;\n        text-orientation: upright;\n    "]);
 
@@ -70042,9 +70279,11 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
 var RightMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive);
   var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour);
+  console.log(props.group);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, "     ", !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
       props.moveSection(-64);
@@ -70053,7 +70292,10 @@ var RightMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (prop
     onClick: function onClick() {
       props.moveSection(-32);
     }
-  }, "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Riht Menu"));
+  }, "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeCheck__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    user: props.user,
+    group: props.group
+  }));
 });
 /* harmony default export */ __webpack_exports__["default"] = (RightMenu);
 
@@ -70071,7 +70313,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-/* harmony import */ var _HypeSet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HypeSet */ "./resources/assets/js/NewLayout/components/HypeSet.js");
+/* harmony import */ var _Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Hype/HypeSet */ "./resources/assets/js/NewLayout/components/Hype/HypeSet.js");
 function _templateObject() {
   var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 30%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        overflow-y:scroll;\n      \n    "]);
 
@@ -70089,7 +70331,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorOne, props.theme.colorTwo, props.theme.colorFive);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HypeSet__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__["default"], {
     group: props.group,
     user: props.userData.user,
     activeGroup: props.activeGroup,
@@ -71113,130 +71355,42 @@ function (_Component) {
     value: function render() {
       var _this = this;
 
-      console.log(this.props.group);
-      return (// <React.Fragment>
-        //     <button
-        //         className="mega-button"
-        //         onClick={() => this.props.hypenotizer()}
-        //     >
-        //         CLICK HERE TO SAVE
-        //     </button>
-        //     <div className="hype-wrapper">
-        //         <div className={"hype-list"}>
-        //             {Array.isArray(this.props.group.types)
-        //                 ? this.props.group.types.map(type => {
-        //                       if (
-        //                           type.group_id === this.props.activeGroup
-        //                       ) {
-        //                           return (
-        //                               <div
-        //                                   className="hype-set-row"
-        //                                   key={type.type}
-        //                               >
-        //                                   <div className="hype-row-element">
-        //                                       {type.type}
-        //                                   </div>
-        //                                   <div className="hype-row-element">
-        //                                       <select
-        //                                           className={"hype-options"}
-        //                                           onChange={e =>
-        //                                               this.props.hypeLevelHandler(
-        //                                                   e,
-        //                                                   type.id
-        //                                               )
-        //                                           }
-        //                                       >
-        //                                           {this.props.group.users.map(user => {
-        //                                               if (
-        //                                                   user.id ===
-        //                                                   this.props.user.id
-        //                                               ) {
-        //                                                 return  user.types.map( userType => {
-        //                                                       if (userType.id === type.id) {
-        //                                                      return (
-        //                                                         <option
-        //                                                         key={
-        //                                                             "default" +
-        //                                                             userType.type
-        //                                                         }
-        //                                                         defaultValue={
-        //                                                             userType.pivot.hype
-        //                                                         }
-        //                                                     >
-        //                                                         {
-        //                                                             userType.pivot.hype
-        //                                                         }
-        //                                                     </option>
-        //                                                      )
-        //                                                         ;
-        //                                                       }
-        //                                                   })
-        //                                               }
-        //                                           })}
-        //                                           {this.props.hypeLevels.map(
-        //                                               (level, index) => {
-        //                                                   return (
-        //                                                       <option
-        //                                                           key={
-        //                                                               type.type +
-        //                                                               index
-        //                                                           }
-        //                                                           value={
-        //                                                               level
-        //                                                           }
-        //                                                       >
-        //                                                           {level}
-        //                                                       </option>
-        //                                                   );
-        //                                               }
-        //                                           )}
-        //                                       </select>
-        //                                   </div>
-        //                               </div>
-        //                           );
-        //                       }
-        //                   })
-        //                 : null}
-        //         </div>
-        //     </div>
-        // </React.Fragment>
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "mega-button",
-          onClick: function onClick() {
-            return _this.props.hypenotizer();
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "mega-button",
+        onClick: function onClick() {
+          return _this.props.hypenotizer();
+        }
+      }, "CLICK HERE TO SAVE"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "hype-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "hype-list"
+      }, Array.isArray(this.props.group.users) ? this.props.group.users.map(function (user) {
+        return user.types.map(function (type) {
+          if (type.group_id === _this.props.activeGroup && type.pivot.user_id === _this.props.user.id) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "hype-set-row",
+              key: type.type
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "hype-row-element"
+            }, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "hype-row-element"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+              className: 'hype-options',
+              onChange: function onChange(e) {
+                return _this.props.hypeLevelHandler(e, type.id);
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+              key: "default" + type.type,
+              defaultValue: type.pivot.hype
+            }, type.pivot.hype), ")", _this.props.hypeLevels.map(function (level, index) {
+              return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+                key: type.type + index,
+                value: level
+              }, level);
+            }))));
           }
-        }, "CLICK HERE TO SAVE"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "hype-wrapper"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "hype-list"
-        }, Array.isArray(this.props.group.users) ? this.props.group.users.map(function (user) {
-          return user.types.map(function (type) {
-            if (type.group_id === _this.props.activeGroup && type.pivot.user_id === _this.props.user.id) {
-              return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "hype-set-row",
-                key: type.type
-              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "hype-row-element"
-              }, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "hype-row-element"
-              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-                className: 'hype-options',
-                onChange: function onChange(e) {
-                  return _this.props.hypeLevelHandler(e, type.id);
-                }
-              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-                key: "default" + type.type,
-                defaultValue: type.pivot.hype
-              }, type.pivot.hype), ")", _this.props.hypeLevels.map(function (level, index) {
-                return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-                  key: type.type + index,
-                  value: level
-                }, level);
-              }))));
-            }
-          });
-        }) : null)))
-      );
+        });
+      }) : null)));
     }
   }]);
 
@@ -74044,7 +74198,7 @@ function (_Component) {
       }).filter(Boolean).flat(1);
       axios.post("/hype/hypenotizer", {
         userTypes: _toConsumableArray(activeGroupTypes)
-      });
+      }, console.log(activeGroupTypes));
     }
   }, {
     key: "buttonHandler",
@@ -74535,8 +74689,6 @@ function (_Component) {
   }, {
     key: "castVote",
     value: function castVote(typeId, userId) {
-      console.log(this.state.votingList.data);
-
       var votingList = _objectSpread({}, this.state.votingList);
 
       var voteCount = 0;

@@ -1,5 +1,6 @@
 import React, { useState }  from "react";
 import styled from "styled-components";
+import HypeCheck from "./Hype/HypeCheck";
 
 const RightMenu = React.memo(props => {
    
@@ -21,6 +22,7 @@ const RightMenu = React.memo(props => {
     writing-mode: vertical-rl;
         text-orientation: upright;
     `
+    console.log(props.group)
     return <MainWrapper
     >     {!props.moved ? (
         <Click
@@ -39,7 +41,9 @@ const RightMenu = React.memo(props => {
             Close
         </Click>
     )}
-        <div>Riht Menu</div>
+        <HypeCheck
+        user={props.user}
+        group={props.group} />
     </MainWrapper>;
 });
 

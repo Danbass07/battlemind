@@ -32,7 +32,7 @@ const HypeSet = React.memo(props => {
         border: 2px dotted ${props.theme.colorTwo};
         border-radius: 50%;
         height: 38px;
-        margin: 15px 5px;
+        margin: 5px 5px;
         color: ${props.theme.colorTwo};
         padding-left: 12px;
        
