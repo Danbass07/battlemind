@@ -83,7 +83,7 @@ class AppBody extends Component {
         flex-direction: row;
         transform: translateX(${this.state.middleSectionMoveValue}%);
     `;
-console.log(this.props.data.user)
+
         return (
             <MainWrapper>
                 <div>
@@ -112,7 +112,7 @@ console.log(this.props.data.user)
                     theme={this.state.theme[this.state.themeActive]} />
 
                     <Screen
-                        
+                        hypeLevelHandler={(e, typeId) => this.props.hypeLevelHandler(e, typeId)}
                         activeGroup={this.props.data.user.groups[this.props.data.activeGroupIndex].id}
                         theme={this.state.theme[this.state.themeActive]}
                         userData={this.props.data}

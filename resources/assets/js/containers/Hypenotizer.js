@@ -91,8 +91,8 @@ class Hypenotizer extends Component {
 
     }
     castVote(typeId, userId) {
-       
-        let votingList = [...this.state.votingList];
+       console.log(this.state.votingList.data)
+        let votingList = {...this.state.votingList};
         let voteCount = 0;
         this.state.votingList.data.map( type => {   type.votersId.includes(userId) ? voteCount += +1 : null })
    

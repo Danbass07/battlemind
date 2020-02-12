@@ -7,7 +7,9 @@ const Logo = props => {
         background-color: ${props.theme.colorOne};
         border: 10px ridge ${props.theme.colorTwo};
         background-image: url(/images/${props.activeGroup}logo.png);
-        background-size: cover;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
         grid-area: 1 / 1 / 3 / 2; 
     `;
     return ( 

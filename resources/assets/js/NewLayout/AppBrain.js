@@ -41,7 +41,6 @@ class AppBrain extends Component {
         );
     }
     render() {
-//console.log(this.state);
         return (
            
                 <AppBody 
