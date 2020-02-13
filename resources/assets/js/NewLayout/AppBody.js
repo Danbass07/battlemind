@@ -106,7 +106,8 @@ class AppBody extends Component {
                 </TopSection>
 
                 <MiddleSection>
-                    <LeftMenu 
+                    <LeftMenu
+                    group={this.props.data.user.groups[this.props.data.activeGroupIndex]} 
                     moved={this.state.moved}
                     moveSection={(moveValue) => this.moveSection(moveValue)}
                     theme={this.state.theme[this.state.themeActive]} />

@@ -42,6 +42,7 @@ const RightMenu = React.memo(props => {
         </Click>
     )}
         <HypeCheck
+        setUpVote={(votingList) => props.setUpVote(votingList)}
         user={props.user}
         group={props.group} />
     </MainWrapper>;

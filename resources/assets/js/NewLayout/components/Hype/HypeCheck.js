@@ -6,12 +6,11 @@ class HypeCheck extends Component {
         super(props);
         this.state = {
             click: true,
-            exludeLevel: 0,  
+            exludeLevel: 0
         };
     }
-    componentDidMount() {
-    }
-    
+    componentDidMount() {}
+
     compareValues(key, ascending = false) {
         return function(a, b) {
             if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
@@ -33,99 +32,124 @@ class HypeCheck extends Component {
             return ascending == false ? comparison * -1 : comparison;
         };
     }
+    setUpVote(votingList) {
+        const activeVoteDetails = votingList.map(type => {
+            return (type = {
+                id: type.id,
+                name: type.type,
+                votersId: [],
+                winner: false
+            });
+        });
+        axios
+            .post("/vote/setUpVote", {
+                data: JSON.stringify(activeVoteDetails),
+                group_id: this.props.group.id
+            })
+            // .then(response => {
+            //     let activeVoteDetails = response.data.activeVoteDetails;
+            //     activeVoteDetails !== null
+            //         ? (activeVoteDetails.data = JSON.parse(
+            //               activeVoteDetails.data
+            //           ))
+            //         : null;
+
+            //     this.setState({
+            //         votingList: activeVoteDetails
+            //     });
+            // });
+    }
     checkPlayerRating(user) {
-        let theOne = []
-        theOne.push(user)
+        let theOne = [];
+        theOne.push(user);
         this.setState({
             theOne: theOne,
-            onlyOne: !this.state.onlyOne,
-        })
+            onlyOne: !this.state.onlyOne
+        });
     }
 
-    render() 
-  
-    {
+    render() {
         let group = { ...this.props.group };
-        let zeroRated = []
-        
-      
-        let activeUsersRating = group.users.map(user => {
-          return  user.pivot.active ?  user : null  
-            }).filter(Boolean);
+        let zeroRated = [];
 
-       
-      
-        group.types.map( type => {
+        let activeUsersRating = group.users
+            .map(user => {
+                return user.pivot.active ? user : null;
+            })
+            .filter(Boolean);
+
+        group.types.map(type => {
             let totalHype = 0;
-          if(this.state.onlyOne){
-            activeUsersRating = [...this.state.theOne] 
-          }
-            activeUsersRating.map( user => { 
-            return    user.types.map( userType => {
+            if (this.state.onlyOne) {
+                activeUsersRating = [...this.state.theOne];
+            }
+            activeUsersRating.map(user => {
+                return user.types.map(userType => {
                     if (userType.id === type.id) {
-                        totalHype += +userType.pivot.hype
-                        if(+userType.pivot.hype === this.state.exludeLevel) {
+                        totalHype += +userType.pivot.hype;
+                        if (+userType.pivot.hype === this.state.exludeLevel) {
                             zeroRated.push(type);
                         }
                     }
-                })
-            
-            })
+                });
+            });
             type.totalHype = totalHype;
-        })
-        
-        let data =[...group.types.filter( (type) =>{return !zeroRated.includes(type) ? type : null  } ).sort(this.compareValues('totalHype', false))]; 
-       
-        let votingList =[...data];
+        });
+
+        let data = [
+            ...group.types
+                .filter(type => {
+                    return !zeroRated.includes(type) ? type : null;
+                })
+                .sort(this.compareValues("totalHype", false))
+        ];
+
+        let votingList = [...data];
 
         let firstPlace = null;
-        let topList = []
+        let topList = [];
         votingList.map((candidate, index) => {
-                // console.log(candidate)
-                topList.length < 3 ? topList.push(candidate) : topList[index-1] ?
-                topList[index-1].totalHype === candidate.totalHype ? topList.push(candidate) :
-                console.log('list is full') : null
-            
-            
-        })
-        votingList=topList
-        console.log(this.props.user.user.id)
+            // console.log(candidate)
+            topList.length < 3
+                ? topList.push(candidate)
+                : topList[index - 1]
+                ? topList[index - 1].totalHype === candidate.totalHype
+                    ? topList.push(candidate)
+                    : console.log("list is full")
+                : null;
+        });
+        votingList = topList;
+        console.log(this.props.user.user.id);
         // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
 
-        const Button =styled.button`
-        `
+        const Button = styled.button``;
 
         return (
-
             <React.Fragment>
-                  {this.props.user.user.id === 1 ? 
-                        <Button
-          onClick={() => this.props.setUpVote(votingList)}>
-                                 CAST VOTE </Button>
-                                 : null} 
-
-
-
-
+                {this.props.user.user.id === 1 ? (
+                    <Button onClick={() => this.setUpVote(votingList)}>
+                        CAST VOTE{" "}
+                    </Button>
+                ) : null}
 
                 <div className={""}>
                     {activeUsersRating.map(user => {
                         return (
                             <div
-                            className={""} 
-                            onClick={() => this.checkPlayerRating(user)}
-                            key={user.name}
-                            >{user.name}</div>
-                        )
+                                className={""}
+                                onClick={() => this.checkPlayerRating(user)}
+                                key={user.name}
+                            >
+                                {user.name}
+                            </div>
+                        );
                     })}
                 </div>
-      
-            
+
                 {group.types ? (
-                    <table className="hypecheck-results-list">
-                        <tbody className="hypecheck-results-list">
-                       
-                            {!group.types 
+                    <table className="">
+                        <tbody className="">
+                            {!group.types
                                 ? data.map((type, index) => {
                                       if (index < 3) {
                                           return (
@@ -139,13 +163,9 @@ class HypeCheck extends Component {
                                           );
                                       }
                                   })
-                                : data.map((type) => {
-
-                               
+                                : data.map(type => {
                                       return (
-                                       
-                                       
-                                          <tr key={type.id + ' ' + type.hype}>
+                                          <tr key={type.id + " " + type.hype}>
                                               <td>{type.type}</td>
 
                                               <td
@@ -159,17 +179,11 @@ class HypeCheck extends Component {
                                                   {type.average}
                                               </td>
                                           </tr>
-                                         
                                       );
-
-
-
                                   })}
                         </tbody>
                     </table>
                 ) : null}
-        
-  
             </React.Fragment>
         );
     }

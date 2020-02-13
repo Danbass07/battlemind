@@ -69458,6 +69458,7 @@ function (_Component) {
           return _this2.changeTheme(themeNumber);
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MiddleSection, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_LeftMenu__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        group: this.props.data.user.groups[this.props.data.activeGroupIndex],
         moved: this.state.moved,
         moveSection: function moveSection(moveValue) {
           return _this2.moveSection(moveValue);
@@ -69550,7 +69551,7 @@ function (_Component) {
       user: {
         name: "loading",
         groups: [{
-          id: 0,
+          id: 1,
           users: [],
           types: []
         }]
@@ -69610,11 +69611,21 @@ function (_Component) {
       });
     }
   }, {
+    key: "setUpVote",
+    value: function setUpVote(votingList) {
+      this.setState({
+        votingList: votingList
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        setUpVote: function setUpVote(votingList) {
+          return _this4.setUpVote(votingList);
+        },
         hypeLevelHandler: function hypeLevelHandler(e, typeId) {
           return _this4.hypeLevelHandler(e, typeId);
         },
@@ -69773,7 +69784,7 @@ __webpack_require__.r(__webpack_exports__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        "]);
+  var data = _taggedTemplateLiteral([""]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -69863,6 +69874,32 @@ function (_Component) {
       };
     }
   }, {
+    key: "setUpVote",
+    value: function setUpVote(votingList) {
+      var activeVoteDetails = votingList.map(function (type) {
+        return type = {
+          id: type.id,
+          name: type.type,
+          votersId: [],
+          winner: false
+        };
+      });
+      axios.post("/vote/setUpVote", {
+        data: JSON.stringify(activeVoteDetails),
+        group_id: this.props.group.id
+      }); // .then(response => {
+      //     let activeVoteDetails = response.data.activeVoteDetails;
+      //     activeVoteDetails !== null
+      //         ? (activeVoteDetails.data = JSON.parse(
+      //               activeVoteDetails.data
+      //           ))
+      //         : null;
+      //     this.setState({
+      //         votingList: activeVoteDetails
+      //     });
+      // });
+    }
+  }, {
     key: "checkPlayerRating",
     value: function checkPlayerRating(user) {
       var theOne = [];
@@ -69906,7 +69943,7 @@ function (_Component) {
 
       var data = _toConsumableArray(group.types.filter(function (type) {
         return !zeroRated.includes(type) ? type : null;
-      }).sort(this.compareValues('totalHype', false)));
+      }).sort(this.compareValues("totalHype", false)));
 
       var votingList = _toConsumableArray(data);
 
@@ -69914,7 +69951,7 @@ function (_Component) {
       var topList = [];
       votingList.map(function (candidate, index) {
         // console.log(candidate)
-        topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : console.log('list is full') : null;
+        topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : console.log("list is full") : null;
       });
       votingList = topList;
       console.log(this.props.user.user.id); // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
@@ -69922,9 +69959,9 @@ function (_Component) {
       var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject());
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, this.props.user.user.id === 1 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
         onClick: function onClick() {
-          return _this2.props.setUpVote(votingList);
+          return _this2.setUpVote(votingList);
         }
-      }, "CAST VOTE ") : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "CAST VOTE", " ") : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: ""
       }, activeUsersRating.map(function (user) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -69935,9 +69972,9 @@ function (_Component) {
           key: user.name
         }, user.name);
       })), group.types ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "hypecheck-results-list"
+        className: ""
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
-        className: "hypecheck-results-list"
+        className: ""
       }, !group.types ? data.map(function (type, index) {
         if (index < 3) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
@@ -69946,7 +69983,7 @@ function (_Component) {
         }
       }) : data.map(function (type) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-          key: type.id + ' ' + type.hype
+          key: type.id + " " + type.hype
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           style: {
             marginLeft: "auto"
@@ -70113,6 +70150,194 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
 
 /***/ }),
 
+/***/ "./resources/assets/js/NewLayout/components/Hype/HypeVote.js":
+/*!*******************************************************************!*\
+  !*** ./resources/assets/js/NewLayout/components/Hype/HypeVote.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var HypeVote =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(HypeVote, _Component);
+
+  function HypeVote(props) {
+    var _this;
+
+    _classCallCheck(this, HypeVote);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HypeVote).call(this, props));
+    _this.state = {
+      votingList: {
+        data: []
+      },
+      data: {
+        data: []
+      }
+    };
+    return _this;
+  }
+
+  _createClass(HypeVote, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      console.log(this.props.group);
+      this.getData();
+      this.interval = setInterval(function () {
+        _this2.getData();
+      }, 50000);
+    }
+  }, {
+    key: "getData",
+    value: function getData() {
+      var _this3 = this;
+
+      axios.get("/vote/votecheck/".concat(this.props.group.id)).then(function (response) {
+        var activeVoteDetails = response.data.activeVoteDetails;
+        activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
+
+        _this3.setState({
+          votingList: activeVoteDetails
+        });
+      });
+    }
+  }, {
+    key: "castVote",
+    value: function castVote(typeId, userId) {
+      var votingList = _toConsumableArray(this.state.votingList.data);
+
+      var voteCount = 0;
+      this.state.votingList.map(function (type) {
+        type.votersId.includes(userId) ? voteCount += +1 : null;
+      });
+
+      if (voteCount < 2) {
+        var data = _toConsumableArray(this.state.votingList.data.map(function (type) {
+          if (type.id === typeId && !type.votersId.includes(userId)) {
+            /// 3 votes but on different game.
+            type.votersId.push(userId);
+          }
+
+          return type;
+        }));
+
+        votingList = _toConsumableArray(data);
+        var voteData = JSON.stringify(data);
+        axios.put("/vote/castvote/".concat(this.props.group.id), {
+          voteData: voteData
+        });
+        this.setState({
+          votingList: votingList
+        });
+      } else {
+        var _data = _toConsumableArray(this.state.votingList.data);
+
+        _data.map(function (type) {
+          type.votersId.map(function (voterId) {
+            var removedIndx = _data.indexOf(voterId);
+
+            if (typeId === type.id) {
+              type.votersId.splice(removedIndx, 1);
+            }
+          });
+        });
+
+        votingList = _toConsumableArray(_data);
+
+        var _voteData = JSON.stringify(_data);
+
+        axios.put("/vote/castvote/".concat(this.props.group.id), {
+          voteData: _voteData
+        });
+        this.setState({
+          votingList: votingList
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      console.log(this.state.votingList);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: ""
+      }, this.state.votingList.data ? this.state.votingList.data.map(function (type) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "",
+          key: type.name
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: ""
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "",
+          onClick: function onClick() {
+            return _this4.castVote(type.id, _this4.props.user.id);
+          }
+        }, type.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: ""
+        }, type.votersId ? type.votersId.map(function (voter) {
+          return _this4.props.group.users.map(function (user) {
+            if (user.id === voter) {
+              return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "",
+                key: voter
+              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user.name));
+            }
+          });
+        }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: ""
+        }, type.votersId ? type.votersId.length : null));
+      }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "",
+        onClick: function onClick() {
+          return _this4.closeVote();
+        }
+      }, "Close Vote"));
+    }
+  }]);
+
+  return HypeVote;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (HypeVote);
+
+/***/ }),
+
 /***/ "./resources/assets/js/NewLayout/components/InfoDisplay.js":
 /*!*****************************************************************!*\
   !*** ./resources/assets/js/NewLayout/components/InfoDisplay.js ***!
@@ -70161,6 +70386,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _Hype_HypeVote__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Hype/HypeVote */ "./resources/assets/js/NewLayout/components/Hype/HypeVote.js");
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n        width: 30px;\n        height: 100%;\n        background-color: ", ";\n        margin-left: auto;\n        writing-mode: vertical-rl;\n        text-orientation: upright;\n    "]);
 
@@ -70185,10 +70411,13 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
 var LeftMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive);
   var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "LeftMenu"), !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeVote__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    group: props.group
+  }), !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
       props.moveSection(0);
     }
@@ -70293,6 +70522,9 @@ var RightMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (prop
       props.moveSection(-32);
     }
   }, "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeCheck__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    setUpVote: function setUpVote(votingList) {
+      return props.setUpVote(votingList);
+    },
     user: props.user,
     group: props.group
   }));

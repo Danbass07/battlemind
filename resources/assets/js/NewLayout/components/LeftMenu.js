@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import HypeVote from "./Hype/HypeVote";
 
 const LeftMenu = React.memo(props => {
     const MainWrapper = styled.div`
@@ -23,7 +24,8 @@ const LeftMenu = React.memo(props => {
 
     return (
         <MainWrapper>
-            <div>LeftMenu</div>
+             <HypeVote
+            group={props.group} />
 
             {!props.moved ? (
                 <Click
@@ -42,6 +44,8 @@ const LeftMenu = React.memo(props => {
                     Close
                 </Click>
             )}
+          
+            
         </MainWrapper>
     );
 });

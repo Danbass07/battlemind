@@ -9,7 +9,7 @@ class AppBrain extends Component {
             user: {
                 name: "loading",
                 groups: [{ 
-                    id: 0,
+                    id: 1,
                     users: [],
                     types: [],
              }]
@@ -57,9 +57,15 @@ class AppBrain extends Component {
             })
         );
     }
+    setUpVote(votingList){
+        this.setState({
+            votingList: votingList
+        })
+    }
     render() {
         return (
             <AppBody
+                setUpVote={(votingList) => this.setUpVote(votingList)}
                 hypeLevelHandler={(e, typeId) =>
                     this.hypeLevelHandler(e, typeId)
                 }
