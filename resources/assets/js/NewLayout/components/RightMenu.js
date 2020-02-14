@@ -22,7 +22,7 @@ const RightMenu = React.memo(props => {
     writing-mode: vertical-rl;
         text-orientation: upright;
     `
-    console.log(props.group)
+
     return <MainWrapper
     >     {!props.moved ? (
         <Click

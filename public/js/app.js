@@ -69887,17 +69887,7 @@ function (_Component) {
       axios.post("/vote/setUpVote", {
         data: JSON.stringify(activeVoteDetails),
         group_id: this.props.group.id
-      }); // .then(response => {
-      //     let activeVoteDetails = response.data.activeVoteDetails;
-      //     activeVoteDetails !== null
-      //         ? (activeVoteDetails.data = JSON.parse(
-      //               activeVoteDetails.data
-      //           ))
-      //         : null;
-      //     this.setState({
-      //         votingList: activeVoteDetails
-      //     });
-      // });
+      });
     }
   }, {
     key: "checkPlayerRating",
@@ -69953,8 +69943,7 @@ function (_Component) {
         // console.log(candidate)
         topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : console.log("list is full") : null;
       });
-      votingList = topList;
-      console.log(this.props.user.user.id); // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
+      votingList = topList; // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
 
       var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject());
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, this.props.user.user.id === 1 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
@@ -70203,9 +70192,6 @@ function (_Component) {
     _this.state = {
       votingList: {
         data: []
-      },
-      data: {
-        data: []
       }
     };
     return _this;
@@ -70216,24 +70202,24 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      console.log(this.props.group);
       this.getData();
       this.interval = setInterval(function () {
         _this2.getData();
-      }, 50000);
+      }, 8000);
     }
   }, {
     key: "getData",
     value: function getData() {
       var _this3 = this;
 
-      axios.get("/vote/votecheck/".concat(this.props.group.id)).then(function (response) {
+      console.log(this.state);
+      axios.get("/vote/votecheckk/").then(function (response) {
         var activeVoteDetails = response.data.activeVoteDetails;
         activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
 
         _this3.setState({
           votingList: activeVoteDetails
-        });
+        }, console.log(activeVoteDetails));
       });
     }
   }, {
@@ -70292,42 +70278,10 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
-
-      console.log(this.state.votingList);
+      //console.log(this.state.votingList)
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: ""
-      }, this.state.votingList.data ? this.state.votingList.data.map(function (type) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "",
-          key: type.name
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: ""
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "",
-          onClick: function onClick() {
-            return _this4.castVote(type.id, _this4.props.user.id);
-          }
-        }, type.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: ""
-        }, type.votersId ? type.votersId.map(function (voter) {
-          return _this4.props.group.users.map(function (user) {
-            if (user.id === voter) {
-              return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "",
-                key: voter
-              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user.name));
-            }
-          });
-        }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: ""
-        }, type.votersId ? type.votersId.length : null));
-      }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "",
-        onClick: function onClick() {
-          return _this4.closeVote();
-        }
-      }, "Close Vote"));
+      });
     }
   }]);
 
@@ -70512,7 +70466,6 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 var RightMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive);
   var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour);
-  console.log(props.group);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, "     ", !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
       props.moveSection(-64);
@@ -75290,8 +75243,8 @@ if (document.getElementById('root')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })

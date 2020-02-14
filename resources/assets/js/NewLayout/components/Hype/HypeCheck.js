@@ -46,18 +46,7 @@ class HypeCheck extends Component {
                 data: JSON.stringify(activeVoteDetails),
                 group_id: this.props.group.id
             })
-            // .then(response => {
-            //     let activeVoteDetails = response.data.activeVoteDetails;
-            //     activeVoteDetails !== null
-            //         ? (activeVoteDetails.data = JSON.parse(
-            //               activeVoteDetails.data
-            //           ))
-            //         : null;
-
-            //     this.setState({
-            //         votingList: activeVoteDetails
-            //     });
-            // });
+      
     }
     checkPlayerRating(user) {
         let theOne = [];
@@ -119,7 +108,7 @@ class HypeCheck extends Component {
                 : null;
         });
         votingList = topList;
-        console.log(this.props.user.user.id);
+       
         // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
 
         const Button = styled.button``;

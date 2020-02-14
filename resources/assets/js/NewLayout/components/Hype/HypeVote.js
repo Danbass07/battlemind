@@ -7,21 +7,20 @@ class HypeVote extends Component {
             votingList: {
                 data: []
             },
-            data: {
-                data: []
-            }
+          
         };
     }
     componentDidMount() {
-        console.log(this.props.group)
+       
         this.getData();
         this.interval = setInterval(() => {
          this.getData();
        
-       }, 50000);
+       }, 8000);
          }
          getData(){
-             axios.get(`/vote/votecheck/${this.props.group.id}`).then(response => {
+            console.log(this.state)
+             axios.get(`/vote/votecheckk/`).then(response => {
       
                  let activeVoteDetails = response.data.activeVoteDetails;
                  activeVoteDetails !== null ? 
@@ -31,7 +30,7 @@ class HypeVote extends Component {
                  : null ;
                  this.setState({
                      votingList: activeVoteDetails,
-                 })
+                 },console.log(activeVoteDetails))
                 
              })
          }
@@ -85,10 +84,10 @@ class HypeVote extends Component {
       
     }
     render() {
-        console.log(this.state.votingList)
+        //console.log(this.state.votingList)
         return (
             <div className={""}>
-                {this.state.votingList.data
+                {/* {this.state.votingList.data
                     ? this.state.votingList.data.map(type => {
                           return (
                               <div className={""}  key={type.name}>
@@ -107,7 +106,7 @@ class HypeVote extends Component {
                                       >
                                           {type.name} 
                                           {/* type name VotingList its rearranged from group types type.type */}
-                                      </div>
+                                      {/* </div>
                                       <div className={""}>
                                       {type.votersId ? type.votersId.map(voter => {
                                           return this.props.group.users.map(
@@ -133,7 +132,7 @@ class HypeVote extends Component {
                           );
                       })
                     : null}
-                <div className={""} onClick={() => this.closeVote()}>Close Vote</div>
+                <div className={""} onClick={() => this.closeVote()}>Close Vote</div> */} 
             </div>
         );
     }

@@ -63,4 +63,14 @@ class VoteController extends Controller
            
         return;
     }
+    public function votecheckk (Request $request, $id)
+    {
+       
+        $vote = $group->votes->where('active','=',true)->first();
+
+           
+        return response()->json([
+            'activeVoteDetails' => $vote,
+             ]);
+    }
 }
