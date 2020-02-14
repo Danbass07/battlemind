@@ -25,7 +25,8 @@ const LeftMenu = React.memo(props => {
     return (
         <MainWrapper>
              <HypeVote
-            group={props.group} />
+             
+             groupIndex={props.groupIndex} />
 
             {!props.moved ? (
                 <Click

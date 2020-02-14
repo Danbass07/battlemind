@@ -10884,6 +10884,10 @@ a.text-dark:focus {
   }
 }
 
+body {
+  background-color: black;
+}
+
 a:visited {
   color: #009625;
 }

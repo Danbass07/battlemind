@@ -69458,7 +69458,7 @@ function (_Component) {
           return _this2.changeTheme(themeNumber);
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MiddleSection, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_LeftMenu__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        group: this.props.data.user.groups[this.props.data.activeGroupIndex],
+        groupIndex: this.props.data.activeGroupIndex,
         moved: this.state.moved,
         moveSection: function moveSection(moveValue) {
           return _this2.moveSection(moveValue);
@@ -69622,6 +69622,7 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
+      console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         setUpVote: function setUpVote(votingList) {
           return _this4.setUpVote(votingList);
@@ -70190,7 +70191,11 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(HypeVote).call(this, props));
     _this.state = {
-      votingList: {
+      votingList: [{
+        name: "loading",
+        votes: ["lading", "loading"]
+      }],
+      activeVote: {
         data: []
       }
     };
@@ -70205,17 +70210,28 @@ function (_Component) {
       this.getData();
       this.interval = setInterval(function () {
         _this2.getData();
-      }, 8000);
+      }, 80000);
     }
   }, {
     key: "getData",
     value: function getData() {
       var _this3 = this;
 
-      console.log(this.state);
+      console.log();
       axios.get("/vote/votecheckk/").then(function (response) {
-        var activeVoteDetails = response.data.activeVoteDetails;
-        activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
+        var activeVoteDetails = response.data.user.groups;
+
+        activeVoteDetails[_this3.props.groupIndex].votes.map(function (vote) {
+          vote.data = JSON.parse(vote.data);
+
+          if (vote.active) {
+            console.log(vote);
+
+            _this3.setState({
+              activeVote: vote
+            });
+          }
+        });
 
         _this3.setState({
           votingList: activeVoteDetails
@@ -70281,7 +70297,11 @@ function (_Component) {
       //console.log(this.state.votingList)
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: ""
-      });
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.activeVote.data.map(function (type) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: type.id
+        }, type.name, " ");
+      })));
     }
   }]);
 
@@ -70370,7 +70390,7 @@ var LeftMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive);
   var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeVote__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    group: props.group
+    groupIndex: props.groupIndex
   }), !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
       props.moveSection(0);
@@ -75243,8 +75263,8 @@ if (document.getElementById('root')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })

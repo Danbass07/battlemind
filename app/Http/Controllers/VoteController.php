@@ -1,13 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Vote;
 use App\Group;
+use App\User;
 
 class VoteController extends Controller
 {   
+    public function show($id)
+    {
+    
+    }
     public function votecheck (Request $request, $id)
     {
         $group= Group::find($id);
@@ -63,14 +68,14 @@ class VoteController extends Controller
            
         return;
     }
-    public function votecheckk (Request $request, $id)
+    public function votecheckk ()
     {
-       
-        $vote = $group->votes->where('active','=',true)->first();
+         $user =  Auth::user();
+        $data = User::with(['groups.votes'])->where('id', '=' ,$user->id)->first();
 
            
         return response()->json([
-            'activeVoteDetails' => $vote,
+            'user' => $data,
              ]);
     }
 }

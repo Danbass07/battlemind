@@ -63,9 +63,8 @@ Route::get('/types/{id}/userTypes','TypeController@userTypes' );
  Route::post('/hype/hypenotizerrr', 'HypeController@hypenotizerrr');
 
 
- Route::resource('/vote', 'VoteController');
  Route::get('/vote/votecheck/{groupid}', 'VoteController@votecheck');
- Route::get('/vote/votecheckk/', 'VoteController@votecheckk');
+ Route::get('/vote/votecheckk', 'VoteController@votecheckk');
  Route::post('/vote/setUpVote', 'VoteController@setUpVote');
  Route::put('/vote/voteclose/{groupid}', 'VoteController@voteclose');
  Route::put('/vote/castvote/{groupid}', 'VoteController@castvote');

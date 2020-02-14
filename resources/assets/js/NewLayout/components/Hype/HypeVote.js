@@ -4,10 +4,15 @@ class HypeVote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            votingList: {
+            votingList: [
+                {
+                    name: "loading",
+                    votes: ["lading","loading"]
+                }
+            ],
+            activeVote: {
                 data: []
-            },
-          
+            }
         };
     }
     componentDidMount() {
@@ -16,18 +21,23 @@ class HypeVote extends Component {
         this.interval = setInterval(() => {
          this.getData();
        
-       }, 8000);
+       }, 80000);
          }
          getData(){
-            console.log(this.state)
-             axios.get(`/vote/votecheckk/`).then(response => {
-      
-                 let activeVoteDetails = response.data.activeVoteDetails;
-                 activeVoteDetails !== null ? 
+          console.log()
+              axios.get(`/vote/votecheckk/`).then(response => {
+                
+                 let activeVoteDetails = response.data.user.groups;
                  
-                 activeVoteDetails.data = JSON.parse(activeVoteDetails.data)
-               
-                 : null ;
+                 activeVoteDetails[this.props.groupIndex].votes.map(vote => {
+                     vote.data = JSON.parse(vote.data)
+                    if (vote.active){
+                        console.log(vote)
+                        this.setState({
+                            activeVote: vote,
+                        })
+                    } 
+                 })
                  this.setState({
                      votingList: activeVoteDetails,
                  },console.log(activeVoteDetails))
@@ -87,8 +97,27 @@ class HypeVote extends Component {
         //console.log(this.state.votingList)
         return (
             <div className={""}>
-                {/* {this.state.votingList.data
-                    ? this.state.votingList.data.map(type => {
+
+
+
+ <div>{this.state.activeVote.data.map(type => {
+     return ( <div key={type.id}>{ type.name} </div>)
+ })}</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {/* {this.state.votingList
+                    ? this.state.activeVote.map(type => {
                           return (
                               <div className={""}  key={type.name}>
                                   <div
@@ -104,7 +133,7 @@ class HypeVote extends Component {
                                               )
                                           }
                                       >
-                                          {type.name} 
+                                          {type.data} </div></div> */}
                                           {/* type name VotingList its rearranged from group types type.type */}
                                       {/* </div>
                                       <div className={""}>
@@ -133,9 +162,13 @@ class HypeVote extends Component {
                       })
                     : null}
                 <div className={""} onClick={() => this.closeVote()}>Close Vote</div> */} 
-            </div>
-        );
-    }
+            {/* </div>
+         
+        )}) : null} */}
+    
+   </div>)
+    
+            }  
 }
 
 export default HypeVote;
