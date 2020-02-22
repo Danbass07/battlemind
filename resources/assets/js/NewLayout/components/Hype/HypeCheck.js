@@ -56,6 +56,7 @@ class HypeCheck extends Component {
             onlyOne: !this.state.onlyOne
         });
     }
+    
 
     render() {
         let group = { ...this.props.group };
@@ -104,7 +105,7 @@ class HypeCheck extends Component {
                 : topList[index - 1]
                 ? topList[index - 1].totalHype === candidate.totalHype
                     ? topList.push(candidate)
-                    : console.log("list is full")
+                    : null
                 : null;
         });
         votingList = topList;

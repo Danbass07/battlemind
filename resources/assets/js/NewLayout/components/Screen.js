@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import styled from "styled-components";
 import HypeSet from "./Hype/HypeSet";
 
@@ -14,11 +14,10 @@ const Screen = React.memo(props => {
         overflow-y:scroll;
       
     `;
-   
     return (
         
         <MainWrapper >
-        <HypeSet
+          <HypeSet
             group={props.group}
             user={props.userData.user}
             activeGroup={props.activeGroup}
@@ -26,6 +25,7 @@ const Screen = React.memo(props => {
             hypeLevelHandler={(e, typeId) =>props.hypeLevelHandler(e, typeId)}
             theme={props.theme}
         />
+       
         </MainWrapper>
     );
    

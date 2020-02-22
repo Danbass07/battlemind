@@ -67240,7 +67240,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _emotion_stylis__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @emotion/stylis */ "./node_modules/@emotion/stylis/dist/stylis.browser.esm.js");
 /* harmony import */ var _emotion_unitless__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @emotion/unitless */ "./node_modules/@emotion/unitless/dist/unitless.browser.esm.js");
 /* harmony import */ var _emotion_is_prop_valid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @emotion/is-prop-valid */ "./node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js");
-/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
 /* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__);
 
 
@@ -69112,6 +69112,121 @@ if ( true && typeof window !== 'undefined') {
 
 /***/ }),
 
+/***/ "./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var reactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+var REACT_STATICS = {
+  childContextTypes: true,
+  contextType: true,
+  contextTypes: true,
+  defaultProps: true,
+  displayName: true,
+  getDefaultProps: true,
+  getDerivedStateFromError: true,
+  getDerivedStateFromProps: true,
+  mixins: true,
+  propTypes: true,
+  type: true
+};
+var KNOWN_STATICS = {
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
+};
+var FORWARD_REF_STATICS = {
+  '$$typeof': true,
+  render: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true
+};
+var MEMO_STATICS = {
+  '$$typeof': true,
+  compare: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true,
+  type: true
+};
+var TYPE_STATICS = {};
+TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
+TYPE_STATICS[reactIs.Memo] = MEMO_STATICS;
+
+function getStatics(component) {
+  // React v16.11 and below
+  if (reactIs.isMemo(component)) {
+    return MEMO_STATICS;
+  } // React v16.12 and above
+
+
+  return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
+}
+
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = Object.prototype;
+function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+  if (typeof sourceComponent !== 'string') {
+    // don't hoist over string (html) components
+    if (objectPrototype) {
+      var inheritedComponent = getPrototypeOf(sourceComponent);
+
+      if (inheritedComponent && inheritedComponent !== objectPrototype) {
+        hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+      }
+    }
+
+    var keys = getOwnPropertyNames(sourceComponent);
+
+    if (getOwnPropertySymbols) {
+      keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+    }
+
+    var targetStatics = getStatics(targetComponent);
+    var sourceStatics = getStatics(sourceComponent);
+
+    for (var i = 0; i < keys.length; ++i) {
+      var key = keys[i];
+
+      if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
+        var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+
+        try {
+          // Avoid failures from read-only properties
+          defineProperty(targetComponent, key, descriptor);
+        } catch (e) {}
+      }
+    }
+  }
+
+  return targetComponent;
+}
+
+module.exports = hoistNonReactStatics;
+
+
+/***/ }),
+
 /***/ "./node_modules/value-equal/index.js":
 /*!*******************************************!*\
   !*** ./node_modules/value-equal/index.js ***!
@@ -69573,9 +69688,6 @@ function (_Component) {
       })[0].types.filter(function (type) {
         return type.id === typeId;
       })[0].pivot.hype = e.target.value;
-      this.setState({
-        user: _objectSpread({}, user)
-      });
       axios.post("/hype/hypenotizerrr", {
         typeId: typeId,
         value: e.target.value
@@ -69622,7 +69734,6 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         setUpVote: function setUpVote(votingList) {
           return _this4.setUpVote(votingList);
@@ -69942,7 +70053,7 @@ function (_Component) {
       var topList = [];
       votingList.map(function (candidate, index) {
         // console.log(candidate)
-        topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : console.log("list is full") : null;
+        topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : null : null;
       });
       votingList = topList; // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
 
@@ -70007,7 +70118,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _templateObject8() {
-  var data = _taggedTemplateLiteral(["\n \n    "]);
+  var data = _taggedTemplateLiteral([""]);
 
   _templateObject8 = function _templateObject8() {
     return data;
@@ -70017,7 +70128,7 @@ function _templateObject8() {
 }
 
 function _templateObject7() {
-  var data = _taggedTemplateLiteral(["\n        background-color: ", ";\n        border: 2px dotted ", ";\n        border-radius: 50%;\n        height: 38px;\n        margin: 5px 5px;\n        color: ", ";\n        padding-left: 12px;\n       \n    "]);
+  var data = _taggedTemplateLiteral(["\n        background-color: ", ";\n        border: 2px dotted ", ";\n        border-radius: 50%;\n        height: 38px;\n        margin: 5px 5px;\n        color: ", ";\n        padding-left: 12px;\n    "]);
 
   _templateObject7 = function _templateObject7() {
     return data;
@@ -70047,7 +70158,7 @@ function _templateObject5() {
 }
 
 function _templateObject4() {
-  var data = _taggedTemplateLiteral(["\n        margin-top: 20px;\n        margin-bottom: 200px;  \n    "]);
+  var data = _taggedTemplateLiteral(["\n        margin-top: 20px;\n        margin-bottom: 200px;\n    "]);
 
   _templateObject4 = function _templateObject4() {
     return data;
@@ -70057,7 +70168,7 @@ function _templateObject4() {
 }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n        margin: auto auto;\n        margin-bottom: 200px;\n        font-size: 26px;    \n    "]);
+  var data = _taggedTemplateLiteral(["\n        margin: auto auto;\n        margin-bottom: 200px;\n        font-size: 26px;\n    "]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -70077,7 +70188,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    width: 99%;\n    "]);
+  var data = _taggedTemplateLiteral(["\n        width: 99%;\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -70136,7 +70247,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
     });
   }) : null)));
 });
-/* harmony default export */ __webpack_exports__["default"] = (HypeSet);
+/* harmony default export */ __webpack_exports__["default"] = (react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(HypeSet));
 
 /***/ }),
 
@@ -70217,7 +70328,6 @@ function (_Component) {
     value: function getData() {
       var _this3 = this;
 
-      console.log();
       axios.get("/vote/votecheckk/").then(function (response) {
         var activeVoteDetails = response.data.user.groups;
 
@@ -70225,8 +70335,6 @@ function (_Component) {
           vote.data = JSON.parse(vote.data);
 
           if (vote.active) {
-            console.log(vote);
-
             _this3.setState({
               activeVote: vote
             });
@@ -70235,7 +70343,7 @@ function (_Component) {
 
         _this3.setState({
           votingList: activeVoteDetails
-        }, console.log(activeVoteDetails));
+        });
       });
     }
   }, {

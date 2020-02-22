@@ -43,7 +43,7 @@ class AppBody extends Component {
             ]
         }
     }
-
+  
     moveSection(moveValue) {
         this.setState({
             middleSectionMoveValue: moveValue,

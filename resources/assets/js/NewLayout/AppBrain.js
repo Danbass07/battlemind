@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component  } from "react";
 import ReactDOM from "react-dom";
 import AppBody from "./AppBody";
 
@@ -26,10 +26,6 @@ class AppBrain extends Component {
             .types.filter(type => type.id === typeId)[0].pivot.hype =
             e.target.value;
 
-        this.setState(
-            {
-                user: { ...user }
-            });
 
         axios.post(`/hype/hypenotizerrr`, {
             typeId: typeId,
@@ -63,7 +59,6 @@ class AppBrain extends Component {
         })
     }
     render() {
-        console.log(this.state)
         return (
             <AppBody
                 setUpVote={(votingList) => this.setUpVote(votingList)}

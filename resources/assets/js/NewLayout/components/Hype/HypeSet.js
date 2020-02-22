@@ -6,17 +6,17 @@ const HypeSet = React.memo(props => {
         active: true
     });
     const MainWrapper = styled.div`
-    width: 99%;
+        width: 99%;
     `;
     const Button = styled.button``;
     const HypeWrapper = styled.div`
         margin: auto auto;
         margin-bottom: 200px;
-        font-size: 26px;    
+        font-size: 26px;
     `;
     const HypeList = styled.div`
         margin-top: 20px;
-        margin-bottom: 200px;  
+        margin-bottom: 200px;
     `;
     const HypeSetRow = styled.div`
         display: flex;
@@ -35,11 +35,8 @@ const HypeSet = React.memo(props => {
         margin: 5px 5px;
         color: ${props.theme.colorTwo};
         padding-left: 12px;
-       
     `;
-    const Option = styled.option`
- 
-    `;
+    const Option = styled.option``;
     return (
         <MainWrapper>
             {/* <Button onClick={() => this.props.hypenotizer()}>
@@ -112,4 +109,4 @@ const HypeSet = React.memo(props => {
     );
 });
 
-export default HypeSet;
+export default React.memo(HypeSet);
