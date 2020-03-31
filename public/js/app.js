@@ -69440,7 +69440,7 @@ __webpack_require__.r(__webpack_exports__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n        height:80%;\n        width:280%;\n        position: relative;\n        display: flex;\n        flex-direction: row;\n        transform: translateX(", "%);\n    "]);
+  var data = _taggedTemplateLiteral(["\n            height: 80%;\n            width: 280%;\n            position: relative;\n            display: flex;\n            flex-direction: row;\n            transform: translateX(", "%);\n        "]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -69450,7 +69450,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n        height: 160px;\n        width: 100%;\n        display: grid;\n        grid-template-columns: repeat(5, 1fr);\n        grid-template-rows: repeat(2, 1fr);\n        grid-column-gap: 0px;\n        grid-row-gap: 0px; \n    "]);
+  var data = _taggedTemplateLiteral(["\n            height: 160px;\n            width: 100%;\n            display: grid;\n            grid-template-columns: repeat(5, 1fr);\n            grid-template-rows: repeat(2, 1fr);\n            grid-column-gap: 0px;\n            grid-row-gap: 0px;\n        "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -69460,7 +69460,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        height: 100%;\n        width: 100%;\n        background-color: black;\n        min-width:  425px;\n        overflow: hidden;\n    "]);
+  var data = _taggedTemplateLiteral(["\n            height: 100%;\n            width: 100%;\n            background-color: black;\n            min-width: 425px;\n            overflow: hidden;\n        "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -69514,23 +69514,23 @@ function (_Component) {
       moved: false,
       themeActive: 0,
       theme: [{
-        colorOne: '#000000',
-        colorTwo: '#C7493A',
-        colorThree: '#A33327',
-        colorFour: '#917164',
-        colorFive: '#AD8174'
+        colorOne: "#000000",
+        colorTwo: "#C7493A",
+        colorThree: "#A33327",
+        colorFour: "#917164",
+        colorFive: "#AD8174"
       }, {
-        colorOne: '#7395AE',
-        colorTwo: '#5D5C61',
-        colorThree: '#938E94',
-        colorFour: '#B0A295',
-        colorFive: '#FFFFFF'
+        colorOne: "#7395AE",
+        colorTwo: "#5D5C61",
+        colorThree: "#938E94",
+        colorFour: "#B0A295",
+        colorFive: "#FFFFFF"
       }, {
-        colorOne: '#7395AE',
-        colorTwo: '#5D5C61',
-        colorThree: '#938E94',
-        colorFour: '#B0A295',
-        colorFive: '#FFFFFF'
+        colorOne: "#7395AE",
+        colorTwo: "#5D5C61",
+        colorThree: "#938E94",
+        colorFour: "#B0A295",
+        colorFive: "#FFFFFF"
       }]
     };
     return _this;
@@ -69561,9 +69561,13 @@ function (_Component) {
       var MiddleSection = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3(), this.state.middleSectionMoveValue);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_TopMenu__WEBPACK_IMPORTED_MODULE_8__["default"], {
         theme: this.state.theme[this.state.themeActive]
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TopSection, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Logo__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TopSection, null, this.props.data.user.groups.length !== 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Logo__WEBPACK_IMPORTED_MODULE_2__["default"], {
         theme: this.state.theme[this.state.themeActive],
         activeGroup: this.props.data.user.groups[this.props.data.activeGroupIndex].id,
+        activeGroupChange: this.props.activeGroupChange
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Logo__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        theme: this.state.theme[this.state.themeActive],
+        activeGroup: [],
         activeGroupChange: this.props.activeGroupChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_InfoDisplay__WEBPACK_IMPORTED_MODULE_3__["default"], {
         theme: this.state.theme[this.state.themeActive]
@@ -69580,13 +69584,19 @@ function (_Component) {
         },
         theme: this.state.theme[this.state.themeActive]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Screen__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        addType: function addType(e, value) {
+          return _this2.props.addType(e, value);
+        },
         hypeLevelHandler: function hypeLevelHandler(e, typeId) {
           return _this2.props.hypeLevelHandler(e, typeId);
         },
-        activeGroup: this.props.data.user.groups[this.props.data.activeGroupIndex].id,
+        activeGroup: this.props.data.user.groups[this.props.data.activeGroupIndex] ? this.props.data.user.groups[this.props.data.activeGroupIndex] : [],
         theme: this.state.theme[this.state.themeActive],
         userData: this.props.data,
-        group: this.props.data.user.groups[this.props.data.activeGroupIndex]
+        group: this.props.data.user.groups[this.props.data.activeGroupIndex],
+        demo: function demo() {
+          return _this2.props.demo();
+        }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_RightMenu__WEBPACK_IMPORTED_MODULE_7__["default"], {
         user: this.props.data,
         group: this.props.data.user.groups[this.props.data.activeGroupIndex],
@@ -69604,7 +69614,6 @@ function (_Component) {
   return AppBody;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-;
 /* harmony default export */ __webpack_exports__["default"] = (AppBody);
 
 /***/ }),
@@ -69665,11 +69674,7 @@ function (_Component) {
     _this.state = {
       user: {
         name: "loading",
-        groups: [{
-          id: 1,
-          users: [],
-          types: []
-        }]
+        groups: []
       },
       activeGroupIndex: 0
     };
@@ -69730,20 +69735,49 @@ function (_Component) {
       });
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "demo",
+    value: function demo() {
       var _this4 = this;
 
+      axios.get("/groups/3/addUser/".concat(this.state.user.id)).then(function () {
+        _this4.getUserContent();
+      });
+    }
+  }, {
+    key: "addType",
+    value: function addType(e, value) {
+      var _this5 = this;
+
+      e.preventDefault();
+      console.log(this.state.user.groups[this.state.activeGroupIndex].id);
+      axios.post("/types", {
+        type: value.value,
+        groupId: this.state.user.groups[this.state.activeGroupIndex].id
+      }).then(function () {
+        _this5.getUserContent();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this6 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        addType: function addType(e, value) {
+          return _this6.addType(e, value);
+        },
         setUpVote: function setUpVote(votingList) {
-          return _this4.setUpVote(votingList);
+          return _this6.setUpVote(votingList);
         },
         hypeLevelHandler: function hypeLevelHandler(e, typeId) {
-          return _this4.hypeLevelHandler(e, typeId);
+          return _this6.hypeLevelHandler(e, typeId);
         },
         data: this.state,
         activeGroupChange: function activeGroupChange() {
-          return _this4.activeGroupChange();
+          return _this6.activeGroupChange();
+        },
+        demo: function demo() {
+          return _this6.demo();
         }
       });
     }
@@ -69895,17 +69929,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _templateObject() {
+function _templateObject2() {
   var data = _taggedTemplateLiteral([""]);
 
-  _templateObject = function _templateObject() {
+  _templateObject2 = function _templateObject2() {
     return data;
   };
 
   return data;
 }
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -69920,6 +69952,18 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral([""]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -70000,64 +70044,73 @@ function (_Component) {
         data: JSON.stringify(activeVoteDetails),
         group_id: this.props.group.id
       });
-    }
-  }, {
-    key: "checkPlayerRating",
-    value: function checkPlayerRating(user) {
-      var theOne = [];
-      theOne.push(user);
-      this.setState({
-        theOne: theOne,
-        onlyOne: !this.state.onlyOne
-      });
-    }
+    } // checkPlayerRating(user) {
+    //     let theOne = [];
+    //     theOne.push(user);
+    //     this.setState({
+    //         theOne: theOne,
+    //         onlyOne: !this.state.onlyOne
+    //     });
+    // }
+
   }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      var group = _objectSpread({}, this.props.group);
-
-      var zeroRated = [];
-      var activeUsersRating = group.users.map(function (user) {
-        return user.pivot.active ? user : null;
-      }).filter(Boolean);
-      group.types.map(function (type) {
-        var totalHype = 0;
-
-        if (_this2.state.onlyOne) {
-          activeUsersRating = _toConsumableArray(_this2.state.theOne);
-        }
-
-        activeUsersRating.map(function (user) {
-          return user.types.map(function (userType) {
-            if (userType.id === type.id) {
-              totalHype += +userType.pivot.hype;
-
-              if (+userType.pivot.hype === _this2.state.exludeLevel) {
-                zeroRated.push(type);
-              }
-            }
-          });
-        });
-        type.totalHype = totalHype;
-      });
-
-      var data = _toConsumableArray(group.types.filter(function (type) {
-        return !zeroRated.includes(type) ? type : null;
-      }).sort(this.compareValues("totalHype", false)));
-
-      var votingList = _toConsumableArray(data);
-
-      var firstPlace = null;
-      var topList = [];
-      votingList.map(function (candidate, index) {
-        // console.log(candidate)
-        topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : null : null;
-      });
-      votingList = topList; // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
-
       var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject());
+      var activeUsersRating;
+      var group;
+      var data;
+
+      if (this.props.group) {
+        group = _objectSpread({}, this.props.group);
+        var zeroRated = [];
+        activeUsersRating = group.users.map(function (user) {
+          return user.pivot.active ? user : null;
+        }).filter(Boolean);
+        group.types.map(function (type) {
+          var totalHype = 0;
+
+          if (_this2.state.onlyOne) {
+            activeUsersRating = _toConsumableArray(_this2.state.theOne);
+          }
+
+          activeUsersRating.map(function (user) {
+            return user.types.map(function (userType) {
+              if (userType.id === type.id) {
+                totalHype += +userType.pivot.hype;
+
+                if (+userType.pivot.hype === _this2.state.exludeLevel) {
+                  zeroRated.push(type);
+                }
+              }
+            });
+          });
+          type.totalHype = totalHype;
+        });
+        data = _toConsumableArray(group.types.filter(function (type) {
+          return !zeroRated.includes(type) ? type : null;
+        }).sort(this.compareValues("totalHype", false)));
+
+        var _votingList = _toConsumableArray(data);
+
+        var firstPlace = null;
+        var topList = [];
+
+        _votingList.map(function (candidate, index) {
+          // console.log(candidate)
+          topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : null : null;
+        });
+
+        _votingList = topList; // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
+
+        var _Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject2());
+      } else {
+        activeUsersRating = [];
+        data = [];
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, this.props.user.user.id === 1 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
         onClick: function onClick() {
           return _this2.setUpVote(votingList);
@@ -70072,7 +70125,7 @@ function (_Component) {
           },
           key: user.name
         }, user.name);
-      })), group.types ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+      })), group ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: ""
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
         className: ""
@@ -70080,12 +70133,12 @@ function (_Component) {
         if (index < 3) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
             key: type.id + " " + type.hype
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, type.type));
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", type.type, " "));
         }
       }) : data.map(function (type) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: type.id + " " + type.hype
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, type.type, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           style: {
             marginLeft: "auto"
           }
@@ -70157,8 +70210,16 @@ function _templateObject5() {
   return data;
 }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function _templateObject4() {
-  var data = _taggedTemplateLiteral(["\n        margin-top: 20px;\n        margin-bottom: 200px;\n    "]);
+  var data = _taggedTemplateLiteral(["\n    margin-top: 20px;\n    margin-bottom: 200px;\n"]);
 
   _templateObject4 = function _templateObject4() {
     return data;
@@ -70168,7 +70229,7 @@ function _templateObject4() {
 }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n        margin: auto auto;\n        margin-bottom: 200px;\n        font-size: 26px;\n    "]);
+  var data = _taggedTemplateLiteral(["\n    margin: auto auto;\n    margin-bottom: 200px;\n    font-size: 26px;\n"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -70188,7 +70249,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        width: 99%;\n    "]);
+  var data = _taggedTemplateLiteral(["\n    width: 99%;\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -70199,35 +70260,48 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
-
+var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
+var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject2());
+var HypeWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3());
+var HypeList = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject4());
 var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
-    active: true
+    value: ""
   }),
       _useState2 = _slicedToArray(_useState, 2),
-      setComponentStatus = _useState2[0],
-      newComponentStatus = _useState2[1];
+      value = _useState2[0],
+      newValue = _useState2[1];
 
-  var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
-  var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject2());
-  var HypeWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3());
-  var HypeList = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject4());
   var HypeSetRow = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject5(), props.theme.colorTwo);
   var HypeRowElement = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject6(), props.theme.colorTwo);
   var Select = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].select(_templateObject7(), props.theme.colorOne, props.theme.colorTwo, props.theme.colorTwo);
-  var Option = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].option(_templateObject8());
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeList, null, Array.isArray(props.group.users) ? props.group.users.map(function (user) {
+  var Option = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].option(_templateObject8()); // const addType = e => {
+  //     e.preventDefault();
+  //     console.log("tr");
+  // };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeWrapper, null, props.activeGroup.id === 3 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: function onSubmit(e) {
+      return props.addType(e, value);
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Game:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "game",
+    value: value.value,
+    onChange: function onChange(e) {
+      var InputValue = e.target.value;
+      newValue({
+        value: InputValue
+      });
+    }
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "submit",
+    value: "Submit"
+  })) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeList, null, Array.isArray(props.group.users) ? props.group.users.map(function (user) {
     return user.types.map(function (type) {
-      if (type.group_id === props.activeGroup && type.pivot.user_id === props.user.id) {
+      if (type.group_id === props.activeGroup.id && type.pivot.user_id === props.user.id) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeSetRow, {
           key: type.type
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, null, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Select, {
@@ -70245,7 +70319,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
         }))));
       }
     });
-  }) : null)));
+  }) : null))));
 });
 /* harmony default export */ __webpack_exports__["default"] = (react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(HypeSet));
 
@@ -70330,8 +70404,7 @@ function (_Component) {
 
       axios.get("/vote/votecheckk/").then(function (response) {
         var activeVoteDetails = response.data.user.groups;
-
-        activeVoteDetails[_this3.props.groupIndex].votes.map(function (vote) {
+        activeVoteDetails[_this3.props.groupIndex] ? activeVoteDetails[_this3.props.groupIndex].votes.map(function (vote) {
           vote.data = JSON.parse(vote.data);
 
           if (vote.active) {
@@ -70339,7 +70412,7 @@ function (_Component) {
               activeVote: vote
             });
           }
-        });
+        }) : null;
 
         _this3.setState({
           votingList: activeVoteDetails
@@ -70402,7 +70475,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      //console.log(this.state.votingList)
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: ""
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.activeVote.data.map(function (type) {
@@ -70433,7 +70505,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color:", ";\n        grid-area: 1 / 2 / 2 / 6;\n        text-align: center;\n    "]);
+  var data = _taggedTemplateLiteral(["\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        grid-area: 1 / 2 / 2 / 6;\n        text-align: center;\n        font-size: 1.7vh;\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -70449,7 +70521,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 var InfoDisplay = function InfoDisplay(props) {
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorOne, props.theme.colorTwo, props.theme.colorFive);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, "HERE WILL DISPLAY ALL YOU NEED TO KNOW");
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, "Welcom to my gaming group. Do you know those games? If yes rate them for me. Add 2 of yours favourite game if you want.");
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (InfoDisplay);
@@ -70627,8 +70699,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Hype/HypeSet */ "./resources/assets/js/NewLayout/components/Hype/HypeSet.js");
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n        height: 40px;\n        width: 60%;\n    "]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 30%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        overflow-y:scroll;\n      \n    "]);
+  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 30%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        overflow-y: scroll;\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -70644,7 +70726,11 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorOne, props.theme.colorTwo, props.theme.colorFive);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  var Demo = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject2());
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, props.activeGroup.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    addType: function addType(e, value) {
+      return props.addType(e, value);
+    },
     group: props.group,
     user: props.userData.user,
     activeGroup: props.activeGroup,
@@ -70653,7 +70739,11 @@ var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) 
       return props.hypeLevelHandler(e, typeId);
     },
     theme: props.theme
-  }));
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Demo, {
+    onClick: function onClick() {
+      return props.demo();
+    }
+  }, "DEMO"));
 });
 /* harmony default export */ __webpack_exports__["default"] = (Screen);
 

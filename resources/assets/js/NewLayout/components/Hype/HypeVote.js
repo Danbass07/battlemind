@@ -24,15 +24,16 @@ class HypeVote extends Component {
     getData() {
         axios.get(`/vote/votecheckk/`).then(response => {
             let activeVoteDetails = response.data.user.groups;
-
-            activeVoteDetails[this.props.groupIndex].votes.map(vote => {
-                vote.data = JSON.parse(vote.data);
-                if (vote.active) {
-                    this.setState({
-                        activeVote: vote
-                    });
-                }
-            });
+            activeVoteDetails[this.props.groupIndex]
+                ? activeVoteDetails[this.props.groupIndex].votes.map(vote => {
+                      vote.data = JSON.parse(vote.data);
+                      if (vote.active) {
+                          this.setState({
+                              activeVote: vote
+                          });
+                      }
+                  })
+                : null;
             this.setState({
                 votingList: activeVoteDetails
             });
@@ -87,7 +88,6 @@ class HypeVote extends Component {
         }
     }
     render() {
-        //console.log(this.state.votingList)
         return (
             <div className={""}>
                 <div>

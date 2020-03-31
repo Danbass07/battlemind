@@ -21,6 +21,7 @@ class UserController extends Controller
     //    foreach($user1->groups as $group)  {
     //     Log::info($group->pivot);
     //    }
+    
     $users = User::all();
        return response()->json([
            'user' => $user,

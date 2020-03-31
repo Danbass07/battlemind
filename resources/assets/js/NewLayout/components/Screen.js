@@ -11,24 +11,31 @@ const Screen = React.memo(props => {
         color: ${props.theme.colorFive};
         margin: auto auto;
         text-align: center;
-        overflow-y:scroll;
-      
+        overflow-y: scroll;
+    `;
+    const Demo = styled.button`
+        height: 40px;
+        width: 60%;
     `;
     return (
-        
-        <MainWrapper >
-          <HypeSet
-            group={props.group}
-            user={props.userData.user}
-            activeGroup={props.activeGroup}
-            hypeLevels={[1,2,3,4,5]} 
-            hypeLevelHandler={(e, typeId) =>props.hypeLevelHandler(e, typeId)}
-            theme={props.theme}
-        />
-       
+        <MainWrapper>
+            {props.activeGroup.id ? (
+                <HypeSet
+                    addType={(e, value) => props.addType(e, value)}
+                    group={props.group}
+                    user={props.userData.user}
+                    activeGroup={props.activeGroup}
+                    hypeLevels={[1, 2, 3, 4, 5]}
+                    hypeLevelHandler={(e, typeId) =>
+                        props.hypeLevelHandler(e, typeId)
+                    }
+                    theme={props.theme}
+                />
+            ) : (
+                <Demo onClick={() => props.demo()}>DEMO</Demo>
+            )}
         </MainWrapper>
     );
-   
 });
 
 export default Screen;

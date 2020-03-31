@@ -41,78 +41,86 @@ class HypeCheck extends Component {
                 winner: false
             });
         });
-        axios
-            .post("/vote/setUpVote", {
-                data: JSON.stringify(activeVoteDetails),
-                group_id: this.props.group.id
-            })
-      
-    }
-    checkPlayerRating(user) {
-        let theOne = [];
-        theOne.push(user);
-        this.setState({
-            theOne: theOne,
-            onlyOne: !this.state.onlyOne
+        axios.post("/vote/setUpVote", {
+            data: JSON.stringify(activeVoteDetails),
+            group_id: this.props.group.id
         });
     }
-    
+    // checkPlayerRating(user) {
+    //     let theOne = [];
+    //     theOne.push(user);
+    //     this.setState({
+    //         theOne: theOne,
+    //         onlyOne: !this.state.onlyOne
+    //     });
+    // }
 
     render() {
-        let group = { ...this.props.group };
-        let zeroRated = [];
-
-        let activeUsersRating = group.users
-            .map(user => {
-                return user.pivot.active ? user : null;
-            })
-            .filter(Boolean);
-
-        group.types.map(type => {
-            let totalHype = 0;
-            if (this.state.onlyOne) {
-                activeUsersRating = [...this.state.theOne];
-            }
-            activeUsersRating.map(user => {
-                return user.types.map(userType => {
-                    if (userType.id === type.id) {
-                        totalHype += +userType.pivot.hype;
-                        if (+userType.pivot.hype === this.state.exludeLevel) {
-                            zeroRated.push(type);
-                        }
-                    }
-                });
-            });
-            type.totalHype = totalHype;
-        });
-
-        let data = [
-            ...group.types
-                .filter(type => {
-                    return !zeroRated.includes(type) ? type : null;
-                })
-                .sort(this.compareValues("totalHype", false))
-        ];
-
-        let votingList = [...data];
-
-        let firstPlace = null;
-        let topList = [];
-        votingList.map((candidate, index) => {
-            // console.log(candidate)
-            topList.length < 3
-                ? topList.push(candidate)
-                : topList[index - 1]
-                ? topList[index - 1].totalHype === candidate.totalHype
-                    ? topList.push(candidate)
-                    : null
-                : null;
-        });
-        votingList = topList;
-       
-        // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
-
         const Button = styled.button``;
+        let activeUsersRating;
+        let group;
+        let data;
+        if (this.props.group) {
+            group = { ...this.props.group };
+            let zeroRated = [];
+
+            activeUsersRating = group.users
+                .map(user => {
+                    return user.pivot.active ? user : null;
+                })
+                .filter(Boolean);
+
+            group.types.map(type => {
+                let totalHype = 0;
+                if (this.state.onlyOne) {
+                    activeUsersRating = [...this.state.theOne];
+                }
+                activeUsersRating.map(user => {
+                    return user.types.map(userType => {
+                        if (userType.id === type.id) {
+                            totalHype += +userType.pivot.hype;
+                            if (
+                                +userType.pivot.hype === this.state.exludeLevel
+                            ) {
+                                zeroRated.push(type);
+                            }
+                        }
+                    });
+                });
+                type.totalHype = totalHype;
+            });
+
+            data = [
+                ...group.types
+                    .filter(type => {
+                        return !zeroRated.includes(type) ? type : null;
+                    })
+                    .sort(this.compareValues("totalHype", false))
+            ];
+
+            let votingList = [...data];
+
+            let firstPlace = null;
+            let topList = [];
+            votingList.map((candidate, index) => {
+                // console.log(candidate)
+                topList.length < 3
+                    ? topList.push(candidate)
+                    : topList[index - 1]
+                    ? topList[index - 1].totalHype === candidate.totalHype
+                        ? topList.push(candidate)
+                        : null
+                    : null;
+            });
+            votingList = topList;
+
+            // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
+
+            const Button = styled.button``;
+        } else {
+            activeUsersRating = [];
+            data = [];
+        }
 
         return (
             <React.Fragment>
@@ -136,7 +144,7 @@ class HypeCheck extends Component {
                     })}
                 </div>
 
-                {group.types ? (
+                {group ? (
                     <table className="">
                         <tbody className="">
                             {!group.types
@@ -148,7 +156,7 @@ class HypeCheck extends Component {
                                                       type.id + " " + type.hype
                                                   }
                                               >
-                                                  <td>{type.type}</td>
+                                                  <td> {type.type} </td>
                                               </tr>
                                           );
                                       }
@@ -156,7 +164,7 @@ class HypeCheck extends Component {
                                 : data.map(type => {
                                       return (
                                           <tr key={type.id + " " + type.hype}>
-                                              <td>{type.type}</td>
+                                              <td>{type.type} </td>
 
                                               <td
                                                   style={{ marginLeft: "auto" }}
