@@ -89,23 +89,15 @@ class AppBody extends Component {
                 </div>
 
                 <TopSection>
-                    {this.props.data.user.groups.length !== 0 ? (
-                        <Logo
-                            theme={this.state.theme[this.state.themeActive]}
-                            activeGroup={
-                                this.props.data.user.groups[
-                                    this.props.data.activeGroupIndex
-                                ].id
-                            }
-                            activeGroupChange={this.props.activeGroupChange}
-                        />
-                    ) : (
-                        <Logo
-                            theme={this.state.theme[this.state.themeActive]}
-                            activeGroup={[]}
-                            activeGroupChange={this.props.activeGroupChange}
-                        />
-                    )}
+                    <Logo
+                        theme={this.state.theme[this.state.themeActive]}
+                        activeGroup={
+                            this.props.data.user.groups[
+                                this.props.data.activeGroupIndex
+                            ].id
+                        }
+                        activeGroupChange={this.props.activeGroupChange}
+                    />
 
                     <InfoDisplay
                         theme={this.state.theme[this.state.themeActive]}
@@ -135,10 +127,6 @@ class AppBody extends Component {
                             this.props.data.user.groups[
                                 this.props.data.activeGroupIndex
                             ]
-                                ? this.props.data.user.groups[
-                                      this.props.data.activeGroupIndex
-                                  ]
-                                : []
                         }
                         theme={this.state.theme[this.state.themeActive]}
                         userData={this.props.data}

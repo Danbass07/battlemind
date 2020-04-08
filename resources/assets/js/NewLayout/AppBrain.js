@@ -8,7 +8,7 @@ class AppBrain extends Component {
         this.state = {
             user: {
                 name: "loading",
-                groups: []
+                groups: [{ id: 0, users: [], types: [] }]
             },
             activeGroupIndex: 0
         };
@@ -41,11 +41,14 @@ class AppBrain extends Component {
         }
     }
     getUserContent() {
-        axios.get(`/users`).then(response =>
+        axios.get(`/users`).then(response => {
+            if (response.data.user.groups.length === 0) {
+                response.data.user.groups = [{ id: 0, users: [], types: [] }];
+            }
             this.setState({
                 user: { ...response.data.user }
-            })
-        );
+            });
+        });
     }
     setUpVote(votingList) {
         this.setState({
@@ -59,7 +62,7 @@ class AppBrain extends Component {
     }
     addType(e, value) {
         e.preventDefault();
-
+        console.log("add type");
         console.log(this.state.user.groups[this.state.activeGroupIndex].id);
         axios
             .post("/types", {
@@ -71,6 +74,7 @@ class AppBrain extends Component {
             });
     }
     render() {
+        console.log(this.state);
         return (
             <AppBody
                 addType={(e, value) => this.addType(e, value)}

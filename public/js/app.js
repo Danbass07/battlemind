@@ -69561,13 +69561,9 @@ function (_Component) {
       var MiddleSection = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3(), this.state.middleSectionMoveValue);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_TopMenu__WEBPACK_IMPORTED_MODULE_8__["default"], {
         theme: this.state.theme[this.state.themeActive]
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TopSection, null, this.props.data.user.groups.length !== 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Logo__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TopSection, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Logo__WEBPACK_IMPORTED_MODULE_2__["default"], {
         theme: this.state.theme[this.state.themeActive],
         activeGroup: this.props.data.user.groups[this.props.data.activeGroupIndex].id,
-        activeGroupChange: this.props.activeGroupChange
-      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Logo__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        theme: this.state.theme[this.state.themeActive],
-        activeGroup: [],
         activeGroupChange: this.props.activeGroupChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_InfoDisplay__WEBPACK_IMPORTED_MODULE_3__["default"], {
         theme: this.state.theme[this.state.themeActive]
@@ -69590,7 +69586,7 @@ function (_Component) {
         hypeLevelHandler: function hypeLevelHandler(e, typeId) {
           return _this2.props.hypeLevelHandler(e, typeId);
         },
-        activeGroup: this.props.data.user.groups[this.props.data.activeGroupIndex] ? this.props.data.user.groups[this.props.data.activeGroupIndex] : [],
+        activeGroup: this.props.data.user.groups[this.props.data.activeGroupIndex],
         theme: this.state.theme[this.state.themeActive],
         userData: this.props.data,
         group: this.props.data.user.groups[this.props.data.activeGroupIndex],
@@ -69674,7 +69670,11 @@ function (_Component) {
     _this.state = {
       user: {
         name: "loading",
-        groups: []
+        groups: [{
+          id: 0,
+          users: [],
+          types: []
+        }]
       },
       activeGroupIndex: 0
     };
@@ -69722,7 +69722,15 @@ function (_Component) {
       var _this3 = this;
 
       axios.get("/users").then(function (response) {
-        return _this3.setState({
+        if (response.data.user.groups.length === 0) {
+          response.data.user.groups = [{
+            id: 0,
+            users: [],
+            types: []
+          }];
+        }
+
+        _this3.setState({
           user: _objectSpread({}, response.data.user)
         });
       });
@@ -69749,6 +69757,7 @@ function (_Component) {
       var _this5 = this;
 
       e.preventDefault();
+      console.log("add type");
       console.log(this.state.user.groups[this.state.activeGroupIndex].id);
       axios.post("/types", {
         type: value.value,
@@ -69762,6 +69771,7 @@ function (_Component) {
     value: function render() {
       var _this6 = this;
 
+      console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         addType: function addType(e, value) {
           return _this6.addType(e, value);
