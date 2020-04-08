@@ -32,7 +32,13 @@ const Screen = React.memo(props => {
                     theme={props.theme}
                 />
             ) : (
-                <Demo onClick={() => props.demo()}>DEMO</Demo>
+                <React.Fragment>
+                    <Demo onClick={() => props.demo()}>DEMO</Demo>
+                    <form>
+                        <input></input>
+                    </form>
+                </React.Fragment>
+                
             )}
         </MainWrapper>
     );

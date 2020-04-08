@@ -62,8 +62,6 @@ class AppBrain extends Component {
     }
     addType(e, value) {
         e.preventDefault();
-        console.log("add type");
-        console.log(this.state.user.groups[this.state.activeGroupIndex].id);
         axios
             .post("/types", {
                 type: value.value,
@@ -74,7 +72,6 @@ class AppBrain extends Component {
             });
     }
     render() {
-        console.log(this.state);
         return (
             <AppBody
                 addType={(e, value) => this.addType(e, value)}
