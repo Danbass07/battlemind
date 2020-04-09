@@ -56,7 +56,13 @@ class HypeCheck extends Component {
     // }
 
     render() {
-        const Button = styled.button``;
+        let Button = styled.button`
+        width: 80px;
+        height: 100%;
+        background-color: ${this.props.theme.colorFour};
+        writing-mode: vertical-rl;
+            text-orientation: upright;
+        `;
         let activeUsersRating;
         let group;
         let data;
@@ -116,7 +122,13 @@ class HypeCheck extends Component {
 
             // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
 
-            const Button = styled.button``;
+            Button = styled.button`
+            width: 80px;
+            height: 100%;
+            background-color: ${this.props.theme.colorFour};
+            writing-mode: vertical-rl;
+                text-orientation: upright;
+            `;
         } else {
             activeUsersRating = [];
             data = [];
@@ -124,11 +136,11 @@ class HypeCheck extends Component {
 
         return (
             <React.Fragment>
-                {this.props.user.user.id === 1 ? (
+          
                     <Button onClick={() => this.setUpVote(votingList)}>
-                        CAST VOTE{" "}
+                        Set vote on what we should play 
                     </Button>
-                ) : null}
+            
 
                 <div className={""}>
                     {activeUsersRating.map(user => {

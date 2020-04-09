@@ -44,7 +44,8 @@ const RightMenu = React.memo(props => {
         <HypeCheck
         setUpVote={(votingList) => props.setUpVote(votingList)}
         user={props.user}
-        group={props.group} />
+        group={props.group}
+        theme={props.theme} />
     </MainWrapper>;
 });
 

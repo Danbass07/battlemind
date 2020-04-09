@@ -64,7 +64,7 @@ class AppBrain extends Component {
         e.preventDefault();
         axios
             .post("/types", {
-                type: value.value,
+                type: value,
                 groupId: this.state.user.groups[this.state.activeGroupIndex].id
             })
             .then(() => {
