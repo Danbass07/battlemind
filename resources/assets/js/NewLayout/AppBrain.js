@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import AppBody from "./AppBody";
+import { hypeLevelHandler } from "./Functions.js";
 
 class AppBrain extends Component {
     constructor(props) {
@@ -13,18 +14,14 @@ class AppBrain extends Component {
             activeGroupIndex: 0
         };
     }
+
     hypeLevelHandler(e, typeId) {
-        const user = { ...this.state.user };
-
-        user.groups[this.state.activeGroupIndex].users
-            .filter(user => user.id === this.state.user.id)[0]
-            .types.filter(type => type.id === typeId)[0].pivot.hype =
-            e.target.value;
-
-        axios.post(`/hype/hypenotizerrr`, {
-            typeId: typeId,
-            value: e.target.value
-        });
+        hypeLevelHandler(
+            e,
+            typeId,
+            this.state.user,
+            this.state.activeGroupIndex
+        );
     }
     componentDidMount() {
         this.getUserContent();

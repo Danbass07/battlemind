@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import * as HypeFunctions from "./HypeFunctions.js";
 
 class HypeCheck extends Component {
     constructor(props) {
@@ -12,39 +13,10 @@ class HypeCheck extends Component {
     componentDidMount() {}
 
     compareValues(key, ascending = false) {
-        return function(a, b) {
-            if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-                // property doesn't exist on either object
-                return 0;
-            }
-            const varA =
-                typeof a[key] === "string" /// letter case insensitive
-                    ? a[key].toUpperCase()
-                    : a[key];
-            const varB =
-                typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
-            let comparison = 0;
-            if (varA > varB) {
-                comparison = 1;
-            } else if (varA < varB) {
-                comparison = -1;
-            }
-            return ascending == false ? comparison * -1 : comparison;
-        };
+        HypeFunctions.compareValues(key, ascending);
     }
-    setUpVote(votingList) {
-        const activeVoteDetails = votingList.map(type => {
-            return (type = {
-                id: type.id,
-                name: type.type,
-                votersId: [],
-                winner: false
-            });
-        });
-        axios.post("/vote/setUpVote", {
-            data: JSON.stringify(activeVoteDetails),
-            group_id: this.props.group.id
-        });
+    setUpVote(votingList, groupId) {
+        HypeFunctions.setUpVote(votingList, groupId);
     }
     // checkPlayerRating(user) {
     //     let theOne = [];
@@ -57,16 +29,17 @@ class HypeCheck extends Component {
 
     render() {
         let Button = styled.button`
-        width: 80px;
-        height: 100%;
-        background-color: ${this.props.theme.colorFour};
-        writing-mode: vertical-rl;
+            width: 80px;
+            height: 100%;
+            background-color: ${this.props.theme.colorFour};
+            writing-mode: vertical-rl;
             text-orientation: upright;
         `;
         let activeUsersRating;
         let group;
         let data;
-        if (this.props.group) {
+        let votingList = [];
+        if (this.props) {
             group = { ...this.props.group };
             let zeroRated = [];
 
@@ -123,10 +96,10 @@ class HypeCheck extends Component {
             // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
 
             Button = styled.button`
-            width: 80px;
-            height: 100%;
-            background-color: ${this.props.theme.colorFour};
-            writing-mode: vertical-rl;
+                width: 80px;
+                height: 100%;
+                background-color: ${this.props.theme.colorFour};
+                writing-mode: vertical-rl;
                 text-orientation: upright;
             `;
         } else {
@@ -136,11 +109,13 @@ class HypeCheck extends Component {
 
         return (
             <React.Fragment>
-          
-                    <Button onClick={() => this.setUpVote(votingList)}>
-                        Set vote on what we should play 
-                    </Button>
-            
+                <Button
+                    onClick={() =>
+                        this.setUpVote(votingList, this.props.group.id)
+                    }
+                >
+                    Set vote on what we should play
+                </Button>
 
                 <div className={""}>
                     {activeUsersRating.map(user => {

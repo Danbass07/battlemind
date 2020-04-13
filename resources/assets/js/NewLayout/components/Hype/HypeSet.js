@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-
 const HypeSet = React.memo(props => {
-
     const MainWrapper = styled.div`
-    width: 99%;
-`;
+        width: 99%;
+    `;
     const Button = styled.button``;
     const HypeWrapper = styled.div`
-    margin: auto auto;
-    margin-bottom: 10px;
-    font-size: 26px;
-`;
+        margin: auto auto;
+        margin-bottom: 10px;
+        font-size: 26px;
+    `;
     const HypeList = styled.div`
-    margin-top: 20px;
-    margin-bottom: 10px;
-`;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    `;
     const HypeSetRow = styled.div`
         display: flex;
         border-bottom: 1px solid ${props.theme.colorTwo};
@@ -37,87 +35,54 @@ const HypeSet = React.memo(props => {
     `;
     const Option = styled.option``;
 
+    const displayTypeRating = (type, index) => {
+        return (
+            <HypeSetRow key={type.type + index}>
+                <HypeRowElement>{type.type}</HypeRowElement>
+
+                <HypeRowElement>
+                    <Select onChange={e => props.hypeLevelHandler(e, type.id)}>
+                        <Option
+                            key={"default" + type.type}
+                            defaultValue={type.pivot.hype}
+                        >
+                            {type.pivot.hype}
+                        </Option>
+                        )
+                        {props.hypeLevels.map((level, index) => {
+                            return (
+                                <Option key={type.type + index} value={level}>
+                                    {level}
+                                </Option>
+                            );
+                        })}
+                    </Select>
+                </HypeRowElement>
+            </HypeSetRow>
+        );
+    };
+
+    const mapUsers = () => {
+        return props.group.users.map(user => {
+            return user.types.map((type, index) => {
+                if (
+                    type.group_id === props.activeGroup.id &&
+                    type.pivot.user_id === props.user.id
+                ) {
+                    return displayTypeRating(type, index);
+                }
+            });
+        });
+    };
+
     return (
-        <React.Fragment>
-            <React.Fragment></React.Fragment>
-            <MainWrapper>
-                {/* <Button onClick={() => this.props.hypenotizer()}>
-                CLICK HERE TO SAVE
-            </Button> */}
-
-                <HypeWrapper>
-
-                    <HypeList>
-                        {Array.isArray(props.group.users)
-                            ? props.group.users.map(user => {
-                                return user.types.map((type, index) => {
-                                    if (
-                                        type.group_id ===
-                                        props.activeGroup.id &&
-                                        type.pivot.user_id === props.user.id
-                                    ) {
-                                        return (
-                                            <HypeSetRow key={type.type + index}>
-                                                <HypeRowElement>
-                                                    {type.type}
-                                                </HypeRowElement>
-
-                                                <HypeRowElement>
-                                                    <Select
-                                                        onChange={e =>
-                                                            props.hypeLevelHandler(
-                                                                e,
-                                                                type.id
-                                                            )
-                                                        }
-                                                    >
-                                                        <Option
-                                                            key={
-                                                                "default" +
-                                                                type.type
-                                                            }
-                                                            defaultValue={
-                                                                type.pivot
-                                                                    .hype
-                                                            }
-                                                        >
-                                                            {type.pivot.hype}
-                                                        </Option>
-                                                        )
-                                                          {props.hypeLevels.map(
-                                                            (
-                                                                level,
-                                                                index
-                                                            ) => {
-                                                                return (
-                                                                    <Option
-                                                                        key={
-                                                                            type.type +
-                                                                            index
-                                                                        }
-                                                                        value={
-                                                                            level
-                                                                        }
-                                                                    >
-                                                                        {
-                                                                            level
-                                                                        }
-                                                                    </Option>
-                                                                );
-                                                            }
-                                                        )}
-                                                    </Select>
-                                                </HypeRowElement>
-                                            </HypeSetRow>
-                                        );
-                                    }
-                                });
-                            })
-                            : null}
-                    </HypeList>
-                </HypeWrapper>
-            </MainWrapper>
-        </React.Fragment>
+        <MainWrapper>
+            <HypeWrapper>
+                <HypeList>
+                    {Array.isArray(props.group.users) ? mapUsers() : null}
+                </HypeList>
+            </HypeWrapper>
+        </MainWrapper>
     );
 });
 

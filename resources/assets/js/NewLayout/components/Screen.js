@@ -21,41 +21,46 @@ const Screen = React.memo(props => {
         height: 40px;
         width: 60%;
     `;
-    
+
     return (
         <MainWrapper>
             {props.activeGroup.id ? (
                 <React.Fragment>
-                <HypeSet
-                    addType={(e, value) => props.addType(e, value)}
-                    group={props.group}
-                    user={props.userData.user}
-                    activeGroup={props.activeGroup}
-                    hypeLevels={[1, 2, 3, 4, 5]}
-                    hypeLevelHandler={(e, typeId) =>
-                        props.hypeLevelHandler(e, typeId)
-                    }
-                    theme={props.theme}
-                />
-            <Form 
-            title="Add Game"
-            submitControll={(e, value) => {  props.addType(e, value) }}
-             />
+                    <HypeSet
+                        addType={(e, value) => props.addType(e, value)}
+                        group={props.group}
+                        user={props.userData.user}
+                        activeGroup={props.activeGroup}
+                        hypeLevels={[1, 2, 3, 4, 5]}
+                        hypeLevelHandler={(e, typeId) =>
+                            props.hypeLevelHandler(e, typeId)
+                        }
+                        theme={props.theme}
+                    />
+                    <Form
+                        theme={props.theme}
+                        title="Add Game"
+                        submitControll={(e, value) => {
+                            props.addType(e, value);
+                        }}
+                    />
                 </React.Fragment>
-
             ) : (
                 <React.Fragment>
-                    <Demo onClick={() => props.demo()}>DEMO</Demo>
-                
+                    <Demo onClick={() => props.demo()}>DEMO GROUP</Demo>
                 </React.Fragment>
-                
             )}
-                      
-             {<Form 
-            title="Enter Club Code"
-            submitControll={(e, value) => { e.preventDefault(); console.log(value) }}
-             />}     
-                
+
+            {
+                <Form
+                    theme={props.theme}
+                    title="Enter Club Code"
+                    submitControll={(e, value) => {
+                        e.preventDefault();
+                        console.log(value);
+                    }}
+                />
+            }
         </MainWrapper>
     );
 });
