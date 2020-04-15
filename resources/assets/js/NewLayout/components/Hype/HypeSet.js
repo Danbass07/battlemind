@@ -9,10 +9,9 @@ const MainWrapper = styled.div`
 const HypeWrapper = styled.div`
     position: relative;
     margin: auto auto;
-    margin-bottom: 10px;
     font-size: 26px;
     overflow-y: scroll;
-    height: 250px;
+    height: 332px;
     width: 108%;
 `;
 
@@ -29,7 +28,7 @@ const HypeRowElement = styled.div`
 const Select = styled.select`
     border-radius: 50%;
     height: 38px;
-    margin: 5px 13px;
+    margin: 5px 28px;
     padding-left: 12px;
 `;
 const TypeOptions = styled.div`

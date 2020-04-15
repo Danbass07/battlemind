@@ -11799,6 +11799,10 @@ a:hover {
 
 /* Madia */
 
+body {
+  overflow: hidden;
+}
+
 #AppBrain {
   max-width: 450px;
   max-height: 620px;
