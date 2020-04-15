@@ -16,7 +16,7 @@ class AppBrain extends Component {
     }
 
     hypeLevelHandler(e, typeId) {
-        hypeLevelHandler(
+        const data = hypeLevelHandler(
             e,
             typeId,
             this.state.user,

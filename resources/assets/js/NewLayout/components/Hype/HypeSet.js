@@ -1,47 +1,79 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Form from "../Form";
+
+const MainWrapper = styled.div`
+    width: 100%;
+`;
+
+const HypeWrapper = styled.div`
+    position: relative;
+    margin: auto auto;
+    margin-bottom: 10px;
+    font-size: 26px;
+    overflow-y: scroll;
+    height: 250px;
+    width: 108%;
+`;
+
+const HypeSetRow = styled.div`
+    display: flex;
+`;
+const HypeRowElement = styled.div`
+    margin-right: 5px;
+    margin-left: auto;
+    padding-left: 16px;
+    word-wrap: break-word;
+`;
+
+const Select = styled.select`
+    border-radius: 50%;
+    height: 38px;
+    margin: 5px 13px;
+    padding-left: 12px;
+`;
+const TypeOptions = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+const Button = styled.button`
+    width: 50%;
+`;
+const Option = styled.option``;
 
 const HypeSet = React.memo(props => {
-    const MainWrapper = styled.div`
-        width: 99%;
-    `;
-    const Button = styled.button``;
-    const HypeWrapper = styled.div`
-        margin: auto auto;
-        margin-bottom: 10px;
-        font-size: 26px;
-    `;
-    const HypeList = styled.div`
-        margin-top: 20px;
-        margin-bottom: 10px;
-    `;
-    const HypeSetRow = styled.div`
-        display: flex;
-        border-bottom: 1px solid ${props.theme.colorTwo};
-    `;
-    const HypeRowElement = styled.div`
-        margin-left: auto;
-        color: ${props.theme.colorTwo};
-        padding-left: 16px;
-    `;
-    const Select = styled.select`
-        background-color: ${props.theme.colorOne};
-        border: 2px dotted ${props.theme.colorTwo};
-        border-radius: 50%;
-        height: 38px;
-        margin: 5px 5px;
-        color: ${props.theme.colorTwo};
-        padding-left: 12px;
-    `;
-    const Option = styled.option``;
+    const styleHypeSetRow = {
+        borderBottom: "1px solid" + props.theme.colorTwo
+    };
+
+    const styleHypeRowElement = {
+        color: props.theme.colorTwo
+    };
+
+    const styleSelect = {
+        backgroundColor: props.theme.colorOne,
+        border: " 2px dotted+" + props.theme.colorTwo,
+        color: props.theme.colorTwo
+    };
+
+    const styleHypeRowElementOne = {
+        width: "279px",
+        fontSize: "20px",
+        padding: "8px 0px 5px 0px"
+    };
 
     const displayTypeRating = (type, index) => {
         return (
-            <HypeSetRow key={type.type + index}>
-                <HypeRowElement>{type.type}</HypeRowElement>
+            <HypeSetRow style={styleHypeSetRow} key={type.type + index}>
+                <HypeRowElement style={styleHypeRowElementOne}>
+                    {type.type}
+                </HypeRowElement>
 
-                <HypeRowElement>
-                    <Select onChange={e => props.hypeLevelHandler(e, type.id)}>
+                <HypeRowElement style={styleHypeRowElement}>
+                    <Select
+                        style={styleSelect}
+                        onChange={e => props.hypeLevelHandler(e, type.id)}
+                    >
                         <Option
                             key={"default" + type.type}
                             defaultValue={type.pivot.hype}
@@ -77,11 +109,20 @@ const HypeSet = React.memo(props => {
 
     return (
         <MainWrapper>
+            <TypeOptions>
+                <Button>Main Games</Button>
+                <Button>Small Games</Button>
+            </TypeOptions>
             <HypeWrapper>
-                <HypeList>
-                    {Array.isArray(props.group.users) ? mapUsers() : null}
-                </HypeList>
+                {Array.isArray(props.group.users) ? mapUsers() : null}
             </HypeWrapper>
+            <Form
+                theme={props.theme}
+                title="Add Game"
+                submitControll={(e, value) => {
+                    props.addType(e, value);
+                }}
+            />
         </MainWrapper>
     );
 });

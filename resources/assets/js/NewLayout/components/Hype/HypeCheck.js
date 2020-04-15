@@ -74,7 +74,7 @@ class HypeCheck extends Component {
                     .filter(type => {
                         return !zeroRated.includes(type) ? type : null;
                     })
-                    .sort(this.compareValues("totalHype", false))
+                    .sort(HypeFunctions.compareValues("totalHype", false))
             ];
 
             let votingList = [...data];
@@ -151,7 +151,14 @@ class HypeCheck extends Component {
                                 : data.map(type => {
                                       return (
                                           <tr key={type.id + " " + type.hype}>
-                                              <td>{type.type} </td>
+                                              <td
+                                                  style={{
+                                                      wordBreak: "break-all",
+                                                      width: "180px"
+                                                  }}
+                                              >
+                                                  {type.type}{" "}
+                                              </td>
 
                                               <td
                                                   style={{ marginLeft: "auto" }}

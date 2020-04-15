@@ -4,6 +4,7 @@ import styled from "styled-components";
 const MainWrapper = styled.div``;
 let Input = styled.input`
     margin-left: auto;
+    background-color: props.theme.colorOne;
 `;
 let Label = styled.label`
     display: flex;
@@ -15,7 +16,9 @@ const Form = React.memo(props => {
     });
     const style = {
         backgroundColor: props.theme.colorOne,
-        width: "100%"
+        width: "60%",
+        color: props.theme.colorTwo,
+        border: "1px solid " + props.theme.colorThree
     };
     const style2 = {
         display: "flex",
