@@ -82,7 +82,7 @@ class AppBrain extends Component {
             });
     }
     render() {
-        console.log(this.state.user);
+        // console.log(this.state.user);
         return (
             <AppBody
                 addType={(e, value) => this.addType(e, value)}

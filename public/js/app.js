@@ -69777,7 +69777,7 @@ function (_Component) {
     value: function render() {
       var _this5 = this;
 
-      console.log(this.state.user);
+      // console.log(this.state.user);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         addType: function addType(e, value) {
           return _this5.addType(e, value);
