@@ -19,16 +19,13 @@ const HypeSetRow = styled.div`
     display: flex;
 `;
 const HypeRowElement = styled.div`
-    margin-right: 5px;
-    margin-left: auto;
-    padding-left: 16px;
     word-wrap: break-word;
 `;
 
 const Select = styled.select`
     border-radius: 50%;
     height: 38px;
-    margin: 5px 28px;
+    margin: 5px 24px;
     padding-left: 12px;
 `;
 const TypeOptions = styled.div`
@@ -36,7 +33,7 @@ const TypeOptions = styled.div`
     justify-content: space-between;
 `;
 const Button = styled.button`
-    width: 50%;
+    width: 100%;
 `;
 const Option = styled.option``;
 
@@ -62,35 +59,39 @@ const HypeSet = React.memo(props => {
     };
 
     const displayTypeRating = (type, index) => {
-        return (
-            <HypeSetRow style={styleHypeSetRow} key={type.type + index}>
-                <HypeRowElement style={styleHypeRowElementOne}>
-                    {type.type}
-                </HypeRowElement>
+        if (type.details === props.data.details)
+            return (
+                <HypeSetRow style={styleHypeSetRow} key={type.type + index}>
+                    <HypeRowElement style={styleHypeRowElementOne}>
+                        {type.type}
+                    </HypeRowElement>
 
-                <HypeRowElement style={styleHypeRowElement}>
-                    <Select
-                        style={styleSelect}
-                        onChange={e => props.hypeLevelHandler(e, type.id)}
-                    >
-                        <Option
-                            key={"default" + type.type}
-                            defaultValue={type.pivot.hype}
+                    <HypeRowElement style={styleHypeRowElement}>
+                        <Select
+                            style={styleSelect}
+                            onChange={e => props.hypeLevelHandler(e, type.id)}
                         >
-                            {type.pivot.hype}
-                        </Option>
-                        )
-                        {props.hypeLevels.map((level, index) => {
-                            return (
-                                <Option key={type.type + index} value={level}>
-                                    {level}
-                                </Option>
-                            );
-                        })}
-                    </Select>
-                </HypeRowElement>
-            </HypeSetRow>
-        );
+                            <Option
+                                key={"default" + type.type}
+                                defaultValue={type.pivot.hype}
+                            >
+                                {type.pivot.hype}
+                            </Option>
+                            )
+                            {props.hypeLevels.map((level, index) => {
+                                return (
+                                    <Option
+                                        key={type.type + index}
+                                        value={level}
+                                    >
+                                        {level}
+                                    </Option>
+                                );
+                            })}
+                        </Select>
+                    </HypeRowElement>
+                </HypeSetRow>
+            );
     };
 
     const mapUsers = () => {
@@ -98,7 +99,7 @@ const HypeSet = React.memo(props => {
             return user.types.map((type, index) => {
                 if (
                     type.group_id === props.activeGroup.id &&
-                    type.pivot.user_id === props.user.id
+                    type.pivot.user_id === props.data.user.id
                 ) {
                     return displayTypeRating(type, index);
                 }
@@ -109,8 +110,9 @@ const HypeSet = React.memo(props => {
     return (
         <MainWrapper>
             <TypeOptions>
-                <Button>Main Games</Button>
-                <Button>Small Games</Button>
+                <Button onClick={() => props.detailsController()}>
+                    {props.data.details} Games
+                </Button>
             </TypeOptions>
             <HypeWrapper>
                 {Array.isArray(props.group.users) ? mapUsers() : null}

@@ -11,7 +11,8 @@ class AppBrain extends Component {
                 name: "loading",
                 groups: [{ id: 0, users: [], types: [] }]
             },
-            activeGroupIndex: 0
+            activeGroupIndex: 0,
+            details: "main"
         };
     }
 
@@ -57,19 +58,31 @@ class AppBrain extends Component {
             this.getUserContent();
         });
     }
+    detailsController() {
+        if (this.state.details === "main") {
+            this.setState({
+                details: "small"
+            });
+        } else {
+            this.setState({
+                details: "main"
+            });
+        }
+    }
     addType(e, value) {
         e.preventDefault();
         axios
             .post("/types", {
                 type: value,
-                groupId: this.state.user.groups[this.state.activeGroupIndex].id
+                groupId: this.state.user.groups[this.state.activeGroupIndex].id,
+                details: this.state.details
             })
             .then(() => {
                 this.getUserContent();
             });
     }
     render() {
-        console.log(this.state.user)
+        console.log(this.state.user);
         return (
             <AppBody
                 addType={(e, value) => this.addType(e, value)}
@@ -80,6 +93,7 @@ class AppBrain extends Component {
                 data={this.state}
                 activeGroupChange={() => this.activeGroupChange()}
                 demo={() => this.demo()}
+                detailsController={() => this.detailsController()}
             />
         );
     }

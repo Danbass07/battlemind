@@ -136,6 +136,7 @@ class AppBody extends Component {
                             ]
                         }
                         demo={() => this.props.demo()}
+                        detailsController={() => this.props.detailsController()}
                     />
 
                     <RightMenu

@@ -61,6 +61,7 @@ class TypeController extends Controller
         $type = new Type;
         $type->type = $request->type;
         $type->group_id = $request->groupId;
+        $type->details = $request->details;
         $type->save();
 
         $group = Group::find($request->groupId);

@@ -27,7 +27,7 @@ const Screen = React.memo(props => {
                 <HypeSet
                     addType={(e, value) => props.addType(e, value)}
                     group={props.group}
-                    user={props.userData.user}
+                    data={props.userData}
                     activeGroup={props.activeGroup}
                     hypeLevels={[1, 2, 3, 4, 5]}
                     hypeLevelHandler={(e, typeId) =>
@@ -35,6 +35,7 @@ const Screen = React.memo(props => {
                     }
                     theme={props.theme}
                     addType={(e, value) => props.addType(e, value)}
+                    detailsController={() => props.detailsController()}
                 />
             ) : (
                 <React.Fragment>

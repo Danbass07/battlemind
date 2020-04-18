@@ -67240,7 +67240,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _emotion_stylis__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @emotion/stylis */ "./node_modules/@emotion/stylis/dist/stylis.browser.esm.js");
 /* harmony import */ var _emotion_unitless__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @emotion/unitless */ "./node_modules/@emotion/unitless/dist/unitless.browser.esm.js");
 /* harmony import */ var _emotion_is_prop_valid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @emotion/is-prop-valid */ "./node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js");
-/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
 /* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__);
 
 
@@ -69112,6 +69112,121 @@ if ( true && typeof window !== 'undefined') {
 
 /***/ }),
 
+/***/ "./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var reactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+var REACT_STATICS = {
+  childContextTypes: true,
+  contextType: true,
+  contextTypes: true,
+  defaultProps: true,
+  displayName: true,
+  getDefaultProps: true,
+  getDerivedStateFromError: true,
+  getDerivedStateFromProps: true,
+  mixins: true,
+  propTypes: true,
+  type: true
+};
+var KNOWN_STATICS = {
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
+};
+var FORWARD_REF_STATICS = {
+  '$$typeof': true,
+  render: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true
+};
+var MEMO_STATICS = {
+  '$$typeof': true,
+  compare: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true,
+  type: true
+};
+var TYPE_STATICS = {};
+TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
+TYPE_STATICS[reactIs.Memo] = MEMO_STATICS;
+
+function getStatics(component) {
+  // React v16.11 and below
+  if (reactIs.isMemo(component)) {
+    return MEMO_STATICS;
+  } // React v16.12 and above
+
+
+  return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
+}
+
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = Object.prototype;
+function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+  if (typeof sourceComponent !== 'string') {
+    // don't hoist over string (html) components
+    if (objectPrototype) {
+      var inheritedComponent = getPrototypeOf(sourceComponent);
+
+      if (inheritedComponent && inheritedComponent !== objectPrototype) {
+        hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+      }
+    }
+
+    var keys = getOwnPropertyNames(sourceComponent);
+
+    if (getOwnPropertySymbols) {
+      keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+    }
+
+    var targetStatics = getStatics(targetComponent);
+    var sourceStatics = getStatics(sourceComponent);
+
+    for (var i = 0; i < keys.length; ++i) {
+      var key = keys[i];
+
+      if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
+        var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+
+        try {
+          // Avoid failures from read-only properties
+          defineProperty(targetComponent, key, descriptor);
+        } catch (e) {}
+      }
+    }
+  }
+
+  return targetComponent;
+}
+
+module.exports = hoistNonReactStatics;
+
+
+/***/ }),
+
 /***/ "./node_modules/value-equal/index.js":
 /*!*******************************************!*\
   !*** ./node_modules/value-equal/index.js ***!
@@ -69477,6 +69592,9 @@ function (_Component) {
         group: this.props.data.user.groups[this.props.data.activeGroupIndex],
         demo: function demo() {
           return _this2.props.demo();
+        },
+        detailsController: function detailsController() {
+          return _this2.props.detailsController();
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_RightMenu__WEBPACK_IMPORTED_MODULE_7__["default"], {
         user: this.props.data,
@@ -69563,7 +69681,8 @@ function (_Component) {
           types: []
         }]
       },
-      activeGroupIndex: 0
+      activeGroupIndex: 0,
+      details: "main"
     };
     return _this;
   }
@@ -69627,6 +69746,19 @@ function (_Component) {
       });
     }
   }, {
+    key: "detailsController",
+    value: function detailsController() {
+      if (this.state.details === "main") {
+        this.setState({
+          details: "small"
+        });
+      } else {
+        this.setState({
+          details: "main"
+        });
+      }
+    }
+  }, {
     key: "addType",
     value: function addType(e, value) {
       var _this4 = this;
@@ -69634,7 +69766,8 @@ function (_Component) {
       e.preventDefault();
       axios.post("/types", {
         type: value,
-        groupId: this.state.user.groups[this.state.activeGroupIndex].id
+        groupId: this.state.user.groups[this.state.activeGroupIndex].id,
+        details: this.state.details
       }).then(function () {
         _this4.getUserContent();
       });
@@ -69661,6 +69794,9 @@ function (_Component) {
         },
         demo: function demo() {
           return _this5.demo();
+        },
+        detailsController: function detailsController() {
+          return _this5.detailsController();
         }
       });
     }
@@ -70223,7 +70359,7 @@ function _templateObject8() {
 }
 
 function _templateObject7() {
-  var data = _taggedTemplateLiteral(["\n    width: 50%;\n"]);
+  var data = _taggedTemplateLiteral(["\n    width: 100%;\n"]);
 
   _templateObject7 = function _templateObject7() {
     return data;
@@ -70243,7 +70379,7 @@ function _templateObject6() {
 }
 
 function _templateObject5() {
-  var data = _taggedTemplateLiteral(["\n    border-radius: 50%;\n    height: 38px;\n    margin: 5px 28px;\n    padding-left: 12px;\n"]);
+  var data = _taggedTemplateLiteral(["\n    border-radius: 50%;\n    height: 38px;\n    margin: 5px 24px;\n    padding-left: 12px;\n"]);
 
   _templateObject5 = function _templateObject5() {
     return data;
@@ -70253,7 +70389,7 @@ function _templateObject5() {
 }
 
 function _templateObject4() {
-  var data = _taggedTemplateLiteral(["\n    margin-right: 5px;\n    margin-left: auto;\n    padding-left: 16px;\n    word-wrap: break-word;\n"]);
+  var data = _taggedTemplateLiteral(["\n    word-wrap: break-word;\n"]);
 
   _templateObject4 = function _templateObject4() {
     return data;
@@ -70324,7 +70460,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
   };
 
   var displayTypeRating = function displayTypeRating(type, index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeSetRow, {
+    if (type.details === props.data.details) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeSetRow, {
       style: styleHypeSetRow,
       key: type.type + index
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
@@ -70350,14 +70486,18 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
   var mapUsers = function mapUsers() {
     return props.group.users.map(function (user) {
       return user.types.map(function (type, index) {
-        if (type.group_id === props.activeGroup.id && type.pivot.user_id === props.user.id) {
+        if (type.group_id === props.activeGroup.id && type.pivot.user_id === props.data.user.id) {
           return displayTypeRating(type, index);
         }
       });
     });
   };
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TypeOptions, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, null, "Main Games"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, null, "Small Games")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeWrapper, null, Array.isArray(props.group.users) ? mapUsers() : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TypeOptions, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
+    onClick: function onClick() {
+      return props.detailsController();
+    }
+  }, props.data.details, " Games")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeWrapper, null, Array.isArray(props.group.users) ? mapUsers() : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form__WEBPACK_IMPORTED_MODULE_2__["default"], {
     theme: props.theme,
     title: "Add Game",
     submitControll: function submitControll(e, value) {
@@ -70782,6 +70922,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
+  var _React$createElement;
+
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
     value: ""
   }),
@@ -70791,21 +70933,23 @@ var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) 
 
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorOne, props.theme.colorTwo, props.theme.colorFive);
   var Demo = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject2());
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, props.activeGroup.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__["default"], _defineProperty({
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, props.activeGroup.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__["default"], (_React$createElement = {
     addType: function addType(e, value) {
       return props.addType(e, value);
     },
     group: props.group,
-    user: props.userData.user,
+    data: props.userData,
     activeGroup: props.activeGroup,
     hypeLevels: [1, 2, 3, 4, 5],
     hypeLevelHandler: function hypeLevelHandler(e, typeId) {
       return props.hypeLevelHandler(e, typeId);
     },
     theme: props.theme
-  }, "addType", function addType(e, value) {
+  }, _defineProperty(_React$createElement, "addType", function addType(e, value) {
     return props.addType(e, value);
-  })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Demo, {
+  }), _defineProperty(_React$createElement, "detailsController", function detailsController() {
+    return props.detailsController();
+  }), _React$createElement)) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Demo, {
     onClick: function onClick() {
       return props.demo();
     }
@@ -75534,8 +75678,8 @@ if (document.getElementById('root')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })
