@@ -69595,6 +69595,9 @@ function (_Component) {
         },
         detailsController: function detailsController() {
           return _this2.props.detailsController();
+        },
+        selectTypeToEdit: function selectTypeToEdit(type) {
+          return _this2.props.selectTypeToEdit(type);
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_RightMenu__WEBPACK_IMPORTED_MODULE_7__["default"], {
         user: this.props.data,
@@ -69605,7 +69608,11 @@ function (_Component) {
         },
         theme: this.state.theme[this.state.themeActive]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_BottomMenu__WEBPACK_IMPORTED_MODULE_9__["default"], {
-        theme: this.state.theme[this.state.themeActive]
+        theme: this.state.theme[this.state.themeActive],
+        data: this.props.editedData,
+        refreshData: function refreshData() {
+          return _this2.props.refreshData();
+        }
       }));
     }
   }]);
@@ -69678,11 +69685,15 @@ function (_Component) {
         groups: [{
           id: 0,
           users: [],
-          types: []
+          types: [{
+            type: "Select Game to Edit and Click this to "
+          }]
         }]
       },
       activeGroupIndex: 0,
-      details: "main"
+      editedTypeIndex: 0,
+      details: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
+
     };
     return _this;
   }
@@ -69746,6 +69757,13 @@ function (_Component) {
       });
     }
   }, {
+    key: "selectTypeToEdit",
+    value: function selectTypeToEdit(index) {
+      this.setState({
+        editedTypeIndex: index
+      });
+    }
+  }, {
     key: "detailsController",
     value: function detailsController() {
       if (this.state.details === "main") {
@@ -69777,7 +69795,6 @@ function (_Component) {
     value: function render() {
       var _this5 = this;
 
-      // console.log(this.state.user);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         addType: function addType(e, value) {
           return _this5.addType(e, value);
@@ -69789,6 +69806,7 @@ function (_Component) {
           return _this5.hypeLevelHandler(e, typeId);
         },
         data: this.state,
+        editedData: this.state.user.groups[this.state.activeGroupIndex].types[this.state.editedTypeIndex],
         activeGroupChange: function activeGroupChange() {
           return _this5.activeGroupChange();
         },
@@ -69797,6 +69815,12 @@ function (_Component) {
         },
         detailsController: function detailsController() {
           return _this5.detailsController();
+        },
+        selectTypeToEdit: function selectTypeToEdit(index) {
+          return _this5.selectTypeToEdit(index);
+        },
+        refreshData: function refreshData() {
+          return _this5.getUserContent();
         }
       });
     }
@@ -69854,8 +69878,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _TypeEdit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TypeEdit */ "./resources/assets/js/NewLayout/components/TypeEdit.js");
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    height: 30px;\n    width: 100%;\n    padding-top: 3px;\n    background-color: ", ";\n    color: ", ";\n    "]);
+  var data = _taggedTemplateLiteral(["\n        height: 30px;\n        width: 100%;\n        padding-top: 3px;\n        background-color: ", ";\n        color: ", ";\n    "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -69865,7 +69890,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 100%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color:", ";\n        margin: auto auto;\n        text-align: center;\n        transform: ", "\n    "]);
+  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 100%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        transform: ", ";\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -69886,19 +69911,27 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
       _useState2 = _slicedToArray(_useState, 2),
       setComponentStatus = _useState2[0],
       newComponentStatus = _useState2[1];
 
-  var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? 'translateY(-100%);' : 'translateY(0);');
-  var Switch = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFive, props.theme.colorThree);
+  var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? "translateY(-100%);" : "translateY(0);");
+  var Switch = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFive, props.theme.colorThree); // console.log(props.data);
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
     }
-  }, setComponentStatus ? "Open" : "Close"));
+  }, setComponentStatus ? props.data.type + " Open" : "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    refreshData: function refreshData() {
+      return props.refreshData();
+    },
+    data: props.data,
+    theme: props.theme
+  }));
 });
 /* harmony default export */ __webpack_exports__["default"] = (BottomMenu);
 
@@ -70460,11 +70493,15 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
   };
 
   var displayTypeRating = function displayTypeRating(type, index) {
-    if (type.details === props.data.details) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeSetRow, {
+    var details = JSON.parse(type.details);
+    if (details.category === props.data.details) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeSetRow, {
       style: styleHypeSetRow,
       key: type.type + index
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
-      style: styleHypeRowElementOne
+      style: styleHypeRowElementOne,
+      onClick: function onClick() {
+        return props.selectTypeToEdit(index);
+      }
     }, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
       style: styleHypeRowElement
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Select, {
@@ -70573,32 +70610,29 @@ function (_Component) {
 
   _createClass(HypeVote, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      this.getData();
-      this.interval = setInterval(function () {
-        _this2.getData();
-      }, 80000);
+    value: function componentDidMount() {// this.getData();
+      // this.interval = setInterval(() => {
+      //     this.getData();
+      // }, 80000);
     }
   }, {
     key: "getData",
     value: function getData() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.get("/vote/votecheckk/").then(function (response) {
         var activeVoteDetails = response.data.user.groups;
-        activeVoteDetails[_this3.props.groupIndex] ? activeVoteDetails[_this3.props.groupIndex].votes.map(function (vote) {
+        activeVoteDetails[_this2.props.groupIndex] ? activeVoteDetails[_this2.props.groupIndex].votes.map(function (vote) {
           vote.data = JSON.parse(vote.data);
 
           if (vote.active) {
-            _this3.setState({
+            _this2.setState({
               activeVote: vote
             });
           }
         }) : null;
 
-        _this3.setState({
+        _this2.setState({
           votingList: activeVoteDetails
         });
       });
@@ -70949,6 +70983,8 @@ var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) 
     return props.addType(e, value);
   }), _defineProperty(_React$createElement, "detailsController", function detailsController() {
     return props.detailsController();
+  }), _defineProperty(_React$createElement, "selectTypeToEdit", function selectTypeToEdit(type) {
+    return props.selectTypeToEdit(type);
   }), _React$createElement)) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Demo, {
     onClick: function onClick() {
       return props.demo();
@@ -71016,6 +71052,251 @@ var TopMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
   }, "TopMenu");
 });
 /* harmony default export */ __webpack_exports__["default"] = (TopMenu);
+
+/***/ }),
+
+/***/ "./resources/assets/js/NewLayout/components/TypeEdit.js":
+/*!**************************************************************!*\
+  !*** ./resources/assets/js/NewLayout/components/TypeEdit.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _templateObject6() {
+  var data = _taggedTemplateLiteral(["\n    margin-left: auto;\n"]);
+
+  _templateObject6 = function _templateObject6() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject5() {
+  var data = _taggedTemplateLiteral(["\n    display: flex;\n    margin-left: auto;\n"]);
+
+  _templateObject5 = function _templateObject5() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["\n    border-radius: 50%;\n    height: 38px;\n    margin: 5px 24px;\n    padding-left: 12px;\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral([""]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral([""]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral([""]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+
+var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
+var TypeEditForm = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].form(_templateObject2());
+var Option = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].option(_templateObject3());
+var Select = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].select(_templateObject4());
+var Label = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].label(_templateObject5());
+var Input = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].input(_templateObject6());
+
+var TypeEdit =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(TypeEdit, _Component);
+
+  function TypeEdit(props) {
+    var _this;
+
+    _classCallCheck(this, TypeEdit);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TypeEdit).call(this, props));
+    _this.state = {
+      id: 0,
+      type: "",
+      minPlayers: 0,
+      maxPlayers: 1,
+      category: "small",
+      lastTimePlayed: "00-00-0000",
+      timesPlayed: 0
+    };
+    return _this;
+  }
+
+  _createClass(TypeEdit, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.props.data.details) {
+        var details = JSON.parse(this.props.data.details);
+        this.setState({
+          id: this.props.data.id,
+          type: this.props.data.type,
+          minPlayers: details.minPlayers,
+          maxPlayers: details.maxPlayers,
+          category: details.category,
+          lastTimePlayed: details.lastTimePlayed,
+          timesPlayed: details.timesPlayed
+        });
+      }
+    }
+  }, {
+    key: "changeController",
+    value: function changeController(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "updateType",
+    value: function updateType(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var details = {
+        minPlayers: this.state.minPlayers,
+        maxPlayers: this.state.maxPlayers,
+        category: this.state.category,
+        lastTimePlayed: this.state.lastTimePlayed,
+        timesPlayed: this.state.timesPlayed
+      };
+      axios.put("/types/".concat(this.state.id), {
+        type: this.state.type,
+        details: JSON.stringify(details)
+      }).then(function () {
+        _this2.props.refreshData();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      console.log(this.state);
+      var style = {
+        backgroundColor: this.props.theme.colorOne,
+        width: "60%",
+        color: this.props.theme.colorTwo,
+        border: "1px solid " + this.props.theme.colorThree
+      };
+      var style2 = {
+        display: "flex",
+        justifyContent: "space-between"
+      };
+      var styleMainWrapper = {
+        backgroundColor: this.props.theme.colorThree,
+        border: "4px ridge " + this.props.theme.colorTwo,
+        color: this.props.theme.colorFive
+      };
+      var styleSelect = {
+        backgroundColor: this.props.theme.colorOne,
+        border: " 2px dotted+" + this.props.theme.colorTwo,
+        color: this.props.theme.colorTwo
+      };
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, {
+        style: styleMainWrapper
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TypeEditForm, {
+        onSubmit: function onSubmit(e) {
+          return _this3.updateType(e);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "NAME :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+        style: style,
+        type: "text",
+        name: "type",
+        value: this.state.type,
+        onChange: function onChange(e) {
+          _this3.changeController(e);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Select, {
+        value: this.state.category,
+        style: styleSelect,
+        type: "text",
+        name: "category",
+        onChange: function onChange(e) {
+          _this3.changeController(e);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "main"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "small"), "`"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+        style: style,
+        type: "number",
+        name: "minPlayers",
+        value: this.state.minPlayers,
+        onChange: function onChange(e) {
+          _this3.changeController(e);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+        style: style,
+        type: "number",
+        name: "maxPlayers",
+        value: this.state.maxPlayers,
+        onChange: function onChange(e) {
+          _this3.changeController(e);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+        type: "submit",
+        value: "Submit"
+      })));
+    }
+  }]);
+
+  return TypeEdit;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (TypeEdit);
 
 /***/ }),
 

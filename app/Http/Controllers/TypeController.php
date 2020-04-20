@@ -46,7 +46,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+       
     }
 
     /**
@@ -61,7 +61,6 @@ class TypeController extends Controller
         $type = new Type;
         $type->type = $request->type;
         $type->group_id = $request->groupId;
-        $type->details = $request->details;
         $type->save();
 
         $group = Group::find($request->groupId);
@@ -82,7 +81,7 @@ class TypeController extends Controller
      */
     public function show($id)
     {
-        //
+      
     }
 
     /**
@@ -93,7 +92,7 @@ class TypeController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -105,7 +104,12 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Log::info($id);
+        $type=Type::find($id);
+        $type->type = $request->type;
+        $type->details = $request->details;
+        $type->save();
+       return response()->json($type);
     }
 
     /**

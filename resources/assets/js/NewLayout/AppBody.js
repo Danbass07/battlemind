@@ -137,6 +137,9 @@ class AppBody extends Component {
                         }
                         demo={() => this.props.demo()}
                         detailsController={() => this.props.detailsController()}
+                        selectTypeToEdit={type =>
+                            this.props.selectTypeToEdit(type)
+                        }
                     />
 
                     <RightMenu
@@ -152,7 +155,11 @@ class AppBody extends Component {
                     />
                 </MiddleSection>
 
-                <BottomMenu theme={this.state.theme[this.state.themeActive]} />
+                <BottomMenu
+                    theme={this.state.theme[this.state.themeActive]}
+                    data={this.props.editedData}
+                    refreshData={() => this.props.refreshData()}
+                />
             </MainWrapper>
         );
     }

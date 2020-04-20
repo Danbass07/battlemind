@@ -59,10 +59,15 @@ const HypeSet = React.memo(props => {
     };
 
     const displayTypeRating = (type, index) => {
-        if (type.details === props.data.details)
+        const details = JSON.parse(type.details);
+
+        if (details.category === props.data.details)
             return (
                 <HypeSetRow style={styleHypeSetRow} key={type.type + index}>
-                    <HypeRowElement style={styleHypeRowElementOne}>
+                    <HypeRowElement
+                        style={styleHypeRowElementOne}
+                        onClick={() => props.selectTypeToEdit(index)}
+                    >
                         {type.type}
                     </HypeRowElement>
 

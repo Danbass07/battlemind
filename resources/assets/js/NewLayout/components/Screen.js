@@ -36,6 +36,7 @@ const Screen = React.memo(props => {
                     theme={props.theme}
                     addType={(e, value) => props.addType(e, value)}
                     detailsController={() => props.detailsController()}
+                    selectTypeToEdit={type => props.selectTypeToEdit(type)}
                 />
             ) : (
                 <React.Fragment>

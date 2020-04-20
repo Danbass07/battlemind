@@ -16,10 +16,10 @@ class HypeVote extends Component {
         };
     }
     componentDidMount() {
-        this.getData();
-        this.interval = setInterval(() => {
-            this.getData();
-        }, 80000);
+        // this.getData();
+        // this.interval = setInterval(() => {
+        //     this.getData();
+        // }, 80000);
     }
     getData() {
         axios.get(`/vote/votecheckk/`).then(response => {

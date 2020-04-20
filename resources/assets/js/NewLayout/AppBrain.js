@@ -9,10 +9,19 @@ class AppBrain extends Component {
         this.state = {
             user: {
                 name: "loading",
-                groups: [{ id: 0, users: [], types: [] }]
+                groups: [
+                    {
+                        id: 0,
+                        users: [],
+                        types: [
+                            { type: "Select Game to Edit and Click this to " }
+                        ]
+                    }
+                ]
             },
             activeGroupIndex: 0,
-            details: "main"
+            editedTypeIndex: 0,
+            details: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
         };
     }
 
@@ -58,6 +67,11 @@ class AppBrain extends Component {
             this.getUserContent();
         });
     }
+    selectTypeToEdit(index) {
+        this.setState({
+            editedTypeIndex: index
+        });
+    }
     detailsController() {
         if (this.state.details === "main") {
             this.setState({
@@ -82,7 +96,6 @@ class AppBrain extends Component {
             });
     }
     render() {
-        // console.log(this.state.user);
         return (
             <AppBody
                 addType={(e, value) => this.addType(e, value)}
@@ -91,9 +104,16 @@ class AppBrain extends Component {
                     this.hypeLevelHandler(e, typeId)
                 }
                 data={this.state}
+                editedData={
+                    this.state.user.groups[this.state.activeGroupIndex].types[
+                        this.state.editedTypeIndex
+                    ]
+                }
                 activeGroupChange={() => this.activeGroupChange()}
                 demo={() => this.demo()}
                 detailsController={() => this.detailsController()}
+                selectTypeToEdit={index => this.selectTypeToEdit(index)}
+                refreshData={() => this.getUserContent()}
             />
         );
     }
