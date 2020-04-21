@@ -69925,7 +69925,7 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
     }
-  }, setComponentStatus ? props.data.type + " Open" : "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, setComponentStatus ? console.log(props.data) + " Open" : "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
     refreshData: function refreshData() {
       return props.refreshData();
     },
