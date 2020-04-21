@@ -31,7 +31,7 @@ class TypeEdit extends Component {
         };
     }
     componentDidMount() {
-        if (this.props.data.details) {
+        if (this.props.data && this.props.data.details) {
             const details = JSON.parse(this.props.data.details);
             this.setState({
                 id: this.props.data.id,
