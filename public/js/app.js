@@ -71227,7 +71227,6 @@ function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      console.log(this.state);
       var style = {
         backgroundColor: this.props.theme.colorOne,
         width: "60%",

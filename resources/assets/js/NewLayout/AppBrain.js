@@ -68,6 +68,7 @@ class AppBrain extends Component {
         });
     }
     selectTypeToEdit(index) {
+        console.log(this.state);
         this.setState({
             editedTypeIndex: index
         });

@@ -71,7 +71,6 @@ class TypeEdit extends Component {
     }
 
     render() {
-        console.log(this.state);
         const style = {
             backgroundColor: this.props.theme.colorOne,
             width: "60%",
