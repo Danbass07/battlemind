@@ -32,12 +32,14 @@ const TypeOptions = styled.div`
     display: flex;
     justify-content: space-between;
 `;
-const Button = styled.button`
-    width: 100%;
-`;
+
 const Option = styled.option``;
 
 const HypeSet = React.memo(props => {
+    const Button = styled.button`
+        width: 100%;
+        background-color: ${props.theme.colorTwo};
+    `;
     const styleHypeSetRow = {
         borderBottom: "1px solid" + props.theme.colorTwo
     };

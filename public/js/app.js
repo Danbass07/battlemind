@@ -70382,7 +70382,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Form */ "./resources/assets/js/NewLayout/components/Form.js");
 function _templateObject8() {
-  var data = _taggedTemplateLiteral([""]);
+  var data = _taggedTemplateLiteral(["\n        width: 100%;\n        background-color: ", ";\n    "]);
 
   _templateObject8 = function _templateObject8() {
     return data;
@@ -70392,7 +70392,7 @@ function _templateObject8() {
 }
 
 function _templateObject7() {
-  var data = _taggedTemplateLiteral(["\n    width: 100%;\n"]);
+  var data = _taggedTemplateLiteral([""]);
 
   _templateObject7 = function _templateObject7() {
     return data;
@@ -70472,9 +70472,9 @@ var HypeSetRow = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_
 var HypeRowElement = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject4());
 var Select = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].select(_templateObject5());
 var TypeOptions = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject6());
-var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject7());
-var Option = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].option(_templateObject8());
+var Option = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].option(_templateObject7());
 var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
+  var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject8(), props.theme.colorTwo);
   var styleHypeSetRow = {
     borderBottom: "1px solid" + props.theme.colorTwo
   };
