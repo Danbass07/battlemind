@@ -38,7 +38,7 @@ const Option = styled.option``;
 const HypeSet = React.memo(props => {
     const Button = styled.button`
         width: 100%;
-        background-color: ${props.theme.colorTwo};
+        background-color: ${props.theme.colorFour};
     `;
     const styleHypeSetRow = {
         borderBottom: "1px solid" + props.theme.colorTwo
