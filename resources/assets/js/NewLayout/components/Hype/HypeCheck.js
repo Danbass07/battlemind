@@ -31,7 +31,7 @@ class HypeCheck extends Component {
         let Button = styled.button`
             width: 80px;
             height: 100%;
-            background-color: ${this.props.theme.colorFour};
+            background-color: green;
             writing-mode: vertical-rl;
             text-orientation: upright;
         `;
