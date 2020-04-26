@@ -23,11 +23,11 @@ const BottomMenu = React.memo(props => {
         background-color: ${props.theme.colorFive};
         color: ${props.theme.colorThree};
     `;
-    puuppa;
+
     return (
         <MainWrapper>
             <Switch onClick={() => newComponentStatus(!setComponentStatus)}>
-                {setComponentStatus ? puppa + " Open this" : "Close that"}
+                {setComponentStatus ? " Open this" : "Close that"}
             </Switch>
             <TypeEdit
                 refreshData={() => props.refreshData()}

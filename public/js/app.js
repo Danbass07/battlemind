@@ -69921,12 +69921,11 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
 
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? "translateY(-100%);" : "translateY(0);");
   var Switch = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFive, props.theme.colorThree);
-  puuppa;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
     }
-  }, setComponentStatus ? puppa + " Open this" : "Close that"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, setComponentStatus ? " Open this" : "Close that"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
     refreshData: function refreshData() {
       return props.refreshData();
     },
