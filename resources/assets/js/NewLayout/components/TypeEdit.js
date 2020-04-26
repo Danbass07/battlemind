@@ -31,7 +31,7 @@ class TypeEdit extends Component {
         };
     }
     componentDidMount() {
-        console.log("change");
+        // console.log("change");
         if (this.props.data && this.props.data.details) {
             const details = JSON.parse(this.props.data.details);
             this.setState({
@@ -117,7 +117,8 @@ class TypeEdit extends Component {
                         }}
                     >
                         <Option>main</Option>
-                        <Option>small</Option>`
+                        <Option>small</Option>
+                        <Option>category</Option>`
                     </Select>
                     <Input
                         style={style}

@@ -69759,6 +69759,7 @@ function (_Component) {
   }, {
     key: "selectTypeToEdit",
     value: function selectTypeToEdit(index) {
+      console.log(this.state);
       this.setState({
         editedTypeIndex: index
       });
@@ -69925,7 +69926,7 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
     }
-  }, setComponentStatus ? console.log(props.data) + " Open" : "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, setComponentStatus ? " Open" : "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
     refreshData: function refreshData() {
       return props.refreshData();
     },
@@ -70111,16 +70112,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HypeFunctions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HypeFunctions.js */ "./resources/assets/js/NewLayout/components/Hype/HypeFunctions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n                width: 80px;\n                height: 100%;\n                background-color: ", ";\n                writing-mode: vertical-rl;\n                text-orientation: upright;\n            "]);
-
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
-
-  return data;
-}
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -70134,18 +70125,6 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n            width: 80px;\n            height: 100%;\n            background-color: ", ";\n            writing-mode: vertical-rl;\n            text-orientation: upright;\n        "]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -70163,9 +70142,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n    width: 80px;\n    height: 100%;\n    background-color: green;\n    writing-mode: vertical-rl;\n    text-orientation: upright;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 
+
+var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject());
 
 var HypeCheck =
 /*#__PURE__*/
@@ -70187,32 +70179,19 @@ function (_Component) {
 
   _createClass(HypeCheck, [{
     key: "componentDidMount",
-    value: function componentDidMount() {}
-  }, {
-    key: "compareValues",
-    value: function compareValues(key) {
-      var ascending = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      _HypeFunctions_js__WEBPACK_IMPORTED_MODULE_2__["compareValues"](key, ascending);
+    value: function componentDidMount() {
+      console.log(this.props);
     }
   }, {
     key: "setUpVote",
     value: function setUpVote(votingList, groupId) {
       _HypeFunctions_js__WEBPACK_IMPORTED_MODULE_2__["setUpVote"](votingList, groupId);
-    } // checkPlayerRating(user) {
-    //     let theOne = [];
-    //     theOne.push(user);
-    //     this.setState({
-    //         theOne: theOne,
-    //         onlyOne: !this.state.onlyOne
-    //     });
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject(), this.props.theme.colorFour);
       var activeUsersRating;
       var group;
       var data;
@@ -70255,18 +70234,16 @@ function (_Component) {
 
         _votingList.map(function (candidate, index) {
           // console.log(candidate)
-          topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : null : null;
+          return topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : null : null;
         });
 
-        _votingList = topList; // votingList.sort(this.compareValues('totalHype', false)).slice(0,3);
-
-        Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject2(), this.props.theme.colorFour);
+        _votingList = topList; // votingList.sort(HypeFunctions.compareValues('totalHype', false)).slice(0,3);
       } else {
         activeUsersRating = [];
         data = [];
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, console.log(votingList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
         onClick: function onClick() {
           return _this2.setUpVote(votingList, _this2.props.group.id);
         }
@@ -70363,7 +70340,7 @@ var setUpVote = function setUpVote(votingList, groupId) {
   axios.post("/vote/setUpVote", {
     data: JSON.stringify(activeVoteDetails),
     group_id: groupId
-  });
+  }, console.log(votingList));
 };
 
 /***/ }),
@@ -70381,6 +70358,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Form */ "./resources/assets/js/NewLayout/components/Form.js");
+/* harmony import */ var _HypeFunctions_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HypeFunctions.js */ "./resources/assets/js/NewLayout/components/Hype/HypeFunctions.js");
 function _templateObject8() {
   var data = _taggedTemplateLiteral(["\n        width: 100%;\n        background-color: ", ";\n    "]);
 
@@ -70466,6 +70444,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
 var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
 var HypeWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
 var HypeSetRow = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3());
@@ -70474,7 +70453,7 @@ var Select = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].select(_t
 var TypeOptions = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject6());
 var Option = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].option(_templateObject7());
 var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
-  var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject8(), props.theme.colorTwo);
+  var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject8(), props.theme.colorFour);
   var styleHypeSetRow = {
     borderBottom: "1px solid" + props.theme.colorTwo
   };
@@ -70494,7 +70473,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
 
   var displayTypeRating = function displayTypeRating(type, index) {
     var details = JSON.parse(type.details);
-    if (details.category === props.data.details) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeSetRow, {
+    if (details.category === props.data.details || details.category === "category") return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeSetRow, {
       style: styleHypeSetRow,
       key: type.type + index
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
@@ -70502,7 +70481,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
       onClick: function onClick() {
         return props.selectTypeToEdit(index);
       }
-    }, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
+    }, type.type, " ", details.category === "category" ? "--CATEGORY!" : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
       style: styleHypeRowElement
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Select, {
       style: styleSelect,
@@ -70522,7 +70501,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
 
   var mapUsers = function mapUsers() {
     return props.group.users.map(function (user) {
-      return user.types.map(function (type, index) {
+      return user.types.sort(_HypeFunctions_js__WEBPACK_IMPORTED_MODULE_3__["compareValues"]("type", true)).map(function (type, index) {
         if (type.group_id === props.activeGroup.id && type.pivot.user_id === props.data.user.id) {
           return displayTypeRating(type, index);
         }
@@ -71184,7 +71163,8 @@ function (_Component) {
   _createClass(TypeEdit, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      if (this.props.data.details) {
+      // console.log("change");
+      if (this.props.data && this.props.data.details) {
         var details = JSON.parse(this.props.data.details);
         this.setState({
           id: this.props.data.id,
@@ -71269,7 +71249,7 @@ function (_Component) {
         onChange: function onChange(e) {
           _this3.changeController(e);
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "main"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "small"), "`"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "main"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "small"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "category"), "`"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
         style: style,
         type: "number",
         name: "minPlayers",

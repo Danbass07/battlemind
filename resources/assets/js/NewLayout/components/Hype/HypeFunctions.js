@@ -27,8 +27,12 @@ export const setUpVote = (votingList, groupId) => {
             winner: false
         });
     });
-    axios.post("/vote/setUpVote", {
-        data: JSON.stringify(activeVoteDetails),
-        group_id: groupId
-    });
+    axios.post(
+        "/vote/setUpVote",
+        {
+            data: JSON.stringify(activeVoteDetails),
+            group_id: groupId
+        },
+        console.log(votingList)
+    );
 };
