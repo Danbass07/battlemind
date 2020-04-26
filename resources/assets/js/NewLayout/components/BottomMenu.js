@@ -27,7 +27,9 @@ const BottomMenu = React.memo(props => {
     return (
         <MainWrapper>
             <Switch onClick={() => newComponentStatus(!setComponentStatus)}>
-                {setComponentStatus ? props.data.puppa + " Open" : "Close"}
+                {setComponentStatus
+                    ? props.data.puppa + " Open this"
+                    : "Close that"}
             </Switch>
             <TypeEdit
                 refreshData={() => props.refreshData()}
