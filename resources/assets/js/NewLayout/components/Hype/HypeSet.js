@@ -72,9 +72,9 @@ const HypeSet = React.memo(props => {
                 <HypeSetRow style={styleHypeSetRow} key={type.type + index}>
                     <HypeRowElement
                         style={styleHypeRowElementOne}
-                        onClick={() => props.selectTypeToEdit(index)}
+                        onClick={() => props.selectTypeToEdit(type)}
                     >
-                        {type.type}{" "}
+                        {type.type}
                         {details.category === "category" ? "--CATEGORY!" : null}
                     </HypeRowElement>
 

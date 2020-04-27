@@ -20,7 +20,9 @@ class AppBrain extends Component {
                 ]
             },
             activeGroupIndex: 0,
-            editedTypeIndex: 0,
+            typeSelescted: {
+                type: "Choose game to edit"
+            },
             details: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
         };
     }
@@ -67,10 +69,9 @@ class AppBrain extends Component {
             this.getUserContent();
         });
     }
-    selectTypeToEdit(index) {
-        console.log(this.state);
+    selectTypeToEdit(type) {
         this.setState({
-            editedTypeIndex: index
+            typeSelescted: type
         });
     }
     detailsController() {
@@ -97,6 +98,7 @@ class AppBrain extends Component {
             });
     }
     render() {
+        console.log(this.state);
         return (
             <AppBody
                 addType={(e, value) => this.addType(e, value)}

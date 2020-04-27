@@ -19,7 +19,7 @@ class HypeCheck extends Component {
         };
     }
     componentDidMount() {
-        console.log(this.props);
+        // console.log(this.props);
     }
 
     setUpVote(votingList, groupId) {
@@ -93,7 +93,7 @@ class HypeCheck extends Component {
 
         return (
             <React.Fragment>
-                {console.log(votingList)}
+                {/* {console.log(votingList)} */}
                 <Button
                     onClick={() =>
                         this.setUpVote(votingList, this.props.group.id)

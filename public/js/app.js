@@ -69609,7 +69609,7 @@ function (_Component) {
         theme: this.state.theme[this.state.themeActive]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_BottomMenu__WEBPACK_IMPORTED_MODULE_9__["default"], {
         theme: this.state.theme[this.state.themeActive],
-        data: this.props.editedData,
+        data: this.props.data.typeSelescted,
         refreshData: function refreshData() {
           return _this2.props.refreshData();
         }
@@ -69691,7 +69691,9 @@ function (_Component) {
         }]
       },
       activeGroupIndex: 0,
-      editedTypeIndex: 0,
+      typeSelescted: {
+        type: "Choose game to edit"
+      },
       details: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
 
     };
@@ -69758,10 +69760,9 @@ function (_Component) {
     }
   }, {
     key: "selectTypeToEdit",
-    value: function selectTypeToEdit(index) {
-      console.log(this.state);
+    value: function selectTypeToEdit(type) {
       this.setState({
-        editedTypeIndex: index
+        typeSelescted: type
       });
     }
   }, {
@@ -69796,6 +69797,7 @@ function (_Component) {
     value: function render() {
       var _this5 = this;
 
+      console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         addType: function addType(e, value) {
           return _this5.addType(e, value);
@@ -69921,11 +69923,12 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
 
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? "translateY(-100%);" : "translateY(0);");
   var Switch = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFive, props.theme.colorThree);
+  console.log(props.data);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
     }
-  }, setComponentStatus ? " Open this" : "Close that"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, setComponentStatus ? props.data.type + " Open" : "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
     refreshData: function refreshData() {
       return props.refreshData();
     },
@@ -70178,8 +70181,7 @@ function (_Component) {
 
   _createClass(HypeCheck, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      console.log(this.props);
+    value: function componentDidMount() {// console.log(this.props);
     }
   }, {
     key: "setUpVote",
@@ -70242,7 +70244,7 @@ function (_Component) {
         data = [];
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, console.log(votingList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
         onClick: function onClick() {
           return _this2.setUpVote(votingList, _this2.props.group.id);
         }
@@ -70478,9 +70480,9 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
       style: styleHypeRowElementOne,
       onClick: function onClick() {
-        return props.selectTypeToEdit(index);
+        return props.selectTypeToEdit(type);
       }
-    }, type.type, " ", details.category === "category" ? "--CATEGORY!" : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
+    }, type.type, details.category === "category" ? "--CATEGORY!" : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
       style: styleHypeRowElement
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Select, {
       style: styleSelect,

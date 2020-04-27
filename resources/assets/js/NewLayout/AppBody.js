@@ -157,7 +157,7 @@ class AppBody extends Component {
 
                 <BottomMenu
                     theme={this.state.theme[this.state.themeActive]}
-                    data={this.props.editedData}
+                    data={this.props.data.typeSelescted}
                     refreshData={() => this.props.refreshData()}
                 />
             </MainWrapper>
