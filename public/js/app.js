@@ -69704,6 +69704,8 @@ function (_Component) {
     key: "hypeLevelHandler",
     value: function hypeLevelHandler(e, typeId) {
       var data = Object(_Functions_js__WEBPACK_IMPORTED_MODULE_3__["hypeLevelHandler"])(e, typeId, this.state.user, this.state.activeGroupIndex);
+
+      console.log(data);
     }
   }, {
     key: "componentDidMount",
@@ -69797,7 +69799,6 @@ function (_Component) {
     value: function render() {
       var _this5 = this;
 
-      console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         addType: function addType(e, value) {
           return _this5.addType(e, value);
@@ -69923,7 +69924,6 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
 
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? "translateY(-100%);" : "translateY(0);");
   var Switch = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFive, props.theme.colorThree);
-  console.log(props.data);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
@@ -70181,7 +70181,8 @@ function (_Component) {
 
   _createClass(HypeCheck, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// console.log(this.props);
+    value: function componentDidMount() {
+      console.log(this.props.group);
     }
   }, {
     key: "setUpVote",

@@ -34,6 +34,7 @@ class AppBrain extends Component {
             this.state.user,
             this.state.activeGroupIndex
         );
+        console.log(data);
     }
     componentDidMount() {
         this.getUserContent();
@@ -98,7 +99,6 @@ class AppBrain extends Component {
             });
     }
     render() {
-        console.log(this.state);
         return (
             <AppBody
                 addType={(e, value) => this.addType(e, value)}

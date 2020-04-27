@@ -23,7 +23,7 @@ const BottomMenu = React.memo(props => {
         background-color: ${props.theme.colorFive};
         color: ${props.theme.colorThree};
     `;
-    console.log(props.data);
+
     return (
         <MainWrapper>
             <Switch onClick={() => newComponentStatus(!setComponentStatus)}>
