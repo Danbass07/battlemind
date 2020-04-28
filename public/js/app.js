@@ -69580,8 +69580,8 @@ function (_Component) {
         },
         theme: this.state.theme[this.state.themeActive]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Screen__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        addType: function addType(e, value) {
-          return _this2.props.addType(e, value);
+        addType: function addType(e, value, category) {
+          _this2.props.addType(e, value, category);
         },
         hypeLevelHandler: function hypeLevelHandler(e, typeId) {
           return _this2.props.hypeLevelHandler(e, typeId);
@@ -69782,14 +69782,13 @@ function (_Component) {
     }
   }, {
     key: "addType",
-    value: function addType(e, value) {
+    value: function addType(e, value, category) {
       var _this4 = this;
 
-      e.preventDefault();
       axios.post("/types", {
         type: value,
         groupId: this.state.user.groups[this.state.activeGroupIndex].id,
-        details: this.state.details
+        details: category
       }).then(function () {
         _this4.getUserContent();
       });
@@ -69800,8 +69799,8 @@ function (_Component) {
       var _this5 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        addType: function addType(e, value) {
-          return _this5.addType(e, value);
+        addType: function addType(e, value, category) {
+          return _this5.addType(e, value, category);
         },
         setUpVote: function setUpVote(votingList) {
           return _this5.setUpVote(votingList);
@@ -70077,6 +70076,7 @@ var Form = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     style: style2,
     onSubmit: function onSubmit(e) {
+      e.preventDefault();
       props.submitControll(e, value.value);
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, props.title, " :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
@@ -70519,7 +70519,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
     theme: props.theme,
     title: "Add Game",
     submitControll: function submitControll(e, value) {
-      props.addType(e, value);
+      props.addType(e, value, props.data.details);
     }
   }));
 });
@@ -70900,8 +70900,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Hype/HypeSet */ "./resources/assets/js/NewLayout/components/Hype/HypeSet.js");
 /* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Form */ "./resources/assets/js/NewLayout/components/Form.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n        height: 40px;\n        width: 60%;\n    "]);
 
@@ -70937,8 +70935,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
-  var _React$createElement;
-
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
     value: ""
   }),
@@ -70948,10 +70944,7 @@ var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) 
 
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorOne, props.theme.colorTwo, props.theme.colorFive);
   var Demo = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject2());
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, props.activeGroup.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__["default"], (_React$createElement = {
-    addType: function addType(e, value) {
-      return props.addType(e, value);
-    },
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, props.activeGroup.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeSet__WEBPACK_IMPORTED_MODULE_2__["default"], {
     group: props.group,
     data: props.userData,
     activeGroup: props.activeGroup,
@@ -70959,14 +70952,17 @@ var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) 
     hypeLevelHandler: function hypeLevelHandler(e, typeId) {
       return props.hypeLevelHandler(e, typeId);
     },
-    theme: props.theme
-  }, _defineProperty(_React$createElement, "addType", function addType(e, value) {
-    return props.addType(e, value);
-  }), _defineProperty(_React$createElement, "detailsController", function detailsController() {
-    return props.detailsController();
-  }), _defineProperty(_React$createElement, "selectTypeToEdit", function selectTypeToEdit(type) {
-    return props.selectTypeToEdit(type);
-  }), _React$createElement)) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Demo, {
+    theme: props.theme,
+    addType: function addType(e, value, category) {
+      return props.addType(e, value, category);
+    },
+    detailsController: function detailsController() {
+      return props.detailsController();
+    },
+    selectTypeToEdit: function selectTypeToEdit(type) {
+      return props.selectTypeToEdit(type);
+    }
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Demo, {
     onClick: function onClick() {
       return props.demo();
     }
@@ -70975,7 +70971,6 @@ var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) 
     title: "Enter Club Code",
     submitControll: function submitControll(e, value) {
       e.preventDefault();
-      console.log(value);
     }
   })));
 });
@@ -71069,7 +71064,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _templateObject6() {
-  var data = _taggedTemplateLiteral(["\n    margin-left: auto;\n"]);
+  var data = _taggedTemplateLiteral(["\n    margin-left: auto;\n    width: 100%;\n"]);
 
   _templateObject6 = function _templateObject6() {
     return data;
@@ -71165,8 +71160,7 @@ function (_Component) {
   _createClass(TypeEdit, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // console.log("change");
-      if (this.props.data && this.props.data.details) {
+      if (this.props.data.details) {
         var details = JSON.parse(this.props.data.details);
         this.setState({
           id: this.props.data.id,
@@ -71235,7 +71229,7 @@ function (_Component) {
         onSubmit: function onSubmit(e) {
           return _this3.updateType(e);
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "NAME :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "Name :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
         style: style,
         type: "text",
         name: "type",
@@ -71243,7 +71237,7 @@ function (_Component) {
         onChange: function onChange(e) {
           _this3.changeController(e);
         }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Select, {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "Type :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Select, {
         value: this.state.category,
         style: styleSelect,
         type: "text",
@@ -71251,7 +71245,7 @@ function (_Component) {
         onChange: function onChange(e) {
           _this3.changeController(e);
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "main"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "small"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "category"), "`"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "main"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "small"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "category"), "`"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "Min PLayers :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
         style: style,
         type: "number",
         name: "minPlayers",
@@ -71259,7 +71253,7 @@ function (_Component) {
         onChange: function onChange(e) {
           _this3.changeController(e);
         }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "Max PLayers :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
         style: style,
         type: "number",
         name: "maxPlayers",
@@ -71267,9 +71261,9 @@ function (_Component) {
         onChange: function onChange(e) {
           _this3.changeController(e);
         }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "Accept Changes :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
         type: "submit",
-        value: "Submit"
+        value: "Save"
       })));
     }
   }]);

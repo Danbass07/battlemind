@@ -29,6 +29,7 @@ const Form = React.memo(props => {
             <form
                 style={style2}
                 onSubmit={e => {
+                    e.preventDefault();
                     props.submitControll(e, value.value);
                 }}
             >

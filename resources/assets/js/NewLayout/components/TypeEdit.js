@@ -16,6 +16,7 @@ let Label = styled.label`
 `;
 let Input = styled.input`
     margin-left: auto;
+    width: 100%;
 `;
 class TypeEdit extends Component {
     constructor(props) {
@@ -31,8 +32,7 @@ class TypeEdit extends Component {
         };
     }
     componentDidMount() {
-        // console.log("change");
-        if (this.props.data && this.props.data.details) {
+        if (this.props.data.details) {
             const details = JSON.parse(this.props.data.details);
             this.setState({
                 id: this.props.data.id,
@@ -97,7 +97,7 @@ class TypeEdit extends Component {
         return (
             <MainWrapper style={styleMainWrapper}>
                 <TypeEditForm onSubmit={e => this.updateType(e)}>
-                    <Label>NAME :</Label>
+                    <Label>Name :</Label>
                     <Input
                         style={style}
                         type="text"
@@ -107,6 +107,7 @@ class TypeEdit extends Component {
                             this.changeController(e);
                         }}
                     />
+                    <Label>Type :</Label>
                     <Select
                         value={this.state.category}
                         style={styleSelect}
@@ -120,6 +121,7 @@ class TypeEdit extends Component {
                         <Option>small</Option>
                         <Option>category</Option>`
                     </Select>
+                    <Label>Min PLayers :</Label>
                     <Input
                         style={style}
                         type="number"
@@ -129,6 +131,7 @@ class TypeEdit extends Component {
                             this.changeController(e);
                         }}
                     />
+                    <Label>Max PLayers :</Label>
                     <Input
                         style={style}
                         type="number"
@@ -138,7 +141,8 @@ class TypeEdit extends Component {
                             this.changeController(e);
                         }}
                     />
-                    <Input type="submit" value="Submit" />
+                    <Label>Accept Changes :</Label>
+                    <Input type="submit" value="Save" />
                 </TypeEditForm>
             </MainWrapper>
         );

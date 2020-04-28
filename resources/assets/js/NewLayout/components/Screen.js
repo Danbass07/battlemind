@@ -25,7 +25,6 @@ const Screen = React.memo(props => {
         <MainWrapper>
             {props.activeGroup.id ? (
                 <HypeSet
-                    addType={(e, value) => props.addType(e, value)}
                     group={props.group}
                     data={props.userData}
                     activeGroup={props.activeGroup}
@@ -34,7 +33,9 @@ const Screen = React.memo(props => {
                         props.hypeLevelHandler(e, typeId)
                     }
                     theme={props.theme}
-                    addType={(e, value) => props.addType(e, value)}
+                    addType={(e, value, category) =>
+                        props.addType(e, value, category)
+                    }
                     detailsController={() => props.detailsController()}
                     selectTypeToEdit={type => props.selectTypeToEdit(type)}
                 />
@@ -46,7 +47,6 @@ const Screen = React.memo(props => {
                         title="Enter Club Code"
                         submitControll={(e, value) => {
                             e.preventDefault();
-                            console.log(value);
                         }}
                     />
                 </React.Fragment>

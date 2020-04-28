@@ -135,7 +135,7 @@ const HypeSet = React.memo(props => {
                 theme={props.theme}
                 title="Add Game"
                 submitControll={(e, value) => {
-                    props.addType(e, value);
+                    props.addType(e, value, props.data.details);
                 }}
             />
         </MainWrapper>

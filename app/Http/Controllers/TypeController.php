@@ -60,7 +60,7 @@ class TypeController extends Controller
         Log::info($request);
         $type = new Type;
         $type->type = $request->type;
-        $type->details = '{"minPlayers":0,"maxPlayers":1,"category":"main","lastTimePlayed":"00-00-0000","timesPlayed":0}';
+        $type->details = '{"minPlayers":0,"maxPlayers":1,"category":"'.$request->details.'","lastTimePlayed":"00-00-0000","timesPlayed":0}';
         $type->group_id = $request->groupId;
         $type->save();
 

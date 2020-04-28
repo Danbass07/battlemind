@@ -86,13 +86,12 @@ class AppBrain extends Component {
             });
         }
     }
-    addType(e, value) {
-        e.preventDefault();
+    addType(e, value, category) {
         axios
             .post("/types", {
                 type: value,
                 groupId: this.state.user.groups[this.state.activeGroupIndex].id,
-                details: this.state.details
+                details: category
             })
             .then(() => {
                 this.getUserContent();
@@ -101,7 +100,9 @@ class AppBrain extends Component {
     render() {
         return (
             <AppBody
-                addType={(e, value) => this.addType(e, value)}
+                addType={(e, value, category) =>
+                    this.addType(e, value, category)
+                }
                 setUpVote={votingList => this.setUpVote(votingList)}
                 hypeLevelHandler={(e, typeId) =>
                     this.hypeLevelHandler(e, typeId)

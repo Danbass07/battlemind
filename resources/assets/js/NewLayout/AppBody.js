@@ -119,7 +119,9 @@ class AppBody extends Component {
                     />
 
                     <Screen
-                        addType={(e, value) => this.props.addType(e, value)}
+                        addType={(e, value, category) => {
+                            this.props.addType(e, value, category);
+                        }}
                         hypeLevelHandler={(e, typeId) =>
                             this.props.hypeLevelHandler(e, typeId)
                         }
