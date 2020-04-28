@@ -97,6 +97,9 @@ class AppBrain extends Component {
                 this.getUserContent();
             });
     }
+    removeType(id) {
+        axios.delete(`/types/${id}`).then(this.getUserContent());
+    }
     render() {
         return (
             <AppBody
@@ -118,6 +121,7 @@ class AppBrain extends Component {
                 detailsController={() => this.detailsController()}
                 selectTypeToEdit={index => this.selectTypeToEdit(index)}
                 refreshData={() => this.getUserContent()}
+                removeType={id => this.removeType(id)}
             />
         );
     }

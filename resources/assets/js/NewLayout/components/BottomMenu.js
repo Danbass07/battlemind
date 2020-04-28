@@ -23,7 +23,7 @@ const BottomMenu = React.memo(props => {
         background-color: ${props.theme.colorFive};
         color: ${props.theme.colorThree};
     `;
-
+    const RemoveType = styled.button``;
     return (
         <MainWrapper>
             <Switch onClick={() => newComponentStatus(!setComponentStatus)}>
@@ -34,6 +34,9 @@ const BottomMenu = React.memo(props => {
                 data={props.data}
                 theme={props.theme}
             />
+            <RemoveType onClick={() => props.removeType(props.data.id)}>
+                Remove Game
+            </RemoveType>
         </MainWrapper>
     );
 });

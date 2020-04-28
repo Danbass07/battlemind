@@ -69612,6 +69612,9 @@ function (_Component) {
         data: this.props.data.typeSelescted,
         refreshData: function refreshData() {
           return _this2.props.refreshData();
+        },
+        removeType: function removeType(id) {
+          return _this2.props.removeType(id);
         }
       }));
     }
@@ -69794,6 +69797,11 @@ function (_Component) {
       });
     }
   }, {
+    key: "removeType",
+    value: function removeType(id) {
+      axios["delete"]("/types/".concat(id)).then(this.getUserContent());
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this5 = this;
@@ -69824,6 +69832,9 @@ function (_Component) {
         },
         refreshData: function refreshData() {
           return _this5.getUserContent();
+        },
+        removeType: function removeType(id) {
+          return _this5.removeType(id);
         }
       });
     }
@@ -69882,6 +69893,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _TypeEdit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TypeEdit */ "./resources/assets/js/NewLayout/components/TypeEdit.js");
+function _templateObject3() {
+  var data = _taggedTemplateLiteral([""]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n        height: 30px;\n        width: 100%;\n        padding-top: 3px;\n        background-color: ", ";\n        color: ", ";\n    "]);
 
@@ -69923,6 +69944,7 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
 
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? "translateY(-100%);" : "translateY(0);");
   var Switch = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFive, props.theme.colorThree);
+  var RemoveType = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject3());
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
@@ -69933,7 +69955,11 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
     },
     data: props.data,
     theme: props.theme
-  }));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RemoveType, {
+    onClick: function onClick() {
+      return props.removeType(props.data.id);
+    }
+  }, "Remove Game"));
 });
 /* harmony default export */ __webpack_exports__["default"] = (BottomMenu);
 

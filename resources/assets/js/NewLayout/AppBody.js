@@ -161,6 +161,7 @@ class AppBody extends Component {
                     theme={this.state.theme[this.state.themeActive]}
                     data={this.props.data.typeSelescted}
                     refreshData={() => this.props.refreshData()}
+                    removeType={id => this.props.removeType(id)}
                 />
             </MainWrapper>
         );
