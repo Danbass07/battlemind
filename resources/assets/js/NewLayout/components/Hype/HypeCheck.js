@@ -19,7 +19,7 @@ class HypeCheck extends Component {
         };
     }
     componentDidMount() {
-        console.log(this.props.group);
+        // console.log(this.props.group);
     }
 
     setUpVote(votingList, groupId) {

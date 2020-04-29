@@ -24,19 +24,38 @@ const BottomMenu = React.memo(props => {
         color: ${props.theme.colorThree};
     `;
     const RemoveType = styled.button``;
+
     return (
         <MainWrapper>
-            <Switch onClick={() => newComponentStatus(!setComponentStatus)}>
-                {setComponentStatus ? props.data.type + " Open" : "Close"}
-            </Switch>
-            <TypeEdit
-                refreshData={() => props.refreshData()}
-                data={props.data}
-                theme={props.theme}
-            />
-            <RemoveType onClick={() => props.removeType(props.data.id)}>
-                Remove Game
-            </RemoveType>
+            {props.position === -33 ? (
+                <React.Fragment>
+                    <Switch
+                        onClick={() => newComponentStatus(!setComponentStatus)}
+                    >
+                        {setComponentStatus
+                            ? props.data.typeSelescted.type + " Open"
+                            : "Close"}
+                    </Switch>
+                    <TypeEdit
+                        refreshData={() => props.refreshData()}
+                        data={props.data.typeSelescted}
+                        theme={props.theme}
+                    />
+                    <RemoveType onClick={() => props.removeType(props.data.id)}>
+                        Remove Game
+                    </RemoveType>
+                </React.Fragment>
+            ) : null}
+            {props.position === -64 ? (
+                <React.Fragment>
+                    {console.log(props.data)}
+                    <Switch
+                        onClick={() => newComponentStatus(!setComponentStatus)}
+                    >
+                        {setComponentStatus ? "Meeting Settings Open" : "Close"}
+                    </Switch>
+                </React.Fragment>
+            ) : null}
         </MainWrapper>
     );
 });

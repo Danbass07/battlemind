@@ -158,8 +158,9 @@ class AppBody extends Component {
                 </MiddleSection>
 
                 <BottomMenu
+                    position={this.state.middleSectionMoveValue}
                     theme={this.state.theme[this.state.themeActive]}
-                    data={this.props.data.typeSelescted}
+                    data={this.props.data}
                     refreshData={() => this.props.refreshData()}
                     removeType={id => this.props.removeType(id)}
                 />

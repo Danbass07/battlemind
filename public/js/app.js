@@ -69608,8 +69608,9 @@ function (_Component) {
         },
         theme: this.state.theme[this.state.themeActive]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_BottomMenu__WEBPACK_IMPORTED_MODULE_9__["default"], {
+        position: this.state.middleSectionMoveValue,
         theme: this.state.theme[this.state.themeActive],
-        data: this.props.data.typeSelescted,
+        data: this.props.data,
         refreshData: function refreshData() {
           return _this2.props.refreshData();
         },
@@ -69945,21 +69946,25 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? "translateY(-100%);" : "translateY(0);");
   var Switch = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFive, props.theme.colorThree);
   var RemoveType = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject3());
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, props.position === -33 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
     }
-  }, setComponentStatus ? props.data.type + " Open" : "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, setComponentStatus ? props.data.typeSelescted.type + " Open" : "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeEdit__WEBPACK_IMPORTED_MODULE_2__["default"], {
     refreshData: function refreshData() {
       return props.refreshData();
     },
-    data: props.data,
+    data: props.data.typeSelescted,
     theme: props.theme
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RemoveType, {
     onClick: function onClick() {
       return props.removeType(props.data.id);
     }
-  }, "Remove Game"));
+  }, "Remove Game")) : null, props.position === -64 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, console.log(props.data), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
+    onClick: function onClick() {
+      return newComponentStatus(!setComponentStatus);
+    }
+  }, setComponentStatus ? "Meeting Settings Open" : "Close")) : null);
 });
 /* harmony default export */ __webpack_exports__["default"] = (BottomMenu);
 
@@ -70207,8 +70212,7 @@ function (_Component) {
 
   _createClass(HypeCheck, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      console.log(this.props.group);
+    value: function componentDidMount() {// console.log(this.props.group);
     }
   }, {
     key: "setUpVote",
