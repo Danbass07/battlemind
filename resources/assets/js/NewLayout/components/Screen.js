@@ -47,6 +47,7 @@ const Screen = React.memo(props => {
                         title="Enter Club Code"
                         submitControll={(e, value) => {
                             e.preventDefault();
+                            console.log("controller needs doing");
                         }}
                     />
                 </React.Fragment>

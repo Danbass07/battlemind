@@ -75,7 +75,7 @@ class AppBody extends Component {
         `;
         const MiddleSection = styled.div`
             height: 80%;
-            width: 280%;
+            width: 285%;
             position: relative;
             display: flex;
             flex-direction: row;

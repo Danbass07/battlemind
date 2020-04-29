@@ -26,7 +26,7 @@ const HypeRowElement = styled.div`
 const Select = styled.select`
     border-radius: 50%;
     height: 38px;
-    margin: 5px 24px;
+    margin: 5px 24px 5px 4px;
     padding-left: 12px;
 `;
 const TypeOptions = styled.div`

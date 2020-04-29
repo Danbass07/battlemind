@@ -28,7 +28,7 @@ const RightMenu = React.memo(props => {
             {!props.moved ? (
                 <Click
                     onClick={() => {
-                        props.moveSection(-64);
+                        props.moveSection(-65);
                     }}
                 >
                     Open

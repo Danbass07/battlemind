@@ -69440,7 +69440,7 @@ __webpack_require__.r(__webpack_exports__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n            height: 80%;\n            width: 280%;\n            position: relative;\n            display: flex;\n            flex-direction: row;\n            transform: translateX(", "%);\n        "]);
+  var data = _taggedTemplateLiteral(["\n            height: 80%;\n            width: 285%;\n            position: relative;\n            display: flex;\n            flex-direction: row;\n            transform: translateX(", "%);\n        "]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -70418,7 +70418,7 @@ function _templateObject6() {
 }
 
 function _templateObject5() {
-  var data = _taggedTemplateLiteral(["\n    border-radius: 50%;\n    height: 38px;\n    margin: 5px 24px;\n    padding-left: 12px;\n"]);
+  var data = _taggedTemplateLiteral(["\n    border-radius: 50%;\n    height: 38px;\n    margin: 5px 24px 5px 4px;\n    padding-left: 12px;\n"]);
 
   _templateObject5 = function _templateObject5() {
     return data;
@@ -70893,7 +70893,7 @@ var RightMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (prop
   var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, " ", !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
-      props.moveSection(-64);
+      props.moveSection(-65);
     }
   }, "Open") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
@@ -70997,6 +70997,7 @@ var Screen = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) 
     title: "Enter Club Code",
     submitControll: function submitControll(e, value) {
       e.preventDefault();
+      console.log("controller needs doing");
     }
   })));
 });
