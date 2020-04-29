@@ -13,7 +13,7 @@ class AppBody extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            middleSectionMoveValue: -32,
+            middleSectionMoveValue: -33,
             moved: false,
             themeActive: 0,
             theme: [
@@ -58,7 +58,7 @@ class AppBody extends Component {
     render() {
         const MainWrapper = styled.div`
             height: 100%;
-            width: 100%;
+            width: 99%;
             background-color: black;
             min-width: 405px;
             overflow: hidden;
@@ -75,7 +75,7 @@ class AppBody extends Component {
         `;
         const MiddleSection = styled.div`
             height: 80%;
-            width: 285%;
+            width: 290%;
             position: relative;
             display: flex;
             flex-direction: row;

@@ -9,7 +9,7 @@ const Screen = React.memo(props => {
     });
     const MainWrapper = styled.div`
         height: 400px;
-        width: 30%;
+        width: 29%;
         background-color: ${props.theme.colorOne};
         border: 4px ridge ${props.theme.colorTwo};
         color: ${props.theme.colorFive};

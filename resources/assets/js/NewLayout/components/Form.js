@@ -16,7 +16,7 @@ const Form = React.memo(props => {
     });
     const style = {
         backgroundColor: props.theme.colorOne,
-        width: "60%",
+        width: "58%",
         color: props.theme.colorTwo,
         border: "1px solid " + props.theme.colorThree
     };

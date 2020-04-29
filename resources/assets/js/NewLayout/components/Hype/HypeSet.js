@@ -18,6 +18,7 @@ const HypeWrapper = styled.div`
 
 const HypeSetRow = styled.div`
     display: flex;
+    justify-content: space-around;
 `;
 const HypeRowElement = styled.div`
     word-wrap: break-word;
@@ -56,7 +57,7 @@ const HypeSet = React.memo(props => {
     };
 
     const styleHypeRowElementOne = {
-        width: "279px",
+        width: "260px",
         fontSize: "20px",
         padding: "8px 0px 5px 0px"
     };

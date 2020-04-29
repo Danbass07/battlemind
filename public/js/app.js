@@ -69440,7 +69440,7 @@ __webpack_require__.r(__webpack_exports__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n            height: 80%;\n            width: 285%;\n            position: relative;\n            display: flex;\n            flex-direction: row;\n            transform: translateX(", "%);\n        "]);
+  var data = _taggedTemplateLiteral(["\n            height: 80%;\n            width: 290%;\n            position: relative;\n            display: flex;\n            flex-direction: row;\n            transform: translateX(", "%);\n        "]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -69460,7 +69460,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n            height: 100%;\n            width: 100%;\n            background-color: black;\n            min-width: 405px;\n            overflow: hidden;\n        "]);
+  var data = _taggedTemplateLiteral(["\n            height: 100%;\n            width: 99%;\n            background-color: black;\n            min-width: 405px;\n            overflow: hidden;\n        "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -69510,7 +69510,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(AppBody).call(this, props));
     _this.state = {
-      middleSectionMoveValue: -32,
+      middleSectionMoveValue: -33,
       moved: false,
       themeActive: 0,
       theme: [{
@@ -70091,7 +70091,7 @@ var Form = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
 
   var style = {
     backgroundColor: props.theme.colorOne,
-    width: "60%",
+    width: "58%",
     color: props.theme.colorTwo,
     border: "1px solid " + props.theme.colorThree
   };
@@ -70438,7 +70438,7 @@ function _templateObject4() {
 }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n    display: flex;\n"]);
+  var data = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-around;\n"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -70494,7 +70494,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
     color: props.theme.colorTwo
   };
   var styleHypeRowElementOne = {
-    width: "279px",
+    width: "260px",
     fontSize: "20px",
     padding: "8px 0px 5px 0px"
   };
@@ -70767,7 +70767,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _Hype_HypeVote__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Hype/HypeVote */ "./resources/assets/js/NewLayout/components/Hype/HypeVote.js");
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n        width: 30px;\n        height: 100%;\n        background-color: ", ";\n        margin-left: auto;\n        writing-mode: vertical-rl;\n        text-orientation: upright;\n    "]);
+  var data = _taggedTemplateLiteral(["\n        width: 35px;\n        height: 100%;\n        background-color: ", ";\n        margin-left: auto;\n        writing-mode: vertical-rl;\n        text-orientation: upright;\n        border: 4px ridge ", ";\n    "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -70777,7 +70777,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 36%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color:", ";\n        margin: auto auto;\n        text-align: center;\n        display: flex;\n    "]);
+  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 36%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        display: flex;\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -70793,16 +70793,16 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 var LeftMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive);
-  var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour);
+  var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour, props.theme.colorTwo);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeVote__WEBPACK_IMPORTED_MODULE_2__["default"], {
     groupIndex: props.groupIndex
   }), !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
-      props.moveSection(0);
+      props.moveSection(-1);
     }
   }, "Open") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
-      props.moveSection(-32);
+      props.moveSection(-33);
     }
   }, "Close"));
 });
@@ -70864,7 +70864,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _Hype_HypeCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Hype/HypeCheck */ "./resources/assets/js/NewLayout/components/Hype/HypeCheck.js");
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n        position: relative;\n        width: 30px;\n        height: 100%;\n        background-color: ", ";\n        writing-mode: vertical-rl;\n        text-orientation: upright;\n    "]);
+  var data = _taggedTemplateLiteral(["\n        position: relative;\n        width: 37px;\n        height: 100%;\n        background-color: ", ";\n        writing-mode: vertical-rl;\n        text-orientation: upright;\n        border: 4px ridge ", ";\n    "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -70890,14 +70890,14 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 var RightMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props) {
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive);
-  var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, " ", !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
+  var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour, props.theme.colorTwo);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
-      props.moveSection(-65);
+      props.moveSection(-64);
     }
   }, "Open") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
-      props.moveSection(-32);
+      props.moveSection(-33);
     }
   }, "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeCheck__WEBPACK_IMPORTED_MODULE_2__["default"], {
     setUpVote: function setUpVote(votingList) {
@@ -70937,7 +70937,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 30%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n    "]);
+  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 29%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
