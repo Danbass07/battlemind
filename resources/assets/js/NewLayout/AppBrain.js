@@ -39,6 +39,12 @@ class AppBrain extends Component {
     componentDidMount() {
         this.getUserContent();
     }
+
+    activeUser(groupId, userId) {
+        axios.put(`/groups/${groupId}/toggleActiveUser/${userId}`).then(() => {
+            this.getUserContent();
+        });
+    }
     activeGroupChange() {
         if (this.state.user.groups.length - 1 > this.state.activeGroupIndex) {
             this.setState({
@@ -122,6 +128,9 @@ class AppBrain extends Component {
                 selectTypeToEdit={index => this.selectTypeToEdit(index)}
                 refreshData={() => this.getUserContent()}
                 removeType={id => this.removeType(id)}
+                activeUser={(groupId, userId) =>
+                    this.activeUser(groupId, userId)
+                }
             />
         );
     }

@@ -67240,7 +67240,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _emotion_stylis__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @emotion/stylis */ "./node_modules/@emotion/stylis/dist/stylis.browser.esm.js");
 /* harmony import */ var _emotion_unitless__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @emotion/unitless */ "./node_modules/@emotion/unitless/dist/unitless.browser.esm.js");
 /* harmony import */ var _emotion_is_prop_valid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @emotion/is-prop-valid */ "./node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js");
-/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
 /* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__);
 
 
@@ -69112,121 +69112,6 @@ if ( true && typeof window !== 'undefined') {
 
 /***/ }),
 
-/***/ "./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
-/*!*****************************************************************************************************************!*\
-  !*** ./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
-  \*****************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var reactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
-
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-var REACT_STATICS = {
-  childContextTypes: true,
-  contextType: true,
-  contextTypes: true,
-  defaultProps: true,
-  displayName: true,
-  getDefaultProps: true,
-  getDerivedStateFromError: true,
-  getDerivedStateFromProps: true,
-  mixins: true,
-  propTypes: true,
-  type: true
-};
-var KNOWN_STATICS = {
-  name: true,
-  length: true,
-  prototype: true,
-  caller: true,
-  callee: true,
-  arguments: true,
-  arity: true
-};
-var FORWARD_REF_STATICS = {
-  '$$typeof': true,
-  render: true,
-  defaultProps: true,
-  displayName: true,
-  propTypes: true
-};
-var MEMO_STATICS = {
-  '$$typeof': true,
-  compare: true,
-  defaultProps: true,
-  displayName: true,
-  propTypes: true,
-  type: true
-};
-var TYPE_STATICS = {};
-TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
-TYPE_STATICS[reactIs.Memo] = MEMO_STATICS;
-
-function getStatics(component) {
-  // React v16.11 and below
-  if (reactIs.isMemo(component)) {
-    return MEMO_STATICS;
-  } // React v16.12 and above
-
-
-  return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
-}
-
-var defineProperty = Object.defineProperty;
-var getOwnPropertyNames = Object.getOwnPropertyNames;
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-var getPrototypeOf = Object.getPrototypeOf;
-var objectPrototype = Object.prototype;
-function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-  if (typeof sourceComponent !== 'string') {
-    // don't hoist over string (html) components
-    if (objectPrototype) {
-      var inheritedComponent = getPrototypeOf(sourceComponent);
-
-      if (inheritedComponent && inheritedComponent !== objectPrototype) {
-        hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
-      }
-    }
-
-    var keys = getOwnPropertyNames(sourceComponent);
-
-    if (getOwnPropertySymbols) {
-      keys = keys.concat(getOwnPropertySymbols(sourceComponent));
-    }
-
-    var targetStatics = getStatics(targetComponent);
-    var sourceStatics = getStatics(sourceComponent);
-
-    for (var i = 0; i < keys.length; ++i) {
-      var key = keys[i];
-
-      if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
-        var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-
-        try {
-          // Avoid failures from read-only properties
-          defineProperty(targetComponent, key, descriptor);
-        } catch (e) {}
-      }
-    }
-  }
-
-  return targetComponent;
-}
-
-module.exports = hoistNonReactStatics;
-
-
-/***/ }),
-
 /***/ "./node_modules/value-equal/index.js":
 /*!*******************************************!*\
   !*** ./node_modules/value-equal/index.js ***!
@@ -69616,6 +69501,9 @@ function (_Component) {
         },
         removeType: function removeType(id) {
           return _this2.props.removeType(id);
+        },
+        activeUser: function activeUser(groupId, userId) {
+          return _this2.props.activeUser(groupId, userId);
         }
       }));
     }
@@ -69717,6 +69605,15 @@ function (_Component) {
       this.getUserContent();
     }
   }, {
+    key: "activeUser",
+    value: function activeUser(groupId, userId) {
+      var _this2 = this;
+
+      axios.put("/groups/".concat(groupId, "/toggleActiveUser/").concat(userId)).then(function () {
+        _this2.getUserContent();
+      });
+    }
+  }, {
     key: "activeGroupChange",
     value: function activeGroupChange() {
       if (this.state.user.groups.length - 1 > this.state.activeGroupIndex) {
@@ -69732,7 +69629,7 @@ function (_Component) {
   }, {
     key: "getUserContent",
     value: function getUserContent() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/users").then(function (response) {
         if (response.data.user.groups.length === 0) {
@@ -69743,7 +69640,7 @@ function (_Component) {
           }];
         }
 
-        _this2.setState({
+        _this3.setState({
           user: _objectSpread({}, response.data.user)
         });
       });
@@ -69758,10 +69655,10 @@ function (_Component) {
   }, {
     key: "demo",
     value: function demo() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("/groups/3/addUser/".concat(this.state.user.id)).then(function () {
-        _this3.getUserContent();
+        _this4.getUserContent();
       });
     }
   }, {
@@ -69787,14 +69684,14 @@ function (_Component) {
   }, {
     key: "addType",
     value: function addType(e, value, category) {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.post("/types", {
         type: value,
         groupId: this.state.user.groups[this.state.activeGroupIndex].id,
         details: category
       }).then(function () {
-        _this4.getUserContent();
+        _this5.getUserContent();
       });
     }
   }, {
@@ -69805,37 +69702,40 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         addType: function addType(e, value, category) {
-          return _this5.addType(e, value, category);
+          return _this6.addType(e, value, category);
         },
         setUpVote: function setUpVote(votingList) {
-          return _this5.setUpVote(votingList);
+          return _this6.setUpVote(votingList);
         },
         hypeLevelHandler: function hypeLevelHandler(e, typeId) {
-          return _this5.hypeLevelHandler(e, typeId);
+          return _this6.hypeLevelHandler(e, typeId);
         },
         data: this.state,
         editedData: this.state.user.groups[this.state.activeGroupIndex].types[this.state.editedTypeIndex],
         activeGroupChange: function activeGroupChange() {
-          return _this5.activeGroupChange();
+          return _this6.activeGroupChange();
         },
         demo: function demo() {
-          return _this5.demo();
+          return _this6.demo();
         },
         detailsController: function detailsController() {
-          return _this5.detailsController();
+          return _this6.detailsController();
         },
         selectTypeToEdit: function selectTypeToEdit(index) {
-          return _this5.selectTypeToEdit(index);
+          return _this6.selectTypeToEdit(index);
         },
         refreshData: function refreshData() {
-          return _this5.getUserContent();
+          return _this6.getUserContent();
         },
         removeType: function removeType(id) {
-          return _this5.removeType(id);
+          return _this6.removeType(id);
+        },
+        activeUser: function activeUser(groupId, userId) {
+          return _this6.activeUser(groupId, userId);
         }
       });
     }
@@ -69894,6 +69794,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _TypeEdit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TypeEdit */ "./resources/assets/js/NewLayout/components/TypeEdit.js");
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["\n        display: flex;\n        background-color: ", ";\n        color: ", ";\n    "]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject3() {
   var data = _taggedTemplateLiteral([""]);
 
@@ -69946,6 +69856,7 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? "translateY(-100%);" : "translateY(0);");
   var Switch = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFive, props.theme.colorThree);
   var RemoveType = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject3());
+  var GroupUsers = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject4(), props.theme.colorFive, props.theme.colorThree);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, props.position === -33 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
@@ -69960,11 +69871,23 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
     onClick: function onClick() {
       return props.removeType(props.data.id);
     }
-  }, "Remove Game")) : null, props.position === -64 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, console.log(props.data), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
+  }, "Remove Game")) : null, props.position === -64 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, console.log(props.data.user.groups[props.data.activeGroupIndex]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
     }
-  }, setComponentStatus ? "Meeting Settings Open" : "Close")) : null);
+  }, setComponentStatus ? "Meeting Settings Open" : "Close"), props.data.user.groups[props.data.activeGroupIndex].users.map(function (user) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GroupUsers, {
+      key: user.id
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      onChange: function onChange() {
+        return props.activeUser(props.data.user.groups[props.data.activeGroupIndex].id, user.id);
+      },
+      defaultChecked: user.pivot.active ? true : false,
+      type: "checkbox",
+      name: "group",
+      value: user.id
+    }));
+  })) : null);
 });
 /* harmony default export */ __webpack_exports__["default"] = (BottomMenu);
 
@@ -75965,8 +75888,8 @@ if (document.getElementById('root')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })

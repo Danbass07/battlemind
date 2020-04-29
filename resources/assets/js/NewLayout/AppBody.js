@@ -163,6 +163,9 @@ class AppBody extends Component {
                     data={this.props.data}
                     refreshData={() => this.props.refreshData()}
                     removeType={id => this.props.removeType(id)}
+                    activeUser={(groupId, userId) =>
+                        this.props.activeUser(groupId, userId)
+                    }
                 />
             </MainWrapper>
         );

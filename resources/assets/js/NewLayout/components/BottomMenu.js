@@ -25,6 +25,11 @@ const BottomMenu = React.memo(props => {
     `;
     const RemoveType = styled.button``;
 
+    const GroupUsers = styled.div`
+        display: flex;
+        background-color: ${props.theme.colorFive};
+        color: ${props.theme.colorThree};
+    `;
     return (
         <MainWrapper>
             {props.position === -33 ? (
@@ -48,12 +53,39 @@ const BottomMenu = React.memo(props => {
             ) : null}
             {props.position === -64 ? (
                 <React.Fragment>
-                    {console.log(props.data)}
+                    {console.log(
+                        props.data.user.groups[props.data.activeGroupIndex]
+                    )}
                     <Switch
                         onClick={() => newComponentStatus(!setComponentStatus)}
                     >
                         {setComponentStatus ? "Meeting Settings Open" : "Close"}
                     </Switch>
+                    {props.data.user.groups[
+                        props.data.activeGroupIndex
+                    ].users.map(user => {
+                        return (
+                            <GroupUsers key={user.id}>
+                                <div>{user.name}</div>
+                                <input
+                                    onChange={() =>
+                                        props.activeUser(
+                                            props.data.user.groups[
+                                                props.data.activeGroupIndex
+                                            ].id,
+                                            user.id
+                                        )
+                                    }
+                                    defaultChecked={
+                                        user.pivot.active ? true : false
+                                    }
+                                    type="checkbox"
+                                    name="group"
+                                    value={user.id}
+                                />
+                            </GroupUsers>
+                        );
+                    })}
                 </React.Fragment>
             ) : null}
         </MainWrapper>
