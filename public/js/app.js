@@ -69460,7 +69460,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n            height: 100%;\n            width: 100%;\n            background-color: black;\n            min-width: 425px;\n            overflow: hidden;\n        "]);
+  var data = _taggedTemplateLiteral(["\n            height: 100%;\n            width: 100%;\n            background-color: black;\n            min-width: 405px;\n            overflow: hidden;\n        "]);
 
   _templateObject = function _templateObject() {
     return data;
