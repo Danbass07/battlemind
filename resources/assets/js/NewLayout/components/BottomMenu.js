@@ -22,6 +22,7 @@ const BottomMenu = React.memo(props => {
         padding-top: 3px;
         background-color: ${props.theme.colorFive};
         color: ${props.theme.colorThree};
+        margin-bottom: 15px;
     `;
     const RemoveType = styled.button``;
 
@@ -53,9 +54,6 @@ const BottomMenu = React.memo(props => {
             ) : null}
             {props.position === -64 ? (
                 <React.Fragment>
-                    {console.log(
-                        props.data.user.groups[props.data.activeGroupIndex]
-                    )}
                     <Switch
                         onClick={() => newComponentStatus(!setComponentStatus)}
                     >

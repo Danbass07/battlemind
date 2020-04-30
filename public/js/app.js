@@ -67240,7 +67240,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _emotion_stylis__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @emotion/stylis */ "./node_modules/@emotion/stylis/dist/stylis.browser.esm.js");
 /* harmony import */ var _emotion_unitless__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @emotion/unitless */ "./node_modules/@emotion/unitless/dist/unitless.browser.esm.js");
 /* harmony import */ var _emotion_is_prop_valid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @emotion/is-prop-valid */ "./node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js");
-/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
 /* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_6__);
 
 
@@ -69112,6 +69112,121 @@ if ( true && typeof window !== 'undefined') {
 
 /***/ }),
 
+/***/ "./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/styled-components/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var reactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+var REACT_STATICS = {
+  childContextTypes: true,
+  contextType: true,
+  contextTypes: true,
+  defaultProps: true,
+  displayName: true,
+  getDefaultProps: true,
+  getDerivedStateFromError: true,
+  getDerivedStateFromProps: true,
+  mixins: true,
+  propTypes: true,
+  type: true
+};
+var KNOWN_STATICS = {
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
+};
+var FORWARD_REF_STATICS = {
+  '$$typeof': true,
+  render: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true
+};
+var MEMO_STATICS = {
+  '$$typeof': true,
+  compare: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true,
+  type: true
+};
+var TYPE_STATICS = {};
+TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
+TYPE_STATICS[reactIs.Memo] = MEMO_STATICS;
+
+function getStatics(component) {
+  // React v16.11 and below
+  if (reactIs.isMemo(component)) {
+    return MEMO_STATICS;
+  } // React v16.12 and above
+
+
+  return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
+}
+
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = Object.prototype;
+function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+  if (typeof sourceComponent !== 'string') {
+    // don't hoist over string (html) components
+    if (objectPrototype) {
+      var inheritedComponent = getPrototypeOf(sourceComponent);
+
+      if (inheritedComponent && inheritedComponent !== objectPrototype) {
+        hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+      }
+    }
+
+    var keys = getOwnPropertyNames(sourceComponent);
+
+    if (getOwnPropertySymbols) {
+      keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+    }
+
+    var targetStatics = getStatics(targetComponent);
+    var sourceStatics = getStatics(sourceComponent);
+
+    for (var i = 0; i < keys.length; ++i) {
+      var key = keys[i];
+
+      if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
+        var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+
+        try {
+          // Avoid failures from read-only properties
+          defineProperty(targetComponent, key, descriptor);
+        } catch (e) {}
+      }
+    }
+  }
+
+  return targetComponent;
+}
+
+module.exports = hoistNonReactStatics;
+
+
+/***/ }),
+
 /***/ "./node_modules/value-equal/index.js":
 /*!*******************************************!*\
   !*** ./node_modules/value-equal/index.js ***!
@@ -69578,7 +69693,10 @@ function (_Component) {
           id: 0,
           users: [],
           types: [{
-            type: "Select Game to Edit and Click this to "
+            type: "Select Game to Edit and Click this to ",
+            details: {
+              category: "none"
+            }
           }]
         }]
       },
@@ -69586,7 +69704,7 @@ function (_Component) {
       typeSelescted: {
         type: "Choose game to edit"
       },
-      details: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
+      category: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
 
     };
     return _this;
@@ -69671,13 +69789,13 @@ function (_Component) {
   }, {
     key: "detailsController",
     value: function detailsController() {
-      if (this.state.details === "main") {
+      if (this.state.category === "main") {
         this.setState({
-          details: "small"
+          category: "small"
         });
       } else {
         this.setState({
-          details: "main"
+          category: "main"
         });
       }
     }
@@ -69815,7 +69933,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n        height: 30px;\n        width: 100%;\n        padding-top: 3px;\n        background-color: ", ";\n        color: ", ";\n    "]);
+  var data = _taggedTemplateLiteral(["\n        height: 30px;\n        width: 100%;\n        padding-top: 3px;\n        background-color: ", ";\n        color: ", ";\n        margin-bottom: 15px;\n    "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -69871,7 +69989,7 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
     onClick: function onClick() {
       return props.removeType(props.data.id);
     }
-  }, "Remove Game")) : null, props.position === -64 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, console.log(props.data.user.groups[props.data.activeGroupIndex]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
+  }, "Remove Game")) : null, props.position === -64 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
     }
@@ -70082,6 +70200,16 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n            width: 60%;\n            height: 100%;\n            overflow: scroll;\n            margin: auto auto;\n        "]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -70147,6 +70275,7 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
+      var TableWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
       var activeUsersRating;
       var group;
       var data;
@@ -70159,6 +70288,12 @@ function (_Component) {
           return user.pivot.active ? user : null;
         }).filter(Boolean);
         group.types.map(function (type) {
+          if (type.details) {
+            if (!type.details.category) {
+              type.details = JSON.parse(type.details);
+            }
+          }
+
           var totalHype = 0;
 
           if (_this2.state.onlyOne) {
@@ -70180,6 +70315,8 @@ function (_Component) {
         });
         data = _toConsumableArray(group.types.filter(function (type) {
           return !zeroRated.includes(type) ? type : null;
+        }).filter(function (type) {
+          return type.details.category === _this2.props.user.category ? type : null;
         }).sort(_HypeFunctions_js__WEBPACK_IMPORTED_MODULE_2__["compareValues"]("totalHype", false)));
 
         var _votingList = _toConsumableArray(data);
@@ -70198,23 +70335,7 @@ function (_Component) {
         data = [];
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
-        onClick: function onClick() {
-          return _this2.setUpVote(votingList, _this2.props.group.id);
-        }
-      }, "Set vote on what we should play"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: ""
-      }, activeUsersRating.map(function (user) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "",
-          onClick: function onClick() {
-            return _this2.checkPlayerRating(user);
-          },
-          key: user.name
-        }, user.name);
-      })), group ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: ""
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, group ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TableWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
         className: ""
       }, !group.types ? data.map(function (type, index) {
         if (index < 3) {
@@ -70227,8 +70348,7 @@ function (_Component) {
           key: type.id + " " + type.hype
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           style: {
-            wordBreak: "break-all",
-            width: "180px"
+            width: "220px"
           }
         }, type.type, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           style: {
@@ -70239,7 +70359,7 @@ function (_Component) {
             marginLeft: "20px"
           }
         }, type.average));
-      }))) : null);
+      })))) : null);
     }
   }]);
 
@@ -70428,7 +70548,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
 
   var displayTypeRating = function displayTypeRating(type, index) {
     var details = JSON.parse(type.details);
-    if (details.category === props.data.details || details.category === "category") return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeSetRow, {
+    if (details.category === props.data.category || details.category === "category") return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeSetRow, {
       style: styleHypeSetRow,
       key: type.type + index
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeRowElement, {
@@ -70468,7 +70588,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
     onClick: function onClick() {
       return props.detailsController();
     }
-  }, props.data.details, " Games")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeWrapper, null, Array.isArray(props.group.users) ? mapUsers() : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, props.data.category, " Games")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HypeWrapper, null, Array.isArray(props.group.users) ? mapUsers() : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form__WEBPACK_IMPORTED_MODULE_2__["default"], {
     theme: props.theme,
     title: "Add Game",
     submitControll: function submitControll(e, value) {
@@ -75888,8 +76008,8 @@ if (document.getElementById('root')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Danbass\websites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Danbass666\WebSites\battlemind\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })

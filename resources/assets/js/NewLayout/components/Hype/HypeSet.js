@@ -66,7 +66,7 @@ const HypeSet = React.memo(props => {
         const details = JSON.parse(type.details);
 
         if (
-            details.category === props.data.details ||
+            details.category === props.data.category ||
             details.category === "category"
         )
             return (
@@ -126,7 +126,7 @@ const HypeSet = React.memo(props => {
         <MainWrapper>
             <TypeOptions>
                 <Button onClick={() => props.detailsController()}>
-                    {props.data.details} Games
+                    {props.data.category} Games
                 </Button>
             </TypeOptions>
             <HypeWrapper>

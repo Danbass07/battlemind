@@ -18,6 +18,7 @@ class HypeCheck extends Component {
             exludeLevel: 0
         };
     }
+
     componentDidMount() {
         // console.log(this.props.group);
     }
@@ -27,6 +28,12 @@ class HypeCheck extends Component {
     }
 
     render() {
+        let TableWrapper = styled.div`
+            width: 60%;
+            height: 100%;
+            overflow: scroll;
+            margin: auto auto;
+        `;
         let activeUsersRating;
         let group;
         let data;
@@ -42,6 +49,12 @@ class HypeCheck extends Component {
                 .filter(Boolean);
 
             group.types.map(type => {
+                if (type.details) {
+                    if (!type.details.category) {
+                        type.details = JSON.parse(type.details);
+                    }
+                }
+
                 let totalHype = 0;
                 if (this.state.onlyOne) {
                     activeUsersRating = [...this.state.theOne];
@@ -65,6 +78,12 @@ class HypeCheck extends Component {
                 ...group.types
                     .filter(type => {
                         return !zeroRated.includes(type) ? type : null;
+                    })
+                    .filter(type => {
+                        return type.details.category ===
+                            this.props.user.category
+                            ? type
+                            : null;
                     })
                     .sort(HypeFunctions.compareValues("totalHype", false))
             ];
@@ -94,15 +113,15 @@ class HypeCheck extends Component {
         return (
             <React.Fragment>
                 {/* {console.log(votingList)} */}
-                <Button
+                {/* <Button
                     onClick={() =>
                         this.setUpVote(votingList, this.props.group.id)
                     }
                 >
                     Set vote on what we should play
-                </Button>
+                </Button> */}
 
-                <div className={""}>
+                {/* <div className={""}>
                     {activeUsersRating.map(user => {
                         return (
                             <div
@@ -114,52 +133,63 @@ class HypeCheck extends Component {
                             </div>
                         );
                     })}
-                </div>
+                </div> */}
 
                 {group ? (
-                    <table className="">
-                        <tbody className="">
-                            {!group.types
-                                ? data.map((type, index) => {
-                                      if (index < 3) {
+                    <TableWrapper>
+                        <table>
+                            <tbody className="">
+                                {!group.types
+                                    ? data.map((type, index) => {
+                                          if (index < 3) {
+                                              return (
+                                                  <tr
+                                                      key={
+                                                          type.id +
+                                                          " " +
+                                                          type.hype
+                                                      }
+                                                  >
+                                                      <td> {type.type} </td>
+                                                  </tr>
+                                              );
+                                          }
+                                      })
+                                    : data.map(type => {
                                           return (
                                               <tr
                                                   key={
                                                       type.id + " " + type.hype
                                                   }
                                               >
-                                                  <td> {type.type} </td>
+                                                  <td
+                                                      style={{
+                                                          width: "220px"
+                                                      }}
+                                                  >
+                                                      {type.type}{" "}
+                                                  </td>
+
+                                                  <td
+                                                      style={{
+                                                          marginLeft: "auto"
+                                                      }}
+                                                  >
+                                                      {type.totalHype}
+                                                  </td>
+                                                  <td
+                                                      style={{
+                                                          marginLeft: "20px"
+                                                      }}
+                                                  >
+                                                      {type.average}
+                                                  </td>
                                               </tr>
                                           );
-                                      }
-                                  })
-                                : data.map(type => {
-                                      return (
-                                          <tr key={type.id + " " + type.hype}>
-                                              <td
-                                                  style={{
-                                                      wordBreak: "break-all",
-                                                      width: "180px"
-                                                  }}
-                                              >
-                                                  {type.type}{" "}
-                                              </td>
-
-                                              <td
-                                                  style={{ marginLeft: "auto" }}
-                                              >
-                                                  {type.totalHype}
-                                              </td>
-                                              <td
-                                                  style={{ marginLeft: "20px" }}
-                                              >
-                                                  {type.average}
-                                              </td>
-                                          </tr>
-                                      );
-                                  })}
-                        </tbody>
-                    </table>
+                                      })}
+                            </tbody>
+                        </table>
+                    </TableWrapper>
                 ) : null}
             </React.Fragment>
         );

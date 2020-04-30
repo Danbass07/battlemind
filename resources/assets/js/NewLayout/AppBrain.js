@@ -14,7 +14,10 @@ class AppBrain extends Component {
                         id: 0,
                         users: [],
                         types: [
-                            { type: "Select Game to Edit and Click this to " }
+                            {
+                                type: "Select Game to Edit and Click this to ",
+                                details: { category: "none" }
+                            }
                         ]
                     }
                 ]
@@ -23,7 +26,7 @@ class AppBrain extends Component {
             typeSelescted: {
                 type: "Choose game to edit"
             },
-            details: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
+            category: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
         };
     }
 
@@ -82,13 +85,13 @@ class AppBrain extends Component {
         });
     }
     detailsController() {
-        if (this.state.details === "main") {
+        if (this.state.category === "main") {
             this.setState({
-                details: "small"
+                category: "small"
             });
         } else {
             this.setState({
-                details: "main"
+                category: "main"
             });
         }
     }
