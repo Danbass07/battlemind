@@ -69815,7 +69815,6 @@ function (_Component) {
   }, {
     key: "removeType",
     value: function removeType(id) {
-      console.log("remove" + id);
       axios["delete"]("/types/".concat(id)).then(this.getUserContent());
     }
   }, {
