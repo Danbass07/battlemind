@@ -70592,7 +70592,7 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
     theme: props.theme,
     title: "Add Game",
     submitControll: function submitControll(e, value) {
-      props.addType(e, value, props.data.details);
+      props.addType(e, value, props.data.category);
     }
   }));
 });
