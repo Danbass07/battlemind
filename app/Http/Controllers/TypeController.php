@@ -11,7 +11,10 @@ use App\User;
 class TypeController extends Controller
 {
    
-    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request )
     {   
         $user = User::with(['groups.types.users', 'groups',])->where('id', '=' ,$request->user()->id)->first();

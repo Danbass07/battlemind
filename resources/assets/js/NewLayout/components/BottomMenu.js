@@ -47,7 +47,12 @@ const BottomMenu = React.memo(props => {
                         data={props.data.typeSelescted}
                         theme={props.theme}
                     />
-                    <RemoveType onClick={() => props.removeType(props.data.id)}>
+                    <RemoveType
+                        onClick={() => {
+                            console.log(props.data);
+                            props.removeType(props.data.typeSelescted.id);
+                        }}
+                    >
                         Remove Game
                     </RemoveType>
                 </React.Fragment>

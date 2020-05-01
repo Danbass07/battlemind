@@ -90,7 +90,6 @@ class HypeCheck extends Component {
 
             let votingList = [...data];
 
-            let firstPlace = null;
             let topList = [];
             votingList.map((candidate, index) => {
                 // console.log(candidate)
@@ -103,8 +102,6 @@ class HypeCheck extends Component {
                     : null;
             });
             votingList = topList;
-
-            // votingList.sort(HypeFunctions.compareValues('totalHype', false)).slice(0,3);
         } else {
             activeUsersRating = [];
             data = [];

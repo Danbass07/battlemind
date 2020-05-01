@@ -69815,6 +69815,7 @@ function (_Component) {
   }, {
     key: "removeType",
     value: function removeType(id) {
+      console.log("remove" + id);
       axios["delete"]("/types/".concat(id)).then(this.getUserContent());
     }
   }, {
@@ -69987,7 +69988,8 @@ var BottomMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (pro
     theme: props.theme
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RemoveType, {
     onClick: function onClick() {
-      return props.removeType(props.data.id);
+      console.log(props.data);
+      props.removeType(props.data.typeSelescted.id);
     }
   }, "Remove Game")) : null, props.position === -64 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Switch, {
     onClick: function onClick() {
@@ -70321,7 +70323,6 @@ function (_Component) {
 
         var _votingList = _toConsumableArray(data);
 
-        var firstPlace = null;
         var topList = [];
 
         _votingList.map(function (candidate, index) {
@@ -70329,7 +70330,7 @@ function (_Component) {
           return topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : null : null;
         });
 
-        _votingList = topList; // votingList.sort(HypeFunctions.compareValues('totalHype', false)).slice(0,3);
+        _votingList = topList;
       } else {
         activeUsersRating = [];
         data = [];

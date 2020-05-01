@@ -107,6 +107,7 @@ class AppBrain extends Component {
             });
     }
     removeType(id) {
+        console.log("remove" + id);
         axios.delete(`/types/${id}`).then(this.getUserContent());
     }
     render() {
