@@ -5,6 +5,7 @@ import * as HypeFunctions from "./HypeFunctions.js";
 
 const MainWrapper = styled.div`
     width: 100%;
+    height: 50%;
 `;
 
 const HypeWrapper = styled.div`
@@ -12,7 +13,7 @@ const HypeWrapper = styled.div`
     margin: auto auto;
     font-size: 26px;
     overflow-y: scroll;
-    height: 332px;
+    height: 168%;
     width: 108%;
 `;
 

@@ -4,7 +4,7 @@ import HypeCheck from "./Hype/HypeCheck";
 
 const RightMenu = React.memo(props => {
     const MainWrapper = styled.div`
-        height: 400px;
+        height: 100%;
         width: 36%;
         background-color: ${props.theme.colorThree};
         border: 4px ridge ${props.theme.colorTwo};
@@ -43,8 +43,11 @@ const RightMenu = React.memo(props => {
                 </Click>
             )}
             <HypeCheck
+                move={() => {
+                    props.moveSection(-1, false);
+                }}
                 setUpVote={votingList => props.setUpVote(votingList)}
-                user={props.user}
+                data={props.user}
                 group={props.group}
                 theme={props.theme}
             />

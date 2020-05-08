@@ -8,8 +8,8 @@ const Screen = React.memo(props => {
         value: ""
     });
     const MainWrapper = styled.div`
-        height: 400px;
         width: 29%;
+        height: 100%;
         background-color: ${props.theme.colorOne};
         border: 4px ridge ${props.theme.colorTwo};
         color: ${props.theme.colorFive};

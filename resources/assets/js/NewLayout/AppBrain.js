@@ -18,7 +18,8 @@ class AppBrain extends Component {
                                 type: "Select Game to Edit and Click this to ",
                                 details: { category: "none" }
                             }
-                        ]
+                        ],
+                        votes: [{ active: 0, data: "" }]
                     }
                 ]
             },
@@ -26,7 +27,8 @@ class AppBrain extends Component {
             typeSelescted: {
                 type: "Choose game to edit"
             },
-            category: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
+            category: "main", //// globalChange for type displaying (might CHANGE!!!) always check if something not work
+            votingList: []
         };
     }
 
@@ -37,10 +39,12 @@ class AppBrain extends Component {
             this.state.user,
             this.state.activeGroupIndex
         );
-        console.log(data);
     }
     componentDidMount() {
         this.getUserContent();
+        // this.interval = setInterval(() => {
+        //     this.getUserContent();
+        // }, 1000);
     }
 
     activeUser(groupId, userId) {
@@ -110,6 +114,7 @@ class AppBrain extends Component {
         axios.delete(`/types/${id}`).then(this.getUserContent());
     }
     render() {
+        //console.log(this.state);
         return (
             <AppBody
                 addType={(e, value, category) =>

@@ -42,10 +42,14 @@ class AppBody extends Component {
         };
     }
 
-    moveSection(moveValue) {
+    moveSection(moveValue, modifier = true) {
+        let moved = this.state.moved;
+        if (modifier === false) {
+            moved = !moved;
+        }
         this.setState({
             middleSectionMoveValue: moveValue,
-            moved: !this.state.moved
+            moved: !moved
         });
     }
 
@@ -65,7 +69,7 @@ class AppBody extends Component {
         `;
 
         const TopSection = styled.div`
-            height: 160px;
+            height: 182px;
             width: 100%;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -74,7 +78,7 @@ class AppBody extends Component {
             grid-row-gap: 0px;
         `;
         const MiddleSection = styled.div`
-            height: 80%;
+            height: 385px;
             width: 290%;
             position: relative;
             display: flex;
@@ -112,10 +116,19 @@ class AppBody extends Component {
 
                 <MiddleSection>
                     <LeftMenu
+                        group={
+                            this.props.data.user.groups[
+                                this.props.data.activeGroupIndex
+                            ]
+                        }
+                        userId={this.props.data.user.id}
                         groupIndex={this.props.data.activeGroupIndex}
                         moved={this.state.moved}
                         moveSection={moveValue => this.moveSection(moveValue)}
                         theme={this.state.theme[this.state.themeActive]}
+                        middleSectionMoveValue={
+                            this.state.middleSectionMoveValue
+                        }
                     />
 
                     <Screen

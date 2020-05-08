@@ -4,7 +4,6 @@ import HypeVote from "./Hype/HypeVote";
 
 const LeftMenu = React.memo(props => {
     const MainWrapper = styled.div`
-        height: 400px;
         width: 36%;
         background-color: ${props.theme.colorThree};
         border: 4px ridge ${props.theme.colorTwo};
@@ -13,6 +12,7 @@ const LeftMenu = React.memo(props => {
         text-align: center;
         display: flex;
     `;
+
     const Click = styled.div`
         width: 35px;
         height: 100%;
@@ -25,7 +25,11 @@ const LeftMenu = React.memo(props => {
 
     return (
         <MainWrapper>
-            <HypeVote groupIndex={props.groupIndex} />
+            <HypeVote
+                middleSectionMoveValue={props.middleSectionMoveValue}
+                group={props.group}
+                userId={props.userId}
+            />
 
             {!props.moved ? (
                 <Click

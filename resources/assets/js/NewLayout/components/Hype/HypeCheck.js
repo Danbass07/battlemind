@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import * as HypeFunctions from "./HypeFunctions.js";
 
-let Button = styled.button`
-    width: 80px;
-    height: 100%;
-    background-color: green;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
+let TableWrapper = styled.div`
+    width: 100%;
+    overflow: scroll;
+    margin: auto auto;
+    height: 89%;
+    word-break: break-word;
 `;
 
 class HypeCheck extends Component {
@@ -26,14 +26,53 @@ class HypeCheck extends Component {
     setUpVote(votingList, groupId) {
         HypeFunctions.setUpVote(votingList, groupId);
     }
+    table(data) {
+        return (
+            <TableWrapper>
+                <table style={{ height: "90%" }}>
+                    <tbody className="">
+                        {data.map(type => {
+                            return (
+                                <tr key={type.id + " " + type.hype}>
+                                    <td
+                                        style={{
+                                            width: "220px"
+                                        }}
+                                    >
+                                        {type.type}
+                                    </td>
 
+                                    <td
+                                        style={{
+                                            marginLeft: "auto"
+                                        }}
+                                    >
+                                        {type.totalHype}
+                                    </td>
+                                    <td
+                                        style={{
+                                            marginLeft: "20px"
+                                        }}
+                                    >
+                                        {type.average}
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </TableWrapper>
+        );
+    }
     render() {
-        let TableWrapper = styled.div`
-            width: 60%;
-            height: 100%;
-            overflow: scroll;
-            margin: auto auto;
+        let Button = styled.button`
+            width: 100%;
+            height: 39px;
+            background-color: ${this.props.theme.colorFive};
+            color: ${this.props.theme.colorThree};
         `;
+        let votingActive;
+        let MainWrapper = styled.div``;
         let activeUsersRating;
         let group;
         let data;
@@ -81,7 +120,7 @@ class HypeCheck extends Component {
                     })
                     .filter(type => {
                         return type.details.category ===
-                            this.props.user.category
+                            this.props.data.category
                             ? type
                             : null;
                     })
@@ -102,23 +141,18 @@ class HypeCheck extends Component {
                     : null;
             });
             votingList = topList;
+
+            votingActive = this.props.group.votes.filter(vote => {
+                return vote.active ? vote : null;
+            });
         } else {
             activeUsersRating = [];
             data = [];
         }
-
         return (
-            <React.Fragment>
-                {/* {console.log(votingList)} */}
-                {/* <Button
-                    onClick={() =>
-                        this.setUpVote(votingList, this.props.group.id)
-                    }
-                >
-                    Set vote on what we should play
-                </Button> */}
-
-                {/* <div className={""}>
+            <MainWrapper>
+                <React.Fragment>
+                    {/* <div className={""}>
                     {activeUsersRating.map(user => {
                         return (
                             <div
@@ -132,63 +166,24 @@ class HypeCheck extends Component {
                     })}
                 </div> */}
 
-                {group ? (
-                    <TableWrapper>
-                        <table>
-                            <tbody className="">
-                                {!group.types
-                                    ? data.map((type, index) => {
-                                          if (index < 3) {
-                                              return (
-                                                  <tr
-                                                      key={
-                                                          type.id +
-                                                          " " +
-                                                          type.hype
-                                                      }
-                                                  >
-                                                      <td> {type.type} </td>
-                                                  </tr>
-                                              );
-                                          }
-                                      })
-                                    : data.map(type => {
-                                          return (
-                                              <tr
-                                                  key={
-                                                      type.id + " " + type.hype
-                                                  }
-                                              >
-                                                  <td
-                                                      style={{
-                                                          width: "220px"
-                                                      }}
-                                                  >
-                                                      {type.type}{" "}
-                                                  </td>
-
-                                                  <td
-                                                      style={{
-                                                          marginLeft: "auto"
-                                                      }}
-                                                  >
-                                                      {type.totalHype}
-                                                  </td>
-                                                  <td
-                                                      style={{
-                                                          marginLeft: "20px"
-                                                      }}
-                                                  >
-                                                      {type.average}
-                                                  </td>
-                                              </tr>
-                                          );
-                                      })}
-                            </tbody>
-                        </table>
-                    </TableWrapper>
+                    {group ? this.table(data) : null}
+                </React.Fragment>
+                {this.props.data.category === "main" ? (
+                    votingActive.length === 0 ? (
+                        <Button
+                            onClick={() =>
+                                this.setUpVote(votingList, this.props.group.id)
+                            }
+                        >
+                            Set vote
+                        </Button>
+                    ) : (
+                        <Button onClick={() => this.props.move()}>
+                            See vote
+                        </Button>
+                    )
                 ) : null}
-            </React.Fragment>
+            </MainWrapper>
         );
     }
 }

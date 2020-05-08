@@ -69440,7 +69440,7 @@ __webpack_require__.r(__webpack_exports__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n            height: 80%;\n            width: 290%;\n            position: relative;\n            display: flex;\n            flex-direction: row;\n            transform: translateX(", "%);\n        "]);
+  var data = _taggedTemplateLiteral(["\n            height: 385px;\n            width: 290%;\n            position: relative;\n            display: flex;\n            flex-direction: row;\n            transform: translateX(", "%);\n        "]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -69450,7 +69450,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n            height: 160px;\n            width: 100%;\n            display: grid;\n            grid-template-columns: repeat(5, 1fr);\n            grid-template-rows: repeat(2, 1fr);\n            grid-column-gap: 0px;\n            grid-row-gap: 0px;\n        "]);
+  var data = _taggedTemplateLiteral(["\n            height: 182px;\n            width: 100%;\n            display: grid;\n            grid-template-columns: repeat(5, 1fr);\n            grid-template-rows: repeat(2, 1fr);\n            grid-column-gap: 0px;\n            grid-row-gap: 0px;\n        "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -69539,9 +69539,16 @@ function (_Component) {
   _createClass(AppBody, [{
     key: "moveSection",
     value: function moveSection(moveValue) {
+      var modifier = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var moved = this.state.moved;
+
+      if (modifier === false) {
+        moved = !moved;
+      }
+
       this.setState({
         middleSectionMoveValue: moveValue,
-        moved: !this.state.moved
+        moved: !moved
       });
     }
   }, {
@@ -69573,12 +69580,15 @@ function (_Component) {
           return _this2.changeTheme(themeNumber);
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MiddleSection, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_LeftMenu__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        group: this.props.data.user.groups[this.props.data.activeGroupIndex],
+        userId: this.props.data.user.id,
         groupIndex: this.props.data.activeGroupIndex,
         moved: this.state.moved,
         moveSection: function moveSection(moveValue) {
           return _this2.moveSection(moveValue);
         },
-        theme: this.state.theme[this.state.themeActive]
+        theme: this.state.theme[this.state.themeActive],
+        middleSectionMoveValue: this.state.middleSectionMoveValue
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Screen__WEBPACK_IMPORTED_MODULE_5__["default"], {
         addType: function addType(e, value, category) {
           _this2.props.addType(e, value, category);
@@ -69697,6 +69707,10 @@ function (_Component) {
             details: {
               category: "none"
             }
+          }],
+          votes: [{
+            active: 0,
+            data: ""
           }]
         }]
       },
@@ -69704,8 +69718,9 @@ function (_Component) {
       typeSelescted: {
         type: "Choose game to edit"
       },
-      category: "main" //// globalChange for type displaying (might CHANGE!!!) always check if something not work
-
+      category: "main",
+      //// globalChange for type displaying (might CHANGE!!!) always check if something not work
+      votingList: []
     };
     return _this;
   }
@@ -69714,13 +69729,13 @@ function (_Component) {
     key: "hypeLevelHandler",
     value: function hypeLevelHandler(e, typeId) {
       var data = Object(_Functions_js__WEBPACK_IMPORTED_MODULE_3__["hypeLevelHandler"])(e, typeId, this.state.user, this.state.activeGroupIndex);
-
-      console.log(data);
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.getUserContent();
+      this.getUserContent(); // this.interval = setInterval(() => {
+      //     this.getUserContent();
+      // }, 1000);
     }
   }, {
     key: "activeUser",
@@ -69822,6 +69837,7 @@ function (_Component) {
     value: function render() {
       var _this6 = this;
 
+      //console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         addType: function addType(e, value, category) {
           return _this6.addType(e, value, category);
@@ -70201,8 +70217,18 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _templateObject3() {
+  var data = _taggedTemplateLiteral([""]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n            width: 60%;\n            height: 100%;\n            overflow: scroll;\n            margin: auto auto;\n        "]);
+  var data = _taggedTemplateLiteral(["\n            width: 100%;\n            height: 39px;\n            background-color: ", ";\n            color: ", ";\n        "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -70228,7 +70254,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    width: 80px;\n    height: 100%;\n    background-color: green;\n    writing-mode: vertical-rl;\n    text-orientation: upright;\n"]);
+  var data = _taggedTemplateLiteral(["\n    width: 100%;\n    overflow: scroll;\n    margin: auto auto;\n    height: 89%;\n    word-break: break-word;\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -70242,7 +70268,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
-var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject());
+var TableWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
 
 var HypeCheck =
 /*#__PURE__*/
@@ -70272,11 +70298,40 @@ function (_Component) {
       _HypeFunctions_js__WEBPACK_IMPORTED_MODULE_2__["setUpVote"](votingList, groupId);
     }
   }, {
+    key: "table",
+    value: function table(data) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TableWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        style: {
+          height: "90%"
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
+        className: ""
+      }, data.map(function (type) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: type.id + " " + type.hype
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          style: {
+            width: "220px"
+          }
+        }, type.type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          style: {
+            marginLeft: "auto"
+          }
+        }, type.totalHype), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          style: {
+            marginLeft: "20px"
+          }
+        }, type.average));
+      }))));
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      var TableWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
+      var Button = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject2(), this.props.theme.colorFive, this.props.theme.colorThree);
+      var votingActive;
+      var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3());
       var activeUsersRating;
       var group;
       var data;
@@ -70317,7 +70372,7 @@ function (_Component) {
         data = _toConsumableArray(group.types.filter(function (type) {
           return !zeroRated.includes(type) ? type : null;
         }).filter(function (type) {
-          return type.details.category === _this2.props.user.category ? type : null;
+          return type.details.category === _this2.props.data.category ? type : null;
         }).sort(_HypeFunctions_js__WEBPACK_IMPORTED_MODULE_2__["compareValues"]("totalHype", false)));
 
         var _votingList = _toConsumableArray(data);
@@ -70330,36 +70385,23 @@ function (_Component) {
         });
 
         _votingList = topList;
+        votingActive = this.props.group.votes.filter(function (vote) {
+          return vote.active ? vote : null;
+        });
       } else {
         activeUsersRating = [];
         data = [];
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, group ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TableWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
-        className: ""
-      }, !group.types ? data.map(function (type, index) {
-        if (index < 3) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-            key: type.id + " " + type.hype
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", type.type, " "));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, group ? this.table(data) : null), this.props.data.category === "main" ? votingActive.length === 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
+        onClick: function onClick() {
+          return _this2.setUpVote(votingList, _this2.props.group.id);
         }
-      }) : data.map(function (type) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-          key: type.id + " " + type.hype
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          style: {
-            width: "220px"
-          }
-        }, type.type, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          style: {
-            marginLeft: "auto"
-          }
-        }, type.totalHype), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          style: {
-            marginLeft: "20px"
-          }
-        }, type.average));
-      })))) : null);
+      }, "Set vote") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
+        onClick: function onClick() {
+          return _this2.props.move();
+        }
+      }, "See vote") : null);
     }
   }]);
 
@@ -70495,7 +70537,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    position: relative;\n    margin: auto auto;\n    font-size: 26px;\n    overflow-y: scroll;\n    height: 332px;\n    width: 108%;\n"]);
+  var data = _taggedTemplateLiteral(["\n    position: relative;\n    margin: auto auto;\n    font-size: 26px;\n    overflow-y: scroll;\n    height: 168%;\n    width: 108%;\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -70505,7 +70547,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    width: 100%;\n"]);
+  var data = _taggedTemplateLiteral(["\n    width: 100%;\n    height: 50%;\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -70611,15 +70653,8 @@ var HypeSet = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -70637,7 +70672,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n    width: 415px;\n    height: 300px;\n    background-image: url(/images/voting.jpg);\n    background-size: contain;\n    background-repeat: no-repeat;\n    background-position: center;\n    margin: auto auto;\n"]);
 
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n    width: 100%;\n    height: 100%;\n    overflow: scroll;\n    margin: auto auto;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+
+var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
+var Voting = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
 
 var HypeVote =
 /*#__PURE__*/
@@ -70651,109 +70711,104 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(HypeVote).call(this, props));
     _this.state = {
-      votingList: [{
-        name: "loading",
-        votes: ["lading", "loading"]
-      }],
       activeVote: {
-        data: []
-      }
+        data: [{
+          id: 0,
+          name: "loading",
+          votersId: []
+        }]
+      },
+      voting: true
     };
     return _this;
   }
 
   _createClass(HypeVote, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// this.getData();
-      // this.interval = setInterval(() => {
-      //     this.getData();
-      // }, 80000);
+    value: function componentDidMount() {
+      if (this.props.middleSectionMoveValue === -1) {
+        this.getData();
+      } // this.Interval = setInterval(() => {
+      //     let middleSectionMoveValue = this.props.middleSectionMoveValue;
+      //     if (middleSectionMoveValue === -1) {
+      //         this.getData();
+      //     } else {
+      //         clearInterval(this.Interval);
+      //     }
+      // }, 5000);
+
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {// clearInterval(this.Interval);
     }
   }, {
     key: "getData",
     value: function getData() {
       var _this2 = this;
 
-      axios.get("/vote/votecheckk/").then(function (response) {
-        var activeVoteDetails = response.data.user.groups;
-        activeVoteDetails[_this2.props.groupIndex] ? activeVoteDetails[_this2.props.groupIndex].votes.map(function (vote) {
-          vote.data = JSON.parse(vote.data);
-
-          if (vote.active) {
-            _this2.setState({
-              activeVote: vote
-            });
-          }
-        }) : null;
+      axios.get("/vote/votecheck/".concat(this.props.group.id)).then(function (response) {
+        var activeVoteDetails = response.data.activeVoteDetails;
+        activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
 
         _this2.setState({
-          votingList: activeVoteDetails
+          activeVote: activeVoteDetails,
+          voting: false
         });
       });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {}
+  }, {
+    key: "displayVote",
+    value: function displayVote() {
+      var activeVote = this.props.group.votes.filter(function (vote) {
+        return vote.active ? vote : null;
+      });
+      if (activeVote.length !== 0) return;
     }
   }, {
     key: "castVote",
     value: function castVote(typeId, userId) {
-      var votingList = _toConsumableArray(this.state.votingList.data);
-
-      var voteCount = 0;
-      this.state.votingList.map(function (type) {
-        type.votersId.includes(userId) ? voteCount += +1 : null;
+      this.setState({
+        voting: true
       });
-
-      if (voteCount < 2) {
-        var data = _toConsumableArray(this.state.votingList.data.map(function (type) {
-          if (type.id === typeId && !type.votersId.includes(userId)) {
-            /// 3 votes but on different game.
-            type.votersId.push(userId);
-          }
-
-          return type;
-        }));
-
-        votingList = _toConsumableArray(data);
-        var voteData = JSON.stringify(data);
-        axios.put("/vote/castvote/".concat(this.props.group.id), {
-          voteData: voteData
-        });
-        this.setState({
-          votingList: votingList
-        });
-      } else {
-        var _data = _toConsumableArray(this.state.votingList.data);
-
-        _data.map(function (type) {
-          type.votersId.map(function (voterId) {
-            var removedIndx = _data.indexOf(voterId);
-
-            if (typeId === type.id) {
-              type.votersId.splice(removedIndx, 1);
-            }
-          });
-        });
-
-        votingList = _toConsumableArray(_data);
-
-        var _voteData = JSON.stringify(_data);
-
-        axios.put("/vote/castvote/".concat(this.props.group.id), {
-          voteData: _voteData
-        });
-        this.setState({
-          votingList: votingList
-        });
-      }
+      axios.put("/vote/castvote/".concat(this.props.group.id), {
+        userId: userId,
+        typeId: typeId
+      });
+      this.getData();
     }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: ""
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.activeVote.data.map(function (type) {
+      var _this3 = this;
+
+      var style1 = {
+        color: "black",
+        fontSize: "28px"
+      };
+      var style2 = {
+        color: "white",
+        fontSize: "36px"
+      }; // console.log(this.state);
+
+      return !this.state.voting ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, this.state.activeVote.data.map(function (candidate) {
+        candidate.choosen = false;
+        candidate.votersId.map(function (id) {
+          if (id == _this3.props.userId) {
+            candidate.choosen = true;
+          }
+        });
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: type.id
-        }, type.name, " ");
-      })));
+          style: !candidate.choosen ? style1 : style2,
+          key: candidate.id,
+          onClick: function onClick() {
+            _this3.castVote(candidate.id, _this3.props.userId);
+          }
+        }, candidate.name);
+      })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Voting, null);
     }
   }]);
 
@@ -70824,7 +70879,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 36%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        display: flex;\n    "]);
+  var data = _taggedTemplateLiteral(["\n        width: 36%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        display: flex;\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -70842,7 +70897,9 @@ var LeftMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props
   var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive);
   var Click = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2(), props.theme.colorFour, props.theme.colorTwo);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeVote__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    groupIndex: props.groupIndex
+    middleSectionMoveValue: props.middleSectionMoveValue,
+    group: props.group,
+    userId: props.userId
   }), !props.moved ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Click, {
     onClick: function onClick() {
       props.moveSection(-1);
@@ -70921,7 +70978,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 36%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        display: flex;\n    "]);
+  var data = _taggedTemplateLiteral(["\n        height: 100%;\n        width: 36%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        display: flex;\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -70947,10 +71004,13 @@ var RightMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (prop
       props.moveSection(-33);
     }
   }, "Close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Hype_HypeCheck__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    move: function move() {
+      props.moveSection(-1, false);
+    },
     setUpVote: function setUpVote(votingList) {
       return props.setUpVote(votingList);
     },
-    user: props.user,
+    data: props.user,
     group: props.group,
     theme: props.theme
   }));
@@ -70984,7 +71044,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 29%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n    "]);
+  var data = _taggedTemplateLiteral(["\n        width: 29%;\n        height: 100%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
