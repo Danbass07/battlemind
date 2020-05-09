@@ -37,17 +37,17 @@ class HypeVote extends Component {
         if (this.props.middleSectionMoveValue === -1) {
             this.getData();
         }
-        // this.Interval = setInterval(() => {
-        //     let middleSectionMoveValue = this.props.middleSectionMoveValue;
-        //     if (middleSectionMoveValue === -1) {
-        //         this.getData();
-        //     } else {
-        //         clearInterval(this.Interval);
-        //     }
-        // }, 5000);
+        this.Interval = setInterval(() => {
+            let middleSectionMoveValue = this.props.middleSectionMoveValue;
+            if (middleSectionMoveValue === -1) {
+                this.getData();
+            } else {
+                clearInterval(this.Interval);
+            }
+        }, 5000);
     }
     componentWillUnmount() {
-        // clearInterval(this.Interval);
+        clearInterval(this.Interval);
     }
     getData() {
         axios.get(`/vote/votecheck/${this.props.group.id}`).then(response => {
