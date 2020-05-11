@@ -70391,14 +70391,11 @@ function (_Component) {
         data = [];
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, console.log(topList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, group ? this.table(data) : null), this.props.data.category === "main" ? votingActive.length === 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, console.log(topList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, group ? this.table(data) : null), this.props.data.category === "main" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
         onClick: function onClick() {
           return _this2.setUpVote(topList, _this2.props.group.id);
         }
-      }, "Set vote") : null // <Button onClick={() => this.props.move()}>
-      //     See vote
-      // </Button>
-      : null);
+      }, "Set vote") : null);
     }
   }]);
 
@@ -70731,26 +70728,31 @@ function (_Component) {
   _createClass(HypeVote, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       if (this.props.middleSectionMoveValue === -1) {
         this.getData();
-      } // this.Interval = setInterval(() => {
-      //     let middleSectionMoveValue = this.props.middleSectionMoveValue;
-      //     if (middleSectionMoveValue === -1) {
-      //         this.getData();
-      //     } else {
-      //         clearInterval(this.Interval);
-      //     }
-      // }, 1000);
+      }
 
+      this.Interval = setInterval(function () {
+        var middleSectionMoveValue = _this2.props.middleSectionMoveValue;
+
+        if (middleSectionMoveValue === -1) {
+          _this2.getData();
+        } else {
+          clearInterval(_this2.Interval);
+        }
+      }, 3000);
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {// clearInterval(this.Interval);
+    value: function componentWillUnmount() {
+      clearInterval(this.Interval);
     }
   }, {
     key: "getData",
     value: function getData() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/vote/votecheck/".concat(this.props.group.id)).then(function (response) {
         var activeVoteDetails = response.data.activeVoteDetails;
@@ -70762,7 +70764,7 @@ function (_Component) {
           }]
         };
 
-        _this2.setState({
+        _this3.setState({
           activeVote: activeVoteDetails,
           voting: false
         });
@@ -70794,11 +70796,13 @@ function (_Component) {
   }, {
     key: "closeVote",
     value: function closeVote() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.put("/vote/voteclose/".concat(this.props.group.id)).then(function (response) {
-        if (response.status) {
-          _this3.setState({
+        if (response.vote) {
+          console.log(response.vote);
+
+          _this4.setState({
             activeVote: {
               data: [{
                 id: 0,
@@ -70813,7 +70817,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
       var Voting = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
@@ -70828,24 +70832,30 @@ function (_Component) {
       };
       console.log(this.state);
       return !this.state.voting ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, this.state.activeVote.data.map(function (candidate) {
-        candidate.choosen = false;
-        candidate.votersId.map(function (id) {
-          if (id == _this4.props.userId) {
-            candidate.choosen = true;
-          }
-        });
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          style: !candidate.choosen ? style1 : style2,
-          key: candidate.id,
-          onClick: function onClick() {
-            _this4.castVote(candidate.id, _this4.props.userId);
-          }
-        }, candidate.name);
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CloseVote, {
-        onClick: function onClick() {
-          return _this4.closeVote();
+        if (!_this5.state.activeVote.active && candidate.winner) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: candidate.id
+          }, "winner ", candidate.name, " ");
+        } else {
+          candidate.choosen = false;
+          candidate.votersId.map(function (id) {
+            if (id == _this5.props.userId) {
+              candidate.choosen = true;
+            }
+          });
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            style: !candidate.choosen ? style1 : style2,
+            key: candidate.id,
+            onClick: function onClick() {
+              _this5.castVote(candidate.id, _this5.props.userId);
+            }
+          }, candidate.name);
         }
-      }, "Close Vote")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Voting, null);
+      }), this.state.activeVote.active ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CloseVote, {
+        onClick: function onClick() {
+          return _this5.closeVote();
+        }
+      }, "Close Vote") : null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Voting, null);
     }
   }]);
 

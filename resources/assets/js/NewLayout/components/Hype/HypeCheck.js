@@ -169,18 +169,13 @@ class HypeCheck extends Component {
                     {group ? this.table(data) : null}
                 </React.Fragment>
                 {this.props.data.category === "main" ? (
-                    votingActive.length === 0 ? (
-                        <Button
-                            onClick={() =>
-                                this.setUpVote(topList, this.props.group.id)
-                            }
-                        >
-                            Set vote
-                        </Button>
-                    ) : null
-                    // <Button onClick={() => this.props.move()}>
-                    //     See vote
-                    // </Button>
+                    <Button
+                        onClick={() =>
+                            this.setUpVote(topList, this.props.group.id)
+                        }
+                    >
+                        Set vote
+                    </Button>
                 ) : null}
             </MainWrapper>
         );

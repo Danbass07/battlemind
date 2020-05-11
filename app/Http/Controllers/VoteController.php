@@ -7,6 +7,7 @@ use App\User;
 use App\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VoteController extends Controller
 {
@@ -18,7 +19,9 @@ class VoteController extends Controller
     {
         $group = Group::find($id);
         $vote = $group->votes->where('active', '=', true)->first();
-
+        if (!$vote) {
+            $vote = $group->votes->last();
+        }
         return response()->json([
             'activeVoteDetails' => $vote,
         ]);
@@ -49,13 +52,25 @@ class VoteController extends Controller
         $status = false;
         $group = Group::find($id);
         $vote = $group->votes->where('active', '=', true)->first();
+
         if ($vote) {
+            $voteData = json_decode($vote->data);
+            usort($voteData, function ($a, $b) {
+                return count($a->votersId) < count($b->votersId) ? 1 : -1;
+            });
+            $voteData[0]->winner = true;
+            $vote->data = json_encode($voteData);
+            // foreach ($voteData as $key => $candidate) {
+            //     count($candidate->votersId)
+
+            // }
+            Log::info($vote);
             $status = true;
             $vote->active = false;
             $vote->save();
         }
 
-        return response()->json(['status' => $status]);
+        return response()->json(['vote' => $vote]);
     }
     public function castvote(Request $request, $id)
     {
