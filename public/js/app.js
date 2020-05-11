@@ -70336,6 +70336,7 @@ function (_Component) {
       var group;
       var data;
       var votingList = [];
+      var topList = [];
 
       if (this.props) {
         group = _objectSpread({}, this.props.group);
@@ -70377,14 +70378,11 @@ function (_Component) {
 
         var _votingList = _toConsumableArray(data);
 
-        var topList = [];
-
         _votingList.map(function (candidate, index) {
           // console.log(candidate)
           return topList.length < 3 ? topList.push(candidate) : topList[index - 1] ? topList[index - 1].totalHype === candidate.totalHype ? topList.push(candidate) : null : null;
         });
 
-        _votingList = topList;
         votingActive = this.props.group.votes.filter(function (vote) {
           return vote.active ? vote : null;
         });
@@ -70393,15 +70391,14 @@ function (_Component) {
         data = [];
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, group ? this.table(data) : null), this.props.data.category === "main" ? votingActive.length === 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, console.log(topList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, group ? this.table(data) : null), this.props.data.category === "main" ? votingActive.length === 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
         onClick: function onClick() {
-          return _this2.setUpVote(votingList, _this2.props.group.id);
+          return _this2.setUpVote(topList, _this2.props.group.id);
         }
-      }, "Set vote") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
-        onClick: function onClick() {
-          return _this2.props.move();
-        }
-      }, "See vote") : null);
+      }, "Set vote") : null // <Button onClick={() => this.props.move()}>
+      //     See vote
+      // </Button>
+      : null);
     }
   }]);
 
@@ -70656,6 +70653,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n            width: 85px;\n            height: 30px;\n            color: black;\n        "]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n            width: 415px;\n            height: 300px;\n            background-image: url(/images/voting.jpg);\n            background-size: contain;\n            background-repeat: no-repeat;\n            background-position: center;\n            margin: auto auto;\n        "]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n            width: 100%;\n            height: 100%;\n            overflow: scroll;\n            margin: auto auto;\n        "]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -70672,32 +70701,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    width: 415px;\n    height: 300px;\n    background-image: url(/images/voting.jpg);\n    background-size: contain;\n    background-repeat: no-repeat;\n    background-position: center;\n    margin: auto auto;\n"]);
-
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    width: 100%;\n    height: 100%;\n    overflow: scroll;\n    margin: auto auto;\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-
-var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
-var Voting = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
 
 var HypeVote =
 /*#__PURE__*/
@@ -70714,7 +70719,7 @@ function (_Component) {
       activeVote: {
         data: [{
           id: 0,
-          name: "loading",
+          name: "empty",
           votersId: []
         }]
       },
@@ -70735,7 +70740,7 @@ function (_Component) {
       //     } else {
       //         clearInterval(this.Interval);
       //     }
-      // }, 5000);
+      // }, 1000);
 
     }
   }, {
@@ -70749,7 +70754,13 @@ function (_Component) {
 
       axios.get("/vote/votecheck/".concat(this.props.group.id)).then(function (response) {
         var activeVoteDetails = response.data.activeVoteDetails;
-        activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : null;
+        activeVoteDetails !== null ? activeVoteDetails.data = JSON.parse(activeVoteDetails.data) : activeVoteDetails = {
+          data: [{
+            id: 0,
+            name: "empty",
+            votersId: []
+          }]
+        };
 
         _this2.setState({
           activeVote: activeVoteDetails,
@@ -70781,10 +70792,32 @@ function (_Component) {
       this.getData();
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "closeVote",
+    value: function closeVote() {
       var _this3 = this;
 
+      axios.put("/vote/voteclose/".concat(this.props.group.id)).then(function (response) {
+        if (response.status) {
+          _this3.setState({
+            activeVote: {
+              data: [{
+                id: 0,
+                name: "empty",
+                votersId: []
+              }]
+            }
+          });
+        }
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
+      var Voting = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
+      var CloseVote = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject3());
       var style1 = {
         color: "black",
         fontSize: "28px"
@@ -70792,12 +70825,12 @@ function (_Component) {
       var style2 = {
         color: "white",
         fontSize: "36px"
-      }; // console.log(this.state);
-
+      };
+      console.log(this.state);
       return !this.state.voting ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, this.state.activeVote.data.map(function (candidate) {
         candidate.choosen = false;
         candidate.votersId.map(function (id) {
-          if (id == _this3.props.userId) {
+          if (id == _this4.props.userId) {
             candidate.choosen = true;
           }
         });
@@ -70805,10 +70838,14 @@ function (_Component) {
           style: !candidate.choosen ? style1 : style2,
           key: candidate.id,
           onClick: function onClick() {
-            _this3.castVote(candidate.id, _this3.props.userId);
+            _this4.castVote(candidate.id, _this4.props.userId);
           }
         }, candidate.name);
-      })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Voting, null);
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CloseVote, {
+        onClick: function onClick() {
+          return _this4.closeVote();
+        }
+      }, "Close Vote")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Voting, null);
     }
   }]);
 

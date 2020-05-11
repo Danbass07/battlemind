@@ -77,6 +77,7 @@ class HypeCheck extends Component {
         let group;
         let data;
         let votingList = [];
+        let topList = [];
         if (this.props) {
             group = { ...this.props.group };
             let zeroRated = [];
@@ -129,7 +130,6 @@ class HypeCheck extends Component {
 
             let votingList = [...data];
 
-            let topList = [];
             votingList.map((candidate, index) => {
                 // console.log(candidate)
                 return topList.length < 3
@@ -140,7 +140,6 @@ class HypeCheck extends Component {
                         : null
                     : null;
             });
-            votingList = topList;
 
             votingActive = this.props.group.votes.filter(vote => {
                 return vote.active ? vote : null;
@@ -151,6 +150,7 @@ class HypeCheck extends Component {
         }
         return (
             <MainWrapper>
+                {console.log(topList)}
                 <React.Fragment>
                     {/* <div className={""}>
                     {activeUsersRating.map(user => {
@@ -172,16 +172,15 @@ class HypeCheck extends Component {
                     votingActive.length === 0 ? (
                         <Button
                             onClick={() =>
-                                this.setUpVote(votingList, this.props.group.id)
+                                this.setUpVote(topList, this.props.group.id)
                             }
                         >
                             Set vote
                         </Button>
-                    ) : (
-                        <Button onClick={() => this.props.move()}>
-                            See vote
-                        </Button>
-                    )
+                    ) : null
+                    // <Button onClick={() => this.props.move()}>
+                    //     See vote
+                    // </Button>
                 ) : null}
             </MainWrapper>
         );

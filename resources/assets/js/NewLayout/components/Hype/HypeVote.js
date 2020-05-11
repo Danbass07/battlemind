@@ -1,22 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-let Wrapper = styled.div`
-    width: 100%;
-    height: 100%;
-    overflow: scroll;
-    margin: auto auto;
-`;
-let Voting = styled.div`
-    width: 415px;
-    height: 300px;
-    background-image: url(/images/voting.jpg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin: auto auto;
-`;
-
 class HypeVote extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +9,7 @@ class HypeVote extends Component {
                 data: [
                     {
                         id: 0,
-                        name: "loading",
+                        name: "empty",
                         votersId: []
                     }
                 ]
@@ -37,24 +21,32 @@ class HypeVote extends Component {
         if (this.props.middleSectionMoveValue === -1) {
             this.getData();
         }
-        this.Interval = setInterval(() => {
-            let middleSectionMoveValue = this.props.middleSectionMoveValue;
-            if (middleSectionMoveValue === -1) {
-                this.getData();
-            } else {
-                clearInterval(this.Interval);
-            }
-        }, 5000);
+        // this.Interval = setInterval(() => {
+        //     let middleSectionMoveValue = this.props.middleSectionMoveValue;
+        //     if (middleSectionMoveValue === -1) {
+        //         this.getData();
+        //     } else {
+        //         clearInterval(this.Interval);
+        //     }
+        // }, 1000);
     }
     componentWillUnmount() {
-        clearInterval(this.Interval);
+        // clearInterval(this.Interval);
     }
     getData() {
         axios.get(`/vote/votecheck/${this.props.group.id}`).then(response => {
             let activeVoteDetails = response.data.activeVoteDetails;
             activeVoteDetails !== null
                 ? (activeVoteDetails.data = JSON.parse(activeVoteDetails.data))
-                : null;
+                : (activeVoteDetails = {
+                      data: [
+                          {
+                              id: 0,
+                              name: "empty",
+                              votersId: []
+                          }
+                      ]
+                  });
 
             this.setState({
                 activeVote: activeVoteDetails,
@@ -81,11 +73,48 @@ class HypeVote extends Component {
         });
         this.getData();
     }
+    closeVote() {
+        axios.put(`/vote/voteclose/${this.props.group.id}`).then(response => {
+            if (response.status) {
+                this.setState({
+                    activeVote: {
+                        data: [
+                            {
+                                id: 0,
+                                name: "empty",
+                                votersId: []
+                            }
+                        ]
+                    }
+                });
+            }
+        });
+    }
 
     render() {
+        let Wrapper = styled.div`
+            width: 100%;
+            height: 100%;
+            overflow: scroll;
+            margin: auto auto;
+        `;
+        let Voting = styled.div`
+            width: 415px;
+            height: 300px;
+            background-image: url(/images/voting.jpg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: auto auto;
+        `;
+        let CloseVote = styled.button`
+            width: 85px;
+            height: 30px;
+            color: black;
+        `;
         const style1 = { color: "black", fontSize: "28px" };
         const style2 = { color: "white", fontSize: "36px" };
-        // console.log(this.state);
+        console.log(this.state);
         return !this.state.voting ? (
             <Wrapper>
                 {this.state.activeVote.data.map(candidate => {
@@ -107,6 +136,9 @@ class HypeVote extends Component {
                         </div>
                     );
                 })}
+                <CloseVote onClick={() => this.closeVote()}>
+                    Close Vote
+                </CloseVote>
             </Wrapper>
         ) : (
             <Voting />
