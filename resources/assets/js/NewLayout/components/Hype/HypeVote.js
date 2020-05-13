@@ -121,7 +121,7 @@ class HypeVote extends Component {
                 {this.state.activeVote.data.map(candidate => {
                     if (!this.state.activeVote.active && candidate.winner) {
                         return (
-                            <div key={candidate.id}>
+                            <div style={style2} key={candidate.id}>
                                 winner {candidate.name}{" "}
                             </div>
                         );

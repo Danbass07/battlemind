@@ -7,7 +7,6 @@ use App\User;
 use App\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class VoteController extends Controller
 {
@@ -52,19 +51,61 @@ class VoteController extends Controller
         $status = false;
         $group = Group::find($id);
         $vote = $group->votes->where('active', '=', true)->first();
+        $winner = false;
 
         if ($vote) {
             $voteData = json_decode($vote->data);
             usort($voteData, function ($a, $b) {
                 return count($a->votersId) < count($b->votersId) ? 1 : -1;
             });
-            $voteData[0]->winner = true;
-            $vote->data = json_encode($voteData);
-            // foreach ($voteData as $key => $candidate) {
-            //     count($candidate->votersId)
+            if (count($voteData[0]->votersId) !== count($voteData[1]->votersId)) {
+                $voteData[0]->winner = true;
+                $winner = true;
 
-            // }
-            Log::info($vote);
+            } else {
+                $candidates = [];
+                foreach ($voteData as $candidate) {
+                    if (count($candidate->votersId) === count($voteData[0]->votersId)) {
+                        array_push($candidates, $candidate);
+                    }
+                }
+
+                $candidates_with_win = [];
+                foreach ($candidates as $candidate) {
+                    foreach ($group->votes as $past_vote) {
+                        $past_vote_data = json_decode($past_vote->data);
+
+                        foreach ($past_vote_data as $past_candidate) {
+                            if ($past_candidate->winner && $past_candidate->id === $candidate->id) {
+                                $past_candidate->last_win = $past_vote->created_at;
+                                array_push($candidates_with_win, $past_candidate);
+
+                            }
+                        }
+
+                    }
+
+                }
+                usort($candidates_with_win, function ($a, $b) {
+                    return $a->last_win < $b->last_win ? 1 : -1;
+                });
+                foreach ($voteData as $candidate) {
+                    if (count($candidates_with_win) > 0 && $candidate->id === $candidates_with_win[0]->id) {
+                        $candidate->winner = true;
+                        $winner = true;
+                    }
+                }
+
+                if (!$winner) {
+                    $rand = rand(0, count($candidates) - 1);
+                    $candidates[$rand]->winner = true;
+                    $winner = true;
+                }
+
+            }
+
+            $vote->data = json_encode($voteData);
+
             $status = true;
             $vote->active = false;
             $vote->save();

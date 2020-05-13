@@ -70834,6 +70834,7 @@ function (_Component) {
       return !this.state.voting ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, this.state.activeVote.data.map(function (candidate) {
         if (!_this5.state.activeVote.active && candidate.winner) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            style: style2,
             key: candidate.id
           }, "winner ", candidate.name, " ");
         } else {
