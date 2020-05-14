@@ -69512,7 +69512,6 @@ function (_Component) {
     _this.state = {
       middleSectionMoveValue: -33,
       moved: false,
-      themeActive: 0,
       theme: [{
         colorOne: "#000000",
         colorTwo: "#C7493A",
@@ -69537,6 +69536,9 @@ function (_Component) {
   }
 
   _createClass(AppBody, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {}
+  }, {
     key: "moveSection",
     value: function moveSection(moveValue) {
       var modifier = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
@@ -69552,32 +69554,27 @@ function (_Component) {
       });
     }
   }, {
-    key: "changeTheme",
-    value: function changeTheme(themeNumber) {
-      this.setState({
-        themeActive: themeNumber
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
       var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
       var TopSection = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
-      var MiddleSection = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3(), this.state.middleSectionMoveValue);
+      var MiddleSection = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3(), this.state.middleSectionMoveValue); // console.log(this.props.data);
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_TopMenu__WEBPACK_IMPORTED_MODULE_8__["default"], {
-        theme: this.state.theme[this.state.themeActive]
+        theme: this.state.theme[this.props.data.user.theme],
+        user: this.props.data.user
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TopSection, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Logo__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        theme: this.state.theme[this.state.themeActive],
+        theme: this.state.theme[this.props.data.user.theme],
         activeGroup: this.props.data.user.groups[this.props.data.activeGroupIndex].id,
         activeGroupChange: this.props.activeGroupChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_InfoDisplay__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        theme: this.state.theme[this.state.themeActive]
+        theme: this.state.theme[this.props.data.user.theme]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Buttons__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        theme: this.state.theme[this.state.themeActive],
+        theme: this.state.theme[this.props.data.user.theme],
         changeTheme: function changeTheme(themeNumber) {
-          return _this2.changeTheme(themeNumber);
+          return _this2.props.changeTheme(themeNumber);
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MiddleSection, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_LeftMenu__WEBPACK_IMPORTED_MODULE_6__["default"], {
         group: this.props.data.user.groups[this.props.data.activeGroupIndex],
@@ -69587,7 +69584,7 @@ function (_Component) {
         moveSection: function moveSection(moveValue) {
           return _this2.moveSection(moveValue);
         },
-        theme: this.state.theme[this.state.themeActive],
+        theme: this.state.theme[this.props.data.user.theme],
         middleSectionMoveValue: this.state.middleSectionMoveValue
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Screen__WEBPACK_IMPORTED_MODULE_5__["default"], {
         addType: function addType(e, value, category) {
@@ -69597,7 +69594,7 @@ function (_Component) {
           return _this2.props.hypeLevelHandler(e, typeId);
         },
         activeGroup: this.props.data.user.groups[this.props.data.activeGroupIndex],
-        theme: this.state.theme[this.state.themeActive],
+        theme: this.state.theme[this.props.data.user.theme],
         userData: this.props.data,
         group: this.props.data.user.groups[this.props.data.activeGroupIndex],
         demo: function demo() {
@@ -69616,10 +69613,10 @@ function (_Component) {
         moveSection: function moveSection(moveValue) {
           return _this2.moveSection(moveValue);
         },
-        theme: this.state.theme[this.state.themeActive]
+        theme: this.state.theme[this.props.data.user.theme]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_BottomMenu__WEBPACK_IMPORTED_MODULE_9__["default"], {
         position: this.state.middleSectionMoveValue,
-        theme: this.state.theme[this.state.themeActive],
+        theme: this.state.theme[this.props.data.user.theme],
         data: this.props.data,
         refreshData: function refreshData() {
           return _this2.props.refreshData();
@@ -69699,6 +69696,7 @@ function (_Component) {
     _this.state = {
       user: {
         name: "loading",
+        theme: 0,
         groups: [{
           id: 0,
           users: [],
@@ -69726,6 +69724,15 @@ function (_Component) {
   }
 
   _createClass(AppBrain, [{
+    key: "changeTheme",
+    value: function changeTheme(themeNumber) {
+      this.setState({
+        user: _objectSpread({}, this.state.user, {
+          theme: themeNumber
+        })
+      });
+    }
+  }, {
     key: "hypeLevelHandler",
     value: function hypeLevelHandler(e, typeId) {
       var data = Object(_Functions_js__WEBPACK_IMPORTED_MODULE_3__["hypeLevelHandler"])(e, typeId, this.state.user, this.state.activeGroupIndex);
@@ -69837,7 +69844,7 @@ function (_Component) {
     value: function render() {
       var _this6 = this;
 
-      //console.log(this.state);
+      // console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
         addType: function addType(e, value, category) {
           return _this6.addType(e, value, category);
@@ -69870,6 +69877,9 @@ function (_Component) {
         },
         activeUser: function activeUser(groupId, userId) {
           return _this6.activeUser(groupId, userId);
+        },
+        changeTheme: function changeTheme(themeNumber) {
+          return _this6.changeTheme(themeNumber);
         }
       });
     }
@@ -70391,7 +70401,7 @@ function (_Component) {
         data = [];
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, console.log(topList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, group ? this.table(data) : null), this.props.data.category === "main" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, group ? this.table(data) : null), this.props.data.category === "main" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Button, {
         onClick: function onClick() {
           return _this2.setUpVote(topList, _this2.props.group.id);
         }
@@ -70830,7 +70840,6 @@ function (_Component) {
         color: "white",
         fontSize: "36px"
       };
-      console.log(this.state);
       return !this.state.voting ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, this.state.activeVote.data.map(function (candidate) {
         if (!_this5.state.activeVote.active && candidate.winner) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -71172,8 +71181,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n        display: flex;\n        margin-left: auto;\n    "]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n        margin-left: auto;\n        background-color: props.theme.colorOne;\n    "]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 100%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color:", ";\n        margin: auto auto;\n        text-align: center;\n        position:relative;\n        top: -380px;\n        margin-bottom: -380px;\n        text-align: bottom;\n        transform: ", "\n    "]);
+  var data = _taggedTemplateLiteral(["\n        height: 400px;\n        width: 100%;\n        background-color: ", ";\n        border: 4px ridge ", ";\n        color: ", ";\n        margin: auto auto;\n        text-align: center;\n        position: relative;\n        top: -380px;\n        margin-bottom: -380px;\n        text-align: bottom;\n        transform: ", ";\n    "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -71202,12 +71231,69 @@ var TopMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
       setComponentStatus = _useState2[0],
       newComponentStatus = _useState2[1];
 
-  var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? 'translateY(100%);' : 'translateY(0);');
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    name: props.user.name
+  }),
+      _useState4 = _slicedToArray(_useState3, 2),
+      name = _useState4[0],
+      newName = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    theme: ""
+  }),
+      _useState6 = _slicedToArray(_useState5, 2),
+      theme = _useState6[0],
+      newTheme = _useState6[1];
+
+  var MainWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject(), props.theme.colorThree, props.theme.colorTwo, props.theme.colorFive, !setComponentStatus ? "translateY(100%);" : "translateY(0);");
+  var Input = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].input(_templateObject2());
+  var Label = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].label(_templateObject3());
+  var style = {
+    backgroundColor: props.theme.colorOne,
+    width: "58%",
+    color: props.theme.colorTwo,
+    border: "1px solid " + props.theme.colorThree
+  };
+  var style2 = {
+    display: "flex",
+    justifyContent: "space-between"
+  };
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, {
     onClick: function onClick() {
       return newComponentStatus(!setComponentStatus);
     }
-  }, "TopMenu");
+  }, "TopMenu", console.log(props.user), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    style: style2,
+    onSubmit: function onSubmit(e) {
+      e.preventDefault();
+      console.log("submit");
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "Name :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+    style: style,
+    type: "text",
+    name: "game",
+    value: name.name,
+    onChange: function onChange(e) {
+      var InputValue = e.target.value;
+      newName({
+        value: InputValue
+      });
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "Theme :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+    style: style,
+    type: "text",
+    name: "game",
+    value: theme.thmem,
+    onChange: function onChange(e) {
+      var InputValue = e.target.value;
+      newTheme({
+        theme: InputValue
+      });
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
+    type: "submit",
+    value: "Submit"
+  })));
 });
 /* harmony default export */ __webpack_exports__["default"] = (TopMenu);
 

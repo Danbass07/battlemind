@@ -9,6 +9,7 @@ class AppBrain extends Component {
         this.state = {
             user: {
                 name: "loading",
+                theme: 0,
                 groups: [
                     {
                         id: 0,
@@ -23,6 +24,7 @@ class AppBrain extends Component {
                     }
                 ]
             },
+
             activeGroupIndex: 0,
             typeSelescted: {
                 type: "Choose game to edit"
@@ -31,7 +33,11 @@ class AppBrain extends Component {
             votingList: []
         };
     }
-
+    changeTheme(themeNumber) {
+        this.setState({
+            user: { ...this.state.user, theme: themeNumber }
+        });
+    }
     hypeLevelHandler(e, typeId) {
         const data = hypeLevelHandler(
             e,
@@ -114,7 +120,7 @@ class AppBrain extends Component {
         axios.delete(`/types/${id}`).then(this.getUserContent());
     }
     render() {
-        //console.log(this.state);
+        // console.log(this.state);
         return (
             <AppBody
                 addType={(e, value, category) =>
@@ -139,6 +145,7 @@ class AppBrain extends Component {
                 activeUser={(groupId, userId) =>
                     this.activeUser(groupId, userId)
                 }
+                changeTheme={themeNumber => this.changeTheme(themeNumber)}
             />
         );
     }

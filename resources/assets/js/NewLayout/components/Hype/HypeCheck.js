@@ -150,7 +150,6 @@ class HypeCheck extends Component {
         }
         return (
             <MainWrapper>
-                {console.log(topList)}
                 <React.Fragment>
                     {/* <div className={""}>
                     {activeUsersRating.map(user => {

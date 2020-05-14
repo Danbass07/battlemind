@@ -15,7 +15,6 @@ class AppBody extends Component {
         this.state = {
             middleSectionMoveValue: -33,
             moved: false,
-            themeActive: 0,
             theme: [
                 {
                     colorOne: "#000000",
@@ -41,6 +40,7 @@ class AppBody extends Component {
             ]
         };
     }
+    componentDidMount() {}
 
     moveSection(moveValue, modifier = true) {
         let moved = this.state.moved;
@@ -50,12 +50,6 @@ class AppBody extends Component {
         this.setState({
             middleSectionMoveValue: moveValue,
             moved: !moved
-        });
-    }
-
-    changeTheme(themeNumber) {
-        this.setState({
-            themeActive: themeNumber
         });
     }
 
@@ -85,16 +79,19 @@ class AppBody extends Component {
             flex-direction: row;
             transform: translateX(${this.state.middleSectionMoveValue}%);
         `;
-
+        // console.log(this.props.data);
         return (
             <MainWrapper>
                 <div>
-                    <TopMenu theme={this.state.theme[this.state.themeActive]} />
+                    <TopMenu
+                        theme={this.state.theme[this.props.data.user.theme]}
+                        user={this.props.data.user}
+                    />
                 </div>
 
                 <TopSection>
                     <Logo
-                        theme={this.state.theme[this.state.themeActive]}
+                        theme={this.state.theme[this.props.data.user.theme]}
                         activeGroup={
                             this.props.data.user.groups[
                                 this.props.data.activeGroupIndex
@@ -104,12 +101,12 @@ class AppBody extends Component {
                     />
 
                     <InfoDisplay
-                        theme={this.state.theme[this.state.themeActive]}
+                        theme={this.state.theme[this.props.data.user.theme]}
                     />
                     <Buttons
-                        theme={this.state.theme[this.state.themeActive]}
+                        theme={this.state.theme[this.props.data.user.theme]}
                         changeTheme={themeNumber =>
-                            this.changeTheme(themeNumber)
+                            this.props.changeTheme(themeNumber)
                         }
                     />
                 </TopSection>
@@ -125,7 +122,7 @@ class AppBody extends Component {
                         groupIndex={this.props.data.activeGroupIndex}
                         moved={this.state.moved}
                         moveSection={moveValue => this.moveSection(moveValue)}
-                        theme={this.state.theme[this.state.themeActive]}
+                        theme={this.state.theme[this.props.data.user.theme]}
                         middleSectionMoveValue={
                             this.state.middleSectionMoveValue
                         }
@@ -143,7 +140,7 @@ class AppBody extends Component {
                                 this.props.data.activeGroupIndex
                             ]
                         }
-                        theme={this.state.theme[this.state.themeActive]}
+                        theme={this.state.theme[this.props.data.user.theme]}
                         userData={this.props.data}
                         group={
                             this.props.data.user.groups[
@@ -166,13 +163,13 @@ class AppBody extends Component {
                         }
                         moved={this.state.moved}
                         moveSection={moveValue => this.moveSection(moveValue)}
-                        theme={this.state.theme[this.state.themeActive]}
+                        theme={this.state.theme[this.props.data.user.theme]}
                     />
                 </MiddleSection>
 
                 <BottomMenu
                     position={this.state.middleSectionMoveValue}
-                    theme={this.state.theme[this.state.themeActive]}
+                    theme={this.state.theme[this.props.data.user.theme]}
                     data={this.props.data}
                     refreshData={() => this.props.refreshData()}
                     removeType={id => this.props.removeType(id)}

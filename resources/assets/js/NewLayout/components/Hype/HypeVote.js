@@ -115,7 +115,7 @@ class HypeVote extends Component {
         `;
         const style1 = { color: "black", fontSize: "28px" };
         const style2 = { color: "white", fontSize: "36px" };
-        console.log(this.state);
+
         return !this.state.voting ? (
             <Wrapper>
                 {this.state.activeVote.data.map(candidate => {
