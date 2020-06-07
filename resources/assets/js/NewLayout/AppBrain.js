@@ -70,6 +70,7 @@ class AppBrain extends Component {
         }
     }
     getUserContent() {
+        console.log("refresh");
         axios.get(`/users`).then(response => {
             if (response.data.user.groups.length === 0) {
                 response.data.user.groups = [{ id: 0, users: [], types: [] }];

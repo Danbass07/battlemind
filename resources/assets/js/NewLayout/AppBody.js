@@ -79,15 +79,15 @@ class AppBody extends Component {
             flex-direction: row;
             transform: translateX(${this.state.middleSectionMoveValue}%);
         `;
+
         // console.log(this.props.data);
         return (
             <MainWrapper>
-                <div>
-                    <TopMenu
-                        theme={this.state.theme[this.props.data.user.theme]}
-                        user={this.props.data.user}
-                    />
-                </div>
+                <TopMenu
+                    theme={this.state.theme[this.props.data.user.theme]}
+                    user={this.props.data.user}
+                    refreshData={() => this.props.refreshData()}
+                />
 
                 <TopSection>
                     <Logo
