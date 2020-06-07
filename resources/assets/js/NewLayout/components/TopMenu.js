@@ -95,6 +95,7 @@ const TopMenu = React.memo(props => {
                         });
                     }}
                 >
+                    <Option>Choose One</Option>
                     <Option value={0}>Rakdos</Option>
                     <Option value={1}>Azorius</Option>
                     <Option value={2}>Simic</Option>
