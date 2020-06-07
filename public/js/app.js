@@ -69563,6 +69563,7 @@ function (_Component) {
       var MiddleSection = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3(), this.state.middleSectionMoveValue); // console.log(this.props.data);
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MainWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_TopMenu__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        themeIndex: this.props.data.user.theme,
         theme: this.state.theme[this.props.data.user.theme],
         user: this.props.data.user,
         refreshData: function refreshData() {
@@ -71278,7 +71279,7 @@ var TopMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
       newName = _useState4[1];
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
-    theme: 0
+    theme: props.themeIndex
   }),
       _useState6 = _slicedToArray(_useState5, 2),
       theme = _useState6[0],
@@ -71324,14 +71325,16 @@ var TopMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
         name: InputValue
       });
     }
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "Theme :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Select, {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Select, {
     onChange: function onChange(e) {
       var InputValue = e.target.value;
       newTheme({
         theme: InputValue
       });
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, null, "Choose One"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, {
+    value: props.themeIndex
+  }, "Choose Theme"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, {
     value: 0
   }, "Rakdos"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, {
     value: 1

@@ -29,7 +29,7 @@ const TopMenu = React.memo(props => {
         name: props.user.name
     });
     let [theme, newTheme] = useState({
-        theme: 0
+        theme: props.themeIndex
     });
 
     let Button = styled.button`
@@ -85,7 +85,6 @@ const TopMenu = React.memo(props => {
                         });
                     }}
                 />
-                <Label>Theme :</Label>
 
                 <Select
                     onChange={e => {
@@ -95,7 +94,7 @@ const TopMenu = React.memo(props => {
                         });
                     }}
                 >
-                    <Option>Choose One</Option>
+                    <Option value={props.themeIndex}>Choose Theme</Option>
                     <Option value={0}>Rakdos</Option>
                     <Option value={1}>Azorius</Option>
                     <Option value={2}>Simic</Option>

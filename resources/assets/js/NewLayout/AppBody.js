@@ -84,6 +84,7 @@ class AppBody extends Component {
         return (
             <MainWrapper>
                 <TopMenu
+                    themeIndex={this.props.data.user.theme}
                     theme={this.state.theme[this.props.data.user.theme]}
                     user={this.props.data.user}
                     refreshData={() => this.props.refreshData()}
