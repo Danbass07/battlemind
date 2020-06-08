@@ -71308,11 +71308,10 @@ var TopMenu = react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(function (props)
     style: style2,
     onSubmit: function onSubmit(e) {
       e.preventDefault();
-      props.refreshData();
       axios.put("/users/".concat(props.user.id), {
         name: name.name,
         theme: theme.theme
-      });
+      }, props.refreshData());
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Label, null, "Name :"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input, {
     style: style,

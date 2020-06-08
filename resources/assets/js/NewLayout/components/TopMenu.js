@@ -65,11 +65,15 @@ const TopMenu = React.memo(props => {
                 style={style2}
                 onSubmit={e => {
                     e.preventDefault();
-                    props.refreshData();
-                    axios.put(`/users/${props.user.id}`, {
-                        name: name.name,
-                        theme: theme.theme
-                    });
+
+                    axios.put(
+                        `/users/${props.user.id}`,
+                        {
+                            name: name.name,
+                            theme: theme.theme
+                        },
+                        props.refreshData()
+                    );
                 }}
             >
                 <Label>Name :</Label>
